@@ -6,33 +6,17 @@ import Filter from "~/components/pages-components/friends/Filter";
 import { api } from "~/utils/api";
 import { type FriendFilterSchemaType } from "~/validation/friend-filter-validation";
 import Divider from "~/components/ui/Divider";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function FriendsPage() {
-  // const [filterOptions, setFilterOptions] =
-  //   useState<FriendFilterSchemaType | null>(null);
-  const searchParams = useSearchParams();
-  const gender = searchParams.get("gender");
-  const online = searchParams.get("online");
-  const activities = searchParams.get("activities");
+  const [filterOptions, setFilterOptions] =
+    useState<FriendFilterSchemaType | null>(null);
 
-  const filterOption: FriendFilterSchemaType = {};
+  console.log("Filter options: ", filterOptions);
+  const { data: filterData, status: filterStatus } = api.friend.filter.useQuery(
+    { ...filterOptions },
+  );
 
-  if (!!gender) {
-    filterOption.gender = gender;
-  }
-
-  if (!!online) {
-    filterOption.online = JSON.parse(online) as boolean;
-  }
-
-  if (!!activities) {
-    filterOption.activities = { has: activities };
-  }
-
-  console.log("Filter options: ", filterOption);
-  const { data: filterData, status: filterStatus } =
-    api.friend.filter.useQuery(filterOption);
   if (filterStatus === "error") return <DisplayError />;
 
   return (
@@ -43,8 +27,8 @@ export default function FriendsPage() {
       </div>
       <Card className="h-full w-full max-w-screen-2xl content-center  p-4 hover:drop-shadow-lg">
         <Filter
-          // setFilter={setFilterOptions}
-          showClearButton={!!filterOption}
+          setFilter={setFilterOptions}
+          showClearButton={!!filterOptions}
         />
 
         {filterStatus === "loading" ? (
@@ -66,7 +50,7 @@ export default function FriendsPage() {
             <Button
               size="sm"
               color="secondary"
-              // onClick={() => setFilterOptions(null)}
+              onClick={() => setFilterOptions(null)}
             >
               Clear all filters
             </Button>

@@ -2,17 +2,23 @@ import { type PropsType } from "./BigFormPropsType";
 import activities from "~/data/FriendActivitiesList.json";
 import { Chip, Input, Select, SelectItem } from "@nextui-org/react";
 
+type PropType = Required<Pick<PropsType, "setValue">> &
+  PropsType & { value: string[] | undefined };
+
 export default function InterestActivities({
   register,
   errors,
   getValues,
-}: PropsType) {
+  setValue,
+  value,
+}: PropType) {
   const currency = getValues?.("currency");
   const currencySymbol: Record<string, string> = {
     USD: "$",
     EUR: "€",
     GBP: "£",
   };
+
   return (
     <div className="border-b border-gray-900/10">
       <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -31,10 +37,12 @@ export default function InterestActivities({
             items={activities}
             label="Activities willing to do"
             variant="bordered"
+            selectedKeys={value}
             isMultiline={true}
             selectionMode="multiple"
             placeholder="Select a user"
             {...register("activities")}
+            onChange={(e) => setValue("activities", e.target.value.split(","))}
             classNames={{
               base: "max-w-lg",
               trigger: "min-h-unit-12 py-2",
@@ -51,7 +59,11 @@ export default function InterestActivities({
             errorMessage={errors.activities?.message}
           >
             {(activity) => (
-              <SelectItem key={activity.value} textValue={activity.value}>
+              <SelectItem
+                key={activity.value}
+                textValue={activity.value}
+                value={activity.value}
+              >
                 <div className="flex items-center gap-2">
                   <div className="flex flex-col">
                     <span className="text-small">{activity.value}</span>
@@ -71,7 +83,7 @@ export default function InterestActivities({
           <Input
             label="Price"
             placeholder="0.00"
-            {...register("price")}
+            {...register("price", { valueAsNumber: true })}
             startContent={
               <div className="pointer-events-none flex items-center">
                 <span className="text-small text-default-400">

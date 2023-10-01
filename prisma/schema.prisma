@@ -79,7 +79,7 @@ model User {
     gender      String?
     birthday    DateTime?
     activities  String[]
-    price       String?
+    price       Int?
     currency    String?
     languages   String[]
     activated   Boolean?

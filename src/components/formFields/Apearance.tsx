@@ -3,7 +3,8 @@ import { Input, Select, SelectItem } from "@nextui-org/react";
 import { type PropsType } from "./BigFormPropsType";
 import genders from "~/data/gender-list.json";
 
-export default function Apearance({ register, errors }: PropsType) {
+export default function Apearance({ register, errors, getValues }: PropsType) {
+  const gender = getValues?.("gender");
   return (
     <div className="border-b border-gray-900/10 pb-12">
       <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -27,6 +28,7 @@ export default function Apearance({ register, errors }: PropsType) {
             label="Select a gender"
             className="max-w-xs"
             {...register("gender")}
+            defaultSelectedKeys={gender}
             errorMessage={errors.gender?.message}
           >
             {genders.map((gender) => (

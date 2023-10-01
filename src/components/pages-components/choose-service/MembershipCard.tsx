@@ -26,11 +26,11 @@ export default function MembershipCard({
   image,
   memberType,
 }: PropType) {
-  const { data: sessionData } = useSession();
+  const { data: sessionData } = useSession({ required: true });
   const router = useRouter();
   const changeStatus = api.user.changeMemberStatus.useMutation({
     onSuccess: () => {
-      void router.replace(`/profile/${sessionData?.user.id}`);
+      void router.replace(`/auth/update-profile`);
     },
   });
 
@@ -57,7 +57,7 @@ export default function MembershipCard({
         <Button
           onClick={handleClick}
           fullWidth
-          color="secondary"
+          color="primary"
           variant="bordered"
         >
           Select

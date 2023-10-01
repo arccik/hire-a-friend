@@ -29,7 +29,7 @@ export const userValidation = z.object({
   gender: z.string().optional(),
   birthday: z.date().optional(),
   activities: z.array(z.string()).optional(),
-  price: z.string().optional(),
+  price: z.number().optional(),
   currency: z.string().optional(),
   isOffering: z.boolean().optional(),
   languages: z.array(z.string()).optional(),

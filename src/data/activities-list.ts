@@ -10,8 +10,24 @@ import {
   GiBarStool,
   GiDrinking,
   GiFamilyHouse,
+  GiSmart,
+  GiDrawbridge,
+  GiGamepad,
+  GiSportMedal,
+  GiPhone,
 } from "react-icons/gi";
-
+import {
+  FaCameraRetro,
+  FaChurch,
+  FaPhotoVideo,
+  FaUserFriends,
+  FaWalking,
+  FaWheelchair,
+  FaPeopleCarry,
+  FaPeopleArrows,
+} from "react-icons/fa";
+import { MdDinnerDining } from "react-icons/md";
+ 
 export const activities = [
   {
     id: 1,
@@ -46,14 +62,13 @@ export const activities = [
     title: "Sightseeing",
     Icon: GiLookAt,
     description:
-      "Sightseeing can be a great way to explore new places.  Whether sightseeing in a large city or a small town you want to make sure you get the best experience possible.  Finding locals who live in the area you are sightseeing can always be helpful to find new beautiful places to enjoy.",
+      "Sightseeing, whether in a big city or a small town, can be enhanced with the help of locals who know the best places to explore.",
   },
   {
     id: 6,
     title: "Museums",
     Icon: GiHistogram,
-    description:
-      "There thousands of Museums all over the US & Canada and range from everything you can possibly imagine. Search online and you can find a local museum that you can visit with a Friend.",
+    description: "Explore museums with an engaging guide and companion.",
   },
   {
     id: 7,
@@ -86,7 +101,7 @@ export const activities = [
   {
     id: 11,
     title: "Dinner",
-    Icon: GiDrinking,
+    Icon: MdDinnerDining,
     description:
       "Going out for food is always a good time. Bringing a Friend can make things even better. It doesn't matter if it's fast food for a 4 star restaurant, having a Friend with you can always make things better.",
   },
@@ -96,5 +111,80 @@ export const activities = [
     Icon: GiFamilyHouse,
     description:
       "A lot of us have family events that we must attend every year. Bringing someone long, can help make things go a lot easier and more interesting!",
+  },
+  {
+    id: 13,
+    title: "Introduce you to people",
+    Icon: FaPeopleArrows,
+    description:
+      "If you find introductions challenging, they will introduce you",
+  },
+  {
+    id: 14,
+    title: "Amusement Parks",
+    Icon: FaWalking,
+    description:
+      "If you find amusement parks overwhelming, they will guide you.",
+  },
+  {
+    id: 15,
+    title: "Phone Friend",
+    Icon: GiPhone,
+    description: "Hire a friend as your phone companion.",
+  },
+  {
+    id: 16,
+    title: "Wingman/Wingwoman",
+    Icon: FaUserFriends,
+    description: "Hire a wingman or wingwoman to boost your social confidence.",
+  },
+  {
+    id: 17,
+    title: "Sporting Events",
+    Icon: GiSportMedal,
+    description:
+      "Enhanced experience at sporting events, sharing the excitement and passion of the game with you.",
+  },
+  {
+    id: 18,
+    title: "Photography",
+    Icon: FaCameraRetro,
+    description:
+      "Hire a photography enthusiast to accompany you and capture memorable moments in stunning photos.",
+  },
+  {
+    id: 19,
+    title: "Religious",
+    Icon: FaChurch,
+    description:
+      "Hire a companion for religious and spiritual gatherings, and to share moments of prayer and reflection.",
+  },
+  {
+    id: 20,
+    title: "Arcade",
+    Icon: GiGamepad,
+    description:
+      "Hire a gaming enthusiast to accompany you at the arcade, share the fun, or even watch you play and provide encouragement.",
+  },
+  {
+    id: 21,
+    title: "Friends with Disabled",
+    Icon: FaWheelchair,
+    description:
+      "Hire a companion for social activities and support for friends with disabilities, ensuring inclusive and enjoyable experiences.",
+  },
+  {
+    id: 22,
+    title: "Poetry/Art/Drawing",
+    Icon: GiDrawbridge,
+    description:
+      "Express creativity and inspire one another with a friendly artist and poet.",
+  },
+  {
+    id: 23,
+    title: "Business Events",
+    Icon: GiSmart,
+    description:
+      "Network with ease and have fun at business events with a friendly companion.",
   },
 ];

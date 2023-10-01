@@ -1,20 +1,16 @@
-"use client";
 import { Button, Input, Card } from "@nextui-org/react";
 import Link from "next/link";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  type LoginSchemaType,
-  loginSchema,
-} from "~/validation/user-validation";
+import { LoginSchemaType, loginSchema } from "~/validation/user-validation";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const SignInPage = () => {
-  const { data: userSession } = useSession();
+  // const { data: userSession } = useSession();
   const router = useRouter();
 
-  if (userSession?.user.id) void router.push("/");
+  // if (userSession?.user.id) void router.push("/");
 
   const {
     register,
@@ -84,7 +80,7 @@ const SignInPage = () => {
                   href="/auth/reset-password"
                   className="font-medium text-primary-600 hover:underline "
                 >
-                  Forgot your password ?{" "}
+                  Forgot your password ?
                 </Link>
               </p>
             </form>

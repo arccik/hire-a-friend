@@ -8,13 +8,9 @@ export default function Features() {
   function generateRandomHexColor() {
     // Generate a random 24-bit (8-bit for each R, G, and B) color value
     const randomColorValue = Math.floor(Math.random() * 16777215); // 16777215 is equivalent to 0xFFFFFF in hexadecimal
-
-    // Convert the random value to a hexadecimal string
     const color = "#" + randomColorValue.toString(16).toUpperCase();
-
     return color;
   }
-  console.log("Color;", generateRandomHexColor());
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
       {activities.map((item, index) => (

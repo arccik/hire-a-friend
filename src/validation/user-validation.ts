@@ -4,8 +4,10 @@ export const userValidation = z.object({
   name: z.string().min(3, "Required"),
   email: z.string().email("Email Required"),
   images: z.any(z.string()).optional(),
-  image: z.any(z.instanceof(File)).optional(),
-  coverImage: z.any(z.instanceof(File)).optional(),
+  // image: z.any(z.instanceof(File)).optional(),
+  // coverImage: z.any(z.instanceof(File)).optional(),
+  image: z.any(z.string()).optional(),
+  coverImage: z.any(z.string()).optional(),
 
   firstName: z.string().optional(),
   lastName: z.string().optional(),

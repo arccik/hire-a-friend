@@ -1,36 +1,36 @@
 import { Button, Input, Card } from "@nextui-org/react";
-// import Link from "next/link";
-// import { useForm, SubmitHandler } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { LoginSchemaType, loginSchema } from "~/validation/user-validation";
-// import { signIn, useSession } from "next-auth/react";
-// import { useRouter } from "next/router";
+import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchemaType, loginSchema } from "~/validation/user-validation";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const SignInPage = () => {
-  // const { data: userSession } = useSession();
-  // const router = useRouter();
+  const { data: userSession } = useSession();
+  const router = useRouter();
 
-  // if (userSession?.user.id) void router.push("/");
+  if (userSession?.user.id) void router.push("/");
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   setError,
-  // } = useForm<LoginSchemaType>({
-  //   resolver: zodResolver(loginSchema),
-  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  // const onSubmit: SubmitHandler<LoginSchemaType> = async (
-  //   data,
-  // ): Promise<void> => {
-  //   const response = await signIn("credentials", { ...data, redirect: false });
-  //   if (!response?.ok) {
-  //     setError("email", { message: "Invalid email or password" });
-  //   } else {
-  //     await router.push("/");
-  //   }
-  // };
+  const onSubmit: SubmitHandler<LoginSchemaType> = async (
+    data,
+  ): Promise<void> => {
+    const response = await signIn("credentials", { ...data, redirect: false });
+    if (!response?.ok) {
+      setError("email", { message: "Invalid email or password" });
+    } else {
+      await router.push("/");
+    }
+  };
 
   return (
     <section className="bg-gray-50">
@@ -47,27 +47,27 @@ const SignInPage = () => {
             </h1>
             <form
               className="space-y-4 md:space-y-6"
-              // onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+              onSubmit={(event) => void handleSubmit(onSubmit)(event)}
             >
               <Input
-                // {...register("email")}
+                {...register("email")}
                 label="Email"
                 variant="bordered"
                 autoComplete="email"
                 placeholder="email@example.com"
-                // errorMessage={errors.email?.message}
+                errorMessage={errors.email?.message}
               />
               <Input
-                // {...register("password")}
+                {...register("password")}
                 label="Password"
                 variant="bordered"
                 type="password"
                 placeholder="Type your password"
-                // errorMessage={errors.password?.message}
+                errorMessage={errors.password?.message}
               />
 
               <Button
-                // isDisabled={!!errors.email || !!errors.password}
+                isDisabled={!!errors.email || !!errors.password}
                 type="submit"
                 color="primary"
                 className="w-full"
@@ -76,12 +76,12 @@ const SignInPage = () => {
               </Button>
 
               <p className="text-sm font-light text-gray-500">
-                {/* <Link
+                <Link
                   href="/auth/reset-password"
                   className="font-medium text-primary-600 hover:underline "
                 >
                   Forgot your password ?
-                </Link> */}
+                </Link>
               </p>
             </form>
           </div>

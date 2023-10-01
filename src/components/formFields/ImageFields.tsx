@@ -8,8 +8,8 @@ export default function ImageFields({
   getValues,
   setValue,
 }: Required<Pick<PropsType, "getValues" | "setValue">> & PropsType) {
-  const avatar: string | undefined = getValues("image");
-  const coverImage: string | undefined = getValues("coverImage");
+  const avatar = getValues("image") as string | undefined;
+  const coverImage = getValues("coverImage") as string | undefined;
 
   return (
     <>

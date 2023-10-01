@@ -1,0 +1,11 @@
+[
+  { "id": 1, "value": "United States" },
+  {
+    "id": 2,
+    "value": "United Kingdom"
+  },
+  {
+    "id": 3,
+    "value": "Europe"
+  }
+]

@@ -1,10 +1,10 @@
 import { Button, Input, Card } from "@nextui-org/react";
-import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchemaType, loginSchema } from "~/validation/user-validation";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+// import Link from "next/link";
+// import { useForm, SubmitHandler } from "react-hook-form";
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { LoginSchemaType, loginSchema } from "~/validation/user-validation";
+// import { signIn, useSession } from "next-auth/react";
+// import { useRouter } from "next/router";
 
 const SignInPage = () => {
   // const { data: userSession } = useSession();
@@ -76,12 +76,12 @@ const SignInPage = () => {
               </Button>
 
               <p className="text-sm font-light text-gray-500">
-                <Link
+                {/* <Link
                   href="/auth/reset-password"
                   className="font-medium text-primary-600 hover:underline "
                 >
                   Forgot your password ?
-                </Link>
+                </Link> */}
               </p>
             </form>
           </div>

@@ -2,6 +2,7 @@ import { Input, Select, SelectItem } from "@nextui-org/react";
 
 import { type PropsType } from "./BigFormPropsType";
 import genders from "~/data/gender-list.json";
+import InputField from "../ui/InputField";
 
 export default function Apearance({ register, errors, getValues }: PropsType) {
   const gender = getValues?.("gender");
@@ -18,6 +19,8 @@ export default function Apearance({ register, errors, getValues }: PropsType) {
         <div className="mt-6 grid w-full gap-5 md:grid-cols-2">
           <Input
             variant="bordered"
+            labelPlacement="outside"
+            placeholder="type here"
             radius="sm"
             label="Age"
             {...register("age", { valueAsNumber: true })}
@@ -28,6 +31,7 @@ export default function Apearance({ register, errors, getValues }: PropsType) {
             label="Select a gender"
             className="max-w-xs"
             {...register("gender")}
+            variant="bordered"
             defaultSelectedKeys={gender}
             errorMessage={errors.gender?.message}
           >
@@ -40,6 +44,8 @@ export default function Apearance({ register, errors, getValues }: PropsType) {
 
           <Input
             variant="bordered"
+            labelPlacement="outside"
+            placeholder="type here"
             radius="sm"
             label="Height"
             type="text"
@@ -48,13 +54,16 @@ export default function Apearance({ register, errors, getValues }: PropsType) {
           <Input
             variant="bordered"
             radius="sm"
+            labelPlacement="outside"
+            placeholder="type here"
             label="Eyes"
-            type="text"
             {...register("appearance.eyeColor")}
           />
           <Input
             variant="bordered"
             radius="sm"
+            labelPlacement="outside"
+            placeholder="type here"
             label="Hair"
             type="text"
             {...register("appearance.hairColor")}
@@ -62,6 +71,8 @@ export default function Apearance({ register, errors, getValues }: PropsType) {
           <Input
             variant="bordered"
             radius="sm"
+            labelPlacement="outside"
+            placeholder="type here"
             label="Body Type"
             type="text"
             {...register("appearance.bodyType")}
@@ -70,6 +81,8 @@ export default function Apearance({ register, errors, getValues }: PropsType) {
             variant="bordered"
             radius="sm"
             label="Ethnicity"
+            labelPlacement="outside"
+            placeholder="type here"
             type="text"
             {...register("appearance.ethnicity")}
             errorMessage={errors.appearance?.ethnicity?.message}

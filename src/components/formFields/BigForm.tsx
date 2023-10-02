@@ -1,4 +1,4 @@
-import { Button, Input, Textarea } from "@nextui-org/react";
+import { Button, Textarea } from "@nextui-org/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { User, Appearance } from "@prisma/client";
@@ -12,6 +12,8 @@ import Apearance from "./Apearance";
 import InterestActivities from "./InterestActivities";
 import PersonalInformation from "./PersonalInfo";
 import ImageFields from "./ImageFields";
+import InputField from "../ui/InputField";
+import NotifyBy from "./NotifyBy";
 
 type PropType = User & { userId: string } & { appearance: Appearance | null };
 
@@ -109,27 +111,12 @@ export default function BigForm(props: PropType) {
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Nickname
-              </label>
-              <div className="mt-2">
-                <Input
-                  variant="bordered"
-                  {...register("name")}
-                  type="text"
-                  name="name"
-                  id="name"
-                  autoComplete="name"
-                  placeholder="type here"
-                  radius="sm"
-                />
-              </div>
-            </div>
-
+            <InputField
+              title="Nickname"
+              fieldName="name"
+              register={register}
+              errors={errors}
+            />
             <div className="col-span-full">
               <label
                 htmlFor="about"
@@ -175,7 +162,7 @@ export default function BigForm(props: PropType) {
         setValue={setValue}
         value={getValues("activities")}
       />
-
+      <NotifyBy />
       <div className="mt-6 flex items-center justify-end gap-x-6">
         <Button variant="faded">Cancel</Button>
         <Button color="success" type="submit">

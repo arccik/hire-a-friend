@@ -6,6 +6,8 @@ import { Button } from "@nextui-org/react";
 import Features from "~/components/pages-components/home/Features";
 import bubbleProfileAnimationData from "../animations/bubble-profile.json";
 import Link from "next/link";
+import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
+import { GiReturnArrow } from "react-icons/gi";
 
 export default function NewPage() {
   return (
@@ -63,15 +65,28 @@ export default function NewPage() {
       </section>
       <section className="mx-auto mt-10 md:container">
         <div className="m-5">
-          <p className="mb-10 text-6xl font-semibold ">Events and Activities</p>
+          <p className="text-6xl font-semibold ">Events and Activities</p>
           <p className="mb-10 text-xl">
-            Don not let loneliness linger. It is time to reach out and connect
-            with people who understand what it means to seek a friend
+            Don not let loneliness linger.
+            {/* Don not let loneliness linger. It is time to reach out and connect
+            with people who understand what it means to seek a friend */}
           </p>
         </div>
 
         <Features />
       </section>
+      <section className="mx-auto mt-32 md:container">
+        <div className="m-5">
+          <p className="mb-10 text-6xl font-semibold ">Check who is Online</p>
+          <p className="mb-10 text-xl">
+            It is time to reach out and connect with people who understand what
+            it means to seek a friend
+          </p>
+        </div>
+
+        <ActiveFriend />
+      </section>
+
       <section className="m-5 mt-10 grid grid-flow-row md:grid-cols-2">
         <div className="flex flex-col justify-center md:ml-10">
           <p className="text-7xl font-semibold">Our Vision</p>

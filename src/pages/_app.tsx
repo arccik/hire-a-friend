@@ -3,6 +3,9 @@ import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 import { NextUIProvider } from "@nextui-org/react";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
@@ -18,6 +21,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <SessionProvider session={session}>
         <Header />
         <Component {...pageProps} />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Footer />
       </SessionProvider>
     </NextUIProvider>

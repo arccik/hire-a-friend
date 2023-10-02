@@ -8,6 +8,10 @@ import { CiLocationOn } from "react-icons/ci";
 import CustomerProfile from "~/components/pages-components/profile/CustomerProfile";
 import ApearanceTable from "~/components/pages-components/profile/ApearanceTable";
 
+import { genders } from "~/data/gender-icons";
+import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
+import Title from "~/components/ui/Title";
+
 export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
@@ -23,6 +27,8 @@ export default function ProfilePage() {
   if (status === "error") return <DisplayError />;
 
   if (data?.userType === "Customer") return <CustomerProfile />;
+
+  const GenderIcon = genders.find((g) => g.id.toString() == data?.gender)?.Icon;
 
   return (
     <main className="profile-page">
@@ -90,9 +96,9 @@ export default function ProfilePage() {
                   <div className="flex justify-center md:py-4 md:pt-8 lg:pt-4">
                     <div className="mr-4 p-3 text-center">
                       <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
-                        22
+                        £ {data?.price}
                       </span>
-                      <span className="text-sm text-gray-400">Calls Out</span>
+                      <span className="text-sm text-gray-400">Per Hour</span>
                     </div>
                     <div className="mr-4 p-3 text-center">
                       <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
@@ -109,58 +115,50 @@ export default function ProfilePage() {
                   </div>
                 </div>
               </div>
-              <div className="text-center md:mt-12">
-                <h3 className="mb-2  text-4xl font-semibold leading-normal text-gray-700">
+              <div className="text-center md:mt-2">
+                <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
                   {data?.name}
+                  {GenderIcon && <GenderIcon />}
                 </h3>
                 <div className="mb-2 mt-0 flex justify-center text-sm font-bold uppercase leading-normal text-gray-400">
                   <CiLocationOn className="mr-2 text-lg text-gray-400 " />
-                  {data?.city + ", " + data?.country}
+                  {data?.city}
                 </div>
-                <div className="mb-2 mt-10 text-gray-600">{data?.about}</div>
+
+                <div className="mx-auto mb-10 mt-10 max-w-2xl text-left text-gray-600">
+                  {data?.about}
+                </div>
               </div>
-              {/* {data?.activities && data.activities.length > 0 && (
-                <div className="mx-auto mt-10 flex justify-center gap-2">
-                  <p className="text-xl font-bold uppercase tracking-wide text-gray-600">
-                    Available for
-                  </p>
-                  {data?.activities.map((activity) => (
-                    <Chip key={activity} color="primary" variant="dot">
-                      {activity}
-                    </Chip>
-                  ))}
-                </div>
-              )} */}
-              <ApearanceTable />
-              {/* Activities */}
               {!!data?.activities.length && (
-                <>
-                  <p className="text-xl font-bold uppercase tracking-wide text-gray-600">
-                    We can enjoy together
+                <div className="mt-10 border-t border-gray-200 py-10 text-center">
+                  <p className="mb-4 text-lg leading-relaxed text-gray-700">
+                    Can be booked for
                   </p>
-                  <div className="grid gap-1 md:grid-flow-row">
+                  <div className="mx-auto flex max-w-2xl flex-wrap gap-1 ">
                     {data?.activities.map((activity) => (
-                      <Chip key={activity} color="primary" variant="dot">
+                      <Chip key={activity} color="primary" variant="solid">
                         {activity}
                       </Chip>
                     ))}
                   </div>
-                </>
+                </div>
               )}
-              <div className="grid gap-5">
-                <p className="font-bold uppercase tracking-wide text-gray-600">
-                  Price
-                </p>
-                <Chip> {data?.price}</Chip>
-                <p className="font-bold uppercase tracking-wide text-gray-600">
-                  Languages:
-                </p>
-                {data?.languages.map((language) => (
-                  <Chip key={language} color="success" variant="shadow">
-                    {language}
-                  </Chip>
-                ))}
-              </div>
+
+              <ApearanceTable data={data?.appearance} />
+
+              {!!data?.languages.length && (
+                <div className="mt-10 border-t border-gray-200 py-10 text-center">
+                  <p className="font-bold uppercase tracking-wide text-gray-600">
+                    Languages:
+                  </p>
+                  {data?.languages.map((language) => (
+                    <Chip key={language} color="success" variant="shadow">
+                      {language}
+                    </Chip>
+                  ))}
+                </div>
+              )}
+
               <div className="mt-10 border-t border-gray-200 py-10 text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 lg:w-9/12">
@@ -172,7 +170,7 @@ export default function ProfilePage() {
                       services.
                     </p>
                     <a href="#pablo" className="font-normal text-pink-500">
-                      Leave Feedback
+                      Report
                     </a>
                   </div>
                 </div>
@@ -180,34 +178,15 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-        {/* <footer className="relative mt-8 bg-gray-200 pb-6 pt-8">
+        <footer className="relative mt-8 bg-gray-200 pb-6 pt-8">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap items-center justify-center md:justify-between">
-              <div className="mx-auto w-full px-4 text-center md:w-6/12">
-                <div className="py-1 text-sm font-semibold text-gray-500">
-                  Made with{" "}
-                  <a
-                    href="https://www.creative-tim.com/product/notus-js"
-                    className="text-gray-500 hover:text-gray-800"
-                    target="_blank"
-                  >
-                    Notus JS
-                  </a>{" "}
-                  by{" "}
-                  <a
-                    href="https://www.creative-tim.com"
-                    className="text-gray-500 hover:text-gray-800"
-                    target="_blank"
-                  >
-                    {" "}
-                    Creative Tim
-                  </a>
-                  .
-                </div>
-              </div>
+              <Title text="Similar offer" className="mx-auto mb-5" />
+
+              <ActiveFriend />
             </div>
           </div>
-        </footer> */}
+        </footer>
       </section>
     </main>
   );

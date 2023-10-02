@@ -1,5 +1,6 @@
 import { Button, Textarea } from "@nextui-org/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 import type { User, Appearance } from "@prisma/client";
 import {
@@ -14,17 +15,30 @@ import PersonalInformation from "./PersonalInfo";
 import ImageFields from "./ImageFields";
 import InputField from "../ui/InputField";
 import NotifyBy from "./NotifyBy";
+import Link from "next/link";
 
 type PropType = User & { userId: string } & { appearance: Appearance | null };
 
 export default function BigForm(props: PropType) {
   const updateUser = api.user.update.useMutation({
-    onSuccess: (data) => {
-      console.log("Update User Success: ", data);
+    onSuccess: () => {
+      toast.success("Profile Updated!", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    },
+    onError: (error) => {
+      toast.error("Something went wrong. Updates not saved");
+      console.error("[update profile]: something went wrong: ", error.message);
     },
   });
 
-  console.log("USer DATA : ", props);
   const {
     register,
     handleSubmit,
@@ -99,76 +113,80 @@ export default function BigForm(props: PropType) {
   // }
 
   return (
-    <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
-      <div className="grid grid-cols-1 space-y-12 md:grid-flow-dense md:grid-cols-2 md:space-x-12">
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Profile
-          </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            This information will be displayed publicly so be careful what you
-            share.
-          </p>
+    <>
+      <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
+        <div className="grid grid-cols-1 space-y-12 md:grid-flow-dense md:grid-cols-2 md:space-x-12">
+          <div className="border-b border-gray-900/10 pb-12">
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Profile
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              This information will be displayed publicly so be careful what you
+              share.
+            </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <InputField
-              title="Nickname"
-              fieldName="name"
-              register={register}
-              errors={errors}
-            />
-            <div className="col-span-full">
-              <label
-                htmlFor="about"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                About
-              </label>
-              <div className="mt-2">
-                <Textarea
-                  id="about"
-                  {...register("about")}
-                  name="about"
-                  rows={3}
-                  variant="bordered"
-                  radius="sm"
-                />
+            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <InputField
+                title="Nickname"
+                fieldName="name"
+                register={register}
+                errors={errors}
+              />
+              <div className="col-span-full">
+                <label
+                  htmlFor="about"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  About
+                </label>
+                <div className="mt-2">
+                  <Textarea
+                    id="about"
+                    {...register("about")}
+                    name="about"
+                    rows={3}
+                    variant="bordered"
+                    radius="sm"
+                  />
+                </div>
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  Write a few sentences about yourself.
+                </p>
               </div>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                Write a few sentences about yourself.
-              </p>
+
+              <ImageFields
+                register={register}
+                errors={errors}
+                watch={watch}
+                getValues={getValues}
+                setValue={setValue}
+              />
             </div>
-
-            <ImageFields
-              register={register}
-              errors={errors}
-              watch={watch}
-              getValues={getValues}
-              setValue={setValue}
-            />
           </div>
-        </div>
 
-        <PersonalInformation
+          <PersonalInformation
+            register={register}
+            errors={errors}
+            getValues={getValues}
+          />
+        </div>
+        <Apearance register={register} errors={errors} getValues={getValues} />
+        <InterestActivities
           register={register}
           errors={errors}
-          getValues={getValues}
+          setValue={setValue}
+          value={getValues("activities")}
         />
-      </div>
-      <Apearance register={register} errors={errors} getValues={getValues} />
-      <InterestActivities
-        register={register}
-        errors={errors}
-        setValue={setValue}
-        value={getValues("activities")}
-      />
-      <NotifyBy />
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <Button variant="faded">Cancel</Button>
-        <Button color="success" type="submit">
-          Save
-        </Button>
-      </div>
-    </form>
+        <NotifyBy />
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <Button variant="faded" as={Link} href="/">
+            Cancel
+          </Button>
+          <Button color="success" type="submit">
+            Save
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }

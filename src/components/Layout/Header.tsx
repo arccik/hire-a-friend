@@ -47,7 +47,7 @@ export default function Header() {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll>
       <NavbarContent>
         {!sessionData?.user && (
           <NavbarMenuToggle

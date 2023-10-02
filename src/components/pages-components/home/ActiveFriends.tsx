@@ -8,9 +8,8 @@ export default function ActiveFriend() {
   const { data, status } = api.user.getAll.useQuery();
   if (status === "loading") return <Spinner size="lg" />;
   return (
-    <div className="hide-scroll-bar flex w-[calc(100%-2rem)] flex-col">
-      <Title text="Most Popular" className="mx-auto mb-5" />
-      <div className="hide-scroll-bar ml-4 flex w-full overflow-x-scroll md:ml-10">
+    <div className="hide-scroll-bar flex w-[calc(100%)] flex-col">
+      <div className="hide-scroll-bar flex w-full overflow-x-scroll">
         <div className="flex flex-nowrap gap-2 md:gap-5">
           {data?.map((item) => <ActiveFriendsCard {...item} key={item.id} />)}
         </div>

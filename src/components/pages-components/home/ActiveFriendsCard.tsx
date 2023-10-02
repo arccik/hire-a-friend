@@ -11,7 +11,7 @@ export default function ActiveFriendsCard(props: User) {
       radius="lg"
       className="min-w-[200px] max-w-[200px] border-none"
       as={Link}
-      href={`profile/${props.id}`}
+      href={`/profile/${props.id}`}
     >
       {props.image && (
         <Image

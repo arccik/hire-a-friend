@@ -6,8 +6,28 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/react";
+import { Appearance } from "@prisma/client";
 
-export default function ApearanceTable() {
+type PropType = {
+  data: Appearance | null | undefined;
+};
+
+export default function ApearanceTable({ data }: PropType) {
+  if (!data) return null;
+  console.log("Apperance: ", data);
+
+  const toDisplay = Object.entries(data)
+    .filter((value) => value[1] !== "" && value[0] !== "id")
+    .map(([key, value]) => {
+      return (
+        <TableRow key={key}>
+          <TableCell>{key}</TableCell>
+          <TableCell>
+            <b>{value}</b>
+          </TableCell>
+        </TableRow>
+      );
+    });
   return (
     <>
       <p className="mb-2 text-center text-2xl font-thin">Apearance</p>
@@ -18,32 +38,7 @@ export default function ApearanceTable() {
             <TableColumn>NAME</TableColumn>
             <TableColumn>PARAMS</TableColumn>
           </TableHeader>
-          <TableBody>
-            <TableRow key="1">
-              <TableCell>Height</TableCell>
-              <TableCell>6</TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>Weight</TableCell>
-              <TableCell>60 kg</TableCell>
-            </TableRow>
-            <TableRow key="3">
-              <TableCell>Hair Color</TableCell>
-              <TableCell>Blond</TableCell>
-            </TableRow>
-            <TableRow key="4">
-              <TableCell>Eye Color</TableCell>
-              <TableCell>Blue</TableCell>
-            </TableRow>
-            <TableRow key="5">
-              <TableCell>Body Type</TableCell>
-              <TableCell>Athletic</TableCell>
-            </TableRow>
-            <TableRow key="6">
-              <TableCell>Ethnicity</TableCell>
-              <TableCell>White</TableCell>
-            </TableRow>
-          </TableBody>
+          <TableBody>{toDisplay}</TableBody>
         </Table>
       </div>
     </>

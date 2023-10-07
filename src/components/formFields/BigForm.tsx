@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 import type { User, Appearance } from "@prisma/client";
 import {
   userValidation,
-  UserValidationType,
+  type UserValidationType,
 } from "~/validation/user-validation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import Apearance from "./Apearance";
 import InterestActivities from "./InterestActivities";

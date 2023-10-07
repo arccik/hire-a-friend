@@ -76,6 +76,13 @@ export const userRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany();
   }),
+  getActiveFriends: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.user.findMany({
+      where: {
+        activated: true,
+      },
+    });
+  }),
   changeMemberStatus: protectedProcedure
     .input(z.object({ memberType: z.enum(["Friend", "Customer"]) }))
     .mutation(async ({ ctx, input }) => {

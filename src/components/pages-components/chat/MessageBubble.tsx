@@ -23,7 +23,7 @@ export default function MessageBubble({
         shadow="sm"
         className={cn("max-w-xs rounded-lg", {
           "bg-gray-200": side === "left",
-          "bg-blue-500": side === "right",
+          "bg-blue-500 text-white": side === "right",
         })}
       >
         <CardBody>

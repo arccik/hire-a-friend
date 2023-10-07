@@ -1,5 +1,5 @@
 import { Badge, Button } from "@nextui-org/react";
-import { PropsType } from "./BigFormPropsType";
+import type { PropsType } from "./BigFormPropsType";
 import { FaPhotoVideo, FaUserCircle } from "react-icons/fa";
 
 export default function ImageFields({

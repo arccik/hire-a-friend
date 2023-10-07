@@ -1,22 +1,28 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { GoFilter } from "react-icons/go";
 import activitiesList from "~/data/FriendActivitiesList.json";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState, useEffect } from "react";
 import { type FriendFilterSchemaType } from "~/validation/friend-filter-validation";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import genders from "~/data/gender-list.json";
+import { useRouter } from "next/router";
 
 type PropsType = {
   setFilter: Dispatch<SetStateAction<FriendFilterSchemaType | null>>;
   showClearButton: boolean;
 };
 
-export default function Filter({ showClearButton, setFilter }: PropsType) {
+export default function Filter() {
   const [showFilter, setShowFilter] = useState(false);
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   router.push(`?activities=${activities}&status=${status}&gender=${gender}`);
+  // }, [activities, status, gender]);
 
   return (
-    <div className="mb-2 flex w-full flex-col justify-between gap-2 md:flex-row ">
+    <div className="mb-2 flex w-full flex-col justify-between gap-2 md:flex-row">
       <GoFilter onClick={() => setShowFilter((prev) => !prev)} />
 
       <AnimatePresence>
@@ -33,7 +39,10 @@ export default function Filter({ showClearButton, setFilter }: PropsType) {
               size="sm"
               name="gender"
               onChange={(e) => {
-                setFilter((prev) => ({ ...prev, gender: e.target.value }));
+                void router.push({
+                  query: { ...router.query, gender: e.target.value },
+                });
+                // setFilter((prev) => ({ ...prev, gender: e.target.value }));
               }}
             >
               {genders.map((gender) => (
@@ -47,15 +56,18 @@ export default function Filter({ showClearButton, setFilter }: PropsType) {
               variant="bordered"
               size="sm"
               onChange={(e) => {
-                setFilter((prev) => ({
-                  ...prev,
-                  online:
-                    e.target.value === "Online"
-                      ? true
-                      : e.target.value === "Offline"
-                      ? false
-                      : undefined,
-                }));
+                void router.push({
+                  query: { ...router.query, status: e.target.value },
+                });
+                // setFilter((prev) => ({
+                //   ...prev,
+                //   online:
+                //     e.target.value === "Online"
+                //       ? true
+                //       : e.target.value === "Offline"
+                //       ? false
+                //       : undefined,
+                // }));
               }}
             >
               {["Online", "Offline"].map((status) => (
@@ -70,15 +82,18 @@ export default function Filter({ showClearButton, setFilter }: PropsType) {
               size="sm"
               name="activities"
               onChange={(e) => {
-                if (!e.target.value)
-                  return setFilter((prev) => ({
-                    ...prev,
-                    activities: undefined,
-                  }));
-                setFilter((prev) => ({
-                  ...prev,
-                  activities: { has: e.target.value },
-                }));
+                void router.push({
+                  query: { ...router.query, activities: e.target.value },
+                });
+                // if (!e.target.value)
+                //   return setFilter((prev) => ({
+                //     ...prev,
+                //     activities: undefined,
+                //   }));
+                // setFilter((prev) => ({
+                //   ...prev,
+                //   activities: { has: e.target.value },
+                // }));
               }}
             >
               {activitiesList.map((activity) => (
@@ -88,12 +103,17 @@ export default function Filter({ showClearButton, setFilter }: PropsType) {
           </motion.div>
         )}
       </AnimatePresence>
-      {showClearButton && (
+      {Object.keys(router.query).length > 0 && (
         <div
-          onClick={() => setFilter(null)}
-          className="flex cursor-pointer items-center text-red-400"
+          onClick={() => {
+            void router.push({
+              query: null,
+            });
+            setShowFilter(false);
+          }}
+          className="flex cursor-pointer items-start text-xs text-red-400"
         >
-          <p className="text-xs font-bold">Clear filter</p>
+          <p className=" font-bold">Clear filter</p>
           <AiOutlineClose />
         </div>
       )}

@@ -20,14 +20,14 @@ export const friendRouter = createTRPCRouter({
   filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
     const options: Record<string, string | boolean | object | null> = {};
     // const options: { [key: string]: string | boolean | object } = {};
-    if (!!input.online) options.online = input.online;
-    if (input.activities) {
+    if (!!input.status) options.status = input.status;
+    if (input.activities?.has && input.activities.has !== "null") {
       options.activities = input.activities;
     } else {
       delete options.activities;
     }
-    if (input.gender) options.gender = input.gender;
-    console.log("TRPC FILTER OPTIONS: ", { options, input });
+    if (input.gender && input.gender !== "null") options.gender = input.gender;
+
     return ctx.prisma.user.findMany({ where: { ...options } });
   }),
 });

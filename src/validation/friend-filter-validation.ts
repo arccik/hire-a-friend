@@ -1,9 +1,12 @@
 import { z } from "zod";
 
 export const friendFilterSchema = z.object({
-  gender: z.string().optional(),
-  online: z.boolean().optional(),
-  activities: z.object({ has: z.string().optional() }).optional(),
+  gender: z.string().optional().nullable(),
+  status: z.string().optional().nullable(),
+  activities: z
+    .object({ has: z.string().optional().nullable() })
+    .optional()
+    .nullable(),
 });
 
 export type FriendFilterSchemaType = z.infer<typeof friendFilterSchema>;

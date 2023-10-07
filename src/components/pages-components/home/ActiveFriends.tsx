@@ -5,7 +5,7 @@ import { api } from "~/utils/api";
 import Title from "../../ui/Title";
 
 export default function ActiveFriend() {
-  const { data, status } = api.user.getAll.useQuery();
+  const { data, status } = api.user.getActiveFriends.useQuery();
   if (status === "loading") return <Spinner size="lg" />;
   return (
     <div className="hide-scroll-bar flex w-[calc(100%)] flex-col">

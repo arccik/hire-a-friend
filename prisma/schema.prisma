@@ -91,7 +91,7 @@ model User {
 
     followers Follower[]
 
-    online       Boolean?
+    status       String?
     appearance  Appearance? @relation(fields: [appearanceId], references: [id])
     appearanceId String?
     views        Int       @default(0)

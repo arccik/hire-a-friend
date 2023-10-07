@@ -4,17 +4,24 @@ import Title from "~/components/ui/Title";
 import FriendCard from "~/components/pages-components/friends/FriendCard";
 import Filter from "~/components/pages-components/friends/Filter";
 import { api } from "~/utils/api";
-import { type FriendFilterSchemaType } from "~/validation/friend-filter-validation";
 import Divider from "~/components/ui/Divider";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 export default function FriendsPage() {
-  const [filterOptions, setFilterOptions] =
-    useState<FriendFilterSchemaType | null>(null);
+  const router = useRouter();
 
-  console.log("Filter options: ", filterOptions);
+  const searchParams = useSearchParams();
+  const activities = searchParams.get("activities");
+  const status = searchParams.get("status");
+  const gender = searchParams.get("gender");
+
   const { data: filterData, status: filterStatus } = api.friend.filter.useQuery(
-    { ...filterOptions },
+    {
+      activities: { has: activities },
+      status,
+      gender: gender,
+    },
   );
 
   if (filterStatus === "error") return <DisplayError />;
@@ -26,10 +33,7 @@ export default function FriendsPage() {
         <p className="mb-10 text-sm text-gray-400">Subtext for makakako</p>
       </div>
       <Card className="h-full w-full max-w-screen-2xl content-center  p-4 hover:drop-shadow-lg">
-        <Filter
-          setFilter={setFilterOptions}
-          showClearButton={!!filterOptions}
-        />
+        <Filter />
 
         {filterStatus === "loading" ? (
           <Spinner className="mt-10 items-center align-middle" />
@@ -50,7 +54,15 @@ export default function FriendsPage() {
             <Button
               size="sm"
               color="secondary"
-              onClick={() => setFilterOptions(null)}
+              onClick={() => {
+                void router.push(
+                  { pathname: router.pathname, query: null },
+                  undefined,
+                  {
+                    shallow: true,
+                  },
+                );
+              }}
             >
               Clear all filters
             </Button>

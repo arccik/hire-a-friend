@@ -162,14 +162,13 @@ export default function ProfilePage() {
               <div className="mt-10 border-t border-gray-200 py-10 text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 lg:w-9/12">
-                    <p className="mb-4 text-lg leading-relaxed text-gray-700">
-                      Leaving feedback is easy and quick. Simply click on the
-                      &quot;Leave Feedback&quot; button below, and you will be
-                      directed to a brief survey. Your responses are
-                      confidential and will be used solely to enhance our
-                      services.
+                    <p className="mb-4 text-tiny leading-relaxed text-gray-700">
+                      Your Safety Matters. If you believe this person is
+                      harassing you or violating our community guidelines,
+                      please don't hesitate to report. We're here to ensure a
+                      safe and respectful environment for all.
                     </p>
-                    <a href="#pablo" className="font-normal text-pink-500">
+                    <a href="report" className="font-normal text-pink-500">
                       Report
                     </a>
                   </div>

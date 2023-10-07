@@ -32,7 +32,7 @@ export default function FriendsPage() {
         <Title text="We were waiting for you" className="mt-10" />
         <p className="mb-10 text-sm text-gray-400">Subtext for makakako</p>
       </div>
-      <Card className="h-full w-full max-w-screen-2xl content-center  p-4 hover:drop-shadow-lg">
+      <Card className="mx-auto h-full w-full max-w-screen-2xl content-center  p-4 hover:drop-shadow-lg">
         <Filter />
 
         {filterStatus === "loading" ? (

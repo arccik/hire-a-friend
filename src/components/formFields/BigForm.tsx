@@ -79,7 +79,6 @@ export default function BigForm(props: PropType) {
     },
   });
 
-  console.log("VALUESSS ", watch());
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
     delete data.image;
     delete data.coverImage;

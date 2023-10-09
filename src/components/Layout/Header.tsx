@@ -109,48 +109,38 @@ export default function Header() {
           </NavbarItem>
         ))}
       </NavbarContent>
-      {/* Auth Users Menu */}
-      {userSession?.user.id && (
-        <Dropdown placement="bottom-end">
-          <DropdownTrigger>
+
+      <NavbarContent justify="end" className="hidden sm:flex">
+        <NavbarItem>
+          {userSession?.user.id ? (
             <Avatar
               isBordered
-              as="button"
               className="transition-transform"
               size="sm"
               src={
-                userSession.user.image ??
+                userSession?.user.image ??
                 "/assets/images/avatar-placeholder.jpeg"
               }
             />
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">{userSession?.user?.email}</p>
-            </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="settings">
-              <Link href={`/profile/${userSession?.user?.id}`}>Profile</Link>
-            </DropdownItem>
-            <DropdownItem
-              key="logout"
-              color="danger"
-              onClick={() => void signOut()}
-            >
-              Log Out
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      )}
-      <NavbarContent justify="end" className="hidden sm:flex">
-        <NavbarItem>
-          <Button as={Link} color="warning" href="#" variant="flat">
-            Sign Up
-          </Button>
+          ) : (
+            <Button as={Link} color="warning" href="#" variant="flat">
+              Sign Up
+            </Button>
+          )}
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="md:hidden" justify="end">
+        {userSession?.user.id && (
+          <Avatar
+            isBordered
+            className="transition-transform"
+            size="sm"
+            src={
+              userSession?.user.image ??
+              "/assets/images/avatar-placeholder.jpeg"
+            }
+          />
+        )}
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />
@@ -168,6 +158,15 @@ export default function Header() {
             </Link>
           </NavbarMenuItem>
         ))}
+
+        {userSession?.user.id && (
+          <NavbarMenuItem key="Sign Out">
+            {" "}
+            <button onClick={() => void signOut()} className="text-red-500">
+              Logout
+            </button>
+          </NavbarMenuItem>
+        )}
       </NavbarMenu>
     </Navbar>
   );

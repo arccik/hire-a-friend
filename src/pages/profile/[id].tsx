@@ -184,7 +184,7 @@ export default function ProfilePage() {
         <footer className="relative mt-8 bg-gray-200 pb-6 pt-8">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap items-center justify-center md:justify-between">
-              <Title text="Funcy someone else ?" className="mx-auto mb-5" />
+              <Title text="Check other profiles" className="mx-auto mb-5" />
               <ActiveFriend />
             </div>
           </div>

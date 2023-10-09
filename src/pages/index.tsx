@@ -15,7 +15,7 @@ export default function NewPage() {
         <Lottie animationData={sayHiData} />
         <div className="m-5 flex flex-col justify-center">
           <p className="text-6xl font-semibold md:text-8xl">
-            Tired of being alone ?
+            Tired of being alone?
           </p>
           <p className="mr-10 mt-5 text-xl">
             {/* Having nobody to share your emotions, the quiet evenings spent
@@ -32,7 +32,7 @@ export default function NewPage() {
               radius="full"
               className="mt-10 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
             >
-              Hire Someone
+              Find Right Person
             </Button>
           </div>
         </div>

@@ -32,7 +32,7 @@ export default function NewPage() {
               radius="full"
               className="mt-10 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
             >
-              Check Friends
+              Hire Someone
             </Button>
           </div>
         </div>

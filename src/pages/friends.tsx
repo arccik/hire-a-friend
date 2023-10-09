@@ -34,8 +34,10 @@ export default function FriendsPage() {
   return (
     <main className="m-3 md:m-10">
       <div className="text-center">
-        <Title text="We were waiting for you" className="mt-10" />
-        <p className="mb-10 text-sm text-gray-400">Subtext for makakako</p>
+        <Title text="Almost there" className="mt-10 text-tiny" />
+        <p className="mb-10 text-sm text-gray-400">
+          All it takes is one click to break free from loneliness.
+        </p>
       </div>
       <Card className="mx-auto h-full w-full max-w-screen-2xl content-center  p-4 pb-10 hover:drop-shadow-lg">
         <Filter />

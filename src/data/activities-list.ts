@@ -48,7 +48,7 @@ export const activities = [
     title: "Teaching Manners",
     Icon: GiTeacher,
     description:
-      "It's great to hire a Friend who can teach you how to properly behave in certain social situations.",
+      "It's great to get someone who can teach you how to properly behave in certain social situations.",
   },
   {
     id: 4,
@@ -82,7 +82,7 @@ export const activities = [
     title: "Hanging Out",
     Icon: GiWineBottle,
     description:
-      "Sometimes you just want to hang out. Maybe watch a sporting even on TV, or just to talk. hireafriend.co.uk can be a great way to find someone to spend time with you.",
+      "Sometimes you just want to hang out. Maybe watch a sporting even on TV, or just to talk. rentmytime.co.uk can be a great way to find someone to spend time with you.",
   },
   {
     id: 9,
@@ -130,13 +130,13 @@ export const activities = [
     id: 15,
     title: "Phone Friend",
     Icon: GiPhone,
-    description: "Hire a friend as your phone companion.",
+    description: "For Meaningful Conversations Over the Phone",
   },
   {
     id: 16,
     title: "Wingman/Wingwoman",
     Icon: FaUserFriends,
-    description: "Hire a wingman or wingwoman to boost your social confidence.",
+    description: "A wingman or wingwoman to boost your social confidence.",
   },
   {
     id: 17,
@@ -150,28 +150,28 @@ export const activities = [
     title: "Photography",
     Icon: FaCameraRetro,
     description:
-      "Hire a photography enthusiast to accompany you and capture memorable moments in stunning photos.",
+      "Get a photography enthusiast to accompany you and capture memorable moments in stunning photos.",
   },
   {
     id: 19,
     title: "Religious",
     Icon: FaChurch,
     description:
-      "Hire a companion for religious and spiritual gatherings, and to share moments of prayer and reflection.",
+      "Rent my Time companion for religious and spiritual gatherings, and to share moments of prayer and reflection.",
   },
   {
     id: 20,
     title: "Arcade",
     Icon: GiGamepad,
     description:
-      "Hire a gaming enthusiast to accompany you at the arcade, share the fun, or even watch you play and provide encouragement.",
+      "Get a gaming enthusiast to accompany you at the arcade, share the fun, or even watch you play and provide encouragement.",
   },
   {
     id: 21,
     title: "Friends with Disabled",
     Icon: FaWheelchair,
     description:
-      "Hire a companion for social activities and support for friends with disabilities, ensuring inclusive and enjoyable experiences.",
+      "Get a companion for social activities and support for friends with disabilities, ensuring inclusive and enjoyable experiences.",
   },
   {
     id: 22,

@@ -85,10 +85,10 @@ export default function ProfilePage() {
                 <div className="lg:order-3 lg:w-4/12 lg:self-center lg:text-right">
                   <div className="flex justify-end gap-5 py-6 sm:mt-0">
                     <Button color="secondary" variant="flat">
-                      Follow
+                      Save
                     </Button>
                     <Button color="success" variant="flat">
-                      Hire
+                      Connect
                     </Button>
                   </div>
                 </div>
@@ -131,8 +131,8 @@ export default function ProfilePage() {
               </div>
               {!!data?.activities.length && (
                 <div className="mt-10 border-t border-gray-200 py-10 text-center">
-                  <p className="mb-4 text-lg leading-relaxed text-gray-700">
-                    Can be booked for
+                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
+                    Available for:
                   </p>
                   <div className="mx-auto flex max-w-2xl flex-wrap gap-1 ">
                     {data?.activities.map((activity) => (
@@ -148,11 +148,15 @@ export default function ProfilePage() {
 
               {!!data?.languages.length && (
                 <div className="mt-10 border-t border-gray-200 py-10 text-center">
-                  <p className="font-bold uppercase tracking-wide text-gray-600">
+                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
                     Languages:
                   </p>
                   {data?.languages.map((language) => (
-                    <Chip key={language} color="success" variant="shadow">
+                    <Chip
+                      key={language}
+                      color="success"
+                      className="bg-success/20"
+                    >
                       {language}
                     </Chip>
                   ))}
@@ -162,10 +166,10 @@ export default function ProfilePage() {
               <div className="mt-10 border-t border-gray-200 py-10 text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 lg:w-9/12">
-                    <p className="mb-4 text-tiny leading-relaxed text-gray-700">
+                    <p className="text-tiny leading-relaxed text-gray-700">
                       Your Safety Matters. If you believe this person is
                       harassing you or violating our community guidelines,
-                      please don't hesitate to report. We're here to ensure a
+                      please don not hesitate to report. We are here to ensure a
                       safe and respectful environment for all.
                     </p>
                     <a href="report" className="font-normal text-pink-500">
@@ -180,8 +184,7 @@ export default function ProfilePage() {
         <footer className="relative mt-8 bg-gray-200 pb-6 pt-8">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap items-center justify-center md:justify-between">
-              <Title text="Similar offer" className="mx-auto mb-5" />
-
+              <Title text="Funcy someone else ?" className="mx-auto mb-5" />
               <ActiveFriend />
             </div>
           </div>

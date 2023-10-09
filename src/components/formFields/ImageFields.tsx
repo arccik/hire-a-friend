@@ -4,7 +4,6 @@ import { FaPhotoVideo, FaUserCircle } from "react-icons/fa";
 
 export default function ImageFields({
   register,
-  errors,
   getValues,
   setValue,
 }: Required<Pick<PropsType, "getValues" | "setValue">> & PropsType) {

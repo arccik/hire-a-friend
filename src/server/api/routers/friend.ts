@@ -1,10 +1,6 @@
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  // protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { friendFilterSchema } from "~/validation/friend-filter-validation";
 
 export const friendRouter = createTRPCRouter({
@@ -27,7 +23,12 @@ export const friendRouter = createTRPCRouter({
       delete options.activities;
     }
     if (input.gender && input.gender !== "null") options.gender = input.gender;
-
-    return ctx.prisma.user.findMany({ where: { ...options } });
+    const pageSize = 9;
+    const skip = (input.page - 1) * pageSize;
+    const take = pageSize;
+    return ctx.prisma.$transaction([
+      ctx.prisma.user.findMany({ where: { ...options }, skip, take }),
+      ctx.prisma.user.count({ where: { ...options } }),
+    ]);
   }),
 });

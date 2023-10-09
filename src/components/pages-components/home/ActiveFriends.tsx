@@ -2,7 +2,6 @@ import React from "react";
 import { Spinner } from "@nextui-org/react";
 import ActiveFriendsCard from "./ActiveFriendsCard";
 import { api } from "~/utils/api";
-import Title from "../../ui/Title";
 
 export default function ActiveFriend() {
   const { data, status } = api.user.getActiveFriends.useQuery();

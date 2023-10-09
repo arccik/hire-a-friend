@@ -1,4 +1,4 @@
-import { Button, Card, Spinner } from "@nextui-org/react";
+import { Button, Card, Pagination, Spinner } from "@nextui-org/react";
 import DisplayError from "~/components/ui/DisplayError";
 import Title from "~/components/ui/Title";
 import FriendCard from "~/components/pages-components/friends/FriendCard";
@@ -7,8 +7,10 @@ import { api } from "~/utils/api";
 import Divider from "~/components/ui/Divider";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function FriendsPage() {
+  const [page, setPage] = useState(1);
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -21,10 +23,13 @@ export default function FriendsPage() {
       activities: { has: activities },
       status,
       gender: gender,
+      page,
     },
   );
 
   if (filterStatus === "error") return <DisplayError />;
+
+  console.log("Friends: ", filterData);
 
   return (
     <main className="m-3 md:m-10">
@@ -32,41 +37,53 @@ export default function FriendsPage() {
         <Title text="We were waiting for you" className="mt-10" />
         <p className="mb-10 text-sm text-gray-400">Subtext for makakako</p>
       </div>
-      <Card className="mx-auto h-full w-full max-w-screen-2xl content-center  p-4 hover:drop-shadow-lg">
+      <Card className="mx-auto h-full w-full max-w-screen-2xl content-center  p-4 pb-10 hover:drop-shadow-lg">
         <Filter />
 
         {filterStatus === "loading" ? (
           <Spinner className="mt-10 items-center align-middle" />
         ) : (
-          <div className="grid grid-flow-row gap-2 md:grid-cols-3 md:gap-4">
-            {filterData?.map((friend) => (
-              <FriendCard item={friend} key={friend.id} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-flow-row gap-2 md:grid-cols-3 md:gap-4">
+              {filterData[0]?.map((friend) => (
+                <FriendCard item={friend} key={friend.id} />
+              ))}
+            </div>
+            {filterData[1] === 0 && (
+              <div className="flex h-full flex-col items-center justify-center">
+                <p className="text-xl font-bold">No friends found</p>
+                <p className="text-center text-gray-600">
+                  Try to change your filter
+                </p>
+                <Divider text="or" />
+                <Button
+                  size="sm"
+                  color="secondary"
+                  onClick={() => {
+                    void router.push(
+                      { pathname: router.pathname, query: null },
+                      undefined,
+                      {
+                        shallow: true,
+                      },
+                    );
+                  }}
+                >
+                  Clear all filters
+                </Button>
+              </div>
+            )}
+          </>
         )}
-        {filterData?.length === 0 && filterStatus !== "loading" && (
-          <div className="flex h-full flex-col items-center justify-center">
-            <p className="text-xl font-bold">No friends found</p>
-            <p className="text-center text-gray-600">
-              Try to change your filter
-            </p>
-            <Divider text="or" />
-            <Button
-              size="sm"
-              color="secondary"
-              onClick={() => {
-                void router.push(
-                  { pathname: router.pathname, query: null },
-                  undefined,
-                  {
-                    shallow: true,
-                  },
-                );
-              }}
-            >
-              Clear all filters
-            </Button>
-          </div>
+
+        {filterData && filterData[1] > 8 && (
+          <Pagination
+            className="m-10 mx-auto"
+            total={Math.ceil(filterData[1] / 9)}
+            showControls
+            page={page}
+            onChange={setPage}
+          />
         )}
       </Card>
     </main>

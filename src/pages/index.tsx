@@ -7,7 +7,6 @@ import Features from "~/components/pages-components/home/Features";
 import bubbleProfileAnimationData from "../animations/bubble-profile.json";
 import Link from "next/link";
 import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
-import { GiReturnArrow } from "react-icons/gi";
 
 export default function NewPage() {
   return (
@@ -15,12 +14,16 @@ export default function NewPage() {
       <section className="grid min-h-screen grid-flow-row md:grid-cols-2">
         <Lottie animationData={sayHiData} />
         <div className="m-5 flex flex-col justify-center">
-          <p className="text-6xl font-semibold md:text-9xl">
-            Looking for friend ?
+          <p className="text-6xl font-semibold md:text-8xl">
+            Tired of being alone ?
           </p>
           <p className="mr-10 mt-5 text-xl">
-            Tired of being alone and having nobody to share your emotions, the
-            quiet evenings spent alone, and the unspoken words?
+            {/* Having nobody to share your emotions, the quiet evenings spent
+            alone, and the unspoken words? */}
+            Whether you are seeking companionship, a listening ear, or a way to
+            earn extra income, our platform connects those looking to offer
+            services with those in need, creating meaningful connections and
+            financial opportunities.
           </p>
           <div className="mb-10 flex w-full">
             <Button
@@ -29,7 +32,7 @@ export default function NewPage() {
               radius="full"
               className="mt-10 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
             >
-              Hire a Friend
+              Check Friends
             </Button>
           </div>
         </div>
@@ -40,7 +43,7 @@ export default function NewPage() {
             Your Path to Friendship and Connection
           </p>
           <p className="mt-10 text-xl">
-            At HireAFriend, we believe that everyone deserves the warmth of
+            At Rent My Time, we believe that everyone deserves the warmth of
             friendship and the comfort of connection. We&apos;re here to help
             you bridge the gap between loneliness and companionship.
           </p>
@@ -104,7 +107,7 @@ export default function NewPage() {
           href="/friends"
           className="mt-10 animate-bounce bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg hover:from-yellow-500 hover:to-pink-500 hover:drop-shadow-lg"
         >
-          Hire a Friend
+          Explore
         </Button>
       </div>
     </main>

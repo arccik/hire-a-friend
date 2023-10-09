@@ -56,11 +56,11 @@ export default function Header() {
           />
         )}
         <NavbarBrand>
-          <Link href="/">
+          <Link href="/" className="cursor-pointer">
             <Image
-              src="/assets/images/logo.png"
+              src="/assets/images/logo-circle.png"
               alt="Brand logo"
-              width={200}
+              width={60}
               height={60}
             />
           </Link>

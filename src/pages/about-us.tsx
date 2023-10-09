@@ -15,7 +15,7 @@ export default function AboutPage() {
             </div>
             <div className="md:7/12 lg:w-6/12">
               <h2 className="text-2xl font-bold text-gray-900 md:text-4xl">
-                Hire a Friend
+                Rent My Time
               </h2>
               <p>
                 Connects you with local companions across the United Kingdom.
@@ -23,12 +23,12 @@ export default function AboutPage() {
                 friendly face for an event, we&#39;ve got you covered.
               </p>
               <p>
-                How does HireAFriend.co.uk work? Simply search for companions in
+                How does RentMyTime.co.uk work? Simply search for companions in
                 your UK location. Browse profiles, view photos, and learn about
                 their interests for free. To connect, register as a member with
                 a small fee.
               </p>
-              <p>How do people use HireAFriend.co.uk?</p>
+              <p>How do people use RentMyTime.co.uk?</p>
               <p>
                 Discover local insights with a companion. Never attend events
                 alone. Enjoy movies, dining, or outings together. Learn new
@@ -45,7 +45,7 @@ export default function AboutPage() {
               <p>
                 Ready to Begin? Browse companion profiles for free and find your
                 ideal friend. Click the green button below to start your search
-                on HireAFriend.co.uk.
+                on RentMyTime.co.uk.
               </p>
             </div>
           </div>

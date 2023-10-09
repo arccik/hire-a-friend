@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchemaType, loginSchema } from "~/validation/user-validation";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Divider from "~/components/ui/Divider";
+import { FaGoogle } from "react-icons/fa";
 
 const SignInPage = () => {
   const { data: userSession } = useSession();
@@ -73,6 +75,14 @@ const SignInPage = () => {
                 className="w-full"
               >
                 Login
+              </Button>
+              <Divider text="OR" />
+              <Button
+                onClick={() => void signIn("google")}
+                fullWidth
+                startContent={<FaGoogle />}
+              >
+                Login with Google
               </Button>
 
               <p className="text-sm font-light text-gray-500">

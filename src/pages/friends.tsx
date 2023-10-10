@@ -1,4 +1,4 @@
-import { Button, Card, Pagination, Spinner } from "@nextui-org/react";
+import { Button, Pagination, Spinner } from "@nextui-org/react";
 import DisplayError from "~/components/ui/DisplayError";
 import Title from "~/components/ui/Title";
 import FriendCard from "~/components/pages-components/friends/FriendCard";
@@ -26,15 +26,13 @@ export default function FriendsPage() {
       page,
     },
   );
-
+  const title = activities ?? "Choose Right Person";
   if (filterStatus === "error") return <DisplayError />;
-
-  console.log("Friends: ", filterData);
 
   return (
     <main className="m-3 md:m-10">
       <div className="text-center">
-        <Title text="Almost there" className="mt-10 text-tiny" />
+        <Title text={title} className="mt-10 text-tiny" />
         <p className="mb-2 text-sm text-gray-400">
           All it takes is one click to break free from loneliness.
         </p>

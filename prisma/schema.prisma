@@ -79,22 +79,25 @@ model User {
     gender      String?
     birthday    DateTime?
     activities  String[]
+    hobbies     String[]
+    
+    experties   String?
     price       Int?
     currency    String?
     languages   String[]
     activated   Boolean?
     earnings    String?
     feedback    String[]
-    
-    isOffering  Boolean?
-    userType    UserType?
+
+    isOffering Boolean?
+    userType   UserType?
 
     followers Follower[]
 
     status       String?
-    appearance  Appearance? @relation(fields: [appearanceId], references: [id])
+    appearance   Appearance? @relation(fields: [appearanceId], references: [id])
     appearanceId String?
-    views        Int       @default(0)
+    views        Int         @default(0)
     userId       String?
     Comment      Comment[]
 }

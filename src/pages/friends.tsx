@@ -35,15 +35,15 @@ export default function FriendsPage() {
     <main className="m-3 md:m-10">
       <div className="text-center">
         <Title text="Almost there" className="mt-10 text-tiny" />
-        <p className="mb-10 text-sm text-gray-400">
+        <p className="mb-2 text-sm text-gray-400">
           All it takes is one click to break free from loneliness.
         </p>
       </div>
-      <Card className="mx-auto h-full w-full max-w-screen-2xl content-center  p-4 pb-10 hover:drop-shadow-lg">
+      <div className="mx-auto h-full w-full max-w-screen-2xl content-center  pb-10">
         <Filter />
 
         {filterStatus === "loading" ? (
-          <Spinner className="mt-10 items-center align-middle" />
+          <Spinner className="mt-10 flex items-center align-middle" />
         ) : (
           <>
             <div className="grid grid-flow-row gap-2 md:grid-cols-3 md:gap-4">
@@ -80,14 +80,14 @@ export default function FriendsPage() {
 
         {filterData && filterData[1] > 8 && (
           <Pagination
-            className="m-10 mx-auto"
+            className="m-10 flex place-content-center"
             total={Math.ceil(filterData[1] / 9)}
             showControls
             page={page}
             onChange={setPage}
           />
         )}
-      </Card>
+      </div>
     </main>
   );
 }

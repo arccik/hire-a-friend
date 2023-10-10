@@ -9,10 +9,6 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Avatar,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
 } from "@nextui-org/react";
 
 import Link from "next/link";
@@ -117,6 +113,8 @@ export default function Header() {
               isBordered
               className="transition-transform"
               size="sm"
+              as={Link}
+              href={`/profile/${userSession.user.id}`}
               src={
                 userSession?.user.image ??
                 "/assets/images/avatar-placeholder.jpeg"
@@ -135,6 +133,8 @@ export default function Header() {
             isBordered
             className="transition-transform"
             size="sm"
+            as={Link}
+            href={`/profile/${userSession.user.id}`}
             src={
               userSession?.user.image ??
               "/assets/images/avatar-placeholder.jpeg"
@@ -148,7 +148,7 @@ export default function Header() {
       {/* Mobile Menu */}
       <NavbarMenu>
         {menu.map((item, index) => (
-          <NavbarMenuItem key={item.id}>
+          <NavbarMenuItem key={item.id} className="mt-5 text-2xl">
             <Link
               className="w-full"
               href={item.href}
@@ -160,8 +160,7 @@ export default function Header() {
         ))}
 
         {userSession?.user.id && (
-          <NavbarMenuItem key="Sign Out">
-            {" "}
+          <NavbarMenuItem key="Sign Out" className="mt-5 text-2xl">
             <button onClick={() => void signOut()} className="text-red-500">
               Logout
             </button>

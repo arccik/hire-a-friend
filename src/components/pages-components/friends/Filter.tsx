@@ -1,30 +1,39 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { GoFilter } from "react-icons/go";
 import activitiesList from "~/data/FriendActivitiesList.json";
-import { type Dispatch, type SetStateAction, useState, useEffect } from "react";
-import { type FriendFilterSchemaType } from "~/validation/friend-filter-validation";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import genders from "~/data/gender-list.json";
 import { useRouter } from "next/router";
 
-type PropsType = {
-  setFilter: Dispatch<SetStateAction<FriendFilterSchemaType | null>>;
-  showClearButton: boolean;
-};
-
 export default function Filter() {
   const [showFilter, setShowFilter] = useState(false);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   router.push(`?activities=${activities}&status=${status}&gender=${gender}`);
-  // }, [activities, status, gender]);
-
   return (
-    <div className="mb-2 flex w-full flex-col justify-between gap-2 md:flex-row">
-      <GoFilter onClick={() => setShowFilter((prev) => !prev)} />
-
+    <div className="mb-2 gap-2">
+      {Object.keys(router.query).length > 0 && (
+        <div
+          onClick={() => {
+            void router.push({
+              query: null,
+            });
+            setShowFilter(false);
+          }}
+          className="flex cursor-pointer text-xs text-red-400"
+        >
+          <p className=" font-bold">Clear filter</p>
+          <AiOutlineClose />
+        </div>
+      )}
+      <div className="flex flex-row justify-end ">
+        <p className="text-tiny font-semibold text-slate-500">Filter</p>
+        <GoFilter
+          className="mb-2 ml-2 rounded-full bg-white p-2 text-2xl shadow-md hover:bg-gray-100 hover:shadow-lg md:cursor-pointer"
+          onClick={() => setShowFilter((prev) => !prev)}
+        />
+      </div>
       <AnimatePresence>
         {showFilter && (
           <motion.div
@@ -42,7 +51,6 @@ export default function Filter() {
                 void router.push({
                   query: { ...router.query, gender: e.target.value },
                 });
-                // setFilter((prev) => ({ ...prev, gender: e.target.value }));
               }}
             >
               {genders.map((gender) => (
@@ -59,15 +67,6 @@ export default function Filter() {
                 void router.push({
                   query: { ...router.query, status: e.target.value },
                 });
-                // setFilter((prev) => ({
-                //   ...prev,
-                //   online:
-                //     e.target.value === "Online"
-                //       ? true
-                //       : e.target.value === "Offline"
-                //       ? false
-                //       : undefined,
-                // }));
               }}
             >
               {["Online", "Offline"].map((status) => (
@@ -85,15 +84,6 @@ export default function Filter() {
                 void router.push({
                   query: { ...router.query, activities: e.target.value },
                 });
-                // if (!e.target.value)
-                //   return setFilter((prev) => ({
-                //     ...prev,
-                //     activities: undefined,
-                //   }));
-                // setFilter((prev) => ({
-                //   ...prev,
-                //   activities: { has: e.target.value },
-                // }));
               }}
             >
               {activitiesList.map((activity) => (
@@ -103,20 +93,6 @@ export default function Filter() {
           </motion.div>
         )}
       </AnimatePresence>
-      {Object.keys(router.query).length > 0 && (
-        <div
-          onClick={() => {
-            void router.push({
-              query: null,
-            });
-            setShowFilter(false);
-          }}
-          className="flex cursor-pointer items-start text-xs text-red-400"
-        >
-          <p className=" font-bold">Clear filter</p>
-          <AiOutlineClose />
-        </div>
-      )}
     </div>
   );
 }

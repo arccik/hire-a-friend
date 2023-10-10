@@ -13,31 +13,50 @@ export default function FriendCard({ item }: { item: User }) {
       <div
         className="h-auto w-36 flex-none  overflow-hidden  bg-cover text-center"
         style={{ backgroundImage: `url(${item.image})` }}
-        title="Mountain"
+        title="User Image"
       ></div>
       <div className="flex w-full flex-col  justify-between  rounded bg-white p-4 leading-normal ">
         <div className="mb-8">
           <div className="text-xl font-bold text-gray-900">{item.name}</div>
-          <p className="mb-2  flex items-center text-sm text-gray-600">
-            Occupation
+          <p className="mb-2  flex items-center text-sm text-gray-500">
+            {item.experties}
           </p>
           <p className="text-base text-gray-700">
             {item.about?.slice(0, 100)}..
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-1">
-          {item.activities.slice(0, 4).map((activity) => (
-            <Chip
-              as={Link}
-              href={`?activities=${activity}`}
-              size="sm"
-              key={activity}
-              className="text-xs"
-            >
-              {activity}
-            </Chip>
-          ))}
-          {item.activities.length > 4 && <Chip size="sm">...</Chip>}
+        <div>
+          <p className="text-xs font-bold text-slate-500">Hobbies:</p>
+          <div className="flex flex-wrap items-center gap-1">
+            {item.hobbies.map((hobby) => (
+              <Chip
+                as={Link}
+                href={`?activities=${hobby}`}
+                size="sm"
+                key={hobby}
+                className="bg-green-400 text-xs"
+              >
+                {hobby}
+              </Chip>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="text-xs font-bold text-slate-500">Activities:</p>
+          <div className="flex flex-wrap items-center gap-1">
+            {item.activities.slice(0, 4).map((activity) => (
+              <Chip
+                as={Link}
+                href={`?activities=${activity}`}
+                size="sm"
+                key={activity}
+                className="text-xs"
+              >
+                {activity}
+              </Chip>
+            ))}
+            {item.activities.length > 4 && <Chip size="sm">...</Chip>}
+          </div>
         </div>
       </div>
     </div>

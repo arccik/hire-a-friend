@@ -22,7 +22,7 @@ export default function SearchBar() {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -100 }}
-          className="ml-5 md:w-1/2"
+          className="ml-5 w-full md:w-1/2"
         >
           <Input
             isClearable

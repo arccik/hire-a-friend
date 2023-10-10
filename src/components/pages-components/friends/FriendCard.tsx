@@ -7,33 +7,29 @@ export default function FriendCard({ item }: { item: User }) {
   const router = useRouter();
   return (
     <div
-      className=" flex w-full max-w-full cursor-pointer drop-shadow-md hover:drop-shadow-lg"
+      className=" flex w-full max-w-full cursor-pointer drop-shadow-md hover:rounded-xl hover:drop-shadow-lg"
       onClick={() => void router.push(`/profile/${item.id}`)}
     >
       <div
-        className="h-auto w-36 flex-none  overflow-hidden  bg-cover text-center"
+        className="w-36 flex-none overflow-hidden  bg-cover bg-center"
         style={{ backgroundImage: `url(${item.image})` }}
-        title="User Image"
       ></div>
       <div className="flex w-full flex-col  justify-between  rounded bg-white p-4 leading-normal ">
-        <div className="mb-8">
+        <div className="mb-2">
           <div className="text-xl font-bold text-gray-900">{item.name}</div>
-          <p className="mb-2  flex items-center text-sm text-gray-500">
+          <p className="flex items-center text-sm text-gray-500">
             {item.experties}
-          </p>
-          <p className="text-base text-gray-700">
-            {item.about?.slice(0, 100)}..
           </p>
         </div>
         <div>
           <p className="text-xs font-bold text-slate-500">Hobbies:</p>
           <div className="flex flex-wrap items-center gap-1">
-            {item.hobbies.map((hobby) => (
+            {item.hobbies.map((hobby, index) => (
               <Chip
                 as={Link}
                 href={`?activities=${hobby}`}
                 size="sm"
-                key={hobby}
+                key={hobby + index}
                 className="bg-green-400 text-xs"
               >
                 {hobby}

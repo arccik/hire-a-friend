@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 
 export default function SearchBar() {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const ButtonWithIcon = () => (
     <>
       <p className="text-tiny font-semibold text-slate-500">Search</p>

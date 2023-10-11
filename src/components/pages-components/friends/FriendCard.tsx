@@ -24,13 +24,13 @@ export default function FriendCard({ item }: { item: User }) {
         <div>
           <p className="text-xs font-bold text-slate-500">Hobbies:</p>
           <div className="flex flex-wrap items-center gap-1">
-            {item.hobbies.map((hobby, index) => (
+            {item.hobbies.slice(0, 4).map((hobby, index) => (
               <Chip
                 as={Link}
                 href={`?activities=${hobby}`}
                 size="sm"
                 key={hobby + index}
-                className="bg-green-400 text-xs"
+                className="text-xs text-slate-600"
               >
                 {hobby}
               </Chip>
@@ -46,12 +46,16 @@ export default function FriendCard({ item }: { item: User }) {
                 href={`?activities=${activity}`}
                 size="sm"
                 key={activity}
-                className="text-xs"
+                className="bg-green-300 text-xs"
               >
                 {activity}
               </Chip>
             ))}
-            {item.activities.length > 4 && <Chip size="sm">...</Chip>}
+            {item.activities.length > 4 && (
+              <Chip size="sm" className="bg-green-300 text-xs">
+                ...
+              </Chip>
+            )}
           </div>
         </div>
       </div>

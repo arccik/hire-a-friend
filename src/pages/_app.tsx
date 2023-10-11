@@ -11,6 +11,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Header from "~/components/Layout/Header";
 import Footer from "~/components/Layout/Footer";
+import Head from "next/head";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -19,6 +20,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <NextUIProvider>
       <SessionProvider session={session}>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+          />
+        </Head>
         <Header />
         <Component {...pageProps} />
 

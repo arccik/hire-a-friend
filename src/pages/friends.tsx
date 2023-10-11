@@ -28,7 +28,7 @@ export default function FriendsPage() {
   );
   const title = "Choose Right Person";
   if (filterStatus === "error") return <DisplayError />;
-
+console.log("Friends: ", filterData);
   return (
     <main className="m-3 md:m-10">
       <div className="text-center">
@@ -78,7 +78,7 @@ export default function FriendsPage() {
 
         {filterData && filterData[1] > 8 && (
           <Pagination
-            className="m-10 flex place-content-center"
+            className="bg-[{colors.primary}}] m-10 flex place-content-center"
             total={Math.ceil(filterData[1] / 9)}
             showControls
             page={page}

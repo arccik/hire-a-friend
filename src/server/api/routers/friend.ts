@@ -26,9 +26,10 @@ export const friendRouter = createTRPCRouter({
     const pageSize = 9;
     const skip = (input.page - 1) * pageSize;
     const take = pageSize;
+    options.userType = "Friend";
     return ctx.prisma.$transaction([
       ctx.prisma.user.findMany({
-        where: { ...options, userType: "Friend" },
+        where: { ...options },
         skip,
         take,
       }),

@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: "#0070f3",
+      },
       animation: {
         text: "text 5s ease infinite",
       },

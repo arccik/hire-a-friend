@@ -106,7 +106,7 @@ export default function Header() {
         ))}
       </NavbarContent>
 
-      <NavbarContent justify="end" className="hidden sm:flex">
+      <NavbarContent justify="end" className="hidden md:flex">
         <NavbarItem>
           {userSession?.user.id ? (
             <Avatar
@@ -147,7 +147,7 @@ export default function Header() {
       </NavbarContent>
       {/* Mobile Menu */}
       <NavbarMenu>
-        {menu.map((item, index) => (
+        {menu.map((item) => (
           <NavbarMenuItem key={item.id} className="mt-5 text-2xl">
             <Link
               className="w-full"

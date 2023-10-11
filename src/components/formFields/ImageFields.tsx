@@ -1,6 +1,8 @@
 import { Badge, Button } from "@nextui-org/react";
 import type { PropsType } from "./BigFormPropsType";
 import { FaPhotoVideo, FaUserCircle } from "react-icons/fa";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function ImageFields({
   register,
@@ -10,6 +12,7 @@ export default function ImageFields({
   const avatar = getValues("image") as string | undefined;
   const coverImage = getValues("coverImage") as string | undefined;
 
+  const [showCoverImage, setShowCoverImage] = useState(!!coverImage);
   return (
     <>
       <div className="col-span-full">
@@ -21,7 +24,9 @@ export default function ImageFields({
         </label>
         <div className="mt-2 flex items-center gap-x-3">
           {avatar ? (
-            <img
+            <Image
+              width="100"
+              height="100"
               src={avatar}
               alt="avatar"
               className="h-12 w-12 rounded-full object-cover"
@@ -51,15 +56,21 @@ export default function ImageFields({
         </div>
       </div>
 
-      {coverImage ? (
-        <div className="col-span-full">
+      {showCoverImage && coverImage ? (
+        <div className="col-span-full" onClick={() => setShowCoverImage(false)}>
           <Badge
             content="X"
-            onClick={() => setValue("coverImage", undefined)}
             size="lg"
-            color="danger"
+            // color="danger"
+            className="mt-2 cursor-pointer hover:bg-red-400"
           >
-            <img src={coverImage} className="object-cover" />
+            <Image
+              width="400"
+              height="400"
+              alt="cover image"
+              src={coverImage}
+              className="object-cover"
+            />
           </Badge>
         </div>
       ) : (

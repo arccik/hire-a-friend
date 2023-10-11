@@ -22,16 +22,29 @@ type PropType = User & { userId: string } & { appearance: Appearance | null };
 export default function BigForm(props: PropType) {
   const updateUser = api.user.update.useMutation({
     onSuccess: () => {
-      toast.success("Profile Updated!", {
-        position: "bottom-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.success(
+        <div className="flex flex-row justify-between">
+          <b>Profile Updated</b>{" "}
+          <Button
+            size="sm"
+            className="text-xs"
+            as={Link}
+            href={`/profile/${props.id}`}
+          >
+            View Profile
+          </Button>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        },
+      );
     },
     onError: (error) => {
       toast.error("Something went wrong. Updates not saved");
@@ -178,7 +191,7 @@ export default function BigForm(props: PropType) {
         />
         <NotifyBy />
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <Button variant="faded" as={Link} href="/">
+          <Button variant="faded" as={Link} href={`/profile/${props.id}`}>
             Cancel
           </Button>
           <Button color="success" type="submit">

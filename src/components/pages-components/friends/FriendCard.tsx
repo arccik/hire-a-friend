@@ -11,7 +11,7 @@ export default function FriendCard({ item }: { item: User }) {
       onClick={() => void router.push(`/profile/${item.id}`)}
     >
       <div
-        className="w-36 flex-none overflow-hidden  bg-cover bg-center"
+        className="w-36 flex-none overflow-hidden  rounded-l-xl rounded-tr-none bg-cover bg-center"
         style={{ backgroundImage: `url(${item.image})` }}
       ></div>
       <div className="flex w-full flex-col  justify-between  rounded bg-white p-4 leading-normal ">
@@ -38,9 +38,9 @@ export default function FriendCard({ item }: { item: User }) {
           </div>
         </div>
         <div>
-          <p className="text-xs font-bold text-slate-500">Activities:</p>
+          <p className="mt-1 text-xs font-bold text-slate-500">Open For:</p>
           <div className="flex flex-wrap items-center gap-1">
-            {item.activities.slice(0, 4).map((activity) => (
+            {item.activities.slice(0, 3).map((activity) => (
               <Chip
                 as={Link}
                 href={`?activities=${activity}`}
@@ -57,81 +57,4 @@ export default function FriendCard({ item }: { item: User }) {
       </div>
     </div>
   );
-  // return (
-  //   <Card className="flex flex-row gap-4 ">
-  //     <div>
-  //       {item.image && (
-  //         <Image
-  //           alt="Card background"
-  //           src={item.image}
-  //           width={120}
-  //           height={120}
-  //         />
-  //       )}
-  //     </div>
-  //     <div>
-  //       <h4 className="text-large font-bold">{item.name}</h4>
-  //       <p className="text-tiny font-bold text-slate-400">Ocupation</p>
-  //       <div className="flex-wrap gap-4">
-  //         {item.activities.slice(0, 4).map((activity) => (
-  //           <Chip
-  //             as={Link}
-  //             href={`?activities=${activity}`}
-  //             size="sm"
-  //             key={activity}
-  //             color="primary"
-  //             variant="flat"
-  //           >
-  //             {activity}
-  //           </Chip>
-  //         ))}
-  //         {item.activities.length > 4 && (
-  //           <Chip size="sm" color="primary" variant="flat">
-  //             ...
-  //           </Chip>
-  //         )}
-  //       </div>
-  //     </div>
-  //   </Card>
-  // );
-
-  // return (
-  //   <Card className="py-4" isPressable as={Link} href={`/profile/${item.id}`}>
-  //     <CardHeader className="flex-row items-start justify-between px-4 pb-0 pt-2">
-  //       <h4 className="text-large font-bold">{item.name}</h4>
-  //       <div className="flex flex-col items-end justify-between">
-  //         <p className="text-tiny font-bold uppercase">{item.city}</p>
-  //         {item.price && (
-  //           <small className="text-default-500">£ {item.price + " / h"}</small>
-  //         )}
-  //       </div>
-  //     </CardHeader>
-  //     <CardBody className="items-center overflow-visible py-2">
-  //       {item.image && (
-  //         <Image
-  //           alt="Card background"
-  //           className="h-96 w-96 rounded-xl object-cover"
-  //           src={item.image}
-  //         />
-  //       )}
-  //     </CardBody>
-  //     {item.activities && item.activities.length > 0 && (
-  //       <div className="no-scrollbar ml-5 mr-5 flex overflow-x-auto">
-  //         <p className="mr-5 text-tiny font-bold uppercase">Activities: </p>
-  //         {item.activities.map((activity) => (
-  //           <Chip
-  //             as={Link}
-  //             href={`?activities=${activity}`}
-  //             size="sm"
-  //             key={activity}
-  //             color="primary"
-  //             variant="flat"
-  //           >
-  //             {activity}
-  //           </Chip>
-  //         ))}
-  //       </div>
-  //     )}
-  //   </Card>
-  // );
 }

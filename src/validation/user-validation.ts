@@ -33,6 +33,7 @@ export const userValidation = z.object({
   currency: z.string().optional(),
   isOffering: z.boolean().optional(),
   languages: z.array(z.string()).optional(),
+  expertese: z.array(z.string()).optional(),
   activated: z.boolean().optional(),
   earnings: z.string().optional(),
   feedback: z.array(z.string()).optional(),

@@ -26,7 +26,7 @@ export default function FriendsPage() {
       page,
     },
   );
-  const title = activities ?? "Choose Right Person";
+  const title = "Choose Right Person";
   if (filterStatus === "error") return <DisplayError />;
 
   return (

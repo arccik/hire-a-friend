@@ -21,9 +21,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <SessionProvider session={session}>
         <Header />
         <Component {...pageProps} />
-        {/* <ToastContainer
+
+        <ToastContainer
           position="bottom-center"
-          autoClose={5000}
+          autoClose={1000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -31,7 +32,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           pauseOnFocusLoss
           draggable
           pauseOnHover
-        /> */}
+        />
         <Footer />
       </SessionProvider>
     </NextUIProvider>

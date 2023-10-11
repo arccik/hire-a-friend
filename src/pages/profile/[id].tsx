@@ -11,10 +11,12 @@ import ApearanceTable from "~/components/pages-components/profile/ApearanceTable
 import { genders } from "~/data/gender-icons";
 import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
 import Title from "~/components/ui/Title";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
+  const { data: userSession } = useSession();
 
   const { data, status } = api.user.getOne.useQuery({ id }, { enabled: !!id });
   if (status === "loading")
@@ -90,6 +92,14 @@ export default function ProfilePage() {
                     <Button color="success" variant="flat">
                       Connect
                     </Button>
+                    {userSession?.user.id === id && (
+                      <Button
+                        variant="bordered"
+                        onClick={() => void router.push("/auth/update-profile")}
+                      >
+                        Edit
+                      </Button>
+                    )}
                   </div>
                 </div>
                 <div className="w-full px-4 lg:order-1 lg:w-4/12">

@@ -14,8 +14,6 @@ type PropType = {
 
 export default function ApearanceTable({ data }: PropType) {
   if (!data) return null;
-  console.log("Apperance: ", data);
-
   const toDisplay = Object.entries(data)
     .filter((value) => value[1] !== "" && value[0] !== "id")
     .map(([key, value]) => {

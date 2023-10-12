@@ -28,7 +28,7 @@ export default function FriendsPage() {
   );
   const title = "Choose Right Person";
   if (filterStatus === "error") return <DisplayError />;
-console.log("Friends: ", filterData);
+  console.log("Friends: ", filterData);
   return (
     <main className="m-3 md:m-10">
       <div className="text-center">

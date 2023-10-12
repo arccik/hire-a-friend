@@ -12,10 +12,12 @@ import { api } from "~/utils/api";
 import Apearance from "./Apearance";
 import InterestActivities from "./InterestActivities";
 import PersonalInformation from "./PersonalInfo";
-import ImageFields from "./ImageFields";
 import InputField from "../ui/InputField";
 import NotifyBy from "./NotifyBy";
 import Link from "next/link";
+import UploadImage from "./UploadImage";
+import UploadCoverImage from "./UploadCoverImage";
+import UploadImageGallery from "./UploadImageGallery";
 
 type PropType = User & { userId: string } & { appearance: Appearance | null };
 
@@ -93,36 +95,8 @@ export default function BigForm(props: PropType) {
   });
 
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
-    delete data.image;
-    delete data.coverImage;
     updateUser.mutate({ ...data, id: props.userId });
-
-    // if (data.image) {
-    //   const response = await fetch(
-    //     `/api/upload?type=avatar&filename=${data.image.name}`,
-    //     {
-    //       method: "POST",
-    //       body: data.image,
-    //     },
-    //   );
-    //   console.log("RESPONSE FROM FILE UPLOADING: ", response);
-    // }
-    // console.log("Big FOrm Submittion>> ", data);
   };
-
-  // check if image is vertical orintation
-  // if (coverImage && coverImage[0]) {
-  //   const image = new Image();
-  //   image.src = URL.createObjectURL(coverImage[0]);
-  //   const width = image.naturalWidth;
-  //   const height = image.naturalHeight;
-  //   console.log("CHECKING IMAGE : ", image.naturalHeight);
-  //   if (height > width) {
-  //     setError("coverImage", {
-  //       message: "Cover image must be square",
-  //     });
-  //   }
-  // }
 
   return (
     <>
@@ -166,13 +140,17 @@ export default function BigForm(props: PropType) {
                 </p>
               </div>
 
-              <ImageFields
-                register={register}
-                errors={errors}
-                watch={watch}
-                getValues={getValues}
-                setValue={setValue}
-              />
+              <div className="col-span-full">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Photo
+                </label>
+                <UploadImage setValue={setValue} imgUrl={props.image} />
+              </div>
+              <UploadCoverImage setValue={setValue} imgUrl={props.coverImage} />
+              {/* <UploadImageGallery setValue={setValue} imgUrls={props.photos} /> */}
             </div>
           </div>
 

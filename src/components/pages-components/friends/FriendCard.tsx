@@ -22,42 +22,32 @@ export default function FriendCard({ item }: { item: User }) {
           </p>
         </div>
         <div>
-          <p className="text-xs font-bold text-slate-500">Hobbies:</p>
+          <p className="text-xs font-bold text-slate-900">Hobbies:</p>
           <div className="flex flex-wrap items-center gap-1">
-            {item.hobbies.slice(0, 4).map((hobby, index) => (
-              <Chip
-                as={Link}
-                href={`?activities=${hobby}`}
-                size="sm"
-                key={hobby + index}
-                className="text-xs text-slate-600"
-              >
-                {hobby}
-              </Chip>
-            ))}
+            <p className="mt-1 text-xs text-slate-400">
+              {item.hobbies.join(", ")}
+            </p>
           </div>
         </div>
-        <div>
-          <p className="mt-1 text-xs font-bold text-slate-500">Open For:</p>
+        <div className="mt-2">
+          <p className="mt-1 text-xs font-bold text-slate-800">Open for:</p>
           <div className="flex flex-wrap items-center gap-1">
-            {item.activities.slice(0, 3).map((activity) => (
-              <Chip
-                as={Link}
-                href={`?activities=${activity}`}
-                size="sm"
-                key={activity}
-                className="bg-green-300 text-xs"
-              >
-                {activity}
-              </Chip>
-            ))}
-            {item.activities.length > 4 && (
-              <Chip size="sm" className="bg-green-300 text-xs">
-                ...
-              </Chip>
+            {item.activities.length === 0 && (
+              <p className="mt-1 text-xs text-slate-400">No activities</p>
             )}
+
+            <p className="mt-1 text-xs text-slate-400">
+              {item.activities.join(", ")}
+            </p>
           </div>
         </div>
+        <Chip
+          size="sm"
+          variant="bordered"
+          className="absolute right-5 top-5 text-xs opacity-50"
+        >
+          £ {item.price} / hour
+        </Chip>
       </div>
     </div>
   );

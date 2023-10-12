@@ -139,22 +139,6 @@ export default function ProfilePage() {
                   {data?.about}
                 </div>
               </div>
-              {!!data?.activities.length && (
-                <div className="mt-10 border-t border-gray-200 py-10 text-center">
-                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
-                    Available for:
-                  </p>
-                  <div className="mx-auto flex max-w-2xl flex-wrap gap-1 ">
-                    {data?.activities.map((activity) => (
-                      <Chip key={activity} color="primary" variant="solid">
-                        {activity}
-                      </Chip>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <ApearanceTable data={data?.appearance} />
 
               {!!data?.languages.length && (
                 <div className="mt-10 border-t border-gray-200 py-10 text-center">
@@ -172,6 +156,36 @@ export default function ProfilePage() {
                   ))}
                 </div>
               )}
+              {!!data?.activities.length && (
+                <div className="mt-10 border-t border-gray-200 py-10 text-center">
+                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
+                    Available for:
+                  </p>
+                  <div className="mx-auto flex max-w-2xl flex-wrap gap-1 ">
+                    {data?.activities.map((activity) => (
+                      <Chip key={activity} color="primary" variant="dot">
+                        {activity}
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {!!data?.activities.length && (
+                <div className="mt-10 border-t border-gray-200 py-10 text-center">
+                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
+                    Hobby / Interests
+                  </p>
+                  <div className="mx-auto flex max-w-2xl flex-wrap gap-1 ">
+                    {data?.hobbies.map((hobby) => (
+                      <Chip key={hobby} variant="faded">
+                        {hobby}
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <ApearanceTable data={data?.appearance} />
 
               <div className="mt-10 border-t border-gray-200 py-10 text-center">
                 <div className="flex flex-wrap justify-center">

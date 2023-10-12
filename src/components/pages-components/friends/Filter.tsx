@@ -28,7 +28,7 @@ export default function Filter() {
           <AiOutlineClose />
         </div>
       )}
-      <div className="flex flex-row justify-end ">
+      <div className="flex flex-row justify-end">
         <SearchBar />
         <p className="text-tiny font-semibold text-slate-500">Filter</p>
         <GoFilter
@@ -42,6 +42,7 @@ export default function Filter() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            key="SearchBar"
             className="mb-10 flex w-full flex-col justify-between  gap-5 md:flex-row"
           >
             <Select
@@ -55,8 +56,8 @@ export default function Filter() {
                 });
               }}
             >
-              {genders.map((gender) => (
-                <SelectItem key={gender.name} value={gender.name}>
+              {genders.map((gender, index) => (
+                <SelectItem key={gender.name + index} value={gender.name}>
                   {gender.name}
                 </SelectItem>
               ))}

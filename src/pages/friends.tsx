@@ -78,11 +78,13 @@ console.log("Friends: ", filterData);
 
         {filterData && filterData[1] > 8 && (
           <Pagination
-            className="bg-[{colors.primary}}] m-10 flex place-content-center"
+            className="m-10 flex place-content-center"
             total={Math.ceil(filterData[1] / 9)}
             showControls
             page={page}
             onChange={setPage}
+            variant="light"
+            color="secondary"
           />
         )}
       </div>

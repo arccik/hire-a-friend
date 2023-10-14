@@ -1,4 +1,4 @@
-import { Button, Input } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";

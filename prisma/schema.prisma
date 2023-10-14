@@ -80,14 +80,14 @@ model User {
     birthday    DateTime?
     activities  String[]
     hobbies     String[]
-    
-    experties   String?
-    price       Int?
-    currency    String?
-    languages   String[]
-    activated   Boolean?
-    earnings    String?
-    feedback    String[]
+
+    experties String?
+    price     Float?
+    currency  String?
+    languages String[]
+    activated Boolean?
+    earnings  String?
+    feedback  String[]
 
     isOffering Boolean?
     userType   UserType?
@@ -100,6 +100,14 @@ model User {
     views        Int         @default(0)
     userId       String?
     Comment      Comment[]
+    Rate         Rate[]
+}
+
+model Rate {
+    id     String @id @default(cuid())
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+    rating Int
 }
 
 model Follower {

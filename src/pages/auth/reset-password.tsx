@@ -20,8 +20,8 @@ export default function ResetPasswordPage() {
   const onSubmit: SubmitHandler<SignUpSchemaType> = (data): void => {
     createUser
       .mutateAsync(data)
-      .then((e) => console.log("ALL GOOD"))
-      .catch((e) => setError("email", { message: "User alredy exist!" }));
+      .then((_) => console.log("ALL GOOD"))
+      .catch((_) => setError("email", { message: "User alredy exist!" }));
   };
   return (
     <section className="bg-gray-50">

@@ -1,6 +1,5 @@
-import { Card, CardHeader, Chip, CardBody } from "@nextui-org/react";
+import { Badge, Chip } from "@nextui-org/react";
 import { type User } from "@prisma/client";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function FriendCard({ item }: { item: User }) {
@@ -10,10 +9,12 @@ export default function FriendCard({ item }: { item: User }) {
       className=" flex w-full max-w-full cursor-pointer drop-shadow-md hover:rounded-xl hover:drop-shadow-lg"
       onClick={() => void router.push(`/profile/${item.id}`)}
     >
-      <div
-        className="w-36 flex-none overflow-hidden  rounded-l-xl rounded-tr-none bg-cover bg-center"
-        style={{ backgroundImage: `url(${item.image})` }}
-      ></div>
+      {item.image && (
+        <div
+          className="w-36 flex-none overflow-hidden  rounded-l-xl rounded-tr-none bg-cover bg-center"
+          style={{ backgroundImage: `url(${encodeURI(item.image)})` }}
+        ></div>
+      )}
       <div className="flex w-full flex-col  justify-between  rounded bg-white p-4 leading-normal ">
         <div className="mb-2">
           <div className="text-xl font-bold text-gray-900">{item.name}</div>
@@ -46,7 +47,7 @@ export default function FriendCard({ item }: { item: User }) {
           variant="bordered"
           className="absolute right-5 top-5 text-xs opacity-50"
         >
-          £ {item.price} / hour
+          {item.city?.split(",")[0]}
         </Chip>
       </div>
     </div>

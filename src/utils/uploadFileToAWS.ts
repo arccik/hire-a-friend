@@ -17,7 +17,6 @@ export default async function uploadFileToAWS({
       body: formData,
     });
     if (upload.ok && fields.key) {
-      console.log("UPLOAD SUCCESS, file: ", fields);
       return url + fields.key; // return like to uploaded file
     }
   } catch (error) {

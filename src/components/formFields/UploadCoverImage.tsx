@@ -1,10 +1,10 @@
 import { Badge } from "@nextui-org/react";
 import { useState } from "react";
-import { UseFormSetValue } from "react-hook-form";
+import { type UseFormSetValue } from "react-hook-form";
 import { FaPhotoVideo } from "react-icons/fa";
 import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
-import { UserValidationType } from "~/validation/user-validation";
+import type { UserValidationType } from "~/validation/user-validation";
 import Image from "next/image";
 
 export default function UploadCoverImage({
@@ -43,6 +43,12 @@ export default function UploadCoverImage({
           setImageUrl(null);
         }}
       >
+        <label
+          htmlFor="cover-photo"
+          className="block text-sm font-medium leading-6 text-gray-900"
+        >
+          Cover photo
+        </label>
         <Badge
           content="X"
           size="lg"

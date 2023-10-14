@@ -59,7 +59,6 @@ export default function BigForm(props: PropType) {
     handleSubmit,
     formState: { errors },
     getValues,
-    watch,
     setValue,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
@@ -150,7 +149,6 @@ export default function BigForm(props: PropType) {
                 <UploadImage setValue={setValue} imgUrl={props.image} />
               </div>
               <UploadCoverImage setValue={setValue} imgUrl={props.coverImage} />
-              {/* <UploadImageGallery setValue={setValue} imgUrls={props.photos} /> */}
             </div>
           </div>
 
@@ -160,6 +158,8 @@ export default function BigForm(props: PropType) {
             getValues={getValues}
           />
         </div>
+        <UploadImageGallery setValue={setValue} imgUrls={props.photos} />
+
         <Apearance register={register} errors={errors} getValues={getValues} />
         <InterestActivities
           register={register}

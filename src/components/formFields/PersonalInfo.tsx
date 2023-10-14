@@ -1,7 +1,5 @@
 import { type PropsType } from "./BigFormPropsType";
-import countries from "~/data/Countries.json";
 
-import { Select, SelectItem } from "@nextui-org/react";
 import InputField from "../ui/InputField";
 
 export default function PersonalInformation({ register, errors }: PropsType) {
@@ -47,26 +45,6 @@ export default function PersonalInformation({ register, errors }: PropsType) {
             fieldName="phoneNumber"
           />
         </div>
-        {/* 
-        <div className="sm:col-span-3">
-          <div className="mt-2">
-            <div className="flex w-full flex-wrap gap-4 md:flex-nowrap">
-              <Select
-                label="Select Country"
-                className="max-w-xs"
-                variant="bordered"
-                selectedKeys={selectedCountry}
-                {...register("country")}
-              >
-                {countries.map((country) => (
-                  <SelectItem key={country.id} value={country.value}>
-                    {country.value}
-                  </SelectItem>
-                ))}
-              </Select>
-            </div>
-          </div>
-        </div> */}
 
         <div className="col-span-full">
           <InputField

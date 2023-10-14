@@ -1,10 +1,10 @@
-import { Image, Card, CardBody, CardFooter, Button } from "@nextui-org/react";
 import { useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
-import { FaPhotoVideo } from "react-icons/fa";
 import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { UserValidationType } from "~/validation/user-validation";
+
+import ImageGallery from "../ui/ImageGallery";
 
 export default function UploadImageGallery({
   setValue,
@@ -17,11 +17,13 @@ export default function UploadImageGallery({
 
   const [imageUrls, setImageUrls] = useState<string[] | null>(imgUrls);
 
+  console.log("Gallery Images: ", { imgUrls, imageUrls });
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     const file = event.target.files?.[0];
     if (!file) return;
+    console.log("Success: ", imageUrls);
 
     const { url, fields } = await getUploaderURL.mutateAsync({
       fileName: file.name,
@@ -37,68 +39,49 @@ export default function UploadImageGallery({
     }
   };
   console.log("imageUrls", imageUrls);
+
   return (
-    <div className="col-span-full">
-      <label
-        htmlFor="cover-photo"
-        className="block text-sm font-medium leading-6 text-gray-900"
-      >
-        Images for you Gallery
-      </label>
-      <p className="mt-1 text-sm text-gray-500">
-        Images will be resized to fit within the dimensions of the image and any
-        EXIF data will be removed.
-      </p>
-      <p className="mt-2 text-sm text-gray-500">
-        <FaPhotoVideo className="mx-auto h-12 w-12 text-gray-300" />
-      </p>
-      <p className="mt-2 text-sm text-gray-500">
-        You can upload multiple images at once.
-      </p>
-      <p className="mb-5 mt-2 text-sm text-gray-500">
-        <span className="font-bold">Note:</span> The maximum file size is 10 Mb
-      </p>
-      <input
-        type="file"
-        id="upload-btn"
-        accept="image/*"
-        hidden
-        multiple={true}
-        onChange={(event) => void handleFileUpload(event)}
-      />
-      <Button
-        as="label"
-        htmlFor="upload-btn"
-        variant="bordered"
-        radius="sm"
-        size="sm"
-        fullWidth
-      >
-        Upload File
-      </Button>
-      <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {imageUrls?.map((url, index) => (
-          <Card
-            shadow="sm"
-            key={index}
-            onPress={() => console.log("item pressed")}
-          >
-            <CardBody className="overflow-visible p-0 ">
-              <Image
-                shadow="sm"
-                radius="lg"
-                width="100%"
-                alt={url}
-                className="group h-[140px] w-full object-cover"
-                src={url}
+    <>
+      <p className="mb-2 text-lg font-bold">Upload photos to your gallery</p>
+
+      <ImageGallery imagesUrl={imageUrls} />
+      <div className="mb-10 mt-10 flex w-full items-center justify-center">
+        <label
+          htmlFor="dropzone-file"
+          className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >
+          <div className="flex flex-col items-center justify-center pb-6 pt-5">
+            <svg
+              className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 16"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
               />
-            </CardBody>
-            <CardFooter className="text-small text-red-500">
-              <p className=" text-red-500">Delete</p>
-            </CardFooter>
-          </Card>
-        ))}
+            </svg>
+            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span className="font-semibold">Click to upload</span> or drag and
+              drop
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              SVG, PNG, JPG or GIF (MAX. 800x400px)
+            </p>
+          </div>
+          <input
+            id="dropzone-file"
+            type="file"
+            className="hidden"
+            onChange={(event) => void handleFileUpload(event)}
+          />
+        </label>
       </div>
-    </div>
+    </>
   );
 }

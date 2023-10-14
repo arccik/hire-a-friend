@@ -97,7 +97,7 @@ export default function Header() {
         </NavbarBrand>
 
         {/* Larg Screen Menu */}
-        {menu.map((item, index) => (
+        {menu.map((item) => (
           <NavbarItem key={item.id}>
             <Link color="foreground" href={item.href}>
               {item.title}

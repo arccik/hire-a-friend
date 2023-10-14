@@ -26,15 +26,14 @@ export default function FriendsPage() {
       page,
     },
   );
-  const title = "Choose Right Person";
+  const title = "Meet the Right Person with a Simple Click";
   if (filterStatus === "error") return <DisplayError />;
-  console.log("Friends: ", filterData);
   return (
     <main className="m-3 md:m-10">
       <div className="text-center">
         <Title text={title} className="mt-10 text-tiny" />
-        <p className="mb-2 text-sm text-gray-400">
-          All it takes is one click to break free from loneliness.
+        <p className="mb-5 text-sm text-gray-400">
+          Unlock a World of Connections with a Click.
         </p>
       </div>
       <div className="mx-auto h-full w-full max-w-screen-2xl content-center  pb-10">

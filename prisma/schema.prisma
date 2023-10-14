@@ -83,6 +83,7 @@ model User {
 
     experties String?
     price     Float?
+    showPrice Boolean?
     currency  String?
     languages String[]
     activated Boolean?

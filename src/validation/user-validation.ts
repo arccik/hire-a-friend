@@ -30,6 +30,7 @@ export const userValidation = z.object({
   birthday: z.date().optional(),
   activities: z.array(z.string()).optional(),
   price: z.number().optional(),
+  showPrice: z.boolean().optional(),
   currency: z.string().optional(),
   isOffering: z.boolean().optional(),
   languages: z.array(z.string()).optional(),

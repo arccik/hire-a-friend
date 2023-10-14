@@ -61,6 +61,7 @@ export default function BigForm(props: PropType) {
     formState: { errors },
     getValues,
     setValue,
+    watch
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
     defaultValues: {
@@ -82,6 +83,7 @@ export default function BigForm(props: PropType) {
       activities: props.activities ?? [],
       age: props.age ?? undefined,
       price: props.price ?? undefined,
+      showPrice: props.showPrice ?? false,
       phoneNumber: props.phoneNumber ?? "",
       appearance: {
         height: props.appearance?.height ?? "",
@@ -168,7 +170,7 @@ export default function BigForm(props: PropType) {
           setValue={setValue}
           value={getValues("activities")}
         />
-        <PriceField register={register} errors={errors} />
+        <PriceField register={register} errors={errors}  getValues={getValues} watch={watch} setValue={setValue}/>
 
         <NotifyBy />
         <div className="mt-6 flex items-center justify-end gap-x-6">

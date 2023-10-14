@@ -7,22 +7,25 @@ import { api } from "~/utils/api";
 import Divider from "~/components/ui/Divider";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 export default function FriendsPage() {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const router = useRouter();
 
   const searchParams = useSearchParams();
   const activities = searchParams.get("activities");
   const status = searchParams.get("status");
   const gender = searchParams.get("gender");
+  const city = searchParams.get("city");
+  const paramPage = searchParams.get("page");
+  const page = paramPage ? parseInt(paramPage) : 1;
 
   const { data: filterData, status: filterStatus } = api.friend.filter.useQuery(
     {
       activities: { has: activities },
       status,
-      gender: gender,
+      gender,
+      city,
       page,
     },
   );
@@ -50,7 +53,7 @@ export default function FriendsPage() {
             </div>
             {filterData[1] === 0 && (
               <div className="flex h-full flex-col items-center justify-center">
-                <p className="text-xl font-bold">No friends found</p>
+                <p className="text-xl font-bold">Nothing found</p>
                 <p className="text-center text-gray-600">
                   Try to change your filter
                 </p>
@@ -81,7 +84,15 @@ export default function FriendsPage() {
             total={Math.ceil(filterData[1] / 9)}
             showControls
             page={page}
-            onChange={setPage}
+            onChange={(p) =>
+              void router.push(
+                { pathname: router.pathname, query: { page: p } },
+                undefined,
+                {
+                  shallow: true,
+                },
+              )
+            }
             variant="light"
             color="secondary"
           />

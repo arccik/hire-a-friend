@@ -1,4 +1,4 @@
-import { type PropsType } from "./BigFormPropsType";
+import { type PropsType } from "~/types/BigFormPropsType";
 import activities from "~/data/FriendActivitiesList.json";
 import { Chip, Input, Select, SelectItem } from "@nextui-org/react";
 
@@ -8,17 +8,9 @@ type PropType = Required<Pick<PropsType, "setValue">> &
 export default function InterestActivities({
   register,
   errors,
-  getValues,
   setValue,
   value,
 }: PropType) {
-  const currency = getValues?.("currency");
-  const currencySymbol: Record<string, string> = {
-    USD: "$",
-    EUR: "€",
-    GBP: "£",
-  };
-
   return (
     <div className="border-b border-gray-900/10">
       <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -72,43 +64,6 @@ export default function InterestActivities({
               </SelectItem>
             )}
           </Select>
-        </fieldset>
-        <fieldset>
-          <legend className="text-sm font-semibold leading-6 text-gray-900">
-            Price Per Hour
-          </legend>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            Set the price for your service. This will be shown on your profile.
-          </p>
-          <Input
-            label="Price"
-            placeholder="0.00"
-            {...register("price", { valueAsNumber: true })}
-            startContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-small text-default-400">
-                  {currency ? currencySymbol[currency] : "£"}
-                </span>
-              </div>
-            }
-            endContent={
-              <div className="flex items-center">
-                <label className="sr-only" htmlFor="currency">
-                  Currency
-                </label>
-                <select
-                  className="border-0 bg-transparent text-small text-default-400 outline-none"
-                  id="currency"
-                  {...register("currency")}
-                >
-                  <option>GBP</option>
-                  <option>USD</option>
-                  <option>EUR</option>
-                </select>
-              </div>
-            }
-            type="number"
-          />
         </fieldset>
       </div>
     </div>

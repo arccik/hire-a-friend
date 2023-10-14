@@ -7,18 +7,24 @@ import { AiOutlineClose } from "react-icons/ai";
 import genders from "~/data/gender-list.json";
 import { useRouter } from "next/router";
 import SearchBar from "./SearchBar";
+import { citiesList } from "~/data/cities-list";
 
 export default function Filter() {
   const [showFilter, setShowFilter] = useState(false);
   const router = useRouter();
 
+  const queryKeysToCheck = ["activities", "status", "gender", "city", "status"];
+  const shouldRenderClearBtn = queryKeysToCheck.some(
+    (key) => key in router.query,
+  );
+
   return (
     <div className="mb-2 gap-2">
-      {Object.keys(router.query).length > 0 && (
+      {shouldRenderClearBtn && (
         <div
           onClick={() => {
             void router.push({
-              query: null,
+              query: router.query.page ? { page: router.query.page } : null,
             });
             setShowFilter(false);
           }}
@@ -43,12 +49,12 @@ export default function Filter() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             key="SearchBar"
-            className="mb-10 flex w-full flex-col justify-between  gap-5 md:flex-row"
+            className="mb-10 mt-2 flex w-full flex-col justify-between  gap-5 md:flex-row"
           >
             <Select
               label="Select a gender"
-              variant="bordered"
               size="sm"
+              labelPlacement="outside"
               name="gender"
               onChange={(e) => {
                 void router.push({
@@ -64,8 +70,8 @@ export default function Filter() {
             </Select>
             <Select
               label="Status"
-              variant="bordered"
               size="sm"
+              labelPlacement="outside"
               onChange={(e) => {
                 void router.push({
                   query: { ...router.query, status: e.target.value },
@@ -78,11 +84,12 @@ export default function Filter() {
                 </SelectItem>
               ))}
             </Select>
+
             <Select
               label="Activities"
-              variant="bordered"
               size="sm"
               name="activities"
+              labelPlacement="outside"
               onChange={(e) => {
                 void router.push({
                   query: { ...router.query, activities: e.target.value },
@@ -91,6 +98,22 @@ export default function Filter() {
             >
               {activitiesList.map((activity) => (
                 <SelectItem key={activity.value}>{activity.label}</SelectItem>
+              ))}
+            </Select>
+            <Select
+              label="City"
+              labelPlacement="outside"
+              size="sm"
+              onChange={(e) => {
+                void router.push({
+                  query: { ...router.query, city: e.target.value },
+                });
+              }}
+            >
+              {citiesList.map((city) => (
+                <SelectItem key={city.label} value={city.label}>
+                  {city.label}
+                </SelectItem>
               ))}
             </Select>
           </motion.div>

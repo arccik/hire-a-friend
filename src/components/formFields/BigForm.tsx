@@ -18,6 +18,7 @@ import Link from "next/link";
 import UploadImage from "./UploadImage";
 import UploadCoverImage from "./UploadCoverImage";
 import UploadImageGallery from "./UploadImageGallery";
+import PriceField from "./PriceField";
 
 type PropType = User & { userId: string } & { appearance: Appearance | null };
 
@@ -167,6 +168,8 @@ export default function BigForm(props: PropType) {
           setValue={setValue}
           value={getValues("activities")}
         />
+        <PriceField register={register} errors={errors} />
+
         <NotifyBy />
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <Button variant="faded" as={Link} href={`/profile/${props.id}`}>

@@ -1,7 +1,7 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { GoFilter } from "react-icons/go";
 import activitiesList from "~/data/FriendActivitiesList.json";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import genders from "~/data/gender-list.json";
@@ -14,9 +14,10 @@ export default function Filter() {
   const router = useRouter();
 
   const queryKeysToCheck = ["activities", "status", "gender", "city", "status"];
-  const shouldRenderClearBtn = useMemo(() => queryKeysToCheck.some(
-    (key) => key in router.query,
-  ), [router.query]);
+  const shouldRenderClearBtn = useMemo(
+    () => queryKeysToCheck.some((key) => key in router.query),
+    [router.query],
+  );
 
   return (
     <div className="mb-2 gap-2">
@@ -63,7 +64,7 @@ export default function Filter() {
               }}
             >
               {genders.map((gender, index) => (
-                <SelectItem key={gender.name + index} value={gender.name}>
+                <SelectItem key={gender.name} value={gender.name}>
                   {gender.name}
                 </SelectItem>
               ))}

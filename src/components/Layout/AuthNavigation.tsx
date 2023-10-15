@@ -41,7 +41,7 @@ export default function AuthNavigation() {
               key="settings"
               onClick={() => void router.push("/auth/update-profile")}
             >
-              My Settings
+              Edite
             </DropdownItem>
             <DropdownItem
               key="user_profile"

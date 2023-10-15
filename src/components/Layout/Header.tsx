@@ -22,22 +22,22 @@ export default function Header() {
   const userMenuItems = [
     {
       id: 1,
-      title: "Find People",
+      title: "Explore",
       href: "/friends",
     },
     {
       id: 2,
-      title: "Profile",
-      href: `/profile/${userSession?.user.id}`,
-    },
-    {
-      id: 3,
       title: "Dashboard",
       href: "/dashboard",
     },
     {
+      id: 3,
+      title: "Profile",
+      href: `/profile/${userSession?.user.id}`,
+    },
+    {
       id: 4,
-      title: "My Settings",
+      title: "Edit Profile",
       href: "/auth/update-profile",
     },
   ];
@@ -87,7 +87,7 @@ export default function Header() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+      <NavbarContent className="hidden gap-4 sm:flex" justify="end">
         <NavbarBrand as={Link} href="/">
           <GiTimeTrap
             size="2rem"
@@ -104,6 +104,16 @@ export default function Header() {
             </Link>
           </NavbarItem>
         ))}
+        {userSession?.user.id && (
+          <NavbarItem
+            key="Logout button"
+            className="cursor-pointer text-red-500 decoration-red-500 decoration-2 underline-offset-4 underline-offset-4 transition-colors duration-300 ease-in-out hover:text-red-600 hover:underline hover:decoration-red-600"
+          >
+            <button onClick={() => void signOut()} className="text-red-500">
+              Logout
+            </button>
+          </NavbarItem>
+        )}
       </NavbarContent>
 
       <NavbarContent justify="end" className="hidden md:flex">
@@ -121,7 +131,12 @@ export default function Header() {
               }
             />
           ) : (
-            <Button as={Link} color="warning" href="#" variant="flat">
+            <Button
+              as={Link}
+              color="warning"
+              href="/auth/sign-up"
+              variant="flat"
+            >
               Sign Up
             </Button>
           )}

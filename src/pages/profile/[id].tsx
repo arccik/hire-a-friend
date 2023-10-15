@@ -28,7 +28,6 @@ export default function ProfilePage() {
         className="flex h-screen items-center justify-center"
       />
     );
-  console.log("Profile Data  :", data);
   if (status === "error") return <DisplayError />;
 
   if (data?.userType === "Customer") return <CustomerProfile />;

@@ -1,4 +1,4 @@
-import { Badge, Chip } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import { type User } from "@prisma/client";
 import { useRouter } from "next/router";
 

@@ -2,7 +2,7 @@ import { Button, Input } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { AiOutlineMessage } from "react-icons/ai";
 import io, { Socket } from "socket.io-client";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
+import { type DefaultEventsMap } from "socket.io/dist/typed-events";
 import MessageBubble from "~/components/pages-components/chat/MessageBubble";
 
 type Message = { text: string; sender: string };

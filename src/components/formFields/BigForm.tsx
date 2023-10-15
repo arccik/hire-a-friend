@@ -17,7 +17,7 @@ import NotifyBy from "./NotifyBy";
 import Link from "next/link";
 import UploadImage from "./UploadImage";
 import UploadCoverImage from "./UploadCoverImage";
-import UploadImageGallery from "./UploadImageGallery";
+import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
 
 type PropType = User & { userId: string } & { appearance: Appearance | null };
@@ -61,7 +61,7 @@ export default function BigForm(props: PropType) {
     formState: { errors },
     getValues,
     setValue,
-    watch
+    watch,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
     defaultValues: {
@@ -83,7 +83,7 @@ export default function BigForm(props: PropType) {
       activities: props.activities ?? [],
       age: props.age ?? undefined,
       price: props.price ?? undefined,
-      showPrice: props.showPrice ?? false,
+      hidePrice: props.hidePrice ?? false,
       phoneNumber: props.phoneNumber ?? "",
       appearance: {
         height: props.appearance?.height ?? "",
@@ -161,7 +161,7 @@ export default function BigForm(props: PropType) {
             getValues={getValues}
           />
         </div>
-        <UploadImageGallery setValue={setValue} imgUrls={props.photos} />
+        <UploadGalleryImages setValue={setValue} imgUrls={props.photos} />
 
         <Apearance register={register} errors={errors} getValues={getValues} />
         <InterestActivities
@@ -170,7 +170,13 @@ export default function BigForm(props: PropType) {
           setValue={setValue}
           value={getValues("activities")}
         />
-        <PriceField register={register} errors={errors}  getValues={getValues} watch={watch} setValue={setValue}/>
+        <PriceField
+          register={register}
+          errors={errors}
+          getValues={getValues}
+          watch={watch}
+          setValue={setValue}
+        />
 
         <NotifyBy />
         <div className="mt-6 flex items-center justify-end gap-x-6">

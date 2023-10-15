@@ -6,6 +6,7 @@ import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import type { UserValidationType } from "~/validation/user-validation";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 export default function UploadCoverImage({
   setValue,
@@ -15,6 +16,14 @@ export default function UploadCoverImage({
   imgUrl: string | null;
 }) {
   const getUploaderURL = api.uploader.getUrl.useMutation();
+  const fileDeleter = api.uploader.delete.useMutation({
+    onSuccess: () => {
+      toast.success("File Succesfully deleted!");
+    },
+    onError: () => {
+      toast.error("File not deleted. Something went wrong!");
+    },
+  });
 
   const [imageUrl, setImageUrl] = useState<string | null>(imgUrl);
 
@@ -35,14 +44,17 @@ export default function UploadCoverImage({
     }
   };
 
+  const handleDelete = () => {
+    if (imageUrl) {
+      fileDeleter.mutate({ url: imageUrl });
+      setImageUrl(null);
+    }
+    setImageUrl(null);
+  };
+
   if (imageUrl) {
     return (
-      <div
-        className="col-span-full"
-        onClick={() => {
-          setImageUrl(null);
-        }}
-      >
+      <div className="col-span-full">
         <label
           htmlFor="cover-photo"
           className="block text-sm font-medium leading-6 text-gray-900"
@@ -53,6 +65,7 @@ export default function UploadCoverImage({
           content="X"
           size="lg"
           className="mt-2 cursor-pointer hover:bg-red-400"
+          onClick={handleDelete}
         >
           <Image
             width="400"

@@ -8,7 +8,6 @@ import {
   GiWineGlass,
   GiWineBottle,
   GiBarStool,
-  GiDrinking,
   GiFamilyHouse,
   GiSmart,
   GiDrawbridge,
@@ -19,11 +18,9 @@ import {
 import {
   FaCameraRetro,
   FaChurch,
-  FaPhotoVideo,
   FaUserFriends,
   FaWalking,
   FaWheelchair,
-  FaPeopleCarry,
   FaPeopleArrows,
 } from "react-icons/fa";
 import { MdDinnerDining } from "react-icons/md";

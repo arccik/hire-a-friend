@@ -1,25 +1,56 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import FsLightbox from "fslightbox-react";
+import { Badge, Image } from "@nextui-org/react";
+import { RiDeleteBin2Fill } from "react-icons/ri";
 
 export default function ImageGallery({
   imagesUrl,
+  handleDeleteImage,
 }: {
   imagesUrl: string[] | null;
+  handleDeleteImage: (url: string) => void;
 }) {
-  const [toggler, setToggler] = useState(false);
+  const [lightboxController, setLightboxController] = useState({
+    toggler: false,
+    slide: 1,
+  });
+
+  if (!imagesUrl) return null;
+
+  function openLightboxOnSlide(slideNumber: number) {
+    setLightboxController({
+      toggler: !lightboxController.toggler,
+      slide: slideNumber,
+    });
+  }
 
   return (
     <>
-      <button type="button" onClick={() => setToggler(!toggler)}>
-        Toggle Lightbox
-      </button>
+      <div className="flex gap-2">
+        {imagesUrl.map((img, index) => (
+          <Fragment key={`${img} --- ${index} --`}>
+            <Badge
+              content={<RiDeleteBin2Fill size="1rem" />}
+              color="danger"
+              className="cursor-pointe m-2 cursor-pointer hover:text-red-100"
+              onClick={() => handleDeleteImage(img)}
+            >
+              <Image
+                isZoomed
+                key={`${img} -- ${index}`}
+                width={240}
+                alt="NextUI Fruit Image with Zoom"
+                src={img}
+                onClick={() => openLightboxOnSlide(index + 1)}
+              />
+            </Badge>
+          </Fragment>
+        ))}
+      </div>
       <FsLightbox
-        toggler={toggler}
-        sources={[
-          "https://i.imgur.com/fsyrScY.jpg",
-          "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
-          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        ]}
+        toggler={lightboxController.toggler}
+        sources={imagesUrl}
+        slide={lightboxController.slide}
       />
     </>
   );

@@ -32,7 +32,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <ToastContainer
           position="bottom-center"
           autoClose={1000}
-          hideProgressBar={false}
+          hideProgressBar={true}
           newestOnTop={false}
           closeOnClick
           rtl={false}

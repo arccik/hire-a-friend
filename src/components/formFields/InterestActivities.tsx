@@ -1,6 +1,6 @@
 import { type PropsType } from "~/types/BigFormPropsType";
 import activities from "~/data/FriendActivitiesList.json";
-import { Chip, Input, Select, SelectItem } from "@nextui-org/react";
+import { Chip, Select, SelectItem } from "@nextui-org/react";
 
 type PropType = Required<Pick<PropsType, "setValue">> &
   PropsType & { value: string[] | undefined };

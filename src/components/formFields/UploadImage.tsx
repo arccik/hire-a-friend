@@ -4,9 +4,9 @@ import { FaUserCircle } from "react-icons/fa";
 import Image from "next/image";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { api } from "~/utils/api";
-import { PropsType } from "~/types/BigFormPropsType";
-import { UseFormSetValue } from "react-hook-form";
-import { UserValidationType } from "~/validation/user-validation";
+import { type UseFormSetValue } from "react-hook-form";
+import { type UserValidationType } from "~/validation/user-validation";
+import { toast } from "react-toastify";
 
 export default function UploadImage({
   setValue,
@@ -15,6 +15,14 @@ export default function UploadImage({
   setValue: UseFormSetValue<UserValidationType>;
   imgUrl: string | null;
 }) {
+  const fileDeleter = api.uploader.delete.useMutation({
+    onSuccess: () => {
+      toast.success("File Succesfully deleted!");
+    },
+    onError: () => {
+      toast.error("File not deleted. Something went wrong!");
+    },
+  });
   const getUploaderURL = api.uploader.getUrl.useMutation();
   const [imageUrl, setImageUrl] = useState(imgUrl);
 
@@ -24,6 +32,9 @@ export default function UploadImage({
     const file = event.target.files?.[0];
 
     if (!file) return;
+    if (imageUrl) {
+      fileDeleter.mutate({ url: imageUrl });
+    }
     const { url, fields } = await getUploaderURL.mutateAsync({
       fileName: file.name,
       fileType: file.type,

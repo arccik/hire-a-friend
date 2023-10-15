@@ -13,7 +13,7 @@ import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
 import Title from "~/components/ui/Title";
 import { useSession } from "next-auth/react";
 import { MdThumbUpAlt } from "react-icons/md";
-import ImageGallery from "~/components/ui/ImageGallery";
+import Gallery from "~/components/pages-components/profile/Gallery";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function ProfilePage() {
 
   return (
     <main className="profile-page">
-      <section className="relative block h-[300px] lg:h-[500px]">
+      <section className="relative block h-[300px] lg:h-[400px]">
         {data?.coverImage && (
           <Image fill src={data?.coverImage} alt={"cover Image" + data?.name} />
         )}
@@ -113,23 +113,27 @@ export default function ProfilePage() {
                 </div>
                 <div className="w-full px-4 lg:order-1 lg:w-4/12">
                   <div className="flex justify-center md:py-4 md:pt-8 lg:pt-4">
-                    <div className="mr-4 p-3 text-center">
-                      <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
-                        £ {data?.price?.toString()}
-                      </span>
-                      <span className="text-sm text-gray-400">Per Hour</span>
-                    </div>
-                    <div className="mr-4 p-3 text-center">
-                      <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
-                        10
-                      </span>
-                      <span className="text-sm text-gray-400">Photos</span>
-                    </div>
+                    {!data?.hidePrice && (
+                      <div className="mr-4 p-3 text-center">
+                        <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
+                          £ {data?.price?.toString()}
+                        </span>
+                        <span className="text-sm text-gray-400">Per Hour</span>
+                      </div>
+                    )}
+                    {data?.photos && (
+                      <div className="mr-4 p-3 text-center">
+                        <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
+                          {data.photos.length}
+                        </span>
+                        <span className="text-sm text-gray-400">Photos</span>
+                      </div>
+                    )}
                     <div className="p-3 text-center lg:mr-4">
                       <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
                         89
                       </span>
-                      <span className="text-sm text-gray-400">Comments</span>
+                      <span className="text-sm text-gray-400">Votes</span>
                     </div>
                   </div>
                 </div>
@@ -146,6 +150,9 @@ export default function ProfilePage() {
 
                 <div className="mx-auto mb-10 mt-10 max-w-2xl text-left text-gray-600">
                   {data?.about}
+                </div>
+                <div className="mx-auto mb-10 mt-10 flex justify-center ">
+                  <Gallery imagesUrl={data?.photos} />
                 </div>
               </div>
 

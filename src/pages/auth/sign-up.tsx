@@ -11,6 +11,7 @@ import { FaGoogle } from "react-icons/fa";
 import { signIn, useSession } from "next-auth/react";
 import Divider from "~/components/ui/Divider";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
   const createUser = api.user.signUp.useMutation();
@@ -40,7 +41,7 @@ export default function SignUpPage() {
 
           callbackUrl: "/auth/choose-member-type",
         });
-        console.log("ALL GOOD");
+        toast.success("User Successfully Created!");
       })
       .catch((e) => setError("email", { message: "User alredy exist!" }));
   };

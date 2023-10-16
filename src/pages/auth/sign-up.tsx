@@ -33,7 +33,7 @@ export default function SignUpPage() {
   const onSubmit: SubmitHandler<SignUpSchemaType> = (data): void => {
     createUser
       .mutateAsync(data)
-      .then(async (e) => {
+      .then(async (_) => {
         await signIn("credentials", {
           email: data.email,
           password: data.password,
@@ -43,7 +43,7 @@ export default function SignUpPage() {
         });
         toast.success("User Successfully Created!");
       })
-      .catch((e) => setError("email", { message: "User alredy exist!" }));
+      .catch((_) => setError("email", { message: "User alredy exist!" }));
   };
 
   return (

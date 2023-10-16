@@ -6,6 +6,7 @@ import { type UserValidationType } from "~/validation/user-validation";
 
 import ImageGallery from "../ui/ImageGallery";
 import { toast } from "react-toastify";
+import { Spinner } from "@nextui-org/react";
 
 export default function UploadImageGallery({
   setValue,
@@ -17,15 +18,13 @@ export default function UploadImageGallery({
   const getUploaderURL = api.uploader.getUrl.useMutation();
 
   const deleteImage = api.uploader.delete.useMutation({
-    onSuccess: () => {
-      toast.success("File Succesfully deleted!");
-    },
     onError: () => {
       toast.error("File not deleted. Something went wrong!");
     },
   });
 
   const [imageUrls, setImageUrls] = useState<string[] | null>(imgUrls);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -33,6 +32,7 @@ export default function UploadImageGallery({
     const file = event.target.files?.[0];
     if (!file) return;
 
+    setIsLoading(true);
     const { url, fields } = await getUploaderURL.mutateAsync({
       fileName: file.name,
       fileType: file.type,
@@ -45,12 +45,21 @@ export default function UploadImageGallery({
       );
       setImageUrls((prev) => [...prev!, savedImageUrl]);
     }
+    setIsLoading(false);
   };
   console.log("imageUrls", imageUrls);
 
   const handleDeleteImage = (imgUrl: string): void => {
+    if (!imageUrls) return;
     deleteImage.mutate({ url: imgUrl });
-    setImageUrls(imageUrls!.filter((url) => url !== imgUrl));
+    const index = imageUrls.indexOf(imgUrl);
+    if (index !== -1) {
+      const newImageUrls = [...imageUrls];
+      newImageUrls.splice(index, 1);
+      setImageUrls(newImageUrls);
+      setValue("photos", newImageUrls);
+      console.log("Setting new value to images", newImageUrls);
+    }
   };
 
   return (
@@ -62,6 +71,7 @@ export default function UploadImageGallery({
           imagesUrl={imageUrls}
           handleDeleteImage={handleDeleteImage}
         />
+        {isLoading && <Spinner className="w-20" />}
         <div className="flex justify-center">
           <label
             htmlFor="dropzone-file"

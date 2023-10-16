@@ -25,7 +25,10 @@ export const env = createEnv({
     AWS_ACCESS_KEY_ID: z.string().min(1),
     AWS_SECRET_ACCESS_KEY: z.string().min(1),
     AWS_BUCKET_NAME: z.string().min(1),
-    AWS_REGION: z.string().min(1)
+    AWS_REGION: z.string().min(1),
+    UPSTASH_REDIS_REST_URL: z.string().min(1),
+    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+
   },
 
   /**
@@ -35,7 +38,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
-    NEXT_PUBLIC_AWS_S3_BACKET_URL: z.string().min(1)
+    NEXT_PUBLIC_AWS_S3_BACKET_URL: z.string().min(1),
   },
 
   /**
@@ -53,8 +56,9 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
     NEXT_PUBLIC_AWS_S3_BACKET_URL: process.env.NEXT_PUBLIC_AWS_S3_BACKET_URL,
-    AWS_REGION: process.env.AWS_REGION
-
+    AWS_REGION: process.env.AWS_REGION,
+    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

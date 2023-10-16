@@ -14,13 +14,27 @@ import Title from "~/components/ui/Title";
 import { useSession } from "next-auth/react";
 import { MdThumbUpAlt } from "react-icons/md";
 import Gallery from "~/components/pages-components/profile/Gallery";
+import { toast } from "react-toastify";
+import { type Rate } from "@prisma/client";
 
 export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
   const { data: userSession } = useSession();
 
-  const { data, status } = api.user.getOne.useQuery({ id }, { enabled: !!id });
+  const { data, status, refetch } = api.user.getOne.useQuery(
+    { id },
+    { enabled: !!id },
+  );
+  const rateThisUser = api.friend.vote.useMutation({
+    onSuccess: async () => {
+      toast.success("Thanks for your vote :)");
+      await refetch();
+    },
+    onError: () => {
+      toast.error("Something went wrong :(");
+    },
+  });
   if (status === "loading")
     return (
       <Spinner
@@ -28,12 +42,16 @@ export default function ProfilePage() {
         className="flex h-screen items-center justify-center"
       />
     );
-  if (status === "error") return <DisplayError />;
+  if (status === "error" || !data) return <DisplayError />;
 
   if (data?.userType === "Customer") return <CustomerProfile />;
 
   const GenderIcon = genders.find((g) => g.id.toString() == data?.gender)?.Icon;
+  const isRated =
+    userSession?.user &&
+    data.Rate.some((v: Rate) => v.voterId === userSession?.user?.id);
 
+  console.log("Profile data: ", data);
   return (
     <main className="profile-page">
       <section className="relative block h-[300px] lg:h-[400px]">
@@ -93,9 +111,13 @@ export default function ProfilePage() {
                 )}
                 <div className="lg:order-3 lg:w-4/12 lg:self-center lg:text-right">
                   <div className="flex justify-end gap-5 py-6 sm:mt-0">
-                    <Button color="secondary" variant="flat">
+                    <Button
+                      color="secondary"
+                      variant={isRated ? "light" : "flat"}
+                      onClick={() => rateThisUser.mutate({ id: data.id })}
+                    >
                       <MdThumbUpAlt />
-                      Rate
+                      {isRated ? "Rated" : "Rate"}
                     </Button>
                     <Button color="success" variant="flat">
                       Chat
@@ -128,12 +150,14 @@ export default function ProfilePage() {
                         <span className="text-sm text-gray-400">Photos</span>
                       </div>
                     )}
-                    <div className="p-3 text-center lg:mr-4">
-                      <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
-                        89
-                      </span>
-                      <span className="text-sm text-gray-400">Votes</span>
-                    </div>
+                    {data.Rate && (
+                      <div className="p-3 text-center lg:mr-4">
+                        <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
+                          {data.Rate.length}
+                        </span>
+                        <span className="text-sm text-gray-400">Votes</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

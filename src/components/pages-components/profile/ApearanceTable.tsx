@@ -6,7 +6,7 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/react";
-import { Appearance } from "@prisma/client";
+import { type Appearance } from "@prisma/client";
 
 type PropType = {
   data: Appearance | null | undefined;

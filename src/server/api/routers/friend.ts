@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { friendFilterSchema } from "~/validation/friend-filter-validation";
 
 export const friendRouter = createTRPCRouter({
@@ -47,4 +51,33 @@ export const friendRouter = createTRPCRouter({
         ],
       },
     });
-  })})
+  }),
+  vote: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      console.log("Voting ::: ");
+      const isVoted = await ctx.prisma.rate.findFirst({
+        where: { voterId: ctx.session.user.id, targetUserId: input.id },
+      });
+      if (!!isVoted) {
+        await ctx.prisma.rate.delete({
+          where: { id: isVoted.id },
+        });
+        console.log("Removing vote : ");
+      } else {
+        const response = await ctx.prisma.rate.create({
+          data: {
+            targetUserId: input.id,
+            voterId: ctx.session.user.id,
+          },
+        });
+        console.log("Adding vote : ", isVoted, response);
+      }
+    }),
+});
+
+
+// id?: string
+//   voterId: string
+//   targetUserId: string
+//   rating?: number

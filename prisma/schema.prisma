@@ -105,10 +105,11 @@ model User {
 }
 
 model Rate {
-    id     String @id @default(cuid())
-    userId String
-    user   User   @relation(fields: [userId], references: [id])
-    rating Int
+    id           String @id @default(cuid())
+    voterId      String
+    targetUserId String
+    user         User   @relation(fields: [targetUserId], references: [id])
+    rating       Int    @default(1)
 }
 
 model Follower {

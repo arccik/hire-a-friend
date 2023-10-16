@@ -70,7 +70,7 @@ export const userRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
-        include: { appearance: true },
+        include: { appearance: true, Rate: true },
       });
     }),
   getAll: publicProcedure.query(({ ctx }) => {

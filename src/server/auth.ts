@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session({ session, token }) {
+      console.log("Google provider check: ", session);
       if (session.user && token.sub) {
         session.user.id = token.sub;
         session.user.name = token.name;
@@ -50,6 +51,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+
     // standart session handler / delete session strategy jwt when uncomment
     // session: ({ session, user }) => ({
     //   ...session,
@@ -82,6 +84,14 @@ export const authOptions: NextAuthOptions = {
           },
         });
         if (!user) return null;
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            lastLogin: new Date(),
+          },
+        });
         return user;
       },
     }),

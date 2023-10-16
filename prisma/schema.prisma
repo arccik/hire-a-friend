@@ -90,6 +90,8 @@ model User {
     earnings  String?
     feedback  String[]
 
+    lastLogin DateTime?
+
     isOffering Boolean?
     userType   UserType?
 

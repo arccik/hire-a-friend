@@ -1,7 +1,3 @@
-export default function ChatApp() {
-  return null;
-}
-
 // import React, { useState, useEffect } from 'react';
 // import { Redis } from '@upstash/redis';
 
@@ -69,3 +65,7 @@ export default function ChatApp() {
 // }
 
 // export default ChatApp;
+
+export default function Apa() {
+  return <p>Ogo</p>;
+}

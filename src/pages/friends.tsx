@@ -83,6 +83,8 @@ export default function FriendsPage() {
             className="m-10 flex place-content-center"
             total={Math.ceil(filterData[1] / 9)}
             showControls
+            isCompact
+            showShadow
             page={page}
             onChange={(p) =>
               void router.push(

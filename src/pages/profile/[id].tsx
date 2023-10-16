@@ -1,4 +1,4 @@
-import { Button, Chip, Spinner } from "@nextui-org/react";
+import { Button, Card, Chip, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -16,6 +16,7 @@ import { MdThumbUpAlt } from "react-icons/md";
 import Gallery from "~/components/pages-components/profile/Gallery";
 import { toast } from "react-toastify";
 import { type Rate } from "@prisma/client";
+import ActivityAndHobby from "~/components/pages-components/profile/ActivityAndHobby";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -179,54 +180,37 @@ export default function ProfilePage() {
                 </div>
               </div>
 
+              <ActivityAndHobby
+                hobbies={data.hobbies}
+                activities={data.activities}
+                languages={data.languages}
+              />
+
+              <ApearanceTable data={data?.appearance} />
+
               {!!data?.languages.length && (
-                <div className="mt-10 border-t border-gray-200 py-10 text-center">
+                <div className="mt-10 flex justify-center">
                   <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
-                    Languages:
+                    Languages
                   </p>
                   {data?.languages.map((language) => (
                     <Chip
                       key={language}
-                      color="success"
-                      className="bg-success/20"
+                      color="warning"
+                      variant="flat"
+                      className="ml-5 "
                     >
                       {language}
                     </Chip>
                   ))}
                 </div>
               )}
-              {!!data?.activities.length && (
-                <div className="mt-10 border-t border-gray-200 py-10 text-center">
-                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
-                    Available for:
-                  </p>
-                  <div className="mx-auto flex max-w-2xl flex-wrap gap-1 ">
-                    {data?.activities.map((activity) => (
-                      <Chip key={activity} color="primary" variant="dot">
-                        {activity}
-                      </Chip>
-                    ))}
-                  </div>
+              {data.lastLogin && (
+                <div className="mt-10 text-xs text-slate-400">
+                  <p>Last Visit: {data.lastLogin.toLocaleDateString()}</p>
                 </div>
               )}
-              {!!data?.activities.length && (
-                <div className="mt-10 border-t border-gray-200 py-10 text-center">
-                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
-                    Hobby / Interests
-                  </p>
-                  <div className="mx-auto flex max-w-2xl flex-wrap gap-1 ">
-                    {data?.hobbies.map((hobby) => (
-                      <Chip key={hobby} variant="faded">
-                        {hobby}
-                      </Chip>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <ApearanceTable data={data?.appearance} />
-
-              <div className="mt-10 border-t border-gray-200 py-10 text-center">
+              <div className=" border-t border-gray-200 py-10 text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 lg:w-9/12">
                     <p className="text-tiny leading-relaxed text-gray-700">

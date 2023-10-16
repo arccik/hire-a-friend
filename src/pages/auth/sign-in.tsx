@@ -63,6 +63,7 @@ const SignInPage = () => {
                 {...register("password")}
                 label="Password"
                 variant="bordered"
+                autoComplete="current-password"
                 type="password"
                 placeholder="Type your password"
                 errorMessage={errors.password?.message}

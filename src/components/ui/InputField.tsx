@@ -1,5 +1,5 @@
 import { Input } from "@nextui-org/react";
-import { PropsType } from "~/types/BigFormPropsType";
+import { type PropsType } from "~/types/BigFormPropsType";
 import { type UserValidationType } from "~/validation/user-validation";
 
 export default function InputField({
@@ -20,7 +20,7 @@ export default function InputField({
         <Input
           variant="bordered"
           {...register(fieldName)}
-          autoComplete="name"
+          autoComplete={fieldName}
           placeholder="type here"
           radius="sm"
           errorMessage={errors[fieldName]?.message as string}

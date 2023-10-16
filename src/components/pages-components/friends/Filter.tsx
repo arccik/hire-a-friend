@@ -1,7 +1,7 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { GoFilter } from "react-icons/go";
 import activitiesList from "~/data/FriendActivitiesList.json";
-import { Fragment, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import genders from "~/data/gender-list.json";
@@ -63,7 +63,7 @@ export default function Filter() {
                 });
               }}
             >
-              {genders.map((gender, index) => (
+              {genders.map((gender) => (
                 <SelectItem key={gender.name} value={gender.name}>
                   {gender.name}
                 </SelectItem>

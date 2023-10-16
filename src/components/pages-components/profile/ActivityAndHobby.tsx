@@ -1,27 +1,11 @@
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Divider,
-  Card,
-} from "@nextui-org/react";
-import { type User, type Appearance } from "@prisma/client";
-import { MdLocalActivity } from "react-icons/md";
+import { Card } from "@nextui-org/react";
 
 type PropType = {
   hobbies: string[];
   activities: string[];
-  languages: string[];
 };
 
-export default function ActivityAndHobby({
-  hobbies,
-  activities,
-  languages,
-}: PropType) {
+export default function ActivityAndHobby({ hobbies, activities }: PropType) {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

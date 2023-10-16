@@ -43,13 +43,18 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session({ session, token }) {
-      console.log("Google provider check: ", session);
       if (session.user && token.sub) {
         session.user.id = token.sub;
         session.user.name = token.name;
         session.user.email = token.email;
       }
       return session;
+    },
+    jwt({ token, user, account, profile }) {
+      if (account) {
+        token.idToken = account.id_token;
+      }
+      return token;
     },
 
     // standart session handler / delete session strategy jwt when uncomment
@@ -67,6 +72,10 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      // allowDangerousEmailAccountLinking: true,
+      accessTokenUrl: "https://oauth2.googleapis.com/token",
+      authorization:
+        "https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code",
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -106,6 +115,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+
   pages: {
     signIn: "/auth/sign-in",
   },

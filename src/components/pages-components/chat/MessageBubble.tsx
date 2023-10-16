@@ -8,13 +8,7 @@ type PropType = {
   avatar?: string;
   side: "left" | "right";
 };
-export default function MessageBubble({
-  username,
-  message,
-  date,
-  avatar,
-  side,
-}: PropType) {
+export default function MessageBubble({ username, message, side }: PropType) {
   return (
     <div
       className={cn("mb-2 flex items-end", side === "right" && "justify-end")}

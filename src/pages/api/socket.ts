@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log("CALLING SOCKET >>> ");

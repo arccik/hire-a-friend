@@ -183,7 +183,6 @@ export default function ProfilePage() {
               <ActivityAndHobby
                 hobbies={data.hobbies}
                 activities={data.activities}
-                languages={data.languages}
               />
 
               <ApearanceTable data={data?.appearance} />

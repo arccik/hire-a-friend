@@ -2,29 +2,40 @@ import { Card, CardBody } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 
 type PropType = {
-  username: string;
-  message: string;
+  username?: string;
+  message?: string;
   date?: string;
   avatar?: string;
-  side: "left" | "right";
+  side?: "left" | "right";
 };
 export default function MessageBubble({ username, message, side }: PropType) {
   return (
     <div
-      className={cn("mb-2 flex items-end", side === "right" && "justify-end")}
+      className={cn(
+        "mb-4 flex items-center",
+        side == "left" ? "flex-row-reverse " : "",
+      )}
     >
-      <Card
-        shadow="sm"
-        className={cn("max-w-xs rounded-lg", {
-          "bg-gray-200": side === "left",
-          "bg-blue-500 text-white": side === "right",
-        })}
-      >
-        <CardBody>
-          <h2 className="text-xl font-semibold">{username}</h2>
-          <p>{message}</p>
-        </CardBody>
-      </Card>
+      <div className="ml-4 flex flex-none flex-col items-center space-y-1">
+        <img
+          className="h-10 w-10 rounded-full"
+          src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        />
+        <a href="#" className="block text-xs hover:underline">
+          Jesse
+        </a>
+      </div>
+      <div className="relative mb-2 flex-1 rounded-lg bg-indigo-100 p-2 text-gray-800">
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.Lorem ipsum
+          dolor sit amet, consectetur adipisicing elit.
+        </div>
+        {side == "left" ? (
+          <div className="absolute left-0 top-1/2 h-2 w-2 -translate-x-1/2 -rotate-45 transform bg-indigo-100"></div>
+        ) : (
+          <div className="absolute right-0 top-1/2 h-2 w-2 translate-x-1/2 rotate-45 transform bg-indigo-100"></div>
+        )}
+      </div>
     </div>
   );
 }

@@ -37,7 +37,6 @@ export default function ImageGallery({
             >
               <Image
                 isZoomed
-                key={`${img} -- ${index}`}
                 width={240}
                 alt="NextUI Fruit Image with Zoom"
                 src={img}

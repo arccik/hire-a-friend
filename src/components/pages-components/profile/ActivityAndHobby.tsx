@@ -9,8 +9,11 @@ export default function ActivityAndHobby({ hobbies, activities }: PropType) {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Card className="rounded bg-blue-200 p-4">
-          <h2 className="text-lg font-bold">Hobbies</h2>
+        <Card className="rounded  p-4">
+          <p className="text-lg font-bold">Hobbies</p>
+          <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
+            This i do on my free time
+          </p>
           <ul>
             {hobbies.map((item, index) => (
               <li key={index}>{item}</li>
@@ -18,11 +21,16 @@ export default function ActivityAndHobby({ hobbies, activities }: PropType) {
           </ul>
         </Card>
 
-        <Card className="rounded bg-green-200 p-4">
-          <h2 className="text-lg font-bold">Activities</h2>
+        <Card className="rounded p-4">
+          <p className="text-lg font-bold">Activities</p>
+          <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
+            I am available for
+          </p>
           <ul>
             {activities.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li className="font-bold" key={index}>
+                {item}
+              </li>
             ))}
           </ul>
         </Card>

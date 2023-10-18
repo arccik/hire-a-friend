@@ -26,7 +26,7 @@ export default function MembershipCard({
   image,
   memberType,
 }: PropType) {
-  const { data: _ } = useSession({ required: true });
+  const {} = useSession({ required: true });
   const router = useRouter();
   const changeStatus = api.user.changeMemberStatus.useMutation({
     onSuccess: () => {

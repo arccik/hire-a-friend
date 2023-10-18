@@ -11,7 +11,6 @@ export const uploaderRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const s3Client = new S3Client({});
       const fileName = new Date().toDateString() + "-" + input.fileName;
-      console.log("File name to upload: ", fileName);
       return await createPresignedPost(s3Client, {
         Bucket: env.AWS_BUCKET_NAME,
         Key: fileName,

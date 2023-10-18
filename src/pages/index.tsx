@@ -8,7 +8,7 @@ import bubbleProfileAnimationData from "../animations/bubble-profile.json";
 import Link from "next/link";
 import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
 
-export default function NewPage() {
+export default function HomePage() {
   return (
     <main className="m-2 md:m-0">
       <section className="grid min-h-screen grid-flow-row md:grid-cols-2">

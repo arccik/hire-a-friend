@@ -47,7 +47,6 @@ export default function UploadImageGallery({
     }
     setIsLoading(false);
   };
-  console.log("imageUrls", imageUrls);
 
   const handleDeleteImage = (imgUrl: string): void => {
     if (!imageUrls) return;
@@ -58,7 +57,6 @@ export default function UploadImageGallery({
       newImageUrls.splice(index, 1);
       setImageUrls(newImageUrls);
       setValue("photos", newImageUrls);
-      console.log("Setting new value to images", newImageUrls);
     }
   };
 

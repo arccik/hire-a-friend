@@ -39,9 +39,7 @@ export default function UploadImage({
       fileName: file.name,
       fileType: file.type,
     });
-    console.log("Fields: ", fields);
     const savedImageUrl = await uploadFileToAWS({ url, fields, file });
-    console.log({ savedImageUrl });
     if (savedImageUrl) {
       setValue("image", savedImageUrl);
       setImageUrl(savedImageUrl);

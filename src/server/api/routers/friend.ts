@@ -41,21 +41,26 @@ export const friendRouter = createTRPCRouter({
       ctx.prisma.user.count({ where: { ...options } }),
     ]);
   }),
-  search: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.user.findMany({
-      where: {
-        OR: [
-          { firstName: { contains: input } },
-          { lastName: { contains: input } },
-          { email: { contains: input } },
-        ],
-      },
-    });
-  }),
+  search: publicProcedure
+    .input(
+      z.object({ value: z.string().optional(), page: z.number().optional() }),
+    )
+    .query(({ ctx, input }) => {
+      // const pageSize = 9;
+      // const skip = input.page ? (input.page - 1) * pageSize : 0;
+      // const take = pageSize;
+      return ctx.prisma.user.findMany({
+        where: {
+          OR: [
+            { name: { contains: input.value, mode: "insensitive" } },
+            { about: { contains: input.value, mode: "insensitive" } },
+          ],
+        },
+      });
+    }),
   vote: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      console.log("Voting ::: ");
       const isVoted = await ctx.prisma.rate.findFirst({
         where: { voterId: ctx.session.user.id, targetUserId: input.id },
       });
@@ -63,7 +68,6 @@ export const friendRouter = createTRPCRouter({
         await ctx.prisma.rate.delete({
           where: { id: isVoted.id },
         });
-        console.log("Removing vote : ");
       } else {
         const response = await ctx.prisma.rate.create({
           data: {
@@ -71,7 +75,6 @@ export const friendRouter = createTRPCRouter({
             voterId: ctx.session.user.id,
           },
         });
-        console.log("Adding vote : ", isVoted, response);
       }
     }),
 });

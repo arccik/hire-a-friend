@@ -1,13 +1,19 @@
-import { type PropsType } from "~/types/BigFormPropsType";
+import { type PropsType } from "~/types/bigFormPropsType";
 
-type PropType = Required<Pick<PropsType, "register" | "errors" | 'getValues' | 'watch' | 'setValue'>>;
+type PropType = Required<
+  Pick<PropsType, "register" | "errors" | "getValues" | "watch" | "setValue">
+>;
 
 import { Checkbox, Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function PriceField({ register, errors,  watch, setValue }: PropType) {
-
-const showPriceField = watch("hidePrice") ?? false;
+export default function PriceField({
+  register,
+  errors,
+  watch,
+  setValue,
+}: PropType) {
+  const showPriceField = watch("hidePrice") ?? false;
   return (
     <fieldset className="mb-10">
       <legend className="text-sm font-semibold leading-6 text-gray-900">

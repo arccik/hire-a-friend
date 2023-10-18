@@ -1,11 +1,25 @@
 import { Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
+import { useDebounce } from "~/hooks/useDebounce";
 
 export default function SearchBar() {
   const [show, setShow] = useState(false);
+  const router = useRouter();
+  const [search, setSearch] = useState(router.query.search ?? "");
+  const debaunceValue = useDebounce(search, 500);
+
+  useEffect(() => {
+    void router.push(router.pathname, {
+      query: {
+        search,
+      },
+    });
+  }, [debaunceValue]);
+
   const ButtonWithIcon = () => (
     <>
       <p className="text-tiny font-semibold text-slate-500">Search</p>
@@ -23,11 +37,13 @@ export default function SearchBar() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -100 }}
           key="Search input bar"
-          className="ml-5 w-full md:w-1/2"
+          className="w-full md:mr-10 md:w-1/2"
         >
           <Input
             isClearable
+            onClear={() => void router.push(router.pathname)}
             radius="lg"
+            onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
             classNames={{
               label: "text-black/50",
               input: [

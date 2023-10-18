@@ -20,6 +20,6 @@ export default async function uploadFileToAWS({
       return url + fields.key; // return like to uploaded file
     }
   } catch (error) {
-    console.log("Was not able to upload file", error);
+    console.error("Was not able to upload file", error);
   }
 }

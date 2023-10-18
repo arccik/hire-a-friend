@@ -8,6 +8,8 @@ import Divider from "~/components/ui/Divider";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 
+const TITLE = "Meet the Right Person with a Simple Click";
+
 export default function FriendsPage() {
   // const [page, setPage] = useState(1);
   const router = useRouter();
@@ -20,6 +22,8 @@ export default function FriendsPage() {
   const paramPage = searchParams.get("page");
   const page = paramPage ? parseInt(paramPage) : 1;
 
+  const searchValue = searchParams.get("search") ?? undefined;
+
   const { data: filterData, status: filterStatus } = api.friend.filter.useQuery(
     {
       activities: { has: activities },
@@ -29,12 +33,21 @@ export default function FriendsPage() {
       page,
     },
   );
-  const title = "Meet the Right Person with a Simple Click";
+
+  const { data: searchResult, status: searchStatus } =
+    api.friend.search.useQuery(
+      { value: searchValue, page },
+      { enabled: !!searchValue },
+    );
+
   if (filterStatus === "error") return <DisplayError />;
+
+  const toDisplay = searchResult ?? (filterData ? filterData[0] : []);
+
   return (
     <main className="m-3 md:m-10">
       <div className="text-center">
-        <Title text={title} className="mt-10 text-tiny" />
+        <Title text={TITLE} className="mt-10 text-tiny" />
         <p className="mb-5 text-sm text-gray-400">
           Unlock a World of Connections with a Click.
         </p>
@@ -47,7 +60,7 @@ export default function FriendsPage() {
         ) : (
           <>
             <div className="grid grid-flow-row gap-2 md:grid-cols-3 md:gap-4">
-              {filterData[0]?.map((friend) => (
+              {toDisplay.map((friend) => (
                 <FriendCard item={friend} key={friend.id} />
               ))}
             </div>

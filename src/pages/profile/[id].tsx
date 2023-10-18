@@ -1,4 +1,4 @@
-import { Button, Card, Chip, Spinner } from "@nextui-org/react";
+import { Button, Chip, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -17,6 +17,7 @@ import Gallery from "~/components/pages-components/profile/Gallery";
 import { toast } from "react-toastify";
 import { type Rate } from "@prisma/client";
 import ActivityAndHobby from "~/components/pages-components/profile/ActivityAndHobby";
+import ReportViolating from "~/components/pages-components/profile/RepotViolating";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function ProfilePage() {
   );
   const rateThisUser = api.friend.vote.useMutation({
     onSuccess: async () => {
-      toast.success("Thanks for your vote :)");
+      toast.success("Thanks");
       await refetch();
     },
     onError: () => {
@@ -52,7 +53,6 @@ export default function ProfilePage() {
     userSession?.user &&
     data.Rate.some((v: Rate) => v.voterId === userSession?.user?.id);
 
-  console.log("Profile data: ", data);
   return (
     <main className="profile-page">
       <section className="relative block h-[300px] lg:h-[400px]">
@@ -209,21 +209,7 @@ export default function ProfilePage() {
                   <p>Last Visit: {data.lastLogin.toLocaleDateString()}</p>
                 </div>
               )}
-              <div className=" border-t border-gray-200 py-10 text-center">
-                <div className="flex flex-wrap justify-center">
-                  <div className="w-full px-4 lg:w-9/12">
-                    <p className="text-tiny leading-relaxed text-gray-700">
-                      Your Safety Matters. If you believe this person is
-                      harassing you or violating our community guidelines,
-                      please don not hesitate to report. We are here to ensure a
-                      safe and respectful environment for all.
-                    </p>
-                    <a href="report" className="font-normal text-pink-500">
-                      Report
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <ReportViolating />
             </div>
           </div>
         </div>

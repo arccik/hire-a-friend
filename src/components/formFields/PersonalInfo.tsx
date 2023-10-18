@@ -1,4 +1,4 @@
-import { type PropsType } from "~/types/BigFormPropsType";
+import { type PropsType } from "~/types/bigFormPropsType";
 
 import InputField from "../ui/InputField";
 

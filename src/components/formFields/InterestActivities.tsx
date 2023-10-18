@@ -1,4 +1,4 @@
-import { type PropsType } from "~/types/BigFormPropsType";
+import { type PropsType } from "~/types/bigFormPropsType";
 import activities from "~/data/FriendActivitiesList.json";
 import { Chip, Select, SelectItem } from "@nextui-org/react";
 

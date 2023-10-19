@@ -189,8 +189,6 @@ export default function ProfilePage() {
                 activities={data.activities}
               />
 
-              <ApearanceTable data={data?.appearance} />
-
               {!!data?.languages.length && (
                 <div className="mt-10 flex justify-center">
                   <p className="mb-5 font-bold  tracking-wide text-gray-600">
@@ -207,6 +205,8 @@ export default function ProfilePage() {
                   ))}
                 </div>
               )}
+              <ApearanceTable data={data?.appearance} />
+
               {data.lastLogin && (
                 <div className="mt-10 text-xs text-slate-400">
                   <p>Last Visit: {data.lastLogin.toLocaleDateString()}</p>

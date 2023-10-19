@@ -75,7 +75,6 @@ export default function BigForm(props: PropType) {
       state: props.state ?? "",
       city: props.city ?? "",
       zipCode: props.zipCode ?? "",
-      currency: props.currency ?? "",
       email: props.email ?? "",
       firstName: props.firstName ?? "",
       lastName: props.lastName ?? "",

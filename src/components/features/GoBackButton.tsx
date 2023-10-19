@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import { RiArrowGoBackFill } from "react-icons/ri";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 export default function GoBackButton() {
   const router = useRouter();
@@ -9,10 +9,11 @@ export default function GoBackButton() {
       size="sm"
       variant="light"
       onClick={() => router.back()}
-      className="absolute left-2 top-10 z-10 hidden text-xl font-bold lg:left-10 lg:block"
+      className="absolute left-2 top-10 z-10 hidden text-xl font-bold opacity-75 lg:left-10 lg:flex"
     >
-      <RiArrowGoBackFill />
-      Go Back
+      <IoIosArrowRoundBack />
+      Back
     </Button>
   );
 }
+

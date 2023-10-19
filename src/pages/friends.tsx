@@ -8,7 +8,7 @@ import Divider from "~/components/features/Divider";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 
-const TITLE = "Meet the Right Person with a Simple Click";
+const TITLE = "Find  Right Person";
 
 export default function FriendsPage() {
   // const [page, setPage] = useState(1);

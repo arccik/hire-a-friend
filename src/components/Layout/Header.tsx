@@ -14,8 +14,8 @@ import {
 import Link from "next/link";
 import { GiTimeTrap } from "react-icons/gi";
 import { signOut, useSession } from "next-auth/react";
-import { MdOutlineArrowBack } from "react-icons/md";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -148,7 +148,7 @@ export default function Header() {
       <NavbarContent className="md:hidden" justify="end">
         {router.pathname.includes("/profile") && (
           <NavbarItem>
-            <MdOutlineArrowBack size="2rem" onClick={() => router.back()} />
+            <IoIosArrowRoundBack size="2rem" onClick={() => router.back()} />
           </NavbarItem>
         )}
 

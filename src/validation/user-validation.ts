@@ -3,7 +3,6 @@ import { z } from "zod";
 export const userValidation = z.object({
   name: z.string().min(3, "Required"),
   email: z.string().email("Email Required"),
-  images: z.any(z.string()).optional(),
   // image: z.any(z.instanceof(File)).optional(),
   // coverImage: z.any(z.instanceof(File)).optional(),
   image: z.any(z.string()).optional(),
@@ -31,7 +30,6 @@ export const userValidation = z.object({
   activities: z.array(z.string()).optional(),
   price: z.number().optional(),
   hidePrice: z.boolean().optional(),
-  currency: z.string().optional(),
   isOffering: z.boolean().optional(),
   languages: z.array(z.string()).optional(),
   expertese: z.array(z.string()).optional(),

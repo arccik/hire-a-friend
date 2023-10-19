@@ -1,6 +1,6 @@
 import { type PropsType } from "~/types/bigFormPropsType";
 
-import InputField from "../ui/InputField";
+import InputField from "../features/InputField";
 
 export default function PersonalInformation({ register, errors }: PropsType) {
   return (

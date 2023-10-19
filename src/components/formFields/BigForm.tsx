@@ -12,7 +12,7 @@ import { api } from "~/utils/api";
 import Apearance from "./Apearance";
 import InterestActivities from "./InterestActivities";
 import PersonalInformation from "./PersonalInfo";
-import InputField from "../ui/InputField";
+import InputField from "../features/InputField";
 import NotifyBy from "./NotifyBy";
 import Link from "next/link";
 import UploadImage from "./UploadImage";

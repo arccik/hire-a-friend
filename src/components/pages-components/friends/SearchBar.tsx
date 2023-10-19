@@ -15,6 +15,7 @@ export default function SearchBar() {
   useEffect(() => {
     void router.push(router.pathname, {
       query: {
+        ...router.query,
         search,
       },
     });

@@ -14,10 +14,13 @@ import {
 import Link from "next/link";
 import { GiTimeTrap } from "react-icons/gi";
 import { signOut, useSession } from "next-auth/react";
+import { MdOutlineArrowBack } from "react-icons/md";
+import Router, { useRouter } from "next/router";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { data: userSession } = useSession();
+  const router = useRouter();
 
   const userMenuItems = [
     {
@@ -143,6 +146,12 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="md:hidden" justify="end">
+        {router.pathname.includes("/profile") && (
+          <NavbarItem>
+            <MdOutlineArrowBack size="2rem" onClick={() => router.back()} />
+          </NavbarItem>
+        )}
+
         {userSession?.user.id && (
           <Avatar
             isBordered
@@ -160,6 +169,7 @@ export default function Header() {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />
       </NavbarContent>
+
       {/* Mobile Menu */}
       <NavbarMenu>
         {menu.map((item) => (

@@ -1,11 +1,13 @@
-import Lottie from "lottie-react";
-import sayHiData from "../animations/say-hi.json";
-import handshake from "../animations/handshake.json";
-import threeFriend from "../animations/three-friend-circles.json";
 import { Button } from "@nextui-org/react";
-import Features from "~/components/pages-components/home/Features";
-import bubbleProfileAnimationData from "../animations/bubble-profile.json";
+import Lottie from "lottie-react";
 import Link from "next/link";
+
+import sayHiData from "~/data/animations/say-hi.json";
+import handshake from "~/data/animations/handshake.json";
+import threeFriend from "~/data/animations/three-friend-circles.json";
+import bubbleProfileAnimationData from "~/data/animations/bubble-profile.json";
+
+import Features from "~/components/pages-components/home/Features";
 import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
 
 export default function HomePage() {

@@ -9,7 +9,7 @@ import {
 } from "~/validation/user-validation";
 import { FaGoogle } from "react-icons/fa";
 import { signIn, useSession } from "next-auth/react";
-import Divider from "~/components/ui/Divider";
+import Divider from "~/components/features/Divider";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 

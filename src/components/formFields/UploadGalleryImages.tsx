@@ -4,7 +4,7 @@ import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { type UserValidationType } from "~/validation/user-validation";
 
-import ImageGallery from "../ui/ImageGallery";
+import ImageGallery from "../features/ImageGallery";
 import { toast } from "react-toastify";
 import { Spinner } from "@nextui-org/react";
 

@@ -2,7 +2,7 @@ import { Card, Spinner } from "@nextui-org/react";
 import BigForm from "../../components/formFields/BigForm";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
-import DisplayError from "~/components/ui/DisplayError";
+import DisplayError from "~/components/features/DisplayError";
 
 export default function UpdateProfile() {
   const { data: userSession } = useSession({ required: true });

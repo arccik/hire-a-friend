@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchemaType, loginSchema } from "~/validation/user-validation";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import Divider from "~/components/ui/Divider";
+import Divider from "~/components/features/Divider";
 import { FaGoogle } from "react-icons/fa";
 
 const SignInPage = () => {

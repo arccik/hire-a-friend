@@ -9,7 +9,14 @@ const config = {
   reactStrictMode: true,
   images: {
     domains: ["lh3.googleusercontent.com", "img.freepik.com", "images.generated.photos", 'rentmytime-storage.s3.eu-west-2.amazonaws.com'],
-
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'rentmytime-storage.s3.eu-west-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 
   /**

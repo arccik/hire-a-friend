@@ -2,7 +2,7 @@ import { Button, Chip, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
-import DisplayError from "~/components/ui/DisplayError";
+import DisplayError from "~/components/features/DisplayError";
 import { CiLocationOn } from "react-icons/ci";
 
 import CustomerProfile from "~/components/pages-components/profile/CustomerProfile";
@@ -10,7 +10,7 @@ import ApearanceTable from "~/components/pages-components/profile/ApearanceTable
 
 import { genders } from "~/data/gender-icons";
 import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
-import Title from "~/components/ui/Title";
+import Title from "~/components/features/Title";
 import { useSession } from "next-auth/react";
 import { MdThumbUpAlt } from "react-icons/md";
 import Gallery from "~/components/pages-components/profile/Gallery";
@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { type Rate } from "@prisma/client";
 import ActivityAndHobby from "~/components/pages-components/profile/ActivityAndHobby";
 import ReportViolating from "~/components/pages-components/profile/RepotViolating";
+import GoBackButton from "~/components/features/GoBackButton";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -56,6 +57,8 @@ export default function ProfilePage() {
   return (
     <main className="profile-page">
       <section className="relative block h-[300px] lg:h-[400px]">
+        <GoBackButton />
+
         {data?.coverImage && (
           <Image fill src={data?.coverImage} alt={"cover Image" + data?.name} />
         )}
@@ -76,6 +79,7 @@ export default function ProfilePage() {
           className="pointer-events-none absolute bottom-0 left-0 right-0 top-auto h-[70px] w-full overflow-hidden"
           style={{ transform: "translateZ(0px)" }}
         >
+          {/* Cover image bottom line */}
           <svg
             className="absolute bottom-0 overflow-hidden"
             xmlns="http://www.w3.org/2000/svg"
@@ -189,15 +193,14 @@ export default function ProfilePage() {
 
               {!!data?.languages.length && (
                 <div className="mt-10 flex justify-center">
-                  <p className="mb-5 font-bold uppercase tracking-wide text-gray-600">
+                  <p className="mb-5 font-bold  tracking-wide text-gray-600">
                     Languages
                   </p>
                   {data?.languages.map((language) => (
                     <Chip
                       key={language}
-                      color="warning"
-                      variant="flat"
-                      className="ml-5 "
+                      variant="dot"
+                      className="ml-5 border-green-100"
                     >
                       {language}
                     </Chip>

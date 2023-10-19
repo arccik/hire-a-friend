@@ -1,10 +1,10 @@
 import { Button, Pagination, Spinner } from "@nextui-org/react";
-import DisplayError from "~/components/ui/DisplayError";
-import Title from "~/components/ui/Title";
+import DisplayError from "~/components/features/DisplayError";
+import Title from "~/components/features/Title";
 import FriendCard from "~/components/pages-components/friends/FriendCard";
 import Filter from "~/components/pages-components/friends/Filter";
 import { api } from "~/utils/api";
-import Divider from "~/components/ui/Divider";
+import Divider from "~/components/features/Divider";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 
@@ -59,7 +59,7 @@ export default function FriendsPage() {
           <Spinner className="mt-10 flex items-center align-middle" />
         ) : (
           <>
-            <div className="grid grid-flow-row gap-2 md:grid-cols-3 md:gap-4">
+            <div className="grid grid-flow-row gap-2 md:gap-4 lg:grid-cols-3">
               {toDisplay.map((friend) => (
                 <FriendCard item={friend} key={friend.id} />
               ))}

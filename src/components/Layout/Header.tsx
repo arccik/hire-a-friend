@@ -51,11 +51,7 @@ export default function Header() {
       title: "Browse",
       href: "/friends",
     },
-    {
-      id: 3,
-      title: "About Us",
-      href: "/about-us",
-    },
+
     {
       id: 4,
       title: "Contact Us",
@@ -134,14 +130,25 @@ export default function Header() {
               }
             />
           ) : (
-            <Button
-              as={Link}
-              color="warning"
-              href="/auth/sign-up"
-              variant="flat"
-            >
-              Sign Up
-            </Button>
+            <>
+              <Button
+                as={Link}
+                // color="success"
+                href="/auth/sign-in"
+                variant="light"
+                className="mr-2"
+              >
+                Login
+              </Button>
+              <Button
+                as={Link}
+                color="warning"
+                href="/auth/sign-up"
+                variant="flat"
+              >
+                Sign Up
+              </Button>
+            </>
           )}
         </NavbarItem>
       </NavbarContent>

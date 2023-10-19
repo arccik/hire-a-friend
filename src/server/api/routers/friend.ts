@@ -45,18 +45,33 @@ export const friendRouter = createTRPCRouter({
     .input(
       z.object({ value: z.string().optional(), page: z.number().optional() }),
     )
-    .query(({ ctx, input }) => {
-      // const pageSize = 9;
-      // const skip = input.page ? (input.page - 1) * pageSize : 0;
-      // const take = pageSize;
-      return ctx.prisma.user.findMany({
-        where: {
-          OR: [
-            { name: { contains: input.value, mode: "insensitive" } },
-            { about: { contains: input.value, mode: "insensitive" } },
-          ],
-        },
-      });
+    .query(async ({ ctx, input }) => {
+      const pageSize = 9;
+      const skip = input.page ? (input.page - 1) * pageSize : 0;
+      const take = pageSize;
+
+      return ctx.prisma.$transaction([
+        ctx.prisma.user.findMany({
+          where: {
+            OR: [
+              { name: { contains: input.value, mode: "insensitive" } },
+              { about: { contains: input.value, mode: "insensitive" } },
+              { experties: { contains: input.value, mode: "insensitive" } },
+            ],
+          },
+          skip,
+          take,
+        }),
+        ctx.prisma.user.count({
+          where: {
+            OR: [
+              { name: { contains: input.value, mode: "insensitive" } },
+              { about: { contains: input.value, mode: "insensitive" } },
+              { experties: { contains: input.value, mode: "insensitive" } },
+            ],
+          },
+        }),
+      ]);
     }),
   vote: protectedProcedure
     .input(z.object({ id: z.string() }))

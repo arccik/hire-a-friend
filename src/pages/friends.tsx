@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import Divider from "~/components/features/Divider";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
+import ClearFilter from "~/components/pages-components/friends/ClearFilterButton";
 
 const TITLE = "Find  Right Person";
 
@@ -42,7 +43,8 @@ export default function FriendsPage() {
 
   if (filterStatus === "error") return <DisplayError />;
 
-  const toDisplay = searchResult ?? (filterData ? filterData[0] : []);
+  const toDisplay =
+    (searchResult && searchResult) ?? (filterData && filterData);
 
   return (
     <main className="m-3 md:m-10">
@@ -57,44 +59,24 @@ export default function FriendsPage() {
 
         {filterStatus === "loading" ? (
           <Spinner className="mt-10 flex items-center align-middle" />
+        ) : !toDisplay ? (
+          <ClearFilter show={true} router={router} />
         ) : (
-          <>
-            <div className="grid grid-flow-row gap-2 md:gap-4 lg:grid-cols-3">
-              {toDisplay.map((friend) => (
-                <FriendCard item={friend} key={friend.id} />
-              ))}
-            </div>
-            {filterData[1] === 0 && (
-              <div className="flex h-full flex-col items-center justify-center">
-                <p className="text-xl font-bold">Nothing found</p>
-                <p className="text-center text-gray-600">
-                  Try to change your filter
-                </p>
-                <Divider text="or" />
-                <Button
-                  size="sm"
-                  color="secondary"
-                  onClick={() => {
-                    void router.push(
-                      { pathname: router.pathname, query: null },
-                      undefined,
-                      {
-                        shallow: true,
-                      },
-                    );
-                  }}
-                >
-                  Clear all filters
-                </Button>
-              </div>
-            )}
-          </>
+          <div className="grid grid-flow-row gap-2 md:gap-4 lg:grid-cols-3">
+            {toDisplay[0].map((friend) => (
+              <FriendCard item={friend} key={friend.id} />
+            ))}
+          </div>
         )}
-
-        {filterData && filterData[1] > 8 && (
+        {searchResult && searchResult[0].length === 0 && (
+          <p className="mt-10 text-center text-sm text-gray-400">
+            No results found
+          </p>
+        )}
+        {toDisplay && toDisplay[1] > 8 && (
           <Pagination
             className="m-10 flex place-content-center"
-            total={Math.ceil(filterData[1] / 9)}
+            total={Math.ceil(toDisplay[1] / 9)}
             showControls
             isCompact
             showShadow

@@ -34,6 +34,7 @@ export default function InterestActivities({
             selectionMode="multiple"
             placeholder="Select a user"
             {...register("activities")}
+            // onSelectionChange={(e) => setValue("activities", [...e])}
             onChange={(e) => setValue("activities", e.target.value.split(","))}
             classNames={{
               base: "max-w-lg",

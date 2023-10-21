@@ -1,13 +1,14 @@
 import { randomUUID } from "crypto";
 import { Dispatch, SetStateAction, useState } from "react";
-import { AiOutlineSend, AiOutlineGroup } from "react-icons/ai";
+import { AiOutlineSend, AiOutlineContacts } from "react-icons/ai";
 import { Message } from "~/validation/message-validation";
 
 type PropType = {
   setMessages: Dispatch<SetStateAction<Message[]>>;
+  setShowContacts: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ChatFooter({ setMessages }: PropType) {
+export default function ChatFooter({ setMessages, setShowContacts }: PropType) {
   const [message, setMessage] = useState<string>("");
 
   const handleMessageSend = async () => {
@@ -42,10 +43,11 @@ export default function ChatFooter({ setMessages }: PropType) {
     <div className="relative bottom-0 flex w-full items-center border-t p-2">
       <div>
         <button
+          onClick={() => setShowContacts((prev) => !prev)}
           className="inline-flex rounded-full p-2 hover:bg-indigo-50"
           type="button"
         >
-          <AiOutlineGroup />
+          <AiOutlineContacts color="black" size="1.4rem" />
         </button>
       </div>
 
@@ -70,7 +72,7 @@ export default function ChatFooter({ setMessages }: PropType) {
           type="button"
           onClick={(e) => void handleMessageSend()}
         >
-          <AiOutlineSend size="1rem" />
+          <AiOutlineSend size="1rem" color="black" />
         </button>
       </div>
     </div>

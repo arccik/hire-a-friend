@@ -9,7 +9,7 @@ export default function GoBackButton() {
       size="sm"
       variant="light"
       onClick={() => router.back()}
-      className="absolute left-2 top-10 z-10 hidden text-xl font-bold opacity-75 lg:left-10 lg:flex"
+      className="absolute left-2 top-10 z-10 hidden opacity-75 lg:left-10 lg:flex"
     >
       <IoIosArrowRoundBack />
       Back

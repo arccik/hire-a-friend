@@ -124,7 +124,16 @@ export default function ProfilePage() {
                       <MdThumbUpAlt />
                       {isRated ? "Rated" : "Rate"}
                     </Button>
-                    <Button color="success" variant="flat">
+                    <Button
+                      onClick={() => {
+                        console.log("Chat CLicked : ", router.asPath);
+                        void router.push({
+                          query: { ...router.query, chat: data.id },
+                        });
+                      }}
+                      color="success"
+                      variant="flat"
+                    >
                       Chat
                     </Button>
                     {userSession?.user.id === id && (

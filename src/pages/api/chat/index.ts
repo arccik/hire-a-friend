@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { z } from "zod";
 import { redis } from "~/utils/redis";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "~/server/auth";
@@ -26,7 +25,10 @@ export default async function handler(
   if (req.method === "POST") {
     try {
       const data = messageSchema.parse(req.body);
-      await redis.sadd(`message:${data.sender}`, data.message);
+      await redis.sadd(`message:${data.senderId}:${data.receiverId}`, {
+        message: data.message,
+        date: data.date,
+      });
       return res.json({ message: "Message added" });
     } catch (error) {
       return res.status(400).json({ message: "Invalid message" });

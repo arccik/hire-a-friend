@@ -1,4 +1,4 @@
-import { Message } from "~/validation/message-validation";
+import { type Message } from "~/validation/message-validation";
 import MessageBubble from "./MessageBubble";
 import { useEffect, useRef } from "react";
 

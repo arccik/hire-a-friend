@@ -6,8 +6,6 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  RadioGroup,
-  Radio,
 } from "@nextui-org/react";
 
 export default function ReportViolating() {

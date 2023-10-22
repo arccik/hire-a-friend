@@ -1,7 +1,6 @@
-import { randomUUID } from "crypto";
 import { Dispatch, SetStateAction, useState } from "react";
 import { AiOutlineSend, AiOutlineContacts } from "react-icons/ai";
-import { Message } from "~/validation/message-validation";
+import { type Message } from "~/validation/message-validation";
 
 type PropType = {
   setMessages: Dispatch<SetStateAction<Message[]>>;
@@ -70,7 +69,7 @@ export default function ChatFooter({ setMessages, setShowContacts }: PropType) {
         <button
           className="inline-flex rounded-full p-2 hover:bg-indigo-50"
           type="button"
-          onClick={(e) => void handleMessageSend()}
+          onClick={() => void handleMessageSend()}
         >
           <AiOutlineSend size="1rem" color="black" />
         </button>

@@ -2,12 +2,10 @@ import Link from "next/link";
 import { cn } from "~/lib/utils";
 import { type Message } from "~/validation/message-validation";
 
-export default function MessageBubble({
-  sender,
-  message,
-  type,
-  avatar,
-}: Message) {
+export default function MessageBubble({ senderId, message }: Message) {
+  const avatar = "/assets/images/startup.png";
+  const type = "sender";
+
   return (
     <div
       className={cn(
@@ -24,8 +22,11 @@ export default function MessageBubble({
         {avatar && (
           <img className="h-10 w-10 rounded-full" src={avatar} alt="avatar" />
         )}
-        <Link href="/profile" className="block text-xs hover:underline">
-          {sender}
+        <Link
+          href="/profile"
+          className="block text-xs text-black hover:underline"
+        >
+          {senderId}
         </Link>
       </div>
       <div

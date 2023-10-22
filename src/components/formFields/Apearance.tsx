@@ -3,6 +3,7 @@ import { Input, Select, SelectItem } from "@nextui-org/react";
 import { type PropsType } from "~/types/bigFormPropsType";
 import genders from "~/data/gender-list.json";
 
+
 export default function Apearance({ register, errors, getValues }: PropsType) {
   const gender = getValues?.("gender");
   return (

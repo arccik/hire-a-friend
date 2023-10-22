@@ -17,7 +17,7 @@ export default function ChatHeader({
     setShowChat(false);
     const { pathname, query } = router;
     delete router.query.chat;
-    router.replace({ pathname, query });
+    void router.replace({ pathname, query });
   };
   if (!user) return null;
   return (

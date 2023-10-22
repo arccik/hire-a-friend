@@ -49,7 +49,7 @@ export default function ProfilePage() {
 
   if (data?.userType === "Customer") return <CustomerProfile />;
 
-  const GenderIcon = genders.find((g) => g.id.toString() == data?.gender)?.Icon;
+  const gender = genders.find((g) => g.id.toString() == data?.gender);
   const isRated =
     userSession?.user &&
     data.Rate.some((v: Rate) => v.voterId === userSession?.user?.id);
@@ -178,9 +178,9 @@ export default function ProfilePage() {
               <div className="text-center md:mt-2">
                 <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
                   {data?.name}
-                  {GenderIcon && <GenderIcon />}
+                  {/* {GenderIcon && <GenderIcon />} */}
                 </h3>
-                <div className="mb-2 mt-0 flex justify-center text-sm font-bold uppercase leading-normal text-gray-400">
+                <div className="mb-2 mt-0 flex justify-center text-sm font-bold leading-normal text-gray-400">
                   <CiLocationOn className="mr-2 text-lg text-gray-400 " />
                   {data?.city}
                 </div>
@@ -199,15 +199,15 @@ export default function ProfilePage() {
               />
 
               {!!data?.languages.length && (
-                <div className="mt-10 flex justify-center">
-                  <p className="mb-5 font-bold  tracking-wide text-gray-600">
+                <div className="mb-10 mt-10 flex flex-wrap justify-center gap-5">
+                  <p className="font-bold  tracking-wide text-gray-600">
                     Languages
                   </p>
                   {data?.languages.map((language) => (
                     <Chip
                       key={language}
                       variant="dot"
-                      className="ml-5 border-green-100"
+                      className=" border-green-100"
                     >
                       {language}
                     </Chip>

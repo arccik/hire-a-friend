@@ -11,20 +11,17 @@ import { useSearchParams } from "next/navigation";
 import Contacts from "./Contacts";
 
 export default function Chat() {
-  const { data: userSession } = useSession({ required: true });
+  const { data: userSession } = useSession();
   const [showChat, setShowChat] = useState(true);
   const [showContacts, setShowContacts] = useState(true);
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: "1",
       message: `Hello ${userSession?.user.name}`,
-      type: "sender",
       date: new Date(),
-      sender: "this is the receiver name",
-      receiver: "this is the sender name",
-      avatar: "https://i.pravatar.cc/150?img=1",
+      senderId: "adfsgafge3g3",
+      receiverId: "2gghekk2",
     },
   ]);
   useEffect(() => {
@@ -38,6 +35,7 @@ export default function Chat() {
     return (
       <AnimatePresence>
         <motion.div
+          key="Chat Button"
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -100 }}
@@ -54,6 +52,7 @@ export default function Chat() {
     // show chat
     <AnimatePresence>
       <motion.div
+        key="chat body"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 100 }}

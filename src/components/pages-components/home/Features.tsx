@@ -29,10 +29,10 @@ export default function Features() {
             <CardBody className="overflow-visible">
               <div className="mx-auto text-center align-middle">
                 <item.Icon
-                  className="mx-auto text-8xl"
-                  style={{
-                    color: generateRandomHexColor(),
-                  }}
+                  className="mx-auto mb-2 rounded-lg bg-gradient-to-tr from-pink-500  to-yellow-500 p-3 text-8xl text-white shadow-lg drop-shadow-lg"
+                  // style={{
+                  //   color: generateRandomHexColor(),
+                  // }}
                 />
                 <b>{item.title}</b>
               </div>

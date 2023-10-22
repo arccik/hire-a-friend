@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/react";
-import { NextRouter } from "next/router";
+import { type NextRouter } from "next/router";
 import Divider from "~/components/features/Divider";
 
 export default function ClearFilter({

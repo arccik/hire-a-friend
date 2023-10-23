@@ -3,39 +3,49 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { TfiClose } from "react-icons/tfi";
 
+type PropType = {
+  setShowChat: (value: boolean) => void;
+  name: string | null;
+  status: string | null;
+  avatar: string | null;
+  id: string;
+};
+
 export default function ChatHeader({
   setShowChat,
-  user,
-}: {
-  setShowChat: (value: boolean) => void;
-  user: DefaultSession["user"] & {
-    id: string;
-  };
-}) {
+  name,
+  status,
+  avatar,
+  id,
+}: PropType) {
+  console.log("Status ::: ", status);
   const router = useRouter();
   const handleCloseButton = () => {
     setShowChat(false);
     const { pathname, query } = router;
     delete router.query.chat;
-    void router.replace({ pathname, query });
+    void router.replace({ pathname, query }, undefined, { shallow: true });
   };
-  if (!user) return null;
   return (
     <div className="flex items-center justify-between border-b p-2">
       <div className="flex items-center">
-        {user.image && (
-          <img className="h-10 w-10 rounded-full" src={user.image} />
+        {avatar && (
+          <img
+            className="h-10 w-10 rounded-full"
+            src={avatar}
+            alt={name + " Image"}
+          />
         )}
         <div className="pl-2 ">
           <div className="font-semibold">
             <Link
               className="text-black hover:underline"
-              href={`/profile/${user.id}`}
+              href={`/profile/${id}`}
             >
-              {user.name}
+              {name}
             </Link>
           </div>
-          <div className="text-xs text-gray-500">Online</div>
+          <div className="text-xs text-gray-500">{status}</div>
         </div>
       </div>
       <div>

@@ -1,9 +1,18 @@
 import Link from "next/link";
 import { cn } from "~/lib/utils";
-import { type Message } from "~/validation/message-validation";
+import { type MessageResponse } from "~/validation/message-validation";
 
-export default function MessageBubble({ senderId, message }: Message) {
-  const avatar = "/assets/images/startup.png";
+export default function MessageBubble({
+  senderId,
+  message,
+  avatar,
+  senderName,
+  receiverName,
+}: MessageResponse & {
+  avatar?: string | null;
+  senderName?: string | null;
+  receiverName?: string | null;
+}) {
   const type = "sender";
 
   return (
@@ -26,7 +35,7 @@ export default function MessageBubble({ senderId, message }: Message) {
           href="/profile"
           className="block text-xs text-black hover:underline"
         >
-          {senderId}
+          {senderName}
         </Link>
       </div>
       <div

@@ -34,7 +34,20 @@ export default function ProfilePage() {
       toast.success("Thanks");
       await refetch();
     },
-    onError: () => {
+    onError: (e) => {
+      if (e.message.includes("UNAUTHORIZED"))
+        return toast.info(
+          <div className="flex">
+            <p>Please login to rate</p>
+            <Button
+              className="ml-4"
+              size="sm"
+              onClick={() => void router.push("/auth/sign-in")}
+            >
+              Login
+            </Button>
+          </div>,
+        );
       toast.error("Something went wrong :(");
     },
   });
@@ -126,12 +139,16 @@ export default function ProfilePage() {
                     </Button>
                     <Button
                       onClick={() => {
-                        console.log("Chat CLicked : ", router.asPath);
-                        void router.push({
-                          query: { ...router.query, chat: data.id },
-                        });
+                        void router.replace(
+                          {
+                            query: { ...router.query, chat: data.id },
+                          },
+                          undefined,
+                          { shallow: true },
+                        );
                       }}
                       color="success"
+                      type="button"
                       variant="flat"
                     >
                       Chat

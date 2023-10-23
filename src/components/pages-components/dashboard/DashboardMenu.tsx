@@ -22,7 +22,7 @@ export default function DashboardMenu() {
         </div>
         <div>
           <p className="font-medium leading-4 group-hover:text-indigo-400">
-            Jim Bzik
+            Example name
           </p>
           <span className="text-xs text-slate-400">Time Industry ltd</span>
         </div>

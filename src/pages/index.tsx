@@ -82,7 +82,9 @@ export default function HomePage() {
       </section>
       <section className="mx-auto mt-32 md:container">
         <div className="m-5">
-          <p className="mb-10 text-6xl font-semibold ">Check who is Online</p>
+          <p className="mb-10 text-6xl font-semibold ">
+            Check who is Available now
+          </p>
           <p className="mb-10 text-xl">
             It is time to reach out and connect with people who understand what
             it means to seek a friend

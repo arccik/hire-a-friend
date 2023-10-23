@@ -7,7 +7,7 @@ import DisplayError from "~/components/features/DisplayError";
 export default function UpdateProfile() {
   const { data: userSession } = useSession({ required: true });
   const { data: user, status } = api.user.getOne.useQuery(
-    { id: userSession?.user?.id ?? "" },
+    { id: userSession?.user.id ?? "" },
     { enabled: !!userSession?.user },
   );
 
@@ -23,7 +23,7 @@ export default function UpdateProfile() {
         {user?.userType === "Friend" && userSession?.user?.id ? (
           <BigForm {...user} userId={userSession.user.id} />
         ) : (
-          <p>You are down for fun ?</p>
+          <p>You are up for fun ?</p>
         )}
       </Card>
     </section>

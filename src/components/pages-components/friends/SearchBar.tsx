@@ -10,7 +10,7 @@ export default function SearchBar() {
   const [show, setShow] = useState(false);
   const router = useRouter();
   const [search, setSearch] = useState(router.query.search ?? "");
-  const debaunceValue = useDebounce(search, 500);
+  const debaunceValue = useDebounce(search, 800);
 
   useEffect(() => {
     void router.push(router.pathname, {

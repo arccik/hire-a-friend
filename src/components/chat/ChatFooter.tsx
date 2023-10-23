@@ -1,41 +1,36 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { AiOutlineSend, AiOutlineContacts } from "react-icons/ai";
-import { type Message } from "~/validation/message-validation";
+import { MessageResponse, type Message } from "~/validation/message-validation";
 
 type PropType = {
-  setMessages: Dispatch<SetStateAction<Message[]>>;
+  setMessages: Dispatch<SetStateAction<MessageResponse[]>>;
   setShowContacts: Dispatch<SetStateAction<boolean>>;
+  receiverId: string | null;
 };
 
-export default function ChatFooter({ setMessages, setShowContacts }: PropType) {
+export default function ChatFooter({
+  setMessages,
+  setShowContacts,
+  receiverId,
+}: PropType) {
   const [message, setMessage] = useState<string>("");
 
   const handleMessageSend = async () => {
     if (!message) return;
 
-    const sendData = JSON.stringify({
+    const sendData = {
       message,
-      sender: "Stas",
-      id: Math.random().toString(36).substring(2, 15),
-    });
+      receiverId,
+      date: new Date(),
+    };
 
     const response = await fetch("/api/chat", {
       method: "POST",
-      body: sendData,
+      body: JSON.stringify(sendData),
     });
     const data = (await response.json()) as Message;
     console.log("REspnse From Server: ", data);
-    setMessages((prev) => [
-      ...prev,
-      // {
-      //   message,
-      //   sender: "Stas",
-      //   receiver: 'someone',
-      //   id: Math.random().toString(36).substring(2, 15),
-      //   type: 'sender',
-
-      // },
-    ]);
+    setMessages((prev) => [...prev, sendData]);
     setMessage("");
   };
   return (

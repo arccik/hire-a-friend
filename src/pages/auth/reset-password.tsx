@@ -6,6 +6,7 @@ import {
   type SignUpSchemaType,
   signUpSchema,
 } from "~/validation/user-validation";
+import { signIn } from "next-auth/react";
 
 export default function ResetPasswordPage() {
   const createUser = api.user.signUp.useMutation();
@@ -25,7 +26,7 @@ export default function ResetPasswordPage() {
   };
   return (
     <section className="bg-gray-50">
-      <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
+      <div className="mx-auto flex h-[32rem] flex-col items-center justify-center px-6 py-8 lg:py-0">
         <div className="text-3xl font-extrabold md:text-5xl">
           <span className="bg-gradient-to-r from-pink-900 to-violet-900 bg-clip-text text-transparent">
             Forgot your password?
@@ -51,11 +52,20 @@ export default function ResetPasswordPage() {
                 placeholder="email@example.com"
                 errorMessage={errors.email?.message}
               />
-
-              <Button type="submit" color="primary" className="w-full">
-                Reset Password
-              </Button>
             </form>
+            <Button
+              onClick={() =>
+                void signIn("email", {
+                  email: "arccik@gmail.com",
+                  callbackUrl: "/change-password",
+                })
+              }
+              type="submit"
+              color="primary"
+              className="w-full"
+            >
+              Reset Password
+            </Button>
           </div>
         </Card>
       </div>

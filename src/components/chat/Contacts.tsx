@@ -8,7 +8,7 @@ export default function Contacts() {
   const handleCloseButton = (index: string) => {
     const { pathname, query } = router;
     router.query.chat = index;
-    void router.replace({ pathname, query });
+    void router.replace({ pathname, query }, undefined, { shallow: true });
   };
   return (
     <>

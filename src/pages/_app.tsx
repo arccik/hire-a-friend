@@ -12,6 +12,7 @@ import "~/styles/globals.css";
 import Header from "~/components/Layout/Header";
 import Footer from "~/components/Layout/Footer";
 import Head from "next/head";
+import Chat from "~/components/chat/Chat";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -27,6 +28,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           />
         </Head>
         <Header />
+        <Chat />
         <Component {...pageProps} />
 
         <ToastContainer

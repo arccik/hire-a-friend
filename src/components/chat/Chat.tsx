@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Contacts from "./Contacts";
 import { api } from "~/utils/api";
+import { User } from "@nextui-org/react";
 
 export default function Chat() {
   const { data: userSession } = useSession(); // add required when complete this component.
@@ -90,7 +91,7 @@ export default function Chat() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 100 }}
-              className="fixed bottom-0 right-1/3 z-50 flex h-[calc(100%-100px)]  flex-col border bg-slate-50 shadow-md"
+              className="fixed bottom-12 z-50 flex w-full flex-row overflow-x-scroll border bg-slate-50  md:bottom-0  md:right-1/3  md:h-[calc(100%-100px)] md:w-72 md:flex-col md:shadow-md"
             >
               <Contacts />
             </motion.div>

@@ -11,12 +11,12 @@ export default function Contacts() {
   };
   return (
     <>
-      <div className="flex items-center justify-between border-b p-2">
-        <p className="h-12 p-3 text-lg font-semibold text-slate-500">
+      <div className="flex items-center justify-between overflow-auto border-b p-2">
+        <p className="p-3 text-lg font-semibold text-slate-500 md:h-12">
           Contacts
         </p>
       </div>
-      <div className="mt-5 flex flex-col overflow-auto ">
+      <div className="flex overflow-auto md:mt-5 md:flex-col ">
         {Array.from({ length: 100 }).map((_, index) => (
           <User
             onClick={() => handleCloseButton(index.toString())}
@@ -34,3 +34,4 @@ export default function Contacts() {
     </>
   );
 }
+

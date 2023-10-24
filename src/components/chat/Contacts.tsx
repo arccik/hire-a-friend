@@ -3,7 +3,6 @@ import { User } from "@nextui-org/react";
 
 export default function Contacts() {
   const router = useRouter();
-  const pathname = router.asPath;
 
   const handleCloseButton = (index: string) => {
     const { pathname, query } = router;

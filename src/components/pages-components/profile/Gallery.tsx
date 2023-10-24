@@ -23,7 +23,7 @@ export default function Gallery({
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         {imagesUrl.map((img, index) => (
           <Image
             isZoomed

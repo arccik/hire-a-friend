@@ -64,7 +64,7 @@ export default function UploadImageGallery({
     <>
       <p className="mb-2 text-lg font-bold">Upload photos to your gallery</p>
 
-      <div className="flex flex-col gap-2 md:flex-row">
+      <div className="flex flex-col gap-2">
         <ImageGallery
           imagesUrl={imageUrls}
           handleDeleteImage={handleDeleteImage}

@@ -1,18 +1,24 @@
-import { Button, Pagination, Spinner } from "@nextui-org/react";
+import { Pagination, Spinner } from "@nextui-org/react";
 import DisplayError from "~/components/features/DisplayError";
 import Title from "~/components/features/Title";
 import FriendCard from "~/components/pages-components/friends/FriendCard";
 import Filter from "~/components/pages-components/friends/Filter";
 import { api } from "~/utils/api";
-import Divider from "~/components/features/Divider";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import ClearFilter from "~/components/pages-components/friends/ClearFilterButton";
+// import PaginationOrange from "~/components/features/PaginationOrange";
+import type { Metadata } from "next/types";
 
-const TITLE = "Find  Right Person";
+export const metadata: Metadata = {
+  title: "Explore Profiles for Companionship and Services | RentMyTime",
+  description:
+    "Discover a diverse range of profiles on our platform. Whether you're looking for companionship, a listening ear, or opportunities to earn extra income, we connect people with shared interests, fostering meaningful connections and financial opportunities. Start your journey today!",
+};
+
+const HEADLINE_TITLE = "Find  Right Person";
 
 export default function FriendsPage() {
-  // const [page, setPage] = useState(1);
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -22,7 +28,6 @@ export default function FriendsPage() {
   const city = searchParams.get("city");
   const paramPage = searchParams.get("page");
   const page = paramPage ? parseInt(paramPage) : 1;
-
   const searchValue = searchParams.get("search") ?? undefined;
 
   const { data: filterData, status: filterStatus } = api.friend.filter.useQuery(
@@ -49,7 +54,7 @@ export default function FriendsPage() {
   return (
     <main className="m-3 md:m-10">
       <div className="text-center">
-        <Title text={TITLE} className="mt-10 text-tiny" />
+        <Title text={HEADLINE_TITLE} className="mt-10 text-tiny" />
         <p className="mb-5 text-sm text-gray-400">
           Unlock a World of Connections with a Click.
         </p>
@@ -57,25 +62,31 @@ export default function FriendsPage() {
       <div className="mx-auto h-full w-full max-w-screen-2xl content-center  pb-10">
         <Filter />
 
-        {filterStatus === "loading" ? (
+        {filterStatus === "loading" && (
           <Spinner className="mt-10 flex items-center align-middle" />
-        ) : !toDisplay ? (
-          <ClearFilter show={true} router={router} />
-        ) : (
-          <div className="grid grid-flow-row gap-2 md:gap-4 lg:grid-cols-3">
-            {toDisplay[0].map((friend) => (
-              <FriendCard item={friend} key={friend.id} />
-            ))}
-          </div>
         )}
+
+        {toDisplay && toDisplay[0].length === 0 && (
+          <ClearFilter show={true} router={router} />
+        )}
+
+        <div className="grid grid-flow-row gap-2 md:gap-4 lg:grid-cols-3">
+          {toDisplay
+            ? toDisplay[0].map((friend) => (
+                <FriendCard item={friend} key={friend.id} />
+              ))
+            : null}
+        </div>
         {searchResult && searchResult[0].length === 0 && (
-          <p className="mt-10 text-center text-sm text-gray-400">
+          <p className="mt-10 text-center text-lg text-gray-400">
             No results found
           </p>
         )}
-        {toDisplay && toDisplay[1] > 8 && (
+
+        {toDisplay && Math.ceil(toDisplay[1] / toDisplay[0]?.length) > 1 && (
           <Pagination
-            className="m-10 flex place-content-center"
+            className="m-10 flex place-content-center "
+            color="warning"
             total={Math.ceil(toDisplay[1] / 9)}
             showControls
             isCompact
@@ -91,7 +102,6 @@ export default function FriendsPage() {
               )
             }
             variant="light"
-            color="secondary"
           />
         )}
       </div>

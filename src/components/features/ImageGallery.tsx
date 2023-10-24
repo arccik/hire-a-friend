@@ -26,7 +26,7 @@ export default function ImageGallery({
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex flex-row flex-wrap gap-2 ">
         {imagesUrl.map((img, index) => (
           <Fragment key={`${img} --- ${index} --`}>
             <Badge

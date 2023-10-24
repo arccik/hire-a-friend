@@ -9,6 +9,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Avatar,
+  Input,
 } from "@nextui-org/react";
 
 import Link from "next/link";
@@ -16,6 +17,7 @@ import { GiTimeTrap } from "react-icons/gi";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { RiSearchLine } from "react-icons/ri";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -76,7 +78,7 @@ export default function Header() {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      <NavbarContent className="pr-[20%] sm:hidden" justify="start">
+      <NavbarContent className="sm:hidden" justify="start">
         <NavbarBrand as={Link} href="/">
           <GiTimeTrap
             size="2rem"
@@ -116,6 +118,23 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarContent justify="end" className="hidden md:flex">
+        <Input
+          classNames={{
+            base: "max-w-full sm:max-w-[10rem] h-10",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper:
+              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+            e.key === "Enter" &&
+            void router.push(`/friends?search=${e.currentTarget.value}`)
+          }
+          placeholder="Type to search..."
+          size="sm"
+          startContent={<RiSearchLine size={18} />}
+          type="search"
+        />
         <NavbarItem>
           {userSession?.user.id ? (
             <Avatar
@@ -153,6 +172,19 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="md:hidden" justify="end">
+        <Input
+          classNames={{
+            base: "max-w-full sm:max-w-[10rem] h-10",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper:
+              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
+          placeholder="Type to search..."
+          size="sm"
+          startContent={<RiSearchLine size={18} />}
+          type="search"
+        />
         {router.pathname.includes("/profile") && (
           <NavbarItem>
             <IoIosArrowRoundBack size="2rem" onClick={() => router.back()} />

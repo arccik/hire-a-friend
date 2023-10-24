@@ -6,14 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import genders from "~/data/gender-list.json";
 import { useRouter } from "next/router";
-import SearchBar from "./SearchBar";
 import { citiesList } from "~/data/cities-list";
 
 export default function Filter() {
   const [showFilter, setShowFilter] = useState(false);
   const router = useRouter();
 
-  const queryKeysToCheck = ["activities", "status", "gender", "city", "status"];
+  const queryKeysToCheck = ["activities", "status", "gender", "city"];
   const shouldRenderClearBtn = useMemo(
     () => queryKeysToCheck.some((key) => key in router.query),
     [router.query],
@@ -36,7 +35,7 @@ export default function Filter() {
         </div>
       )}
       <div className="flex flex-row justify-end">
-        <SearchBar />
+        {/* <SearchBar /> */}
         <p className="text-tiny font-semibold text-slate-500">Filter</p>
         <GoFilter
           className="mb-2 ml-2 rounded-full bg-white p-2 text-2xl shadow-md hover:bg-gray-100 hover:shadow-lg md:cursor-pointer"

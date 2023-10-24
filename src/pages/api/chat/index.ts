@@ -57,7 +57,6 @@ export default async function handler(
   }
   if (req.method === "POST") {
     try {
-      // const rawData: Message = JSON.parse(req.body);
       const data = messageSchema.parse(req.body as Message);
       // await redis.sadd(`chat:${session.user.id}:${data.receiverId}`, {
       await redis.sadd(

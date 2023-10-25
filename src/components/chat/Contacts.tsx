@@ -23,7 +23,7 @@ export default function Contacts({ selected }: PropType) {
 
       fetch(url)
         .then(async (r) => {
-          const data = await r.json();
+          const data = (await r.json()) as ContactsType;
           console.log("list of contacts: ", data);
           setContacts(data);
         })

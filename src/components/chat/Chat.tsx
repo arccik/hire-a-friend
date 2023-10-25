@@ -10,12 +10,12 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Contacts from "./Contacts";
 import { api } from "~/utils/api";
-import { User } from "@nextui-org/react";
 
 export default function Chat() {
   const { data: userSession } = useSession(); // add required when complete this component.
-  const [showChat, setShowChat] = useState(true);
+  const [showChat, setShowChat] = useState(false);
   const [showContacts, setShowContacts] = useState(false);
+  const [messages, setMessages] = useState<MessageResponse[]>([]);
   const searchParams = useSearchParams();
   const receiverId = searchParams.get("chat");
   const { data: receiverData } = api.friend.getOne.useQuery(
@@ -23,12 +23,10 @@ export default function Chat() {
     { enabled: receiverId !== null },
   );
 
-  const [messages, setMessages] = useState<MessageResponse[]>([]);
   useEffect(() => {
     const fetchChats = () => {
-      const url = receiverData?.isOffering
-        ? `/api/chat?receiverId=${receiverId}`
-        : `/api/chat?receiverId=${receiverId}&reverse=${true}`;
+      const url = `/api/chat?receiverId=${receiverId}&reverse=true`;
+
       fetch(url)
         .then(async (r) => {
           const data = (await r.json()) as MessageResponse[];
@@ -38,9 +36,7 @@ export default function Chat() {
         .catch((e) => console.log("Couldn't send message"));
     };
     fetchChats();
-    if (receiverId) {
-      setShowChat(true);
-    }
+    if (receiverId) setShowChat(true);
   }, [receiverId]);
 
   if (!userSession) return null;
@@ -52,12 +48,14 @@ export default function Chat() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0.5, y: -100 }}
         transition={{ duration: 0.5 }}
-        onClick={() => setShowChat((prev) => !prev)}
         className="fixed bottom-5 right-5 flex cursor-pointer  flex-col hover:scale-105 hover:text-slate-600"
       >
-        <IoMdChatboxes size="2rem" />
+        <IoMdChatboxes
+          size="2rem"
+          onClick={() => setShowChat((prev) => !prev)}
+        />
       </motion.div>
-      {showChat && receiverData && (
+      {showChat && (
         <div className="grid grid-cols-2">
           <motion.div
             key="chat body"
@@ -67,17 +65,17 @@ export default function Chat() {
             className="fixed bottom-0 right-0 z-50 flex h-[calc(100%-100px)] w-full flex-col border bg-white shadow-md md:w-1/3"
           >
             <ChatHeader
-              id={receiverData.id}
+              id={receiverData?.id ?? ""}
               setShowChat={setShowChat}
-              name={receiverData.name}
-              status={receiverData.status}
-              avatar={receiverData.image}
+              name={receiverData?.name ?? ""}
+              status={receiverData?.status ?? ""}
+              avatar={receiverData?.image ?? ""}
             />
             <ChatBody
               messages={messages}
               avatar={userSession?.user?.image}
               senderName={userSession?.user?.name}
-              receiverName={receiverData.name}
+              receiverName={receiverData?.name ?? ""}
             />
 
             <ChatFooter

@@ -11,21 +11,16 @@ type PropType = {
   id: string;
 };
 
-export default function ChatHeader({
-  setShowChat,
-  name,
-  status,
-  avatar,
-  id,
-}: PropType) {
-  console.log("Status ::: ", status);
+export default function ChatHeader({ setShowChat, name, status, avatar, id }: PropType) {
   const router = useRouter();
+
   const handleCloseButton = () => {
     setShowChat(false);
     const { pathname, query } = router;
     delete router.query.chat;
     void router.replace({ pathname, query }, undefined, { shallow: true });
   };
+
   return (
     <div className="flex items-center justify-between border-b p-2">
       <div className="flex items-center">

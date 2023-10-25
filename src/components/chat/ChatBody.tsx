@@ -5,14 +5,12 @@ import { useEffect, useRef } from "react";
 type PropType = {
   messages: MessageResponse[] | undefined;
   avatar?: string | null;
-  senderName?: string | null;
   receiverName?: string | null;
 };
 
 export default function ChatBoddy({
   messages,
   avatar,
-  senderName,
   receiverName,
 }: PropType) {
   const chatRef = useRef<HTMLDivElement | null>(null);
@@ -34,7 +32,6 @@ export default function ChatBoddy({
           key={message?.date.toString()}
           {...message}
           avatar={avatar}
-          senderName={senderName}
           receiverName={receiverName}
         />
       ))}

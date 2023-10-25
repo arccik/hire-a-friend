@@ -37,7 +37,6 @@ export default async function handler(
       const querySting = chatHrefConstructor(session.user.id, receiver);
       const messages = await redis.smembers(querySting);
 
-      console.log("messages: ", { receiver, messages, querySting });
       res.json(messages);
     } catch (error) {
       return res
@@ -59,7 +58,7 @@ export default async function handler(
       });
       return res.json({ message: "Message added", ok: true });
     } catch (error) {
-      console.log("Error Adding messages: ", error);
+      console.log("failed to add message: ", error);
       return res.status(400).json({ message: "Invalid message" });
     }
   }

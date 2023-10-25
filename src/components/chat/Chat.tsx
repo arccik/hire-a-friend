@@ -30,11 +30,11 @@ export default function Chat() {
       fetch(url)
         .then(async (r) => {
           const data = (await r.json()) as MessageResponse[];
-          console.log("list of messages: ", data);
           setMessages(data);
         })
         .catch((e) => console.log("Couldn't send message"));
     };
+
     fetchChats();
     if (receiverId) setShowChat(true);
   }, [receiverId]);
@@ -48,7 +48,7 @@ export default function Chat() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0.5, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="fixed bottom-5 right-5 flex cursor-pointer  flex-col hover:scale-105 hover:text-slate-600"
+        className="fixed bottom-5 right-5 z-50 flex cursor-pointer  flex-col hover:scale-105 hover:text-slate-600"
       >
         <IoMdChatboxes
           size="2rem"
@@ -74,10 +74,15 @@ export default function Chat() {
             <ChatBody
               messages={messages}
               avatar={userSession?.user?.image}
-              senderName={userSession?.user?.name}
               receiverName={receiverData?.name ?? ""}
             />
-
+            {!receiverId && (
+              <div className="h-full w-full items-center ">
+                <p className="items-center text-center font-bold">
+                  No chat selected
+                </p>
+              </div>
+            )}
             <ChatFooter
               setMessages={setMessages}
               receiverId={receiverId}
@@ -91,7 +96,7 @@ export default function Chat() {
               exit={{ opacity: 0, x: 100 }}
               className="fixed bottom-12 z-50 flex w-full flex-row overflow-x-scroll border bg-slate-50  md:bottom-0  md:right-1/3  md:h-[calc(100%-100px)] md:w-72 md:flex-col md:shadow-md"
             >
-              <Contacts />
+              <Contacts selected={receiverId} />
             </motion.div>
           )}
         </div>

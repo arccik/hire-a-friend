@@ -16,9 +16,9 @@ export default function ChatHeader({ setShowChat, name, status, avatar, id }: Pr
 
   const handleCloseButton = () => {
     setShowChat(false);
-    const { pathname, query } = router;
-    delete router.query.chat;
-    void router.replace({ pathname, query }, undefined, { shallow: true });
+    // const { pathname, query } = router;
+    // delete router.query.chat;
+    // void router.replace({ pathname, query }, undefined, { shallow: true });
   };
 
   return (

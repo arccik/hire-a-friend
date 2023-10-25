@@ -51,6 +51,7 @@ export default function ChatFooter({
           className="w-full rounded-full border border-gray-200 p-2 pl-4 text-xs"
           type="text"
           autoFocus
+          disabled={!receiverId}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -64,6 +65,7 @@ export default function ChatFooter({
         <button
           className="inline-flex rounded-full p-2 hover:bg-indigo-50"
           type="button"
+          disabled={!message || !receiverId}
           onClick={() => void handleMessageSend()}
         >
           <AiOutlineSend size="1rem" color="black" />

@@ -3,14 +3,10 @@ import { cn } from "~/lib/utils";
 import { type MessageResponse } from "~/validation/message-validation";
 
 export default function MessageBubble({
-  senderId,
   message,
   avatar,
-  senderName,
-  receiverName,
 }: MessageResponse & {
   avatar?: string | null;
-  senderName?: string | null;
   receiverName?: string | null;
 }) {
   const type = "sender";
@@ -35,7 +31,7 @@ export default function MessageBubble({
           href="/profile"
           className="block text-xs text-black hover:underline"
         >
-          {senderName}
+          You
         </Link>
       </div>
       <div

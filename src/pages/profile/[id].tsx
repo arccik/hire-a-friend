@@ -20,7 +20,6 @@ import ActivityAndHobby from "~/components/pages-components/profile/ActivityAndH
 import ReportViolating from "~/components/pages-components/profile/RepotViolating";
 import GoBackButton from "~/components/features/GoBackButton";
 import Head from "next/head";
-import Chat from "~/components/chat/Chat";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -69,7 +68,6 @@ export default function ProfilePage() {
     userSession?.user &&
     data.Rate.some((v: Rate) => v.voterId === userSession?.user?.id);
 
-  console.log("Profile cover image: ", data.coverImage);
   return (
     <main className="profile-page">
       <Head>
@@ -146,29 +144,31 @@ export default function ProfilePage() {
                       <MdThumbUpAlt />
                       {isRated ? "Rated" : "Rate"}
                     </Button>
-                    <Button
-                      onClick={() => {
-                        void router.replace(
-                          {
-                            query: { ...router.query, chat: data.id },
-                          },
-                          undefined,
-                          { shallow: true },
-                        );
-                      }}
-                      color="success"
-                      className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white hover:border hover:border-orange-500"
-                      type="button"
-                      variant="flat"
-                    >
-                      Chat
-                    </Button>
-                    {userSession?.user.id === id && (
+
+                    {userSession?.user.id === id ? (
                       <Button
                         variant="bordered"
                         onClick={() => void router.push("/auth/update-profile")}
                       >
                         Edit
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          void router.replace(
+                            {
+                              query: { ...router.query, chat: data.id },
+                            },
+                            undefined,
+                            { shallow: true },
+                          );
+                        }}
+                        color="success"
+                        className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white hover:border hover:border-orange-500"
+                        type="button"
+                        variant="flat"
+                      >
+                        Chat
                       </Button>
                     )}
                   </div>
@@ -253,7 +253,6 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-        <Chat />
         <footer className="relative mt-8 bg-gray-200 pb-6 pt-8">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap items-center justify-center md:justify-between">

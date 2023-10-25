@@ -108,11 +108,9 @@ export default function Header() {
         {userSession?.user.id && (
           <NavbarItem
             key="Logout button"
-            className="cursor-pointer text-red-500 decoration-red-500 decoration-2  underline-offset-4 transition-colors duration-300 ease-in-out hover:text-red-600 hover:underline hover:decoration-red-600"
+            className="cursor-pointer text-red-600 decoration-red-600 decoration-2  underline-offset-4 transition-colors duration-300 ease-in-out hover:text-red-600 hover:underline hover:decoration-red-600"
           >
-            <button onClick={() => void signOut()} className="text-red-500">
-              Logout
-            </button>
+            <button onClick={() => void signOut()}>Logout</button>
           </NavbarItem>
         )}
       </NavbarContent>

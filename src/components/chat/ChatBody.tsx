@@ -27,7 +27,7 @@ export default function ChatBoddy({
       ref={chatRef}
       className="flex-1 overflow-y-auto scroll-smooth px-4 py-4"
     >
-      {messages.map((message) => (
+      {messages?.map((message) => (
         <MessageBubble
           key={message?.date.toString()}
           {...message}

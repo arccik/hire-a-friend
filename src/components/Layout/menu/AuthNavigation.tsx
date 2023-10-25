@@ -76,7 +76,7 @@ export default function AuthNavigation() {
     );
   return (
     <NavbarContent justify="end">
-      <NavbarItem className="hidden lg:flex">
+      <NavbarItem className="hidden sm:flex">
         <Link href="/auth/sign-in">Login</Link>
       </NavbarItem>
       <NavbarItem>

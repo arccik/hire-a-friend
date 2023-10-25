@@ -18,6 +18,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { RiSearchLine } from "react-icons/ri";
+import SeachBar from "./SeachBar";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -88,7 +89,7 @@ export default function Header() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden gap-4 sm:flex" justify="end">
+      <NavbarContent className="hidden sm:flex md:gap-4" justify="end">
         <NavbarBrand as={Link} href="/">
           <GiTimeTrap
             size="2rem"
@@ -115,24 +116,8 @@ export default function Header() {
         )}
       </NavbarContent>
 
-      <NavbarContent justify="end" className="hidden md:flex">
-        <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[10rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-            e.key === "Enter" &&
-            void router.push(`/friends?search=${e.currentTarget.value}`)
-          }
-          placeholder="Type to search..."
-          size="sm"
-          startContent={<RiSearchLine size={18} />}
-          type="search"
-        />
+      <NavbarContent justify="end" className="hidden sm:flex">
+        <SeachBar router={router} />
         <NavbarItem>
           {userSession?.user.id ? (
             <Avatar
@@ -183,11 +168,6 @@ export default function Header() {
           startContent={<RiSearchLine size={18} />}
           type="search"
         />
-        {router.pathname.includes("/profile") && (
-          <NavbarItem>
-            <IoIosArrowRoundBack size="2rem" onClick={() => router.back()} />
-          </NavbarItem>
-        )}
 
         {userSession?.user.id && (
           <Avatar

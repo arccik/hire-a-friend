@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    jwt({ token, user, account, profile }) {
+    jwt({ token, account }) {
       if (account) {
         token.idToken = account.id_token;
       }

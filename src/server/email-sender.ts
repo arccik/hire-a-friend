@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const info = await transporter.sendMail({
+export const info = await transporter.sendMail({
   from: '"Fred Foo 👻" <foo@example.com>', // sender address
   to: "bar@example.com, baz@example.com", // list of receivers
   subject: "Hello ✔", // Subject line

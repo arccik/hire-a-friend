@@ -84,7 +84,7 @@ export const friendRouter = createTRPCRouter({
           where: { id: isVoted.id },
         });
       } else {
-        const response = await ctx.prisma.rate.create({
+        await ctx.prisma.rate.create({
           data: {
             targetUserId: input.id,
             voterId: ctx.session.user.id,

@@ -1,5 +1,5 @@
 import { Input } from "@nextui-org/react";
-import { NextRouter } from "next/router";
+import type { NextRouter } from "next/router";
 import { RiSearchLine } from "react-icons/ri";
 
 export default function SeachBar({ router }: { router: NextRouter }) {
@@ -16,7 +16,9 @@ export default function SeachBar({ router }: { router: NextRouter }) {
         e.key === "Enter" &&
         void router.push(`/friends?search=${e.currentTarget.value}`)
       }
-      onClear={() => router.push("/friends", undefined, { shallow: true })}
+      onClear={() => {
+        void router.push("/friends", undefined, { shallow: true });
+      }}
       placeholder="Type to search..."
       size="sm"
       startContent={<RiSearchLine size={18} />}

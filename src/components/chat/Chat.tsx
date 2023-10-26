@@ -32,7 +32,7 @@ export default function Chat() {
           const data = (await r.json()) as MessageResponse[];
           setMessages(data);
         })
-        .catch((e) => console.log("Couldn't send message"));
+        .catch(() => console.log("Couldn't send message"));
     };
 
     fetchChats();

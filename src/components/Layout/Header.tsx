@@ -16,7 +16,6 @@ import Link from "next/link";
 import { GiTimeTrap } from "react-icons/gi";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { RiSearchLine } from "react-icons/ri";
 import SeachBar from "./SeachBar";
 

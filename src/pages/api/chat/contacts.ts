@@ -1,11 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
-import {
-  chatHrefConstructor,
-  contactsHrefConstructor,
-} from "~/helpers/chatHrefConstructor";
+import { contactsHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { authOptions } from "~/server/auth";
-import { prisma } from "~/server/db";
 import { redis } from "~/utils/redis";
 
 type ContactType = {

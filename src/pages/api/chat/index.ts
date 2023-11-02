@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "~/server/auth";
 import { messageSchema, Message } from "~/validation/message-validation";
 import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
+import { pusherServer } from "~/utils/pusher";
 
 export const config = {
   api: {
@@ -51,6 +52,10 @@ export default async function handler(
       // const data = messageSchema.parse(JSON.parse(req.body) as string);
 
       const querySting = chatHrefConstructor(session.user.id, data.receiverId);
+      await pusherServer.trigger(querySting, "message", {
+        sender: session.user.id,
+        recever: data.receiverId,
+      });
       await redis.sadd(querySting, {
         message: data.message,
         date: data.date,

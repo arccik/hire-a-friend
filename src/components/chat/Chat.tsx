@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoMdChatboxes } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import ChatBody from "~/components/chat/ChatBody";
@@ -17,27 +17,33 @@ export default function Chat() {
   const [showContacts, setShowContacts] = useState(false);
   const [messages, setMessages] = useState<MessageResponse[]>([]);
   const searchParams = useSearchParams();
-  const receiverId = searchParams.get("chat");
+  const chatId = searchParams.get("chat");
   const { data: receiverData } = api.friend.getOne.useQuery(
-    { id: receiverId! },
-    { enabled: receiverId !== null },
+    { id: chatId! },
+    { enabled: chatId !== null },
   );
 
-  useEffect(() => {
-    const fetchChats = () => {
-      const url = `/api/chat?receiverId=${receiverId}&reverse=true`;
+  const { data: chats, status: chatsStatus } = api.chat.getMessages.useQuery(
+    chatId!,
+    { enabled: !!chatId },
+  );
 
-      fetch(url)
-        .then(async (r) => {
-          const data = (await r.json()) as MessageResponse[];
-          setMessages(data);
-        })
-        .catch(() => console.log("Couldn't send message"));
-    };
+  // console.log("Chatss::: ", chats);
+  // useEffect(() => {
+  //   const fetchChats = () => {
+  //     const url = `/api/chat?receiverId=${receiverId}&reverse=true`;
 
-    fetchChats();
-    if (receiverId) setShowChat(true);
-  }, [receiverId]);
+  //     fetch(url)
+  //       .then(async (r) => {
+  //         const data = (await r.json()) as MessageResponse[];
+  //         setMessages(data);
+  //       })
+  //       .catch(() => console.log("Couldn't send message"));
+  //   };
+
+  //   fetchChats();
+  //   if (receiverId) setShowChat(true);
+  // }, [receiverId]);
 
   if (!userSession) return null;
   return (
@@ -76,7 +82,7 @@ export default function Chat() {
               avatar={userSession?.user?.image}
               receiverName={receiverData?.name ?? ""}
             />
-            {!receiverId && (
+            {!chatId && (
               <div className="h-full w-full items-center ">
                 <p className="items-center text-center font-bold">
                   No chat selected
@@ -85,7 +91,7 @@ export default function Chat() {
             )}
             <ChatFooter
               setMessages={setMessages}
-              receiverId={receiverId}
+              receiverId={chatId}
               setShowContacts={setShowContacts}
             />
           </motion.div>
@@ -96,7 +102,7 @@ export default function Chat() {
               exit={{ opacity: 0, x: 100 }}
               className="fixed bottom-12 z-50 flex w-full flex-row overflow-x-scroll border bg-slate-50  md:bottom-0  md:right-1/3  md:h-[calc(100%-100px)] md:w-72 md:flex-col md:shadow-md"
             >
-              <Contacts selected={receiverId} />
+              <Contacts selected={chatId} />
             </motion.div>
           )}
         </div>

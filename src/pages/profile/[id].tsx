@@ -39,7 +39,7 @@ export default function ProfilePage() {
       if (e.message.includes("UNAUTHORIZED"))
         return toast.info(
           <div className="flex">
-            <p>You have to login to Rate this profile</p>
+            <p>Login to rate this profile</p>
             <Button
               className="ml-4"
               size="sm"
@@ -136,41 +136,18 @@ export default function ProfilePage() {
                 )}
                 <div className="lg:order-3 lg:w-4/12 lg:self-center lg:text-right">
                   <div className="flex justify-end gap-5 py-6 sm:mt-0">
-                    <Button
-                      color="warning"
-                      variant={isRated ? "light" : "flat"}
-                      onClick={() => rateThisUser.mutate({ id: data.id })}
-                    >
-                      <MdThumbUpAlt />
-                      {isRated ? "Rated" : "Rate"}
-                    </Button>
-
-                    {userSession?.user.id === id ? (
-                      <Button
-                        variant="bordered"
-                        onClick={() => void router.push("/auth/update-profile")}
-                      >
-                        Edit
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          void router.replace(
-                            {
-                              query: { ...router.query, chat: data.id },
-                            },
-                            undefined,
-                            { shallow: true },
-                          );
-                        }}
-                        color="success"
-                        className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white hover:border hover:border-orange-500"
-                        type="button"
-                        variant="flat"
-                      >
-                        Chat
-                      </Button>
-                    )}
+                    <div className="mr-4 p-3 text-center">
+                      <span className="block font-bold tracking-wide text-gray-600">
+                        {data.city}
+                      </span>
+                      <span className="text-sm text-gray-400">City</span>
+                    </div>
+                    <div className="mr-4 p-3 text-center">
+                      <span className="block font-bold tracking-wide text-gray-600">
+                        {data.gender}
+                      </span>
+                      <span className="text-sm text-gray-400">Gender</span>
+                    </div>
                   </div>
                 </div>
                 <div className="w-full px-4 lg:order-1 lg:w-4/12">
@@ -207,11 +184,46 @@ export default function ProfilePage() {
               <div className="text-center md:mt-2">
                 <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
                   {data?.name}
-                  {/* {GenderIcon && <GenderIcon />} */}
                 </h3>
-                <div className="mb-2 mt-0 flex justify-center text-sm font-bold leading-normal text-gray-400">
-                  <CiLocationOn className="mr-2 text-lg text-gray-400 " />
-                  {data?.city}
+                <p className="-mt-4 text-slate-400">{data.experties}</p>
+                <div className="mb-2 mt-0 flex justify-center gap-5 text-sm font-bold leading-normal text-gray-400">
+                  <div className="flex justify-end gap-5 py-6 sm:mt-0">
+                    <Button
+                      color="warning"
+                      variant={isRated ? "light" : "flat"}
+                      onClick={() => rateThisUser.mutate({ id: data.id })}
+                    >
+                      <MdThumbUpAlt />
+                      {isRated ? "Rated" : "Rate"}
+                    </Button>
+
+                    {userSession?.user.id === id ? (
+                      <Button
+                        variant="bordered"
+                        onClick={() => void router.push("/auth/update-profile")}
+                      >
+                        Edit
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          void router.replace(
+                            {
+                              query: { ...router.query, chat: data.id },
+                            },
+                            undefined,
+                            { shallow: true },
+                          );
+                        }}
+                        color="success"
+                        className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white hover:border hover:border-orange-500"
+                        type="button"
+                        variant="flat"
+                      >
+                        Chat
+                      </Button>
+                    )}
+                  </div>
                 </div>
 
                 <div className="mx-auto mb-10 mt-10 max-w-2xl text-left text-gray-600">

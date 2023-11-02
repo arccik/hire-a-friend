@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
 import { contactsHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { authOptions } from "~/server/auth";
+import { prisma } from "~/server/db";
 import { redis } from "~/utils/redis";
 
 type ContactType = {
@@ -26,6 +27,14 @@ export default async function handler(
       return { sender: userIds[0], receiver: userIds[1] };
     });
 
+    const senderData = await prisma.user.findFirst({
+      where: {
+        id: contacts[0]?.receiver,
+      },
+      select: { image: true, name: true, status: true },
+    });
+
+    console.log("SenderData from PRisma: ", senderData);
     // console.log("Contacts:::: ", { contacts, contactsStrings, searchPattern });
 
     return res.status(200).json(contacts);

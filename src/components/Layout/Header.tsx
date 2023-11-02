@@ -9,15 +9,14 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Avatar,
-  Input,
 } from "@nextui-org/react";
 
 import Link from "next/link";
 import { GiTimeTrap } from "react-icons/gi";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { RiSearchLine } from "react-icons/ri";
 import SeachBar from "./SeachBar";
+import SearchBar from "./SeachBar";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -154,7 +153,7 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="md:hidden" justify="end">
-        <Input
+        {/* <Input
           classNames={{
             base: "max-w-full sm:max-w-[10rem] h-10",
             mainWrapper: "h-full",
@@ -166,9 +165,11 @@ export default function Header() {
           size="sm"
           startContent={<RiSearchLine size={18} />}
           type="search"
-        />
+          
+        /> */}
+        <SearchBar router={router} />
 
-        {userSession?.user.id && (
+        {/* {userSession?.user.id && (
           <Avatar
             isBordered
             className="transition-transform"
@@ -180,7 +181,7 @@ export default function Header() {
               "/assets/images/avatar-placeholder.jpeg"
             }
           />
-        )}
+        )} */}
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />

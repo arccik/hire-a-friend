@@ -32,7 +32,7 @@ export const userValidation = z.object({
   hidePrice: z.boolean().optional(),
   isOffering: z.boolean().optional(),
   languages: z.array(z.string()).optional(),
-  expertese: z.array(z.string()).optional(),
+  experties: z.string().optional(),
   activated: z.boolean().optional(),
   earnings: z.string().optional(),
   feedback: z.array(z.string()).optional(),

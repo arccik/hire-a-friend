@@ -28,7 +28,11 @@ export const env = createEnv({
     AWS_REGION: z.string().min(1),
     UPSTASH_REDIS_REST_URL: z.string().min(1),
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
-
+    PUSHER_APP_ID: z.string().min(1),
+    PUSHER_APP_SECRET: z.string().min(1),
+    EMAIL_FROM: z.string().min(1),
+    EMAIL_USER: z.string().min(1),
+    EMAIL_PASS: z.string().min(1)
   },
 
   /**
@@ -39,6 +43,7 @@ export const env = createEnv({
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
     NEXT_PUBLIC_AWS_S3_BACKET_URL: z.string().min(1),
+    NEXT_PUBLIC_PUSHER_APP_KEY: z.string().min(1)
   },
 
   /**
@@ -58,7 +63,15 @@ export const env = createEnv({
     NEXT_PUBLIC_AWS_S3_BACKET_URL: process.env.NEXT_PUBLIC_AWS_S3_BACKET_URL,
     AWS_REGION: process.env.AWS_REGION,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    PUSHER_APP_ID: process.env.PUSHER_APP_ID,
+    PUSHER_APP_SECRET: process.env.PUSHER_SECRET,
+    NEXT_PUBLIC_PUSHER_APP_KEY: process.env.NEXT_PUBLIC_PUSHER_APP_KEY,
+    EMAIL_FROM: process.env.EMAIL_FROM,
+    EMAIL_PASS: process.env.EMAIL_PASS,
+    EMAIL_USER: process.env.EMAIL_USER
+
+
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

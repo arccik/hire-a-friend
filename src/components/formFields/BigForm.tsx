@@ -80,6 +80,7 @@ export default function BigForm(props: PropType) {
       lastName: props.lastName ?? "",
       name: props.name ?? "",
       activities: props.activities ?? [],
+      experties: props.experties ?? undefined,
       age: props.age ?? undefined,
       price: props.price ?? undefined,
       hidePrice: props.hidePrice ?? false,
@@ -116,6 +117,12 @@ export default function BigForm(props: PropType) {
               <InputField
                 title="Nickname"
                 fieldName="name"
+                register={register}
+                errors={errors}
+              />
+              <InputField
+                title="Experties"
+                fieldName="experties"
                 register={register}
                 errors={errors}
               />

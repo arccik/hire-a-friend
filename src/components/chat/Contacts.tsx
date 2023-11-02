@@ -17,20 +17,20 @@ export default function Contacts({ selected }: PropType) {
   const router = useRouter();
   const [contacts, setContacts] = useState<ContactsType>(null);
 
-  useEffect(() => {
-    const fetchContacts = () => {
-      const url = `/api/chat/contacts`;
+  // useEffect(() => {
+  //   const fetchContacts = () => {
+  //     const url = `/api/chat/contacts`;
 
-      fetch(url)
-        .then(async (r) => {
-          const data = (await r.json()) as ContactsType;
-          console.log("list of contacts: ", data);
-          setContacts(data);
-        })
-        .catch(() => console.log("Couldn't get contacts from db"));
-    };
-    fetchContacts();
-  }, []);
+  //     fetch(url)
+  //       .then(async (r) => {
+  //         const data = (await r.json()) as ContactsType;
+  //         console.log("list of contacts: ", data);
+  //         setContacts(data);
+  //       })
+  //       .catch(() => console.log("Couldn't get contacts from db"));
+  //   };
+  //   fetchContacts();
+  // }, []);
 
   const handleCloseButton = (index: string) => {
     const { pathname, query } = router;

@@ -19,5 +19,5 @@ export type Message = z.infer<typeof messageSchema>;
 export type MessageResponse = {
   message: string;
   date: string | Date;
-  senderId?: string;
+  sender?: string;
 };

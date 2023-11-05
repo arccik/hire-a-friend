@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
 import DisplayError from "~/components/features/DisplayError";
-import { CiLocationOn } from "react-icons/ci";
 
 import CustomerProfile from "~/components/pages-components/profile/CustomerProfile";
 import ApearanceTable from "~/components/pages-components/profile/ApearanceTable";
@@ -25,12 +24,15 @@ export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
   const { data: userSession } = useSession();
+  const { data: contacts } = api.chat.getContacts.useQuery();
+  const addContact = api.chat.addContact.useMutation();
 
+  console.log("Profile page Contacts from TRPC: ", contacts);
   const { data, status, refetch } = api.user.getOne.useQuery(
     { id },
     { enabled: !!id },
   );
-  const rateThisUser = api.friend.vote.useMutation({
+  const rateUser = api.friend.vote.useMutation({
     onSuccess: async () => {
       toast.success("Thanks");
       await refetch();
@@ -67,6 +69,35 @@ export default function ProfilePage() {
   const isRated =
     userSession?.user &&
     data.Rate.some((v: Rate) => v.voterId === userSession?.user?.id);
+
+  const handleChatClick = () => {
+    if (!userSession) {
+      return toast.info(
+        <div className="flex">
+          <p>Have to be logged in</p>
+          <Button
+            className="ml-4"
+            size="sm"
+            onClick={() => void router.push("/auth/sign-in")}
+          >
+            Login
+          </Button>
+        </div>,
+      );
+    }
+    addContact.mutate({
+      id: data.id,
+      image: data.image ?? "",
+      name: data.name!,
+    });
+    void router.replace(
+      {
+        query: { ...router.query, chat: data.id },
+      },
+      undefined,
+      { shallow: true },
+    );
+  };
 
   return (
     <main className="profile-page">
@@ -143,8 +174,9 @@ export default function ProfilePage() {
                       <span className="text-sm text-gray-400">City</span>
                     </div>
                     <div className="mr-4 p-3 text-center">
-                      <span className="block font-bold tracking-wide text-gray-600">
-                        {data.gender}
+                      <span className=" flex gap-2 font-bold tracking-wide text-gray-600">
+                        {gender?.name}
+                        {gender && <gender.Icon />}
                       </span>
                       <span className="text-sm text-gray-400">Gender</span>
                     </div>
@@ -191,7 +223,7 @@ export default function ProfilePage() {
                     <Button
                       color="warning"
                       variant={isRated ? "light" : "flat"}
-                      onClick={() => rateThisUser.mutate({ id: data.id })}
+                      onClick={() => rateUser.mutate({ id: data.id })}
                     >
                       <MdThumbUpAlt />
                       {isRated ? "Rated" : "Rate"}
@@ -206,15 +238,7 @@ export default function ProfilePage() {
                       </Button>
                     ) : (
                       <Button
-                        onClick={() => {
-                          void router.replace(
-                            {
-                              query: { ...router.query, chat: data.id },
-                            },
-                            undefined,
-                            { shallow: true },
-                          );
-                        }}
+                        onClick={handleChatClick}
                         color="success"
                         className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white hover:border hover:border-orange-500"
                         type="button"
@@ -229,7 +253,7 @@ export default function ProfilePage() {
                 <div className="mx-auto mb-10 mt-10 max-w-2xl text-left text-gray-600">
                   {data?.about}
                 </div>
-                <div className="mx-auto mb-10 mt-10 w-2/3 justify-center">
+                <div className="mx-auto mb-10 mt-10 flex flex-row justify-center gap-4 md:w-2/3">
                   <Gallery imagesUrl={data?.photos} />
                 </div>
               </div>

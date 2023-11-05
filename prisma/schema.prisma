@@ -15,15 +15,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -103,6 +94,8 @@ model User {
     Rate         Rate[]
 
     availableHours String?
+    contactId      String?
+    contacts       Contact[]
 }
 
 model Rate {
@@ -150,4 +143,14 @@ model Comment {
 enum UserType {
     Friend
     Customer
+}
+
+model Contact {
+    id     String @id @default(uuid())
+    userId String
+    href   String
+    name   String?
+    image  String?
+    User   User   @relation(fields: [userId], references: [id])
+    contactId String
 }

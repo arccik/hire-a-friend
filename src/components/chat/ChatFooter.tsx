@@ -1,38 +1,35 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { AiOutlineSend, AiOutlineContacts } from "react-icons/ai";
+import { api } from "~/utils/api";
 import type { MessageResponse, Message } from "~/validation/message-validation";
 
 type PropType = {
-  setMessages: Dispatch<SetStateAction<MessageResponse[]>>;
+  // setMessages: Dispatch<SetStateAction<MessageResponse[]>>;
   setShowContacts: Dispatch<SetStateAction<boolean>>;
-  receiverId: string | null;
+  receiverId?: string | null;
 };
 
 export default function ChatFooter({
-  setMessages,
+  // setMessages,
   setShowContacts,
   receiverId,
 }: PropType) {
   const [message, setMessage] = useState<string>("");
+  const addMessage = api.chat.addMessage.useMutation();
 
   const handleMessageSend = async () => {
     if (!message) return;
 
     const sendData = {
       message,
-      receiverId,
+      receiverId: receiverId!,
       date: new Date(),
     };
+    addMessage.mutate(sendData);
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      body: JSON.stringify(sendData),
-    });
-    const data = (await response.json()) as Message;
-    console.log("REspnse From Server: ", data);
-    setMessages((prev) => [...prev, sendData]);
     setMessage("");
   };
+
   return (
     <div className="relative bottom-0 flex w-full items-center border-t p-2">
       <div>

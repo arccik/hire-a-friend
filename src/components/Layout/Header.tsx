@@ -26,7 +26,7 @@ export default function Header() {
   const userMenuItems = [
     {
       id: 1,
-      title: "Explore",
+      title: "Browse",
       href: "/friends",
     },
     {

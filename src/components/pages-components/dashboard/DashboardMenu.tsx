@@ -1,36 +1,46 @@
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import { api } from "~/utils/api";
 
 export default function DashboardMenu() {
+  const { data: userSession } = useSession({ required: true });
+  const { data: userData } = api.user.getOne.useQuery(
+    { id: userSession?.user.id! },
+    { enabled: !!userSession?.user.id },
+  );
   return (
     <div id="menu" className="col-span-3 rounded-lg bg-white/10 p-4 ">
       <h1 className="bg-gradient-to-br from-white via-white/50 to-transparent bg-clip-text text-lg font-bold text-transparent lg:text-3xl">
         Dashboard<span className="text-indigo-400">.</span>
       </h1>
       <p className="mb-2 text-sm text-slate-400">Welcome back,</p>
-      <a
-        href="#"
+      <Link
+        href={`/profile/${userSession?.user.id}`}
         className="group group mb-5 flex w-full flex-col items-center space-y-2 rounded-lg px-2 py-3 transition duration-150 ease-linear hover:bg-white/10 md:flex-row md:space-x-2 md:space-y-0"
       >
-        <div>
-          <Image
-            className="relative h-10 w-10 rounded-full object-cover"
-            src="https://img.freepik.com/free-photo/no-problem-concept-bearded-man-makes-okay-gesture-has-everything-control-all-fine-gesture-wears-spectacles-jumper-poses-against-pink-wall-says-i-got-this-guarantees-something_273609-42817.jpg?w=1800&t=st=1669749937~exp=1669750537~hmac=4c5ab249387d44d91df18065e1e33956daab805bee4638c7fdbf83c73d62f125"
-            alt="dashboard image"
-            width={40}
-            height={40}
-          />
-        </div>
+        {userData?.image && (
+          <div>
+            <Image
+              className="relative h-10 w-10 rounded-full object-cover"
+              src={userData?.image}
+              alt="dashboard image"
+              width={40}
+              height={40}
+            />
+          </div>
+        )}
         <div>
           <p className="font-medium leading-4 group-hover:text-indigo-400">
-            Example name
+            {userSession?.user.name}
           </p>
-          <span className="text-xs text-slate-400">Time Industry ltd</span>
+          <span className="text-xs text-slate-400">{userData?.experties}</span>
         </div>
-      </a>
+      </Link>
       <hr className="my-2 border-slate-700" />
       <div id="menu" className="my-5 flex flex-col space-y-2">
-        <a
-          href="#"
+        <Link
+          href="/dashboard"
           className="group rounded-lg px-2 py-3 transition duration-150 ease-linear hover:bg-white/10"
         >
           <div className="flex flex-col items-center space-x-2 space-y-2 md:flex-row md:space-y-0">
@@ -59,7 +69,7 @@ export default function DashboardMenu() {
               </p>
             </div>
           </div>
-        </a>
+        </Link>
         <a
           href="#"
           className="group rounded-lg px-2 py-3 transition duration-150 ease-linear hover:bg-white/10"

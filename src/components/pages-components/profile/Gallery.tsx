@@ -23,18 +23,16 @@ export default function Gallery({
 
   return (
     <>
-      <div className="flex flex-wrap justify-center gap-2">
-        {imagesUrl.map((img, index) => (
-          <Image
-            isZoomed
-            key={`${img} -- ${index}`}
-            width={240}
-            alt="NextUI Fruit Image with Zoom"
-            src={img}
-            onClick={() => openLightboxOnSlide(index + 1)}
-          />
-        ))}
-      </div>
+      {imagesUrl.map((img, index) => (
+        <Image
+          isZoomed
+          key={`${img} -- ${index}`}
+          width={240}
+          alt="NextUI Fruit Image with Zoom"
+          src={img}
+          onClick={() => openLightboxOnSlide(index + 1)}
+        />
+      ))}
       <FsLightbox
         toggler={lightboxController.toggler}
         sources={imagesUrl}

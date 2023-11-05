@@ -185,13 +185,28 @@ export default function BigForm(props: PropType) {
         />
 
         <NotifyBy />
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <Button variant="faded" as={Link} href={`/profile/${props.id}`}>
-            Cancel
-          </Button>
-          <Button color="success" type="submit">
-            Save
-          </Button>
+        <div className="fixed inset-x-0 bottom-0 z-40 flex h-auto w-full items-center justify-center gap-4 bg-background/70 p-1 backdrop-blur-lg backdrop-saturate-150">
+          <div className="w-1/4">
+            <Button
+              variant="flat"
+              color="danger"
+              className="bg-red-100 text-red-400"
+              as={Link}
+              href={`/profile/${props.id}`}
+            >
+              Cancel
+            </Button>
+          </div>
+          <div className="w-1/2">
+            <Button
+              fullWidth
+              variant="flat"
+              className="bg-green-100 text-green-400"
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
         </div>
       </form>
     </>

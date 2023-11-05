@@ -27,7 +27,7 @@ export default function Features() {
             onPress={() => console.log("item pressed")}
           >
             <CardBody className="overflow-visible">
-              <div className="mx-auto text-center align-middle">
+              <div className="mx-auto  text-center align-middle duration-200 hover:scale-110">
                 <item.Icon
                   className="mx-auto mb-2 rounded-lg bg-gradient-to-tr from-pink-500  to-yellow-500 p-3 text-8xl text-white shadow-lg drop-shadow-lg"
                   // style={{

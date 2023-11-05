@@ -1,49 +1,36 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoMdChatboxes } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import ChatBody from "~/components/chat/ChatBody";
 import ChatFooter from "~/components/chat/ChatFooter";
 import ChatHeader from "~/components/chat/ChatHeader";
 
-import type { MessageResponse } from "~/validation/message-validation";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Contacts from "./Contacts";
 import { api } from "~/utils/api";
 
 export default function Chat() {
-  const { data: userSession } = useSession(); // add required when complete this component.
+  const { data: userSession } = useSession(); // TODO: add required when complete this component.
   const [showChat, setShowChat] = useState(false);
   const [showContacts, setShowContacts] = useState(false);
-  const [messages, setMessages] = useState<MessageResponse[]>([]);
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
-  const { data: receiverData } = api.friend.getOne.useQuery(
-    { id: chatId! },
-    { enabled: chatId !== null },
+
+  const { data: contactsData } = api.chat.getContacts.useQuery();
+  const { data: messageData } = api.chat.getMessages.useQuery(chatId!, {
+    enabled: !!chatId,
+  });
+
+  const selectedChat = useMemo(
+    () => contactsData?.find((v) => v.contactId === chatId),
+    [chatId],
   );
-
-  const { data: chats, status: chatsStatus } = api.chat.getMessages.useQuery(
-    chatId!,
-    { enabled: !!chatId },
-  );
-
-  // console.log("Chatss::: ", chats);
-  // useEffect(() => {
-  //   const fetchChats = () => {
-  //     const url = `/api/chat?receiverId=${receiverId}&reverse=true`;
-
-  //     fetch(url)
-  //       .then(async (r) => {
-  //         const data = (await r.json()) as MessageResponse[];
-  //         setMessages(data);
-  //       })
-  //       .catch(() => console.log("Couldn't send message"));
-  //   };
-
-  //   fetchChats();
-  //   if (receiverId) setShowChat(true);
-  // }, [receiverId]);
+  useEffect(() => {
+    if (chatId) {
+      setShowChat(true);
+    }
+  }, [chatId]);
 
   if (!userSession) return null;
   return (
@@ -68,20 +55,16 @@ export default function Chat() {
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
-            className="fixed bottom-0 right-0 z-50 flex h-[calc(100%-100px)] w-full flex-col border bg-white shadow-md md:w-1/3"
+            className="fixed bottom-0 right-0 z-50 flex h-[calc(100%-100px)] w-full flex-col rounded-lg border bg-white shadow-md md:w-1/3"
           >
             <ChatHeader
-              id={receiverData?.id ?? ""}
+              id={selectedChat?.contactId ?? ""}
               setShowChat={setShowChat}
-              name={receiverData?.name ?? ""}
-              status={receiverData?.status ?? ""}
-              avatar={receiverData?.image ?? ""}
+              name={selectedChat?.name ?? ""}
+              status="Online | Offline"
+              avatar={selectedChat?.image ?? ""}
             />
-            <ChatBody
-              messages={messages}
-              avatar={userSession?.user?.image}
-              receiverName={receiverData?.name ?? ""}
-            />
+            {messageData && <ChatBody messages={messageData} />}
             {!chatId && (
               <div className="h-full w-full items-center ">
                 <p className="items-center text-center font-bold">
@@ -89,11 +72,7 @@ export default function Chat() {
                 </p>
               </div>
             )}
-            <ChatFooter
-              setMessages={setMessages}
-              receiverId={chatId}
-              setShowContacts={setShowContacts}
-            />
+            <ChatFooter receiverId={chatId} setShowContacts={setShowContacts} />
           </motion.div>
           {showContacts && (
             <motion.div

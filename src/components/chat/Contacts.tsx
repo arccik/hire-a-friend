@@ -1,36 +1,14 @@
 import { useRouter } from "next/router";
 import { User } from "@nextui-org/react";
-import { useEffect, useState } from "react";
 import { cn } from "~/lib/utils";
-
-type ContactsType =
-  | {
-      sender: string;
-      receiver: string;
-    }[]
-  | null;
+import { api } from "~/utils/api";
 
 type PropType = {
   selected: string | null;
 };
 export default function Contacts({ selected }: PropType) {
   const router = useRouter();
-  const [contacts, setContacts] = useState<ContactsType>(null);
-
-  // useEffect(() => {
-  //   const fetchContacts = () => {
-  //     const url = `/api/chat/contacts`;
-
-  //     fetch(url)
-  //       .then(async (r) => {
-  //         const data = (await r.json()) as ContactsType;
-  //         console.log("list of contacts: ", data);
-  //         setContacts(data);
-  //       })
-  //       .catch(() => console.log("Couldn't get contacts from db"));
-  //   };
-  //   fetchContacts();
-  // }, []);
+  const { data: contactsData } = api.chat.getContacts.useQuery();
 
   const handleCloseButton = (index: string) => {
     const { pathname, query } = router;
@@ -46,19 +24,18 @@ export default function Contacts({ selected }: PropType) {
         </p>
       </div>
       <div className="flex items-start overflow-auto md:mt-5 md:flex-col">
-        {contacts?.map((contact) => (
+        {contactsData?.map((contact) => (
           <User
-            onClick={() => handleCloseButton(contact.receiver)}
-            key={contact.receiver}
+            onClick={() => handleCloseButton(contact.contactId)}
+            key={contact.id}
             isFocusable
-            name={contact.receiver}
+            name={contact.name}
             className={cn(
-              "animate-appearance-in cursor-pointer p-2 text-black hover:bg-slate-200",
-              selected === contact.receiver && "bg-slate-300",
+              "w-full animate-appearance-in cursor-pointer content-start justify-start p-2 text-black hover:bg-slate-200",
+              selected === contact.id && "bg-slate-300",
             )}
-            description="Product Designer"
             avatarProps={{
-              src: "/assets/images/logo-circle.png",
+              src: contact.image ?? "",
             }}
           />
         ))}

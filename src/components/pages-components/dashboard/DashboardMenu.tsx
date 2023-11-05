@@ -6,7 +6,7 @@ import { api } from "~/utils/api";
 export default function DashboardMenu() {
   const { data: userSession } = useSession({ required: true });
   const { data: userData } = api.user.getOne.useQuery(
-    { id: userSession?.user.id! },
+    { id: userSession?.user.id ?? "" },
     { enabled: !!userSession?.user.id },
   );
   return (

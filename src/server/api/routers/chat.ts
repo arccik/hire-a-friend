@@ -4,7 +4,7 @@ import { redis } from "~/utils/redis";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
-import { MessageResponse } from "~/validation/message-validation";
+import { type MessageResponse } from "~/validation/message-validation";
 
 export const chatRouter = createTRPCRouter({
   getContact: protectedProcedure
@@ -61,7 +61,7 @@ export const chatRouter = createTRPCRouter({
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const querySting = chatHrefConstructor(ctx.session.user.id, input);
-      const messages = (await redis.smembers(querySting)) as MessageResponse[];
+      const messages: MessageResponse[] = await redis.smembers(querySting); 
       return messages.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);

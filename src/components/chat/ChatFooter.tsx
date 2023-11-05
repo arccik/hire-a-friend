@@ -17,7 +17,7 @@ export default function ChatFooter({
   const [message, setMessage] = useState<string>("");
   const addMessage = api.chat.addMessage.useMutation();
 
-  const handleMessageSend = async () => {
+  const handleMessageSend = () => {
     if (!message) return;
 
     const sendData = {

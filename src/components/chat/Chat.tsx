@@ -64,7 +64,9 @@ export default function Chat() {
               status="Online | Offline"
               avatar={selectedChat?.image ?? ""}
             />
-            {messageData && <ChatBody messages={messageData} />}
+            {messageData && (
+              <ChatBody messages={messageData} selected={selectedChat} />
+            )}
             {!chatId && (
               <div className="h-full w-full items-center ">
                 <p className="items-center text-center font-bold">

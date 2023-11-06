@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { type User } from "@prisma/client";
 import Link from "next/link";
 

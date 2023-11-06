@@ -1,3 +1,4 @@
+import type { Appearance, User } from "@prisma/client";
 import { z } from "zod";
 
 export const userValidation = z.object({
@@ -20,7 +21,7 @@ export const userValidation = z.object({
 
   country: z.string().optional(),
   street: z.string().optional(),
-  city: z.string().optional(),
+  city: z.string(),
   state: z.string().optional(),
   zipCode: z.string().optional(),
 
@@ -67,12 +68,14 @@ export const signUpSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
-  export const loginSchema = z.object({
-    email: z.string().min(3, "Required").email(),
-    password: z.string().min(3, "You must enter a password"),
-  });
+export const loginSchema = z.object({
+  email: z.string().min(3, "Required").email(),
+  password: z.string().min(3, "You must enter a password"),
+});
 
-  export type SignUpSchemaType = z.infer<typeof signUpSchema>;
-  export type LoginSchemaType = z.infer<typeof loginSchema>;
+export type SignUpSchemaType = z.infer<typeof signUpSchema>;
+export type LoginSchemaType = z.infer<typeof loginSchema>;
 
-
+export type BigFormPropType = User & { userId: string } & {
+  appearance: Appearance | null;
+};

@@ -26,6 +26,7 @@
     "@types/socket.io": "^3.0.2",
     "@upstash/redis": "^1.23.3",
     "compressorjs": "^1.2.1",
+    "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
     "fslightbox-react": "^1.7.6",
     "lottie-react": "^2.4.0",

@@ -1,18 +1,22 @@
 import { useSession } from "next-auth/react";
 import { cn } from "~/lib/utils";
 import { type MessageResponse } from "~/validation/message-validation";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+import { User } from "@nextui-org/react";
+import { api } from "~/utils/api";
+import { Contact } from "@prisma/client";
+dayjs.extend(relativeTime);
 
 export default function MessageBubble({
   message,
-  image,
   sender,
   date,
-}: MessageResponse & {
-  image?: string | null;
-}) {
+  selected,
+}: MessageResponse & { selected: Contact | undefined }) {
   const { data: userSession } = useSession();
   const type = userSession?.user.id === sender ? "sender" : "receiver";
-
+  console.log("selected", selected);
   return (
     <div
       className={cn(
@@ -26,11 +30,17 @@ export default function MessageBubble({
           type === "sender" ? "ml-4" : "mr-4",
         )}
       >
-        {image && (
-          <img className="h-10 w-10 rounded-full" src={image} alt="avatar" />
-        )}
-        <p className="block text-xs text-black hover:underline">You</p>
+        <User
+          avatarProps={{
+            src:
+              (type === "sender" ? userSession?.user.image : selected?.image) ??
+              undefined,
+          }}
+          name={type === "sender" ? "You" : selected?.name}
+          description={dayjs(date).fromNow()}
+        />
       </div>
+
       <div
         className={cn(
           "group relative mb-2 flex-1  rounded-xl p-2",
@@ -39,12 +49,7 @@ export default function MessageBubble({
             : "bg-indigo-400 text-white",
         )}
       >
-        <div>
-          {message}
-          <p className="hidden text-[0.7rem]  group-hover:block ">
-            {new Date(date).toUTCString()}
-          </p>
-        </div>
+        <div>{message}</div>
 
         {type == "sender" ? (
           <div className="absolute right-0 top-1/2 h-2 w-2 translate-x-1/2 rotate-45 transform bg-indigo-200"></div>

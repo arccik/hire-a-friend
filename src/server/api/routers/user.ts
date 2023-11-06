@@ -91,4 +91,13 @@ export const userRouter = createTRPCRouter({
         data: { userType: input.memberType },
       });
     }),
+  count: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.user.count();
+  }),
+  lastFiveUsers: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.user.findMany({
+      where: { createdAt: { gt: new Date(Date.now() - 50 * 60 * 1000) } },
+      take: 5,
+    });
+  }),
 });

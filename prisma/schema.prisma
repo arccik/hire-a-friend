@@ -96,6 +96,8 @@ model User {
     availableHours String?
     contactId      String?
     contacts       Contact[]
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
 }
 
 model Rate {
@@ -146,11 +148,11 @@ enum UserType {
 }
 
 model Contact {
-    id     String @id @default(uuid())
-    userId String
-    href   String
-    name   String?
-    image  String?
-    User   User   @relation(fields: [userId], references: [id])
+    id        String  @id @default(uuid())
+    userId    String
+    href      String
+    name      String?
+    image     String?
+    User      User    @relation(fields: [userId], references: [id])
     contactId String
 }

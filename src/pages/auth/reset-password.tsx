@@ -17,7 +17,6 @@ import {
   signUpSchema,
 } from "~/validation/user-validation";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
 
 export default function ResetPasswordPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

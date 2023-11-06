@@ -9,7 +9,7 @@ import { env } from "~/env.mjs";
 export const emailRouter = createTRPCRouter({
   sendGreetings: protectedProcedure
     .input(z.object({ email: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       await transporter.sendMail({
         from: env.EMAIL_FROM,
         to: input.email,
@@ -39,7 +39,7 @@ export const emailRouter = createTRPCRouter({
     }),
   newMessageReceived: protectedProcedure
     .input(z.object({ email: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       await transporter.sendMail({
         from: env.EMAIL_FROM,
         to: input.email,

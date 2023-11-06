@@ -1,7 +1,7 @@
 export default function DashboardIncome() {
   return (
     <div id="last-incomes">
-      <h1 className="py-4 font-bold uppercase">Last 24h incomes</h1>
+      <h1 className="py-4 font-bold uppercase">Last registered</h1>
       <div
         id="stats"
         className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"

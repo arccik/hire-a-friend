@@ -11,6 +11,8 @@ export default function InterestActivities({
   setValue,
   value,
 }: PropType) {
+
+  console.log("InterestActivities", value);
   return (
     <div className="border-b border-gray-900/10">
       <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -29,12 +31,12 @@ export default function InterestActivities({
             items={activities}
             label="Activities willing to do"
             variant="bordered"
-            selectedKeys={value}
+            // selectedKeys={value}
+            defaultSelectedKeys={value}
             isMultiline={true}
             selectionMode="multiple"
             placeholder="Select a user"
             {...register("activities")}
-            // onSelectionChange={(e) => setValue("activities", [...e])}
             onChange={(e) => setValue("activities", e.target.value.split(","))}
             classNames={{
               base: "max-w-lg",

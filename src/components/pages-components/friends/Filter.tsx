@@ -15,7 +15,7 @@ export default function Filter() {
   const queryKeysToCheck = ["activities", "status", "gender", "city"];
   const shouldRenderClearBtn = useMemo(
     () => queryKeysToCheck.some((key) => key in router.query),
-    [router.query],
+    [router.query, queryKeysToCheck],
   );
 
   return (

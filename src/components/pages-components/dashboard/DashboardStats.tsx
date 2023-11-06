@@ -1,4 +1,7 @@
+import { api } from "~/utils/api";
+
 export default function DashboardStats() {
+  const { data: usersCount } = api.user.count.useQuery();
   return (
     <div id="24h">
       <h1 className="py-4 font-bold uppercase">Last 24h Statistics</h1>
@@ -29,7 +32,7 @@ export default function DashboardStats() {
                 Users
               </p>
               <p className="inline-flex items-center space-x-2 text-2xl font-bold text-white">
-                <span>+28</span>
+                <span>{usersCount}</span>
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

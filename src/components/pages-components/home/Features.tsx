@@ -7,12 +7,7 @@ import Link from "next/link";
 export default function Features() {
   const [showMore, setShowMore] = useState(false);
   const toDisplay = showMore ? activities : activities.slice(0, 4);
-  function generateRandomHexColor() {
-    // Generate a random 24-bit (8-bit for each R, G, and B) color value
-    const randomColorValue = Math.floor(Math.random() * 16777215); // 16777215 is equivalent to 0xFFFFFF in hexadecimal
-    const color = "#" + randomColorValue.toString(16).toUpperCase();
-    return color;
-  }
+
   return (
     <>
       <div className="m-5 grid grid-cols-1 gap-4 sm:grid-cols-4">
@@ -28,12 +23,7 @@ export default function Features() {
           >
             <CardBody className="overflow-visible">
               <div className="mx-auto  text-center align-middle duration-200 hover:scale-110">
-                <item.Icon
-                  className="mx-auto mb-2 rounded-lg bg-gradient-to-tr from-pink-500  to-yellow-500 p-3 text-8xl text-white shadow-lg drop-shadow-lg"
-                  // style={{
-                  //   color: generateRandomHexColor(),
-                  // }}
-                />
+                <item.Icon className="mx-auto mb-2 rounded-lg bg-gradient-to-tr from-pink-500  to-yellow-500 p-3 text-8xl text-white shadow-lg drop-shadow-lg" />
                 <b>{item.title}</b>
               </div>
             </CardBody>

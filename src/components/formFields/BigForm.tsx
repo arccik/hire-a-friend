@@ -2,8 +2,8 @@ import { Button, Textarea } from "@nextui-org/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 
-import type { User, Appearance } from "@prisma/client";
 import {
+  type BigFormPropType,
   userValidation,
   type UserValidationType,
 } from "~/validation/user-validation";
@@ -19,15 +19,14 @@ import UploadImage from "./UploadImage";
 import UploadCoverImage from "./UploadCoverImage";
 import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
+import getDefaultValues from "~/helpers/getDefaultValues";
 
-type PropType = User & { userId: string } & { appearance: Appearance | null };
-
-export default function BigForm(props: PropType) {
+export default function BigForm(props: BigFormPropType) {
   const updateUser = api.user.update.useMutation({
     onSuccess: () => {
       toast.success(
-        <div className="flex flex-row justify-between">
-          <b>Profile Updated</b>{" "}
+        <div className="flex flex-row items-center justify-between">
+          <b>Successfully Saved!</b>
           <Button
             size="sm"
             className="text-xs"
@@ -37,16 +36,6 @@ export default function BigForm(props: PropType) {
             View Profile
           </Button>
         </div>,
-        {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        },
       );
     },
     onError: (error) => {
@@ -64,36 +53,7 @@ export default function BigForm(props: PropType) {
     watch,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
-    defaultValues: {
-      about: props.about ?? "",
-      activated: props.activated ?? false,
-      image: props.image ?? undefined,
-      gender: props.gender ?? undefined,
-      coverImage: props.coverImage ?? "",
-      country: props.country ?? "",
-      street: props.street ?? "",
-      state: props.state ?? "",
-      city: props.city ?? "",
-      zipCode: props.zipCode ?? "",
-      email: props.email ?? "",
-      firstName: props.firstName ?? "",
-      lastName: props.lastName ?? "",
-      name: props.name ?? "",
-      activities: props.activities ?? [],
-      experties: props.experties ?? undefined,
-      age: props.age ?? undefined,
-      price: props.price ?? undefined,
-      hidePrice: props.hidePrice ?? false,
-      phoneNumber: props.phoneNumber ?? "",
-      appearance: {
-        height: props.appearance?.height ?? "",
-        weight: props.appearance?.weight ?? "",
-        eyeColor: props.appearance?.eyeColor ?? "",
-        hairColor: props.appearance?.hairColor ?? "",
-        bodyType: props.appearance?.bodyType ?? "",
-        ethnicity: props.appearance?.ethnicity ?? "",
-      },
-    },
+    defaultValues: getDefaultValues(props),
   });
 
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
@@ -189,6 +149,7 @@ export default function BigForm(props: PropType) {
           <div className="w-1/4">
             <Button
               variant="flat"
+              fullWidth
               color="danger"
               className="bg-red-100 text-red-400"
               as={Link}

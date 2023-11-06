@@ -40,11 +40,10 @@ export default function FriendsPage() {
     },
   );
 
-  const { data: searchResult, status: searchStatus } =
-    api.friend.search.useQuery(
-      { value: searchValue, page },
-      { enabled: !!searchValue },
-    );
+  const { data: searchResult } = api.friend.search.useQuery(
+    { value: searchValue, page },
+    { enabled: !!searchValue },
+  );
 
   if (filterStatus === "error") return <DisplayError />;
 

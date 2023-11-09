@@ -1,4 +1,4 @@
-import type { MessageResponse } from "~/validation/message-validation";
+import type { MessageResponse } from "~/validation/message";
 import MessageBubble from "./MessageBubble";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { Contact } from "@prisma/client";

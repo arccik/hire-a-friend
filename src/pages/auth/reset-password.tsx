@@ -12,10 +12,7 @@ import {
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/utils/api";
-import {
-  type SignUpSchemaType,
-  signUpSchema,
-} from "~/validation/user-validation";
+import { type SignUpSchemaType, signUpSchema } from "~/validation/member";
 import { signIn } from "next-auth/react";
 
 export default function ResetPasswordPage() {

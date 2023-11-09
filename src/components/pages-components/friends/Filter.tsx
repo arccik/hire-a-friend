@@ -1,6 +1,6 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { GoFilter } from "react-icons/go";
-import activitiesList from "~/data/FriendActivitiesList.json";
+import activitiesList from "~/data/activities.json";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";

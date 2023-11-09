@@ -6,7 +6,7 @@ import {
   type BigFormPropType,
   userValidation,
   type UserValidationType,
-} from "~/validation/user-validation";
+} from "~/validation/member";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
 import Apearance from "./Apearance";
@@ -60,7 +60,7 @@ export default function BigForm(props: BigFormPropType) {
     updateUser.mutate({ ...data, id: props.userId });
   };
 
-  console.log("BIG FORM : ", watch("hobbies"));
+  console.log("BIG FORM : ", watch("activities"));
   return (
     <>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>

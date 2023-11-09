@@ -3,10 +3,7 @@ import Link from "next/link";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/utils/api";
-import {
-  type SignUpSchemaType,
-  signUpSchema,
-} from "~/validation/user-validation";
+import { type SignUpSchemaType, signUpSchema } from "~/validation/member";
 import { FaGoogle } from "react-icons/fa";
 import { signIn, useSession } from "next-auth/react";
 import Divider from "~/components/features/Divider";

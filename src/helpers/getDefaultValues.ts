@@ -1,7 +1,4 @@
-import type {
-  UserValidationType,
-  BigFormPropType,
-} from "~/validation/user-validation";
+import type { UserValidationType, BigFormPropType } from "~/validation/member";
 
 export default function getDefaultValues(
   props: Partial<BigFormPropType> = {},

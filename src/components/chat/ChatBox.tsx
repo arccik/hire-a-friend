@@ -4,7 +4,7 @@ import { IoMdChatboxes } from "react-icons/io";
 import Contacts from "./Contacts";
 import { useSearchParams } from "next/navigation";
 import ChatBoddy from "./ChatBody";
-import { MessageResponse } from "~/validation/message-validation";
+import { MessageResponse } from "~/validation/message";
 
 const MESSAGES = [
   {

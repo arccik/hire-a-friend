@@ -1,7 +1,7 @@
 import { Contact } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { cn } from "~/lib/utils";
-import { MessageResponse } from "~/validation/message-validation";
+import { MessageResponse } from "~/validation/message";
 
 export default function Message({
   message,

@@ -7,8 +7,8 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { clientSchema } from "~/validation/client-form-validation";
-import { userValidation, signUpSchema } from "~/validation/user-validation";
+import { clientSchema } from "~/validation/client-form";
+import { userValidation, signUpSchema } from "~/validation/member";
 
 export const userRouter = createTRPCRouter({
   signUp: publicProcedure

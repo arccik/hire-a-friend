@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type UseFormSetValue } from "react-hook-form";
 import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
-import { type UserValidationType } from "~/validation/user-validation";
+import { type UserValidationType } from "~/validation/member";
 
 import ImageGallery from "../features/ImageGallery";
 import { toast } from "react-toastify";

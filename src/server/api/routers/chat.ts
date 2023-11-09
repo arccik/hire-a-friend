@@ -7,7 +7,7 @@ import {
   chatHrefConstructor,
   pusherHrefConstructor,
 } from "~/helpers/chatHrefConstructor";
-import { type MessageResponse } from "~/validation/message-validation";
+import { type MessageResponse } from "~/validation/message";
 // import { pusherServer } from "~/utils/pusher";
 import PusherServer from "pusher";
 

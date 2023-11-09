@@ -1,5 +1,5 @@
 import { type PropsType } from "~/types/memberFormPropsType";
-import activities from "~/data/FriendActivitiesList.json";
+import activities from "~/data/activities.json";
 import hobbies from "~/data/hobby-list.json";
 import { Chip, Select, SelectItem } from "@nextui-org/react";
 
@@ -25,7 +25,11 @@ export default function InterestActivities({
         selectionMode="multiple"
         placeholder="Select"
         {...register(type)}
-        onChange={(e) => setValue(type, e.target.value.split(","))}
+        onSelectionChange={(e) => setValue(type, [...e] as string[])}
+        onChange={(e) => {
+          if (type === "hobbies") return;
+          setValue(type, e.target.value.split(","));
+        }}
         classNames={
           {
             // base: "max-w-lg",

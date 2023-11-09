@@ -13,7 +13,7 @@ export const userValidation = z.object({
   lastName: z.string().optional(),
   age: z
     .number()
-    .min(18, "Must be 18+")
+    .min(18, "Must be over 18 to use our service")
     .max(99, "Must be under 100")
     .optional(),
   about: z.string().optional(),

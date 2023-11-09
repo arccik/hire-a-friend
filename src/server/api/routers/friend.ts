@@ -5,7 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { friendFilterSchema } from "~/validation/friend-filter-validation";
+import { friendFilterSchema } from "~/validation/filter";
 
 export const friendRouter = createTRPCRouter({
   getOne: publicProcedure

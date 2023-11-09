@@ -1,12 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Link } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import UploadImage from "./UploadImage";
-import {
-  clientSchema,
-  ClientFormData,
-} from "~/validation/client-form-validation";
+import { clientSchema, ClientFormData } from "~/validation/client-form";
 import { api } from "~/utils/api";
 import { toast } from "react-toastify";
 
@@ -76,13 +73,6 @@ const MyForm: React.FC<PropType> = ({ name, image, city }) => {
           errorMessage={errors.city?.message}
         />
 
-        <Link
-          className="mx-auto  text-small"
-          size="sm"
-          href="/docs/terms-and-conditions"
-        >
-          Terms and conditions
-        </Link>
         <div className="flex justify-end gap-2">
           <Button type="submit" fullWidth color="primary">
             Save

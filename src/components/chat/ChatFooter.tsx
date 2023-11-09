@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { AiOutlineSend, AiOutlineContacts } from "react-icons/ai";
 import { api } from "~/utils/api";
-import type { MessageResponse, Message } from "~/validation/message-validation";
+import type { MessageResponse, Message } from "~/validation/message";
 
 type PropType = {
   setMessages: Dispatch<SetStateAction<MessageResponse[] | null>>;

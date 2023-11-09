@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { cn } from "~/lib/utils";
-import { type MessageResponse } from "~/validation/message-validation";
+import { type MessageResponse } from "~/validation/message";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import { User } from "@nextui-org/react";

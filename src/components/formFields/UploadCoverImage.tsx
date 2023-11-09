@@ -4,7 +4,7 @@ import { type UseFormSetValue } from "react-hook-form";
 import { FaPhotoVideo } from "react-icons/fa";
 import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
-import type { UserValidationType } from "~/validation/user-validation";
+import type { UserValidationType } from "~/validation/member";
 import Image from "next/image";
 import { toast } from "react-toastify";
 

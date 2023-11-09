@@ -5,7 +5,7 @@ import Image from "next/image";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { api } from "~/utils/api";
 import { type UseFormSetValue } from "react-hook-form";
-import { type UserValidationType } from "~/validation/user-validation";
+import { type UserValidationType } from "~/validation/member";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 

@@ -1,5 +1,5 @@
 import { Input } from "@nextui-org/react";
-import { type PropsType } from "~/types/bigFormPropsType";
+import { type PropsType } from "~/types/memberFormPropsType";
 import { type UserValidationType } from "~/validation/user-validation";
 
 export default function InputField({
@@ -18,6 +18,7 @@ export default function InputField({
       </label>
       <div className="mt-2">
         <Input
+          id="name"
           variant="bordered"
           {...register(fieldName)}
           autoComplete={fieldName}

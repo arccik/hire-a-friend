@@ -60,6 +60,7 @@ export default function BigForm(props: BigFormPropType) {
     updateUser.mutate({ ...data, id: props.userId });
   };
 
+  console.log("BIG FORM : ", watch("hobbies"));
   return (
     <>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
@@ -110,12 +111,15 @@ export default function BigForm(props: BigFormPropType) {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="photo"
+                  htmlFor="upload-btn"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Photo
                 </label>
-                <UploadImage setValue={setValue} imgUrl={props.image} />
+                <UploadImage
+                  setValue={(v) => setValue("image", v)}
+                  imgUrl={props.image}
+                />
               </div>
               <UploadCoverImage setValue={setValue} imgUrl={props.coverImage} />
             </div>
@@ -130,12 +134,40 @@ export default function BigForm(props: BigFormPropType) {
         <UploadGalleryImages setValue={setValue} imgUrls={props.photos} />
 
         <Apearance register={register} errors={errors} getValues={getValues} />
-        <InterestActivities
-          register={register}
-          errors={errors}
-          setValue={setValue}
-          value={getValues("activities")}
-        />
+        <div className="flex flex-row">
+          <div className="border-b border-gray-900/10">
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Interests/Activities
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              Listing various interests helps attract the right clients for you.
+            </p>
+
+            <InterestActivities
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              value={getValues("activities")}
+              type="activities"
+            />
+            <br />
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Hobbies/Topics
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              Specify your hobbies/topics, what you especially enjoy discussing.
+              That gives clients a sense of your specialties and descriptive
+              tags help clients easily find you.
+            </p>
+            <InterestActivities
+              register={register}
+              errors={errors}
+              type="hobbies"
+              setValue={setValue}
+              value={getValues("hobbies")}
+            />
+          </div>
+        </div>
         <PriceField
           register={register}
           errors={errors}

@@ -1,0 +1,1313 @@
+[
+  {
+    "value": "Business and Indust",
+    "label": "Business and Indust"
+  },
+  {
+    "value": "Advertising ",
+    "label": "Advertising "
+  },
+  {
+    "value": "Agriculture",
+    "label": "Agriculture"
+  },
+  {
+    "value": "Architecture",
+    "label": "Architecture"
+  },
+  {
+    "value": "Aviation",
+    "label": "Aviation"
+  },
+  {
+    "value": "Banking",
+    "label": "Banking"
+  },
+  {
+    "value": "Investment banking",
+    "label": "Investment banking"
+  },
+  {
+    "value": "Online banking",
+    "label": "Online banking"
+  },
+  {
+    "value": "Retail banking",
+    "label": "Retail banking"
+  },
+  {
+    "value": "Business",
+    "label": "Business"
+  },
+  {
+    "value": "Construction",
+    "label": "Construction"
+  },
+  {
+    "value": "Design",
+    "label": "Design"
+  },
+  {
+    "value": "Fashion design",
+    "label": "Fashion design"
+  },
+  {
+    "value": "Graphic design",
+    "label": "Graphic design"
+  },
+  {
+    "value": "Interior design",
+    "label": "Interior design"
+  },
+  {
+    "value": "Economics",
+    "label": "Economics"
+  },
+  {
+    "value": "Engineering",
+    "label": "Engineering"
+  },
+  {
+    "value": "Entrepreneurship",
+    "label": "Entrepreneurship"
+  },
+  {
+    "value": "Health care ",
+    "label": "Health care "
+  },
+  {
+    "value": "Higher education",
+    "label": "Higher education"
+  },
+  {
+    "value": "Management",
+    "label": "Management"
+  },
+  {
+    "value": "Marketing",
+    "label": "Marketing"
+  },
+  {
+    "value": "Nursing",
+    "label": "Nursing"
+  },
+  {
+    "value": "Online",
+    "label": "Online"
+  },
+  {
+    "value": "Digital marketing",
+    "label": "Digital marketing"
+  },
+  {
+    "value": "Display advertising",
+    "label": "Display advertising"
+  },
+  {
+    "value": "Email marketing",
+    "label": "Email marketing"
+  },
+  {
+    "value": "Online advertising",
+    "label": "Online advertising"
+  },
+  {
+    "value": "Search engine optimization",
+    "label": "Search engine optimization"
+  },
+  {
+    "value": "Social media",
+    "label": "Social media"
+  },
+  {
+    "value": "Social media marketing",
+    "label": "Social media marketing"
+  },
+  {
+    "value": "Web design",
+    "label": "Web design"
+  },
+  {
+    "value": "Web development",
+    "label": "Web development"
+  },
+  {
+    "value": "Web hosting",
+    "label": "Web hosting"
+  },
+  {
+    "value": "Personal finance",
+    "label": "Personal finance"
+  },
+  {
+    "value": "Creditcards",
+    "label": "Creditcards"
+  },
+  {
+    "value": "Insurance",
+    "label": "Insurance"
+  },
+  {
+    "value": "Investment",
+    "label": "Investment"
+  },
+  {
+    "value": "Mortgage loans",
+    "label": "Mortgage loans"
+  },
+  {
+    "value": "Real estate",
+    "label": "Real estate"
+  },
+  {
+    "value": "Retail",
+    "label": "Retail"
+  },
+  {
+    "value": "Sales",
+    "label": "Sales"
+  },
+  {
+    "value": "Science",
+    "label": "Science"
+  },
+  {
+    "value": "Small business",
+    "label": "Small business"
+  },
+  {
+    "value": "Entertainment",
+    "label": "Entertainment"
+  },
+  {
+    "value": "Games",
+    "label": "Games"
+  },
+
+  {
+    "value": "Action games",
+    "label": "Action games"
+  },
+  {
+    "value": "Board games",
+    "label": "Board games"
+  },
+  {
+    "value": "Browser games",
+    "label": "Browser games"
+  },
+  {
+    "value": "Card games",
+    "label": "Card games"
+  },
+  {
+    "value": "Casino games",
+    "label": "Casino games"
+  },
+  {
+    "value": "First-person shooter games",
+    "label": "First-person shooter games"
+  },
+  {
+    "value": "Gambling",
+    "label": "Gambling"
+  },
+  {
+    "value": "Massively multiplayer online games",
+    "label": "Massively multiplayer online games"
+  },
+  {
+    "value": "Massively multiplayer online role-playing games",
+    "label": "Massively multiplayer online role-playing games"
+  },
+  {
+    "value": "Online games",
+    "label": "Online games"
+  },
+  {
+    "value": "Online poker",
+    "label": "Online poker"
+  },
+  {
+    "value": "Puzzle video games",
+    "label": "Puzzle video games"
+  },
+  {
+    "value": "Racing games",
+    "label": "Racing games"
+  },
+  {
+    "value": "Role-playing games",
+    "label": "Role-playing games"
+  },
+  {
+    "value": "Shooter games",
+    "label": "Shooter games"
+  },
+  {
+    "value": "Simulation games",
+    "label": "Simulation games"
+  },
+  {
+    "value": "Sports games",
+    "label": "Sports games"
+  },
+  {
+    "value": "Strategy games",
+    "label": "Strategy games"
+  },
+  {
+    "value": "Video games",
+    "label": "Video games"
+  },
+  {
+    "value": "Word games",
+    "label": "Word games"
+  },
+  {
+    "value": "Live events",
+    "label": "Live events"
+  },
+
+  {
+    "value": "Ballet",
+    "label": "Ballet"
+  },
+  {
+    "value": "Bars",
+    "label": "Bars"
+  },
+  {
+    "value": "Concerts",
+    "label": "Concerts"
+  },
+  {
+    "value": "Dancehalls",
+    "label": "Dancehalls"
+  },
+  {
+    "value": "Music festivals",
+    "label": "Music festivals"
+  },
+  {
+    "value": "Nightclubs",
+    "label": "Nightclubs"
+  },
+  {
+    "value": "Parties",
+    "label": "Parties"
+  },
+  {
+    "value": "Plays",
+    "label": "Plays"
+  },
+  {
+    "value": "Theatre",
+    "label": "Theatre"
+  },
+  {
+    "value": "Movies",
+    "label": "Movies"
+  },
+
+  {
+    "value": "Action movies",
+    "label": "Action movies"
+  },
+  {
+    "value": "Animated movies",
+    "label": "Animated movies"
+  },
+  {
+    "value": "Anime movies",
+    "label": "Anime movies"
+  },
+  {
+    "value": "Bollywood movies",
+    "label": "Bollywood movies"
+  },
+  {
+    "value": "Comedy movies",
+    "label": "Comedy movies"
+  },
+  {
+    "value": "Documentary movies",
+    "label": "Documentary movies"
+  },
+  {
+    "value": "Drama movies",
+    "label": "Drama movies"
+  },
+  {
+    "value": "Fantasy movies",
+    "label": "Fantasy movies"
+  },
+  {
+    "value": "Horror movies",
+    "label": "Horror movies"
+  },
+  {
+    "value": "Musical theatre",
+    "label": "Musical theatre"
+  },
+  {
+    "value": "Science fiction movies",
+    "label": "Science fiction movies"
+  },
+  {
+    "value": "Thriller movies",
+    "label": "Thriller movies"
+  },
+  {
+    "value": "Music",
+    "label": "Music"
+  },
+
+  {
+    "value": "Blues music",
+    "label": "Blues music"
+  },
+  {
+    "value": "Classical music",
+    "label": "Classical music"
+  },
+  {
+    "value": "Country music",
+    "label": "Country music"
+  },
+  {
+    "value": "Dance music",
+    "label": "Dance music"
+  },
+  {
+    "value": "Electronic music",
+    "label": "Electronic music"
+  },
+  {
+    "value": "Gospel music",
+    "label": "Gospel music"
+  },
+  {
+    "value": "Heavy metal music",
+    "label": "Heavy metal music"
+  },
+  {
+    "value": "Hip hop music",
+    "label": "Hip hop music"
+  },
+  {
+    "value": "Jazz music",
+    "label": "Jazz music"
+  },
+  {
+    "value": "Music videos",
+    "label": "Music videos"
+  },
+  {
+    "value": "Pop music",
+    "label": "Pop music"
+  },
+  {
+    "value": "Rhythm and blues music",
+    "label": "Rhythm and blues music"
+  },
+  {
+    "value": "Rock musicSoul music",
+    "label": "Rock musicSoul music"
+  },
+  {
+    "value": "Reading",
+    "label": "Reading"
+  },
+
+  {
+    "value": "Books",
+    "label": "Books"
+  },
+  {
+    "value": "Comics",
+    "label": "Comics"
+  },
+  {
+    "value": "E-books",
+    "label": "E-books"
+  },
+  {
+    "value": "Fiction books",
+    "label": "Fiction books"
+  },
+  {
+    "value": "Literature",
+    "label": "Literature"
+  },
+  {
+    "value": "Magazines",
+    "label": "Magazines"
+  },
+  {
+    "value": "Manga",
+    "label": "Manga"
+  },
+  {
+    "value": "Mystery fiction",
+    "label": "Mystery fiction"
+  },
+  {
+    "value": "Newspapers",
+    "label": "Newspapers"
+  },
+  {
+    "value": "Non-fiction books",
+    "label": "Non-fiction books"
+  },
+  {
+    "value": "Romance novels",
+    "label": "Romance novels"
+  },
+  {
+    "value": "TV",
+    "label": "TV"
+  },
+
+  {
+    "value": "TV comedies",
+    "label": "TV comedies"
+  },
+  {
+    "value": "TV game shows",
+    "label": "TV game shows"
+  },
+  {
+    "value": "TV reality shows",
+    "label": "TV reality shows"
+  },
+  {
+    "value": "TV talkshows",
+    "label": "TV talkshows"
+  },
+  {
+    "value": "Family and relationships",
+    "label": "Family and relationships"
+  },
+  {
+    "value": "Dating",
+    "label": "Dating"
+  },
+  {
+    "value": "Family",
+    "label": "Family"
+  },
+  {
+    "value": "Fatherhood",
+    "label": "Fatherhood"
+  },
+  {
+    "value": "Friendship",
+    "label": "Friendship"
+  },
+  {
+    "value": "Marriage",
+    "label": "Marriage"
+  },
+  {
+    "value": "Motherhood",
+    "label": "Motherhood"
+  },
+  {
+    "value": "Parenting",
+    "label": "Parenting"
+  },
+  {
+    "value": "Weddings",
+    "label": "Weddings"
+  },
+  {
+    "value": "Fitness and wellness",
+    "label": "Fitness and wellness"
+  },
+  {
+    "value": "Bodybuilding",
+    "label": "Bodybuilding"
+  },
+  {
+    "value": "Meditation",
+    "label": "Meditation"
+  },
+  {
+    "value": "Physical exercise",
+    "label": "Physical exercise"
+  },
+  {
+    "value": "Physical fitness",
+    "label": "Physical fitness"
+  },
+  {
+    "value": "Running",
+    "label": "Running"
+  },
+  {
+    "value": "Weight training",
+    "label": "Weight training"
+  },
+  {
+    "value": "Yoga",
+    "label": "Yoga"
+  },
+  {
+    "value": "Food and drink",
+    "label": "Food and drink"
+  },
+  {
+    "value": "Alcoholic beverages",
+    "label": "Alcoholic beverages"
+  },
+
+  {
+    "value": "Beer",
+    "label": "Beer"
+  },
+  {
+    "value": "Distilled beverage",
+    "label": "Distilled beverage"
+  },
+  {
+    "value": "Wine",
+    "label": "Wine"
+  },
+  {
+    "value": "Beverages",
+    "label": "Beverages"
+  },
+
+  {
+    "value": "Coffee",
+    "label": "Coffee"
+  },
+  {
+    "value": "Energy drinks",
+    "label": "Energy drinks"
+  },
+  {
+    "value": "Juice",
+    "label": "Juice"
+  },
+  {
+    "value": "Soft drinks",
+    "label": "Soft drinks"
+  },
+  {
+    "value": "Tea",
+    "label": "Tea"
+  },
+  {
+    "value": "Cooking",
+    "label": "Cooking"
+  },
+
+  {
+    "value": "Baking",
+    "label": "Baking"
+  },
+  {
+    "value": "Recipes",
+    "label": "Recipes"
+  },
+  {
+    "value": "Cuisine",
+    "label": "Cuisine"
+  },
+
+  {
+    "value": "Chinese cuisine",
+    "label": "Chinese cuisine"
+  },
+  {
+    "value": "French cuisine",
+    "label": "French cuisine"
+  },
+  {
+    "value": "German cuisine",
+    "label": "German cuisine"
+  },
+  {
+    "value": "Greek cuisine",
+    "label": "Greek cuisine"
+  },
+  {
+    "value": "Indian cuisine",
+    "label": "Indian cuisine"
+  },
+  {
+    "value": "Italian cuisine",
+    "label": "Italian cuisine"
+  },
+  {
+    "value": "Japanese cuisine",
+    "label": "Japanese cuisine"
+  },
+  {
+    "value": "Korean cuisine",
+    "label": "Korean cuisine"
+  },
+  {
+    "value": "Latin American cuisine",
+    "label": "Latin American cuisine"
+  },
+  {
+    "value": "Mexican cuisine",
+    "label": "Mexican cuisine"
+  },
+  {
+    "value": "Middle Eastern cuisine",
+    "label": "Middle Eastern cuisine"
+  },
+  {
+    "value": "Spanish cuisine",
+    "label": "Spanish cuisine"
+  },
+  {
+    "value": "Thai cuisine",
+    "label": "Thai cuisine"
+  },
+  {
+    "value": "Vietnamese cuisine",
+    "label": "Vietnamese cuisine"
+  },
+  {
+    "value": "Food",
+    "label": "Food"
+  },
+
+  {
+    "value": "Barbecue",
+    "label": "Barbecue"
+  },
+  {
+    "value": "Chocolate",
+    "label": "Chocolate"
+  },
+  {
+    "value": "Desserts",
+    "label": "Desserts"
+  },
+  {
+    "value": "Fast food",
+    "label": "Fast food"
+  },
+  {
+    "value": "Organic food",
+    "label": "Organic food"
+  },
+  {
+    "value": "Pizza",
+    "label": "Pizza"
+  },
+  {
+    "value": "Seafood",
+    "label": "Seafood"
+  },
+  {
+    "value": "Veganism",
+    "label": "Veganism"
+  },
+  {
+    "value": "Vegetarianism",
+    "label": "Vegetarianism"
+  },
+  {
+    "value": "Restaurants",
+    "label": "Restaurants"
+  },
+
+  {
+    "value": "Coffeehouses",
+    "label": "Coffeehouses"
+  },
+  {
+    "value": "Diners",
+    "label": "Diners"
+  },
+  {
+    "value": "Fast casual restaurants",
+    "label": "Fast casual restaurants"
+  },
+  {
+    "value": "Fast food restaurants",
+    "label": "Fast food restaurants"
+  },
+  {
+    "value": "Hobbies and activities",
+    "label": "Hobbies and activities"
+  },
+  {
+    "value": "Arts and music",
+    "label": "Arts and music"
+  },
+
+  {
+    "value": "Acting",
+    "label": "Acting"
+  },
+  {
+    "value": "Crafts",
+    "label": "Crafts"
+  },
+  {
+    "value": "Dance",
+    "label": "Dance"
+  },
+  {
+    "value": "Drawing",
+    "label": "Drawing"
+  },
+  {
+    "value": "Drums",
+    "label": "Drums"
+  },
+  {
+    "value": "Fine art",
+    "label": "Fine art"
+  },
+  {
+    "value": "Guitar",
+    "label": "Guitar"
+  },
+  {
+    "value": "Painting",
+    "label": "Painting"
+  },
+  {
+    "value": "Performing arts",
+    "label": "Performing arts"
+  },
+  {
+    "value": "Photography",
+    "label": "Photography"
+  },
+  {
+    "value": "Sculpture",
+    "label": "Sculpture"
+  },
+  {
+    "value": "Singing",
+    "label": "Singing"
+  },
+  {
+    "value": "Writing",
+    "label": "Writing"
+  },
+  {
+    "value": "Current eventsHome and garden",
+    "label": "Current eventsHome and garden"
+  },
+
+  {
+    "value": "Do it yourself (DIY)",
+    "label": "Do it yourself (DIY)"
+  },
+  {
+    "value": "Furniture",
+    "label": "Furniture"
+  },
+  {
+    "value": "Gardening",
+    "label": "Gardening"
+  },
+  {
+    "value": "Home Appliances",
+    "label": "Home Appliances"
+  },
+  {
+    "value": "Home improvement",
+    "label": "Home improvement"
+  },
+  {
+    "value": "Pets",
+    "label": "Pets"
+  },
+
+  {
+    "value": "Birds",
+    "label": "Birds"
+  },
+  {
+    "value": "Cats",
+    "label": "Cats"
+  },
+  {
+    "value": "Dogs",
+    "label": "Dogs"
+  },
+  {
+    "value": "Fish",
+    "label": "Fish"
+  },
+  {
+    "value": "Horses",
+    "label": "Horses"
+  },
+  {
+    "value": "Pet food",
+    "label": "Pet food"
+  },
+  {
+    "value": "Rabbits",
+    "label": "Rabbits"
+  },
+  {
+    "value": "Reptiles",
+    "label": "Reptiles"
+  },
+  {
+    "value": "Politics and social issues",
+    "label": "Politics and social issues"
+  },
+
+  {
+    "value": "Charity and causes",
+    "label": "Charity and causes"
+  },
+  {
+    "value": "Community issues",
+    "label": "Community issues"
+  },
+  {
+    "value": "Environmentalism",
+    "label": "Environmentalism"
+  },
+  {
+    "value": "Law",
+    "label": "Law"
+  },
+  {
+    "value": "Military",
+    "label": "Military"
+  },
+  {
+    "value": "Politics",
+    "label": "Politics"
+  },
+  {
+    "value": "Religion",
+    "label": "Religion"
+  },
+  {
+    "value": "Sustainability",
+    "label": "Sustainability"
+  },
+  {
+    "value": "Veterans",
+    "label": "Veterans"
+  },
+  {
+    "value": "Volunteering",
+    "label": "Volunteering"
+  },
+  {
+    "value": "Travel",
+    "label": "Travel"
+  },
+
+  {
+    "value": "Adventure travel",
+    "label": "Adventure travel"
+  },
+  {
+    "value": "Air travel",
+    "label": "Air travel"
+  },
+  {
+    "value": "Beaches",
+    "label": "Beaches"
+  },
+  {
+    "value": "Car rentals",
+    "label": "Car rentals"
+  },
+  {
+    "value": "Cruises",
+    "label": "Cruises"
+  },
+  {
+    "value": "Ecotourism",
+    "label": "Ecotourism"
+  },
+  {
+    "value": "Hotels",
+    "label": "Hotels"
+  },
+  {
+    "value": "Lakes",
+    "label": "Lakes"
+  },
+  {
+    "value": "Mountains",
+    "label": "Mountains"
+  },
+  {
+    "value": "Nature",
+    "label": "Nature"
+  },
+  {
+    "value": "Theme parks",
+    "label": "Theme parks"
+  },
+  {
+    "value": "Tourism",
+    "label": "Tourism"
+  },
+  {
+    "value": "Vacations",
+    "label": "Vacations"
+  },
+  {
+    "value": "Vehicles",
+    "label": "Vehicles"
+  },
+
+  {
+    "value": "Automobiles",
+    "label": "Automobiles"
+  },
+  {
+    "value": "Boats",
+    "label": "Boats"
+  },
+  {
+    "value": "Electric vehicle",
+    "label": "Electric vehicle"
+  },
+  {
+    "value": "Hybrids",
+    "label": "Hybrids"
+  },
+  {
+    "value": "Minivans",
+    "label": "Minivans"
+  },
+  {
+    "value": "Motorcycles",
+    "label": "Motorcycles"
+  },
+  {
+    "value": "RVs",
+    "label": "RVs"
+  },
+  {
+    "value": "SUVs",
+    "label": "SUVs"
+  },
+  {
+    "value": "Scooters",
+    "label": "Scooters"
+  },
+  {
+    "value": "Trucks",
+    "label": "Trucks"
+  },
+  {
+    "value": "Shopping and fashion",
+    "label": "Shopping and fashion"
+  },
+  {
+    "value": "Beauty",
+    "label": "Beauty"
+  },
+
+  {
+    "value": "Beauty salons",
+    "label": "Beauty salons"
+  },
+  {
+    "value": "Cosmetics",
+    "label": "Cosmetics"
+  },
+  {
+    "value": "Fragrances",
+    "label": "Fragrances"
+  },
+  {
+    "value": "Hair products",
+    "label": "Hair products"
+  },
+  {
+    "value": "Spas",
+    "label": "Spas"
+  },
+  {
+    "value": "Tattoos",
+    "label": "Tattoos"
+  },
+  {
+    "value": "Clothing",
+    "label": "Clothing"
+  },
+
+  {
+    "value": "Children’s clothing",
+    "label": "Children’s clothing"
+  },
+  {
+    "value": "Men’s clothing",
+    "label": "Men’s clothing"
+  },
+  {
+    "value": "Shoes",
+    "label": "Shoes"
+  },
+  {
+    "value": "Women’s clothing",
+    "label": "Women’s clothing"
+  },
+  {
+    "value": "Fashionaccessories",
+    "label": "Fashionaccessories"
+  },
+
+  {
+    "value": "Dresses",
+    "label": "Dresses"
+  },
+  {
+    "value": "Handbags",
+    "label": "Handbags"
+  },
+  {
+    "value": "Jewelry",
+    "label": "Jewelry"
+  },
+  {
+    "value": "Sunglasses",
+    "label": "Sunglasses"
+  },
+  {
+    "value": "Shopping",
+    "label": "Shopping"
+  },
+
+  {
+    "value": "Boutiques",
+    "label": "Boutiques"
+  },
+  {
+    "value": "Coupons",
+    "label": "Coupons"
+  },
+  {
+    "value": "Discount stores",
+    "label": "Discount stores"
+  },
+  {
+    "value": "Luxury goods",
+    "label": "Luxury goods"
+  },
+  {
+    "value": "Online shopping",
+    "label": "Online shopping"
+  },
+  {
+    "value": "Shopping malls",
+    "label": "Shopping malls"
+  },
+  {
+    "value": "Toys",
+    "label": "Toys"
+  },
+
+  {
+    "value": "Sports and outdoors",
+    "label": "Sports and outdoors"
+  },
+  {
+    "value": "Outdoor recreation",
+    "label": "Outdoor recreation"
+  },
+
+  {
+    "value": "Boating",
+    "label": "Boating"
+  },
+  {
+    "value": "Camping",
+    "label": "Camping"
+  },
+  {
+    "value": "Fishing",
+    "label": "Fishing"
+  },
+  {
+    "value": "Horseback riding",
+    "label": "Horseback riding"
+  },
+  {
+    "value": "Hunting",
+    "label": "Hunting"
+  },
+  {
+    "value": "Mountain biking",
+    "label": "Mountain biking"
+  },
+  {
+    "value": "Surfing",
+    "label": "Surfing"
+  },
+  {
+    "value": "Sports",
+    "label": "Sports"
+  },
+
+  {
+    "value": "American football",
+    "label": "American football"
+  },
+  {
+    "value": "Association football (Soccer)",
+    "label": "Association football (Soccer)"
+  },
+  {
+    "value": "Auto racing",
+    "label": "Auto racing"
+  },
+  {
+    "value": "Baseball",
+    "label": "Baseball"
+  },
+  {
+    "value": "Basketball",
+    "label": "Basketball"
+  },
+  {
+    "value": "College football",
+    "label": "College football"
+  },
+  {
+    "value": "Golf",
+    "label": "Golf"
+  },
+  {
+    "value": "Marathons",
+    "label": "Marathons"
+  },
+  {
+    "value": "Skiing",
+    "label": "Skiing"
+  },
+  {
+    "value": "Snowboarding",
+    "label": "Snowboarding"
+  },
+  {
+    "value": "Swimming",
+    "label": "Swimming"
+  },
+  {
+    "value": "Tennis",
+    "label": "Tennis"
+  },
+  {
+    "value": "Thriathlons",
+    "label": "Thriathlons"
+  },
+  {
+    "value": "Volleyball",
+    "label": "Volleyball"
+  },
+  {
+    "value": "Technology",
+    "label": "Technology"
+  },
+  {
+    "value": "Computers",
+    "label": "Computers"
+  },
+
+  {
+    "value": "Computer memory",
+    "label": "Computer memory"
+  },
+  {
+    "value": "Computer monitors",
+    "label": "Computer monitors"
+  },
+  {
+    "value": "Computer processors",
+    "label": "Computer processors"
+  },
+  {
+    "value": "Computer servers",
+    "label": "Computer servers"
+  },
+  {
+    "value": "Desktop computers",
+    "label": "Desktop computers"
+  },
+  {
+    "value": "Free software",
+    "label": "Free software"
+  },
+  {
+    "value": "Hard drives",
+    "label": "Hard drives"
+  },
+  {
+    "value": "Network storage",
+    "label": "Network storage"
+  },
+  {
+    "value": "Software",
+    "label": "Software"
+  },
+  {
+    "value": "Tablet computers",
+    "label": "Tablet computers"
+  },
+  {
+    "value": "Consumer electronics",
+    "label": "Consumer electronics"
+  },
+
+  {
+    "value": "Audio equipment",
+    "label": "Audio equipment"
+  },
+  {
+    "value": "Camcorders",
+    "label": "Camcorders"
+  },
+  {
+    "value": "Cameras",
+    "label": "Cameras"
+  },
+  {
+    "value": "E-book readers",
+    "label": "E-book readers"
+  },
+  {
+    "value": "GPS devices",
+    "label": "GPS devices"
+  },
+  {
+    "value": "Game consoles",
+    "label": "Game consoles"
+  },
+  {
+    "value": "Mobile phones",
+    "label": "Mobile phones"
+  },
+  {
+    "value": "Portable media players",
+    "label": "Portable media players"
+  },
+  {
+    "value": "Projectors",
+    "label": "Projectors"
+  },
+  {
+    "value": "Smartphones",
+    "label": "Smartphones"
+  },
+  {
+    "value": "Televisions",
+    "label": "Televisions"
+  }
+]

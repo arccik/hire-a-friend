@@ -1,4 +1,4 @@
-import { type PropsType } from "~/types/bigFormPropsType";
+import { type PropsType } from "~/types/memberFormPropsType";
 
 type PropType = Required<
   Pick<PropsType, "register" | "errors" | "getValues" | "watch" | "setValue">

@@ -1,3 +1,4 @@
+import { input } from "@nextui-org/react";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -6,6 +7,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { clientSchema } from "~/validation/client-form-validation";
 import { userValidation, signUpSchema } from "~/validation/user-validation";
 
 export const userRouter = createTRPCRouter({
@@ -100,4 +102,12 @@ export const userRouter = createTRPCRouter({
       take: 5,
     });
   }),
+  updateClientProfile: protectedProcedure
+    .input(clientSchema)
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.user.update({
+        where: { id: ctx.session.user.id },
+        data: input,
+      });
+    }),
 });

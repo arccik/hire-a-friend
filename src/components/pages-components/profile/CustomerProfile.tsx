@@ -1,26 +1,24 @@
 import React from "react";
 
-import { Card, Skeleton } from "@nextui-org/react";
+import { Card, Skeleton, User as UserCard } from "@nextui-org/react";
+import { User } from "@prisma/client";
+import Image from "next/image";
 
-export default function CustomerProfile() {
+type PropType = {
+  data: User;
+};
+
+export default function CustomerProfile({ data }: PropType) {
+  console.log("IMAGE ::: ", data);
   return (
-    <section className="m-10 flex min-h-screen place-content-center">
-      <Card className="h-96 w-[200px] space-y-5 p-4" radius="lg">
-        <Skeleton className="rounded-lg">
-          <div className="h-24 rounded-lg bg-default-300"></div>
-        </Skeleton>
-        <div className="space-y-3">
-          <Skeleton className="w-3/5 rounded-lg">
-            <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
-          </Skeleton>
-          <Skeleton className="w-4/5 rounded-lg">
-            <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
-          </Skeleton>
-          <Skeleton className="w-2/5 rounded-lg">
-            <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
-          </Skeleton>
-        </div>
-      </Card>
+    <section className="m-10 flex h-96 place-content-center">
+      <UserCard
+        name={data.name}
+        description={data.city}
+        avatarProps={{
+          src: data.image ?? "",
+        }}
+      />
     </section>
   );
 }

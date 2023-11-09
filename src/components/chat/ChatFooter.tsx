@@ -4,13 +4,13 @@ import { api } from "~/utils/api";
 import type { MessageResponse, Message } from "~/validation/message-validation";
 
 type PropType = {
-  // setMessages: Dispatch<SetStateAction<MessageResponse[]>>;
+  setMessages: Dispatch<SetStateAction<MessageResponse[] | null>>;
   setShowContacts: Dispatch<SetStateAction<boolean>>;
   receiverId?: string | null;
 };
 
 export default function ChatFooter({
-  // setMessages,
+  setMessages,
   setShowContacts,
   receiverId,
 }: PropType) {
@@ -20,6 +20,7 @@ export default function ChatFooter({
   const handleMessageSend = () => {
     if (!message) return;
 
+    setMessages((prev) => [...(prev ?? []), { message, date: new Date() }]);
     const sendData = {
       message,
       receiverId: receiverId!,

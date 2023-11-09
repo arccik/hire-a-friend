@@ -1,8 +1,9 @@
 import { Card, Spinner } from "@nextui-org/react";
-import BigForm from "../../components/formFields/BigForm";
+import MemberForm from "../../components/formFields/MemberForm";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import DisplayError from "~/components/features/DisplayError";
+import ClientForm from "~/components/formFields/ClientForm";
 
 export default function UpdateProfile() {
   const { data: userSession } = useSession({ required: true });
@@ -21,9 +22,9 @@ export default function UpdateProfile() {
     <section className="mx-auto flex flex-col items-center justify-center p-4">
       <Card fullWidth className="p-4 md:p-10">
         {user?.userType === "Friend" && userSession?.user?.id ? (
-          <BigForm {...user} userId={userSession.user.id} />
+          <MemberForm {...user} userId={userSession.user.id} />
         ) : (
-          <p>You are up for fun ?</p>
+          <ClientForm name={user?.name} city={user?.city} image={user?.image} />
         )}
       </Card>
     </section>

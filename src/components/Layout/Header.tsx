@@ -71,6 +71,7 @@ export default function Header() {
   ];
 
   const menu = userSession?.user.id ? userMenuItems : guestMenuItems;
+
   return (
     <Navbar
       shouldHideOnScroll

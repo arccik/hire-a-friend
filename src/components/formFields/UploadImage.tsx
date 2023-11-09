@@ -7,14 +7,16 @@ import { api } from "~/utils/api";
 import { type UseFormSetValue } from "react-hook-form";
 import { type UserValidationType } from "~/validation/user-validation";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
-export default function UploadImage({
-  setValue,
-  imgUrl,
-}: {
-  setValue: UseFormSetValue<UserValidationType>;
-  imgUrl: string | null;
-}) {
+type PropsType = {
+  setValue: (value: string) => void;
+  imgUrl?: string | null;
+};
+
+export default function UploadImage({ setValue, imgUrl }: PropsType) {
+  const { data: userSession, update } = useSession();
+
   const fileDeleter = api.uploader.delete.useMutation({
     onSuccess: () => {
       toast.success("File Succesfully deleted!");
@@ -41,8 +43,9 @@ export default function UploadImage({
     });
     const savedImageUrl = await uploadFileToAWS({ url, fields, file });
     if (savedImageUrl) {
-      setValue("image", savedImageUrl);
+      setValue(savedImageUrl);
       setImageUrl(savedImageUrl);
+      await update({ user: { ...userSession?.user, image: imageUrl } });
     }
   };
 
@@ -74,7 +77,7 @@ export default function UploadImage({
         radius="sm"
         size="sm"
       >
-        Change
+        {imageUrl?.length ? "Change" : "Upload"} Image
       </Button>
     </div>
   );

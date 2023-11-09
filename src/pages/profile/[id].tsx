@@ -24,10 +24,8 @@ export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
   const { data: userSession } = useSession();
-  const { data: contacts } = api.chat.getContacts.useQuery();
   const addContact = api.chat.addContact.useMutation();
 
-  console.log("Profile page Contacts from TRPC: ", contacts);
   const { data, status, refetch } = api.user.getOne.useQuery(
     { id },
     { enabled: !!id },
@@ -63,7 +61,7 @@ export default function ProfilePage() {
     );
   if (status === "error" || !data) return <DisplayError />;
 
-  if (data?.userType === "Customer") return <CustomerProfile />;
+  if (data?.userType === "Customer") return <CustomerProfile data={data} />;
 
   const gender = genders.find((g) => g.id.toString() == data?.gender);
   const isRated =

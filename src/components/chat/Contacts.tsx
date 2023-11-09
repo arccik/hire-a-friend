@@ -2,11 +2,19 @@ import { useRouter } from "next/router";
 import { User } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 import { api } from "~/utils/api";
+import { TfiClose, TfiArrowLeft } from "react-icons/tfi";
+import { Dispatch, SetStateAction } from "react";
 
 type PropType = {
   selected: string | null;
+  setShowMessages: Dispatch<SetStateAction<boolean>>;
+  setShowChat: Dispatch<SetStateAction<boolean>>;
 };
-export default function Contacts({ selected }: PropType) {
+export default function Contacts({
+  selected,
+  setShowMessages,
+  setShowChat,
+}: PropType) {
   const router = useRouter();
   const { data: contactsData } = api.chat.getContacts.useQuery();
 
@@ -18,12 +26,22 @@ export default function Contacts({ selected }: PropType) {
 
   return (
     <>
-      <div className="hidden justify-between overflow-auto border-b md:flex md:items-center md:p-2">
-        <p className="-rotate-90 text-xs font-semibold text-slate-500 md:h-12 md:rotate-0 md:p-3 md:text-lg">
+      <div className="flex items-center justify-between overflow-auto border-b p-3">
+        <p className="h-12 p-3 text-lg  font-semibold text-slate-500">
           Contacts
         </p>
+        <TfiClose
+          className="inline-flex cursor-pointer rounded-full p-2 text-black hover:bg-indigo-50"
+          size="2rem"
+          onClick={() => setShowChat((prev) => !prev)}
+        />
       </div>
-      <div className="flex items-start overflow-auto md:mt-5 md:flex-col">
+      <div className="flex flex-col items-start overflow-auto md:mt-5">
+        {!contactsData?.length && (
+          <p className="h-12 p-2 text-center text-lg font-semibold  text-slate-500 md:p-3">
+            No contacts
+          </p>
+        )}
         {contactsData?.map((contact) => (
           <User
             onClick={() => handleCloseButton(contact.contactId)}

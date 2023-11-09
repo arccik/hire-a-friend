@@ -55,10 +55,7 @@ export default function UploadCoverImage({
   if (imageUrl) {
     return (
       <div className="col-span-full">
-        <label
-          htmlFor="cover-photo"
-          className="block text-sm font-medium leading-6 text-gray-900"
-        >
+        <label className="block text-sm font-medium leading-6 text-gray-900">
           Cover photo
         </label>
         <Badge

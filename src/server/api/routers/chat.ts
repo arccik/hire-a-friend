@@ -3,8 +3,15 @@ import { z } from "zod";
 import { redis } from "~/utils/redis";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
+import {
+  chatHrefConstructor,
+  pusherHrefConstructor,
+} from "~/helpers/chatHrefConstructor";
 import { type MessageResponse } from "~/validation/message-validation";
+// import { pusherServer } from "~/utils/pusher";
+import PusherServer from "pusher";
+
+import { env } from "~/env.mjs";
 
 export const chatRouter = createTRPCRouter({
   getContact: protectedProcedure
@@ -61,7 +68,7 @@ export const chatRouter = createTRPCRouter({
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const querySting = chatHrefConstructor(ctx.session.user.id, input);
-      const messages: MessageResponse[] = await redis.smembers(querySting); 
+      const messages: MessageResponse[] = await redis.smembers(querySting);
       return messages.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
@@ -73,16 +80,27 @@ export const chatRouter = createTRPCRouter({
       z.object({ message: z.string(), receiverId: z.string(), date: z.date() }),
     )
     .mutation(async ({ ctx, input }) => {
-      const querySting = chatHrefConstructor(
+      const querySting = pusherHrefConstructor(
         ctx.session.user.id,
         input.receiverId,
       );
       console.log("Query String Radis: TRPC :::: ", querySting);
 
-      await redis.sadd(querySting, {
+      const message = {
         message: input.message,
         date: input.date,
         sender: ctx.session.user.id,
+      };
+      const pusherServer = new PusherServer({
+        appId: env.PUSHER_APP_ID,
+        key: env.NEXT_PUBLIC_PUSHER_APP_KEY,
+        secret: env.PUSHER_APP_SECRET,
+        cluster: "eu",
+        useTLS: true,
       });
+      console.log("HEllo FROM TRPS::: ", pusherServer, querySting);
+      await pusherServer.trigger(querySting, "incoming-message", message);
+
+      await redis.sadd(querySting, message);
     }),
 });

@@ -13,6 +13,7 @@ export default function getDefaultValues(
     gender: props.gender ?? undefined,
     coverImage: props.coverImage ?? "",
     country: props.country ?? "",
+    hobbies: props.hobbies ?? [],
     street: props.street ?? "",
     state: props.state ?? "",
     city: props.city ?? "",

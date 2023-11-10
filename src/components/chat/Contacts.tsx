@@ -6,15 +6,9 @@ import { TfiClose, TfiArrowLeft } from "react-icons/tfi";
 import { Dispatch, SetStateAction } from "react";
 
 type PropType = {
-  selected: string | null;
-  setShowMessages: Dispatch<SetStateAction<boolean>>;
-  setShowChat: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 };
-export default function Contacts({
-  selected,
-  setShowMessages,
-  setShowChat,
-}: PropType) {
+export default function Contacts({ onClose }: PropType) {
   const router = useRouter();
   const { data: contactsData } = api.chat.getContacts.useQuery();
 
@@ -33,7 +27,7 @@ export default function Contacts({
         <TfiClose
           className="inline-flex cursor-pointer rounded-full p-2 text-black hover:bg-indigo-50"
           size="2rem"
-          onClick={() => setShowChat((prev) => !prev)}
+          onClick={onClose}
         />
       </div>
       <div className="flex flex-col items-start overflow-auto md:mt-5">
@@ -50,7 +44,7 @@ export default function Contacts({
             name={contact.name}
             className={cn(
               "w-full animate-appearance-in cursor-pointer content-start justify-start p-2 text-black hover:bg-slate-200",
-              selected === contact.id && "bg-slate-300",
+              // selected === contact.id && "bg-slate-300",
             )}
             avatarProps={{
               src: contact.image ?? "",

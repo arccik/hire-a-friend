@@ -9,7 +9,6 @@ type PropType = {
 };
 
 export default function CustomerProfile({ data }: PropType) {
-  console.log("IMAGE ::: ", data);
   return (
     <section className="m-10 flex h-96 place-content-center">
       <UserCard

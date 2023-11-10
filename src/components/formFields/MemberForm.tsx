@@ -60,7 +60,6 @@ export default function BigForm(props: BigFormPropType) {
     updateUser.mutate({ ...data, id: props.userId });
   };
 
-  console.log("BIG FORM : ", watch("activities"));
   return (
     <>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>

@@ -12,7 +12,7 @@ import "~/styles/globals.css";
 import Header from "~/components/Layout/Header";
 import Footer from "~/components/Layout/Footer";
 import Head from "next/head";
-import ChatBox from "~/components/chat/ChatBox";
+import ChatBox from "~/components/chat/Chat";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

@@ -1,4 +1,3 @@
-import { Contact } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { cn } from "~/lib/utils";
 import { MessageResponse } from "~/validation/message";
@@ -6,15 +5,14 @@ import { MessageResponse } from "~/validation/message";
 export default function Message({
   message,
   sender,
-  date, // selected,
-}: MessageResponse) {
+  receiverImage,
+}: MessageResponse & { receiverImage?: string | null }) {
   const { data: userSession } = useSession();
 
   const type = userSession?.user.id === sender ? "sender" : "receiver";
 
-  // const imgUrl =
-  //   (type === "sender" ? userSession?.user.image : selected?.image) ?? "";
-  // const name = type === "sender" ? userSession?.user.name : selected?.name;
+  const imgUrl =
+    (type === "sender" ? userSession?.user.image : receiverImage) ?? "";
 
   return (
     <div
@@ -30,7 +28,7 @@ export default function Message({
         )}
       >
         <img
-          src="/assets/images/test-image.jpg"
+          src={imgUrl}
           alt="avatar"
           className="inline-block h-10 w-10 rounded-full"
         />

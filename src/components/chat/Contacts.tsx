@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import { User } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 import { api } from "~/utils/api";
-import { TfiClose, TfiArrowLeft } from "react-icons/tfi";
-import { Dispatch, SetStateAction } from "react";
+import { TfiClose } from "react-icons/tfi";
 
 type PropType = {
   onClose: () => void;

@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { cn } from "~/lib/utils";
-import { MessageResponse } from "~/validation/message";
+import { type MessageResponse } from "~/validation/message";
 
 export default function Message({
   message,

@@ -1,13 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { IoMdChatboxes } from "react-icons/io";
 import Contacts from "./Contacts";
 import { useSearchParams } from "next/navigation";
 import ChatBody from "./ChatBody";
-import { MessageResponse } from "~/validation/message";
-import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
 import { useRouter } from "next/router";
-import ChatHeader from "./ChatHeader";
 import { useSession } from "next-auth/react";
 
 export default function ChatBox() {
@@ -21,7 +17,7 @@ export default function ChatBox() {
   const handleChatButtonClick = () => {
     if (showChat) {
       delete router.query.showChat;
-      router.replace({ query: router.query });
+      void router.replace({ query: router.query });
     } else {
       void router.replace(
         {

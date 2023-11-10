@@ -1,26 +1,21 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { AiOutlineSend, AiOutlineContacts } from "react-icons/ai";
 import { api } from "~/utils/api";
-import type { MessageResponse, Message } from "~/validation/message";
+import type { MessageResponse } from "~/validation/message";
 
 type PropType = {
-  setMessages: Dispatch<SetStateAction<MessageResponse[] | null>>;
   setShowContacts: Dispatch<SetStateAction<boolean>>;
   receiverId?: string | null;
 };
 
-export default function ChatFooter({
-  setMessages,
-  setShowContacts,
-  receiverId,
-}: PropType) {
+export default function ChatFooter({ setShowContacts, receiverId }: PropType) {
   const [message, setMessage] = useState<string>("");
   const addMessage = api.chat.addMessage.useMutation();
 
   const handleMessageSend = () => {
     if (!message) return;
 
-    setMessages((prev) => [...(prev ?? []), { message, date: new Date() }]);
+    // setMessages((prev) => [...(prev ?? []), { message, date: new Date() }]);
     const sendData = {
       message,
       receiverId: receiverId!,

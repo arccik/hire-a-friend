@@ -1,4 +1,3 @@
-import { DefaultSession } from "next-auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { TfiClose } from "react-icons/tfi";
@@ -11,7 +10,13 @@ type PropType = {
   id: string;
 };
 
-export default function ChatHeader({ setShowChat, name, status, avatar, id }: PropType) {
+export default function ChatHeader({
+  setShowChat,
+  name,
+  status,
+  avatar,
+  id,
+}: PropType) {
   const router = useRouter();
 
   const handleCloseButton = () => {

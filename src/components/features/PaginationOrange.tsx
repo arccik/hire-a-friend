@@ -2,7 +2,7 @@ import React from "react";
 import {
   Pagination,
   PaginationItemType,
-  PaginationItemRenderProps,
+  type PaginationItemRenderProps,
 } from "@nextui-org/react";
 import { BsChevronCompactLeft } from "react-icons/bs";
 import { cn } from "~/lib/utils";
@@ -10,14 +10,9 @@ import { cn } from "~/lib/utils";
 type PropsType = {
   total: number;
   onChange: (page: number) => void;
-  currentPage: number;
 };
 
-export default function PaginationOrange({
-  total,
-  onChange,
-  currentPage,
-}: PropsType) {
+export default function PaginationOrange({ total, onChange }: PropsType) {
   const renderItem = ({
     ref,
     value,

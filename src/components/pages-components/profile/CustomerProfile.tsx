@@ -1,8 +1,7 @@
 import React from "react";
 
-import { Card, Skeleton, User as UserCard } from "@nextui-org/react";
-import { User } from "@prisma/client";
-import Image from "next/image";
+import { User as UserCard } from "@nextui-org/react";
+import type { User } from "@prisma/client";
 
 type PropType = {
   data: User;

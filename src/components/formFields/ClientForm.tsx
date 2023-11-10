@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import UploadImage from "./UploadImage";
-import { clientSchema, ClientFormData } from "~/validation/client-form";
+import { clientSchema, type ClientFormData } from "~/validation/client-form";
 import { api } from "~/utils/api";
 import { toast } from "react-toastify";
 

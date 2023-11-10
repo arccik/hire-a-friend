@@ -12,10 +12,12 @@ export default function Filter() {
   const [showFilter, setShowFilter] = useState(false);
   const router = useRouter();
 
-  const queryKeysToCheck = ["activities", "status", "gender", "city"];
   const shouldRenderClearBtn = useMemo(
-    () => queryKeysToCheck.some((key) => key in router.query),
-    [router.query, queryKeysToCheck],
+    () =>
+      ["activities", "status", "gender", "city"].some(
+        (key) => key in router.query,
+      ),
+    [router.query],
   );
 
   return (

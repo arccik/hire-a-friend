@@ -1,11 +1,9 @@
 import { z } from "zod";
 
 export const messageSchema = z.object({
-  senderId: z.string().optional(),
-  receiverId: z.string(),
+  sender: z.string().optional(),
   message: z.string(),
-  date: z.string(),
-  reverse: z.string().optional(),
+  date: z.date(),
 });
 
 export const chatUsers = z.object({

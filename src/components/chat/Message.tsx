@@ -9,22 +9,16 @@ export default function Message({
 }: MessageResponse & { receiverImage?: string | null }) {
   const { data: userSession } = useSession();
 
-  const type = userSession?.user.id === sender ? "sender" : "receiver";
+  const isSender = () => userSession?.user.id === sender;
 
-  const imgUrl =
-    (type === "sender" ? userSession?.user.image : receiverImage) ?? "";
+  const imgUrl = (isSender() ? userSession?.user.image : receiverImage) ?? "";
 
   return (
-    <div
-      className={cn(
-        "flex",
-        type === "sender" ? "justify-end" : "justify-start",
-      )}
-    >
+    <div className={cn("flex", isSender() ? "justify-end" : "justify-start")}>
       <div
         className={cn(
           "flex w-11/12",
-          type === "sender" ? "flex-row-reverse" : "flex-row",
+          isSender() ? "flex-row-reverse" : "flex-row",
         )}
       >
         <img
@@ -36,7 +30,7 @@ export default function Message({
         <div
           className={cn(
             "relative max-w-xl rounded-xl rounded-tr-none  px-4 py-2",
-            type === "sender" ? "bg-blue-600" : "bg-green-600",
+            isSender() ? "bg-blue-600" : "bg-green-600",
           )}
         >
           <span className="text-sm font-medium text-white">{message}</span>

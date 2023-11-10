@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import ChatBody from "./ChatBody";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
@@ -13,16 +14,25 @@ export default function ChatBox() {
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
 
-  if (!userSession) return null;
+  useEffect(() => {
+    // to disable scrolling of site when chat open
+    if (showChat) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+    return () => {
+      document.body.style.overflow = "visible";
+    };
+  }, [showChat]);
+
   const handleChatButtonClick = () => {
     if (showChat) {
       delete router.query.showChat;
       void router.replace({ query: router.query }, undefined, {
         shallow: true,
       });
-      document.body.style.overflow = "visible"; // to disable scrolling when chat open
     } else {
-      document.body.style.overflow = "hidden";
       void router.replace(
         {
           query: { ...router.query, showChat: true },
@@ -32,6 +42,7 @@ export default function ChatBox() {
       );
     }
   };
+  if (!userSession) return null;
 
   return (
     <AnimatePresence>
@@ -50,7 +61,7 @@ export default function ChatBox() {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 100 }}
-          className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)]  w-full flex-col  overflow-x-scroll  border bg-slate-50 md:w-96 md:shadow-md"
+          className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)] w-full flex-col overflow-x-scroll  rounded-xl  border bg-slate-50 md:w-96 md:shadow-md"
         >
           {chatId ? <ChatBody /> : <Contacts onClose={handleChatButtonClick} />}
         </motion.div>

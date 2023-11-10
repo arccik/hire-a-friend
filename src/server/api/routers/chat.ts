@@ -7,7 +7,7 @@ import {
   chatHrefConstructor,
   pusherHrefConstructor,
 } from "~/helpers/chatHrefConstructor";
-import { type MessageResponse } from "~/validation/message";
+import { messageSchema, type MessageResponse } from "~/validation/message";
 // import { pusherServer } from "~/utils/pusher";
 import PusherServer from "pusher";
 
@@ -76,15 +76,17 @@ export const chatRouter = createTRPCRouter({
       });
     }),
   addMessage: protectedProcedure
-    .input(
-      z.object({ message: z.string(), receiverId: z.string(), date: z.date() }),
-    )
+    .input(messageSchema)
     .mutation(async ({ ctx, input }) => {
+      if (!input.sender)
+        return new TRPCError({
+          message: "Sender is required",
+          code: "BAD_REQUEST",
+        });
       const querySting = pusherHrefConstructor(
         ctx.session.user.id,
-        input.receiverId,
+        input.sender,
       );
-      console.log("Query String Radis: TRPC :::: ", querySting);
 
       const message = {
         message: input.message,
@@ -98,7 +100,6 @@ export const chatRouter = createTRPCRouter({
         cluster: "eu",
         useTLS: true,
       });
-      console.log("HEllo FROM TRPS::: ", pusherServer, querySting);
       await pusherServer.trigger(querySting, "incoming-message", message);
 
       await redis.sadd(querySting, message);

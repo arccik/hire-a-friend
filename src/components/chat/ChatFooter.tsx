@@ -1,7 +1,6 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { AiOutlineSend, AiOutlineContacts } from "react-icons/ai";
 import { api } from "~/utils/api";
-import type { MessageResponse } from "~/validation/message";
 
 type PropType = {
   setShowContacts: Dispatch<SetStateAction<boolean>>;

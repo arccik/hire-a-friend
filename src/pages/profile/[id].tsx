@@ -90,7 +90,7 @@ export default function ProfilePage() {
     });
     void router.replace(
       {
-        query: { ...router.query, chat: data.id },
+        query: { ...router.query, chat: data.id, showChat: true },
       },
       undefined,
       { shallow: true },
@@ -242,7 +242,7 @@ export default function ProfilePage() {
                         type="button"
                         variant="flat"
                       >
-                        Chat
+                        Send Message
                       </Button>
                     )}
                   </div>

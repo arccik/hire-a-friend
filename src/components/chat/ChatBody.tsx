@@ -30,12 +30,12 @@ export default function ChatBody() {
 
   const handleBackButton = () => {
     delete router.query.chat;
-    void router.replace({ query: router.query });
+    void router.replace({ query: router.query }, undefined, { shallow: true });
   };
 
   const handleCloseButton = () => {
     delete router.query.showChat;
-    void router.replace({ query: router.query });
+    void router.replace({ query: router.query }, undefined, { shallow: true });
   };
 
   return (

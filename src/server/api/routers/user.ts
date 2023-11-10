@@ -80,7 +80,8 @@ export const userRouter = createTRPCRouter({
   getActiveFriends: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({
       where: {
-        // activated: false,
+        // activated: true,
+        userType: "Friend",
       },
     });
   }),

@@ -18,7 +18,9 @@ export default function ChatBox() {
     if (showChat) {
       delete router.query.showChat;
       void router.replace({ query: router.query });
+      document.body.style.overflow = "visible"; // to disable scrolling when chat open
     } else {
+      document.body.style.overflow = "hidden";
       void router.replace(
         {
           query: { ...router.query, showChat: true },

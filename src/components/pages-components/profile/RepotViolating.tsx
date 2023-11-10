@@ -35,7 +35,7 @@ export default function ReportViolating() {
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
-                    Report User
+                    Report
                   </ModalHeader>
                   <ModalBody>
                     <p>

@@ -15,7 +15,7 @@ export default function Features() {
           <Card
             as={Link}
             className="p-3 md:p-5"
-            href={`/friends?activities=${item.title}`}
+            href={`/profiles?activities=${item.title}`}
             shadow="sm"
             key={index}
             isPressable

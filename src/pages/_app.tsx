@@ -37,7 +37,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
           hideProgressBar={true}
           newestOnTop={false}
           closeOnClick
-          rtl={false}
           pauseOnFocusLoss
           draggable
           pauseOnHover

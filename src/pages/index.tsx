@@ -30,7 +30,7 @@ export default function HomePage() {
           <div className="mb-10 flex w-full">
             <Button
               as={Link}
-              href="/friends"
+              href="/profiles"
               radius="full"
               className="mt-10 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
             >
@@ -108,7 +108,7 @@ export default function HomePage() {
         <Button
           as={Link}
           size="lg"
-          href="/friends"
+          href="/profiles"
           className="mt-10 animate-bounce bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg hover:from-yellow-500 hover:to-pink-500 hover:drop-shadow-lg"
         >
           Explore

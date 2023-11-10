@@ -1,26 +1,24 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdChatboxes } from "react-icons/io";
 import Contacts from "./Contacts";
 import { useSearchParams } from "next/navigation";
 import ChatBoddy from "./ChatBody";
 import { MessageResponse } from "~/validation/message";
-
-const MESSAGES = [
-  {
-    message: "Hello",
-    date: new Date(),
-    sender: "loolka",
-  },
-];
+import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
 
 export default function ChatBox() {
   const [showChat, setShowChat] = useState(false);
   const [showMessages, setShowMessages] = useState(true);
-  const [messages, setMessages] = useState<MessageResponse[] | null>(MESSAGES);
 
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
+
+  useEffect(() => {
+    if (chatId) {
+      setShowChat((prev) => !prev);
+    }
+  }, [chatId]);
 
   return (
     <AnimatePresence>
@@ -45,13 +43,29 @@ export default function ChatBox() {
             exit={{ opacity: 0, x: 100 }}
             className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)]  w-full flex-col  overflow-x-scroll  border bg-slate-50 md:w-72 md:shadow-md"
           >
-            {showMessages && (
-              <ChatBoddy
-                setShowMessages={setShowMessages}
-                setShowChat={setShowChat}
-              />
-            )}
-            {!showMessages && (
+            {!showChat ? (
+              <>
+                <div className="sticky flex items-center justify-between overflow-auto border-b">
+                  <TfiArrowLeft
+                    className="inline-flex cursor-pointer rounded-full p-2 text-black hover:bg-indigo-50"
+                    size="2rem"
+                    onClick={() => setShowMessages((prev) => !prev)}
+                  />
+                  <p className="text-lg font-semibold  text-slate-500 md:p-3">
+                    User Name
+                  </p>
+                  <TfiClose
+                    className="inline-flex cursor-pointer rounded-full p-2 text-black hover:bg-indigo-50"
+                    size="2rem"
+                    onClick={() => setShowMessages((prev) => !prev)}
+                  />
+                </div>
+                <ChatBoddy
+                  setShowMessages={setShowMessages}
+                  setShowChat={setShowChat}
+                />
+              </>
+            ) : (
               <Contacts
                 selected={chatId}
                 setShowMessages={setShowMessages}

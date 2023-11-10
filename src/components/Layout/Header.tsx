@@ -27,7 +27,7 @@ export default function Header() {
     {
       id: 1,
       title: "Browse",
-      href: "/friends",
+      href: "/profiles",
     },
     {
       id: 2,
@@ -50,7 +50,7 @@ export default function Header() {
     {
       id: 2,
       title: "Browse",
-      href: "/friends",
+      href: "/profiles",
     },
 
     {

@@ -31,10 +31,10 @@ export default function SearchBar({ router }: { router: NextRouter }) {
             }}
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
               e.key === "Enter" &&
-              void router.push(`/friends?search=${e.currentTarget.value}`)
+              void router.push(`/profiles?search=${e.currentTarget.value}`)
             }
             // onClear={() => {
-            //   void router.push("/friends", undefined, { shallow: true });
+            //   void router.push("/profiles", undefined, { shallow: true });
             // }}
             autoFocus
             placeholder="Type to search..."

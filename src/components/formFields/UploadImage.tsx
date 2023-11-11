@@ -14,6 +14,8 @@ type PropsType = {
 
 export default function UploadImage({ setValue, imgUrl }: PropsType) {
   const { data: userSession, update } = useSession();
+  const getUploaderURL = api.uploader.getUrl.useMutation();
+  const [imageUrl, setImageUrl] = useState(imgUrl);
 
   const fileDeleter = api.uploader.delete.useMutation({
     onSuccess: () => {
@@ -23,8 +25,6 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
       toast.error("File not deleted. Something went wrong!");
     },
   });
-  const getUploaderURL = api.uploader.getUrl.useMutation();
-  const [imageUrl, setImageUrl] = useState(imgUrl);
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -43,7 +43,7 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
     if (savedImageUrl) {
       setValue(savedImageUrl);
       setImageUrl(savedImageUrl);
-      await update({ user: { ...userSession?.user, image: imageUrl } });
+      await update({ user: { ...userSession?.user, image: savedImageUrl } });
     }
   };
 

@@ -3,22 +3,26 @@ import { cn } from "~/lib/utils";
 import { type MessageResponse } from "~/validation/message";
 
 export default function Message({
-  message,
   sender,
   receiverImage,
-}: MessageResponse & { receiverImage?: string | null }) {
+  message,
+}: MessageResponse & {
+  receiverImage?: string | null;
+}) {
   const { data: userSession } = useSession();
 
-  const isSender = () => userSession?.user.id === sender;
+  const isSender = userSession?.user.id === sender;
 
-  const imgUrl = (isSender() ? userSession?.user.image : receiverImage) ?? "";
+  console.log();
+
+  const imgUrl = (isSender ? userSession?.user.image : receiverImage) ?? "";
 
   return (
-    <div className={cn("flex", isSender() ? "justify-end" : "justify-start")}>
+    <div className={cn("flex", isSender ? "justify-end" : "justify-start")}>
       <div
         className={cn(
           "flex w-11/12",
-          isSender() ? "flex-row-reverse" : "flex-row",
+          isSender ? "flex-row-reverse" : "flex-row",
         )}
       >
         <img
@@ -29,11 +33,16 @@ export default function Message({
         <div className="mr-4" />
         <div
           className={cn(
-            "relative max-w-xl rounded-xl rounded-tr-none  px-4 py-2",
-            isSender() ? "bg-blue-600" : "bg-green-600",
+            "relative max-w-xl rounded-xl  px-4 py-2",
+            isSender
+              ? "rounded-tr-none bg-blue-600"
+              : "rounded-tl-none bg-green-600",
           )}
         >
-          <span className="text-sm font-medium text-white">{message}</span>
+          <span className="text-md font-medium text-white">{message}</span>
+          <span className="absolute right-0 top-0 text-xs text-white">
+            {sender}
+          </span>
         </div>
       </div>
     </div>

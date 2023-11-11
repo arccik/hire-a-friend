@@ -182,7 +182,7 @@ export default function BigForm(props: BigFormPropType) {
               variant="flat"
               fullWidth
               color="danger"
-              className="bg-red-100 text-red-400"
+              className="bg-red-100 text-red-400  hover:scale-95"
               as={Link}
               href={`/profile/${props.id}`}
             >
@@ -192,8 +192,9 @@ export default function BigForm(props: BigFormPropType) {
           <div className="w-1/2">
             <Button
               fullWidth
+              color="success"
               variant="flat"
-              className="bg-green-100 text-green-400"
+              className=" border border-green-400 bg-green-100 text-green-400 hover:scale-95"
               type="submit"
             >
               Save

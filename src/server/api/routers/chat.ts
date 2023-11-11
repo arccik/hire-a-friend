@@ -3,10 +3,7 @@ import { z } from "zod";
 import { redis } from "~/utils/redis";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import {
-  chatHrefConstructor,
-  pusherHrefConstructor,
-} from "~/helpers/chatHrefConstructor";
+import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { messageSchema, type MessageResponse } from "~/validation/message";
 // import { pusherServer } from "~/utils/pusher";
 import PusherServer from "pusher";
@@ -38,7 +35,10 @@ export const chatRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const searchParams = chatHrefConstructor(ctx.session?.user.id, input.id);
+      const searchParams = pusherHrefConstructor(
+        ctx.session?.user.id,
+        input.id,
+      );
       const isExist = await ctx.prisma.user.findFirst({
         include: { contacts: true },
         where: {
@@ -67,8 +67,9 @@ export const chatRouter = createTRPCRouter({
   getMessages: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
-      const querySting = chatHrefConstructor(ctx.session.user.id, input);
+      const querySting = pusherHrefConstructor(ctx.session.user.id, input);
       const messages: MessageResponse[] = await redis.smembers(querySting);
+
       return messages.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
@@ -93,6 +94,8 @@ export const chatRouter = createTRPCRouter({
         date: input.date,
         sender: ctx.session.user.id,
       };
+      await redis.sadd(querySting, message);
+
       const pusherServer = new PusherServer({
         appId: env.PUSHER_APP_ID,
         key: env.NEXT_PUBLIC_PUSHER_APP_KEY,
@@ -101,7 +104,5 @@ export const chatRouter = createTRPCRouter({
         useTLS: true,
       });
       await pusherServer.trigger(querySting, "incoming-message", message);
-
-      await redis.sadd(querySting, message);
     }),
 });

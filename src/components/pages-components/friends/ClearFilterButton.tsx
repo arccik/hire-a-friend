@@ -17,7 +17,6 @@ export default function ClearFilter({
       <Divider text="or" />
       <Button
         size="sm"
-        color="secondary"
         onClick={() => {
           void router.push(
             { pathname: router.pathname, query: null },
@@ -28,7 +27,7 @@ export default function ClearFilter({
           );
         }}
       >
-        Clear all filters
+        Clear filter
       </Button>
     </div>
   );

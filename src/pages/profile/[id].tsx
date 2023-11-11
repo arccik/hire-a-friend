@@ -1,4 +1,4 @@
-import { Button, Chip, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -10,48 +10,23 @@ import ApearanceTable from "~/components/pages-components/profile/ApearanceTable
 import { genders } from "~/data/gender-icons";
 import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
 import Title from "~/components/features/Title";
-import { useSession } from "next-auth/react";
-import { MdThumbUpAlt } from "react-icons/md";
 import Gallery from "~/components/pages-components/profile/Gallery";
-import { toast } from "react-toastify";
-import { type Rate } from "@prisma/client";
 import ActivityAndHobby from "~/components/pages-components/profile/ActivityAndHobby";
 import ReportViolating from "~/components/pages-components/profile/RepotViolating";
 import GoBackButton from "~/components/features/GoBackButton";
 import Head from "next/head";
+import ActionButtons from "~/components/pages-components/profile/ActionButtons";
+import Languages from "~/components/pages-components/profile/Languages";
 
 export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
-  const { data: userSession } = useSession();
-  const addContact = api.chat.addContact.useMutation();
 
   const { data, status, refetch } = api.user.getOne.useQuery(
     { id },
     { enabled: !!id },
   );
-  const rateUser = api.friend.vote.useMutation({
-    onSuccess: async () => {
-      toast.success("Thanks");
-      await refetch();
-    },
-    onError: (e) => {
-      if (e.message.includes("UNAUTHORIZED"))
-        return toast.info(
-          <div className="flex">
-            <p>Login to rate this profile</p>
-            <Button
-              className="ml-4"
-              size="sm"
-              onClick={() => void router.push("/auth/sign-in")}
-            >
-              Login
-            </Button>
-          </div>,
-        );
-      toast.error("Something went wrong :(");
-    },
-  });
+
   if (status === "loading")
     return (
       <Spinner
@@ -64,38 +39,6 @@ export default function ProfilePage() {
   if (data?.userType === "Customer") return <CustomerProfile data={data} />;
 
   const gender = genders.find((g) => g.id.toString() == data?.gender);
-  const isRated =
-    userSession?.user &&
-    data.Rate.some((v: Rate) => v.voterId === userSession?.user?.id);
-
-  const handleChatClick = () => {
-    if (!userSession) {
-      return toast.info(
-        <div className="flex">
-          <p>Have to be logged in</p>
-          <Button
-            className="ml-4"
-            size="sm"
-            onClick={() => void router.push("/auth/sign-in")}
-          >
-            Login
-          </Button>
-        </div>,
-      );
-    }
-    addContact.mutate({
-      id: data.id,
-      image: data.image ?? "",
-      name: data.name!,
-    });
-    void router.replace(
-      {
-        query: { ...router.query, chat: data.id, showChat: true },
-      },
-      undefined,
-      { shallow: true },
-    );
-  };
 
   return (
     <main className="profile-page">
@@ -169,14 +112,14 @@ export default function ProfilePage() {
                       <span className="block font-bold tracking-wide text-gray-600">
                         {data.city}
                       </span>
-                      <span className="text-sm text-gray-400">City</span>
+                      <p className="text-sm text-orange-500">City</p>
                     </div>
                     <div className="mr-4 p-3 text-center">
-                      <span className=" flex gap-2 font-bold tracking-wide text-gray-600">
+                      <span className=" flex gap-2 font-semibold tracking-wide text-gray-600">
                         {gender?.name}
                         {gender && <gender.Icon />}
                       </span>
-                      <span className="text-sm text-gray-400">Gender</span>
+                      <p className="text-sm text-orange-500">Gender</p>
                     </div>
                   </div>
                 </div>
@@ -187,7 +130,10 @@ export default function ProfilePage() {
                         <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
                           £ {data?.price?.toString()}
                         </span>
-                        <span className="text-sm text-gray-400">Per Hour</span>
+
+                        <span className="text-sm text-orange-500">
+                          Per Hour
+                        </span>
                       </div>
                     )}
                     {data?.photos && (
@@ -195,7 +141,7 @@ export default function ProfilePage() {
                         <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
                           {data.photos.length}
                         </span>
-                        <span className="text-sm text-gray-400">Photos</span>
+                        <span className="text-sm text-orange-500">Photos</span>
                       </div>
                     )}
                     {data.Rate && (
@@ -203,7 +149,7 @@ export default function ProfilePage() {
                         <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
                           {data.Rate.length}
                         </span>
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm text-orange-500">
                           {data.Rate.length > 1 ? "Likes" : "Like"}
                         </span>
                       </div>
@@ -216,37 +162,14 @@ export default function ProfilePage() {
                   {data?.name}
                 </h3>
                 <p className="-mt-4 text-slate-400">{data.experties}</p>
-                <div className="mb-2 mt-0 flex justify-center gap-5 text-sm font-bold leading-normal text-gray-400">
-                  <div className="flex justify-end gap-5 py-6 sm:mt-0">
-                    <Button
-                      color="warning"
-                      variant={isRated ? "light" : "flat"}
-                      onClick={() => rateUser.mutate({ id: data.id })}
-                    >
-                      <MdThumbUpAlt />
-                      {isRated ? "Rated" : "Rate"}
-                    </Button>
 
-                    {userSession?.user.id === id ? (
-                      <Button
-                        variant="bordered"
-                        onClick={() => void router.push("/auth/update-profile")}
-                      >
-                        Edit
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={handleChatClick}
-                        color="success"
-                        className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white hover:border hover:border-orange-500"
-                        type="button"
-                        variant="flat"
-                      >
-                        Send Message
-                      </Button>
-                    )}
-                  </div>
-                </div>
+                <ActionButtons
+                  rate={data.Rate}
+                  id={data.id}
+                  image={data.image}
+                  name={data.name}
+                  refetch={() => void refetch()}
+                />
 
                 <div className="mx-auto mb-10 mt-10 max-w-2xl text-left text-gray-600">
                   {data?.about}
@@ -260,22 +183,8 @@ export default function ProfilePage() {
                 hobbies={data.hobbies}
                 activities={data.activities}
               />
+              <Languages languages={data.languages} />
 
-              {!!data?.languages.length && (
-                <div className="mb-10 mt-10 flex flex-wrap justify-center gap-5">
-                  <p className="tracking-wide text-gray-600">Languages</p>
-                  {data?.languages.map((language) => (
-                    <Chip
-                      key={language}
-                      variant="dot"
-                      color="warning"
-                      className=" border-orange-400"
-                    >
-                      {language}
-                    </Chip>
-                  ))}
-                </div>
-              )}
               <ApearanceTable data={data?.appearance} />
 
               {data.lastLogin && (

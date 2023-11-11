@@ -18,9 +18,9 @@ export default function ActiveFriendsCard(props: User) {
           <Image
             alt={props.id}
             className="object-cover"
-            height={100}
+            height="auto"
             src={props.image}
-            width={200}
+            width={160}
           />
         )}
       </CardBody>

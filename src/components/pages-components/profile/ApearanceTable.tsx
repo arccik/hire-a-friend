@@ -28,7 +28,9 @@ export default function ApearanceTable({ data }: PropType) {
     });
   return (
     <>
-      <p className="m-10 text-center text-2xl font-thin">Apearance</p>
+      <p className="m-10 text-center text-2xl font-thin text-orange-500">
+        Apearance
+      </p>
       <div className="mb-5 flex justify-center border-gray-200">
         {/* Table */}
         <Table hideHeader aria-label="Apearance Table" className="md:w-1/2">

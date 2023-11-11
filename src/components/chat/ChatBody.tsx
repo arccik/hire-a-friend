@@ -2,38 +2,37 @@ import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
-import { TfiArrowLeft, TfiClose, TfiFaceSmile } from "react-icons/tfi";
+import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
 import { useRouter } from "next/router";
-import { Input, Spinner, User } from "@nextui-org/react";
-import { RiMailSendLine } from "react-icons/ri";
+import { Spinner, User } from "@nextui-org/react";
 import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { pusherClient } from "~/utils/pusher";
-import { type MessageResponse } from "~/validation/message";
 import { useSession } from "next-auth/react";
+
+import { type MessageResponse } from "~/validation/message";
+import ChatFooter from "./ChatFooter";
 
 export default function ChatBody() {
   const chatRef = useRef<HTMLDivElement | null>(null);
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
   const router = useRouter();
-  const { data: userSession } = useSession();
+  const { data: userSession } = useSession({ required: true });
 
-  const [message, setMessage] = useState("");
+  const pusherKey = pusherHrefConstructor(userSession?.user.id ?? "", chatId!);
+
   const [messages, setMessages] = useState<MessageResponse[] | null>(null);
+  console.log("Rerender!");
 
-  const {
-    data: messagesData,
-    refetch,
-    status: messageStatus,
-  } = api.chat.getMessages.useQuery(chatId!, {
-    enabled: !!chatId,
-  });
+  const { data: messagesData, status: messageStatus } =
+    api.chat.getMessages.useQuery(chatId!, {
+      enabled: !!chatId,
+    });
 
   const { data: receiverData } = api.user.getOne.useQuery(
     { id: chatId! },
     { enabled: !!chatId },
   );
-  const addMessage = api.chat.addMessage.useMutation();
 
   useEffect(() => {
     if (chatRef.current) {
@@ -43,12 +42,18 @@ export default function ChatBody() {
 
   useEffect(() => {
     if (!chatId || !userSession?.user.id) return;
-    setMessages((prev) => [...(prev ?? []), ...(messagesData ?? [])]);
-    const pusherKey = pusherHrefConstructor(userSession?.user.id, chatId);
+    if (!messages && messagesData) {
+      setMessages(messagesData);
+      console.log("Setting Messages", { messages });
+    }
+
     pusherClient.subscribe(pusherKey);
+
+    console.log("Chat Body: ", { pusherKey });
 
     const messageHandler = (message: MessageResponse) => {
       console.log("messageHandler", message, pusherKey);
+      setMessages((prev) => [...(prev ?? []), message]);
     };
 
     pusherClient.bind("incoming-message", messageHandler);
@@ -57,7 +62,7 @@ export default function ChatBody() {
       pusherClient.unsubscribe(pusherKey);
       pusherClient.unbind("incoming-message", messageHandler);
     };
-  }, [chatId, messagesData, userSession?.user.id]);
+  }, []);
 
   const handleBackButton = () => {
     delete router.query.chat;
@@ -67,22 +72,6 @@ export default function ChatBody() {
   const handleCloseButton = () => {
     delete router.query.showChat;
     void router.replace({ query: router.query }, undefined, { shallow: true });
-  };
-
-  const handleMessageSend = async () => {
-    if (!message || !userSession?.user.id) return;
-    if (chatRef.current) {
-      chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
-    }
-    const sendData = {
-      message,
-      sender: userSession?.user.id,
-      date: new Date(),
-    };
-    setMessages((prev) => [...(prev ?? []), sendData]);
-    addMessage.mutate(sendData);
-    await refetch();
-    setMessage("");
   };
 
   return (
@@ -108,43 +97,23 @@ export default function ChatBody() {
         </div>
       </div>
 
-      <div ref={chatRef} className="flex-1  overflow-y-auto px-4 py-4">
-        <div className="mx-auto mb-16 w-full  space-y-4">
+      <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
+        <div className="mx-auto mb-16 w-full space-y-4">
           {messageStatus === "loading" && (
             <Spinner className="grid h-screen place-items-center" />
           )}
-          {(messages ?? messagesData)?.map((message, index) => (
+          {(messages ?? messagesData)?.map((msg, index) => (
             <Message
-              {...message}
-              key={message.date.toString() + index}
+              key={msg.date.toString() + index}
               receiverImage={receiverData?.image}
+              date={msg.date}
+              message={msg.message}
+              sender={userSession?.user.id ?? ""}
             />
           ))}
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 z-40 flex h-auto w-full items-center justify-around  gap-3 bg-background/70  p-2  backdrop-blur-lg backdrop-saturate-150">
-        <TfiFaceSmile
-          size={30}
-          className="cursor-pointer rounded-full  p-1 hover:bg-indigo-50"
-        />
-
-        <Input
-          value={message}
-          variant="bordered"
-          autoFocus
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              void handleMessageSend();
-            }
-          }}
-        />
-        <RiMailSendLine
-          size={30}
-          onClick={() => void handleMessageSend()}
-          className="-rotate-45 cursor-pointer rounded-full  p-1 hover:bg-indigo-50"
-        />
-      </div>
+      <ChatFooter setMessages={setMessages} chatId={chatId} />
     </>
   );
 }

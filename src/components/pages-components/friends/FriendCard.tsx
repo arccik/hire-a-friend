@@ -9,15 +9,17 @@ export default function FriendCard({ item }: { item: User }) {
       className=" flex w-full max-w-full cursor-pointer drop-shadow-md hover:rounded-xl hover:drop-shadow-lg"
       onClick={() => void router.push(`/profile/${item.id}`)}
     >
-      {item.image && (
+      {item?.image && (
         <div
-          className="w-36 flex-none overflow-hidden  rounded-l-xl rounded-tr-none bg-cover bg-center"
-          style={{ backgroundImage: `url(${encodeURI(item.image)})` }}
-        ></div>
+          className={`w-36 flex-none  overflow-hidden  rounded-l-xl rounded-tr-none bg-cover bg-center`}
+          style={{ backgroundImage: `url(${item.image})` }}
+        />
       )}
       <div className="flex w-full flex-col  justify-between  rounded bg-white p-4 leading-normal ">
         <div className="mb-2">
-          <div className="text-xl font-bold text-gray-900">{item.name}</div>
+          <div className="text-sm font-bold text-gray-900  md:text-xl">
+            {item.name}
+          </div>
           <p className="flex items-center text-sm text-gray-500">
             {item.experties}
           </p>
@@ -45,7 +47,7 @@ export default function FriendCard({ item }: { item: User }) {
         <Chip
           size="sm"
           variant="bordered"
-          className="absolute right-5 top-5 text-xs opacity-50"
+          className="absolute right-1 top-1  text-xs opacity-50 md:static md:right-5 md:top-5 md:-ml-1 md:mt-2 "
         >
           {item.city?.split(",")[0]}
         </Chip>

@@ -69,7 +69,7 @@ export default function FriendsPage() {
           <ClearFilter show={true} router={router} />
         )}
 
-        <div className="grid grid-flow-row gap-2 md:gap-4 lg:grid-cols-3">
+        <div className="grid grid-flow-row gap-2 md:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-4">
           {toDisplay
             ? toDisplay[0].map((friend) => (
                 <FriendCard item={friend} key={friend.id} />

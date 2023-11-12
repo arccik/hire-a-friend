@@ -88,7 +88,9 @@ export const chatRouter = createTRPCRouter({
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const querySting = pusherHrefConstructor(ctx.session.user.id, input);
+
       const messages: MessageResponse[] = await redis.smembers(querySting);
+      // await redis.sadd(querySting, { isRead: true });
       return messages.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
@@ -107,13 +109,13 @@ export const chatRouter = createTRPCRouter({
         ctx.session.user.id,
         input.receiver,
       );
-      console.log("querySting", querySting);
 
       const message = {
         message: input.message,
         date: input.date,
         sender: ctx.session.user.id,
         receiver: input.receiver,
+        isRead: false,
       };
       await redis.sadd(querySting, message);
 

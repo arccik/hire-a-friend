@@ -2,18 +2,32 @@ import { useRouter } from "next/router";
 import { User } from "@nextui-org/react";
 import { api } from "~/utils/api";
 import { TfiClose } from "react-icons/tfi";
+import { VscClose } from "react-icons/vsc";
+import { toast } from "react-toastify";
 
 type PropType = {
   onClose: () => void;
 };
 export default function Contacts({ onClose }: PropType) {
   const router = useRouter();
-  const { data: contactsData } = api.chat.getContacts.useQuery();
+  const { data: contactsData, refetch: refetchContacts } =
+    api.chat.getContacts.useQuery();
+  const deleteContact = api.chat.deleteContact.useMutation({
+    onError: (e) => toast.error(e.message),
+    onSuccess: async () => {
+      toast.success("Contact deleted");
+      await refetchContacts();
+    },
+  });
 
   const handleCloseButton = (index: string) => {
     const { pathname, query } = router;
     router.query.chat = index;
     void router.replace({ pathname, query }, undefined, { shallow: true });
+  };
+
+  const handleDeleteButton = (id: string) => {
+    deleteContact.mutate({ id });
   };
 
   return (
@@ -35,16 +49,24 @@ export default function Contacts({ onClose }: PropType) {
           </p>
         )}
         {contactsData?.map((contact) => (
-          <User
-            onClick={() => handleCloseButton(contact.contactId)}
+          <div
             key={contact.contactId}
-            isFocusable
-            name={contact.name}
-            className="w-full animate-appearance-in cursor-pointer content-start justify-start p-2 text-black hover:bg-slate-200"
-            avatarProps={{
-              src: contact.image ?? "",
-            }}
-          />
+            className="group flex w-full animate-appearance-in cursor-pointer content-start items-center justify-start justify-between p-2 text-black hover:bg-slate-200"
+          >
+            <User
+              onClick={() => handleCloseButton(contact.contactId)}
+              key={contact.contactId}
+              isFocusable
+              name={contact.name}
+              avatarProps={{
+                src: contact.image ?? "",
+              }}
+            />
+            <VscClose
+              className="hidden group-hover:block"
+              onClick={() => handleDeleteButton(contact.contactId)}
+            />
+          </div>
         ))}
       </div>
     </>

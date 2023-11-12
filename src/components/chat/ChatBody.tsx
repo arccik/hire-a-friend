@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 
 import { type MessageResponse } from "~/validation/message";
 import ChatFooter from "./ChatFooter";
+import { toast } from "react-toastify";
 
 export default function ChatBody() {
   const chatRef = useRef<HTMLDivElement | null>(null);
@@ -36,19 +37,18 @@ export default function ChatBody() {
   );
 
   useEffect(() => {
-    console.log("EbATTT");
     if (!messages && messagesData) setMessages(messagesData);
     if (chatRef.current) {
       chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
     }
   }, [messages, messagesData]);
-
   useEffect(() => {
     if (!chatId || !userSession?.user.id) return;
     pusherClient.subscribe(pusherKey);
 
     const messageHandler = (message: MessageResponse) => {
       setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
+      toast.info("New Message");
     };
 
     pusherClient.bind("incoming-message", messageHandler);
@@ -99,11 +99,9 @@ export default function ChatBody() {
           )}
           {messages?.map((msg, index) => (
             <Message
-              key={msg.date.toString() + index}
+              key={msg.message + index}
+              {...msg}
               receiverImage={receiverData?.image}
-              date={msg.date}
-              message={msg.message}
-              sender={userSession?.user.id ?? ""}
               isLast={messages.length === index + 1}
             />
           ))}

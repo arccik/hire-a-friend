@@ -11,6 +11,7 @@ export default function Message({
   message,
   date,
   isLast,
+  receiver,
 }: MessageResponse & {
   receiverImage?: string | null;
   isLast: boolean;

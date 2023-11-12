@@ -31,7 +31,7 @@ export default function ChatFooter({ setMessages, chatId }: PropType) {
       receiver: chatId,
       date: new Date(),
     };
-    setMessages((prev) => [...(prev || []), sendData]);
+    setMessages((prev) => [...(prev ?? []), sendData]);
     addMessage.mutate(sendData);
     setMessage("");
   };

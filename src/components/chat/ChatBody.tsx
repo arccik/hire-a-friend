@@ -28,9 +28,7 @@ export default function ChatBody() {
       enabled: !!chatId,
     });
 
-  const [messages, setMessages] = useState<MessageResponse[] | undefined>(
-    messagesData,
-  );
+  const [messages, setMessages] = useState<MessageResponse[] | undefined>();
 
   const { data: receiverData } = api.user.getOne.useQuery(
     { id: chatId! },
@@ -38,17 +36,19 @@ export default function ChatBody() {
   );
 
   useEffect(() => {
+    console.log("EbATTT");
+    if (!messages && messagesData) setMessages(messagesData);
     if (chatRef.current) {
       chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
     }
-  }, [messages]);
+  }, [messages, messagesData]);
 
   useEffect(() => {
     if (!chatId || !userSession?.user.id) return;
     pusherClient.subscribe(pusherKey);
 
     const messageHandler = (message: MessageResponse) => {
-      setMessages((prev) => [...(prev || []).slice(0, -1), message]);
+      setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
     };
 
     pusherClient.bind("incoming-message", messageHandler);
@@ -57,7 +57,7 @@ export default function ChatBody() {
       pusherClient.unsubscribe(pusherKey);
       pusherClient.unbind("incoming-message", messageHandler);
     };
-  }, []);
+  }, [chatId]);
 
   const handleBackButton = () => {
     delete router.query.chat;
@@ -104,6 +104,7 @@ export default function ChatBody() {
               date={msg.date}
               message={msg.message}
               sender={userSession?.user.id ?? ""}
+              isLast={messages.length === index + 1}
             />
           ))}
         </div>

@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/react";
-import { Rate } from "@prisma/client";
+import type { Rate } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { MdThumbUpAlt } from "react-icons/md";
@@ -67,8 +67,6 @@ export default function ActionButtons({
     }
     addContact.mutate({
       id: id,
-      image: image ?? "",
-      name: name!,
     });
     void router.replace(
       {

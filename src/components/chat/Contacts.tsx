@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { User } from "@nextui-org/react";
-import { cn } from "~/lib/utils";
 import { api } from "~/utils/api";
 import { TfiClose } from "react-icons/tfi";
 

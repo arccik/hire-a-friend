@@ -78,7 +78,7 @@ export default function Header() {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      <NavbarContent className="sm:hidden" justify="start">
+      <NavbarContent className="md:hidden" justify="start">
         <NavbarBrand as={Link} href="/">
           <GiTimeTrap
             size="2rem"
@@ -88,7 +88,7 @@ export default function Header() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex md:gap-4" justify="end">
+      <NavbarContent className="hidden md:flex md:gap-4" justify="end">
         <NavbarBrand as={Link} href="/">
           <GiTimeTrap
             size="2rem"
@@ -115,7 +115,7 @@ export default function Header() {
         )}
       </NavbarContent>
 
-      <NavbarContent justify="end" className="hidden sm:flex">
+      <NavbarContent justify="end" className="hidden md:flex">
         <SeachBar router={router} />
         <NavbarItem>
           {userSession?.user.id ? (

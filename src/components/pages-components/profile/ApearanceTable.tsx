@@ -13,8 +13,7 @@ type PropType = {
 };
 
 export default function ApearanceTable({ data }: PropType) {
-  if (!data) return null;
-  const toDisplay = Object.entries(data)
+  const toDisplay = Object.entries(data ?? [])
     .filter((value) => value[1] !== "" && value[0] !== "id")
     .map(([key, value]) => {
       return (
@@ -26,13 +25,14 @@ export default function ApearanceTable({ data }: PropType) {
         </TableRow>
       );
     });
+  if (!toDisplay.length) return null;
+
   return (
     <>
       <p className="m-10 text-center text-2xl font-thin text-orange-500">
         Apearance
       </p>
       <div className="mb-5 flex justify-center border-gray-200">
-        {/* Table */}
         <Table hideHeader aria-label="Apearance Table" className="md:w-1/2">
           <TableHeader>
             <TableColumn>NAME</TableColumn>

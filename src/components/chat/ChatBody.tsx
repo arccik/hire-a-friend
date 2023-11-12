@@ -76,7 +76,7 @@ export default function ChatBody() {
 
   return (
     <>
-      <div className="flex items-center  overflow-auto border-b p-3">
+      <div className="flex items-center overflow-auto border-b p-3">
         <TfiArrowLeft
           onClick={handleBackButton}
           className="mr-5 cursor-pointer"

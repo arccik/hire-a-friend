@@ -1,5 +1,6 @@
 import { Chip } from "@nextui-org/react";
 import { type User } from "@prisma/client";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function FriendCard({ item }: { item: User }) {
@@ -10,10 +11,19 @@ export default function FriendCard({ item }: { item: User }) {
       onClick={() => void router.push(`/profile/${item.id}`)}
     >
       {item?.image && (
-        <div
-          className={`w-36 flex-none  overflow-hidden  rounded-l-xl rounded-tr-none bg-cover bg-center`}
-          style={{ backgroundImage: `url(${item.image})` }}
-        />
+        <>
+          {/* <div
+            className={`w-36 flex-none  overflow-hidden  rounded-l-xl rounded-tr-none bg-cover bg-center`}
+            style={{ backgroundImage: `url(${item.image})` }}
+          /> */}
+          <Image
+            className="`w-36 flex-none  overflow-hidden  rounded-l-xl rounded-tr-none bg-center object-cover"
+            src={item.image}
+            width={144}
+            height={0}
+            alt={item.name + "Card Image"}
+          />
+        </>
       )}
       <div className="flex w-full flex-col  justify-between  rounded bg-white p-4 leading-normal ">
         <div className="mb-2">

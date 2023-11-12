@@ -20,18 +20,21 @@ export const chatRouter = createTRPCRouter({
     }),
 
   getContacts: protectedProcedure.query(async ({ ctx }) => {
-    const data = await ctx.prisma.user.findFirst({
-      where: { id: ctx.session?.user.id },
-      select: { contacts: true },
+    const response = await ctx.prisma.contact.findMany({
+      where: { userId: ctx.session?.user.id },
+      include: { user: true },
     });
-    return data?.contacts;
+    const contacts = response.map((data) => ({
+      image: data.user.image,
+      name: data.user.name,
+      contactId: data.contactId,
+    }));
+    return contacts;
   }),
   addContact: protectedProcedure
     .input(
       z.object({
         id: z.string(),
-        image: z.string().optional(),
-        name: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -55,21 +58,37 @@ export const chatRouter = createTRPCRouter({
       }
       return await ctx.prisma.contact.create({
         data: {
-          image: input.image,
-          name: input.name,
           userId: ctx.session?.user.id,
           href: searchParams,
           contactId: input.id,
         },
       });
     }),
-
+  deleteContact: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.contact.deleteMany({
+        where: { contactId: input.id, userId: ctx.session?.user.id },
+      });
+    }),
+  deleteMessages: protectedProcedure
+    .input(z.object({ messageId: z.string(), contactId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const querySting = pusherHrefConstructor(
+        ctx.session.user.id,
+        input.contactId,
+      );
+      await redis.srem(querySting, {
+        receiver: ctx.session.user.id,
+        sender: input.contactId,
+      });
+      return { message: "Messages deleted successfully" };
+    }),
   getMessages: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const querySting = pusherHrefConstructor(ctx.session.user.id, input);
       const messages: MessageResponse[] = await redis.smembers(querySting);
-
       return messages.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
@@ -86,13 +105,15 @@ export const chatRouter = createTRPCRouter({
         });
       const querySting = pusherHrefConstructor(
         ctx.session.user.id,
-        input.sender,
+        input.receiver,
       );
+      console.log("querySting", querySting);
 
       const message = {
         message: input.message,
         date: input.date,
         sender: ctx.session.user.id,
+        receiver: input.receiver,
       };
       await redis.sadd(querySting, message);
 

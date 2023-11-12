@@ -9,7 +9,7 @@ import { api } from "~/utils/api";
 import type { MessageResponse } from "~/validation/message";
 
 type PropType = {
-  setMessages: Dispatch<SetStateAction<MessageResponse[] | null>>;
+  setMessages: Dispatch<SetStateAction<MessageResponse[] | undefined>>;
   chatId: string | null;
 };
 
@@ -28,9 +28,10 @@ export default function ChatFooter({ setMessages, chatId }: PropType) {
     const sendData = {
       message,
       sender: userSession.user.id,
+      receiver: chatId,
       date: new Date(),
     };
-    setMessages((prev) => [...(prev ?? []), sendData]);
+    setMessages((prev) => [...(prev || []), sendData]);
     addMessage.mutate(sendData);
     setMessage("");
   };

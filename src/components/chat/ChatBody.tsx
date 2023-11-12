@@ -21,13 +21,16 @@ export default function ChatBody() {
 
   const pusherKey = pusherHrefConstructor(userSession?.user.id ?? "", chatId!);
 
-  const [messages, setMessages] = useState<MessageResponse[] | null>(null);
   console.log("Rerender!");
 
   const { data: messagesData, status: messageStatus } =
     api.chat.getMessages.useQuery(chatId!, {
       enabled: !!chatId,
     });
+
+  const [messages, setMessages] = useState<MessageResponse[] | undefined>(
+    messagesData,
+  );
 
   const { data: receiverData } = api.user.getOne.useQuery(
     { id: chatId! },
@@ -42,18 +45,10 @@ export default function ChatBody() {
 
   useEffect(() => {
     if (!chatId || !userSession?.user.id) return;
-    if (!messages && messagesData) {
-      setMessages(messagesData);
-      console.log("Setting Messages", { messages });
-    }
-
     pusherClient.subscribe(pusherKey);
 
-    console.log("Chat Body: ", { pusherKey });
-
     const messageHandler = (message: MessageResponse) => {
-      console.log("messageHandler", message, pusherKey);
-      setMessages((prev) => [...(prev ?? []), message]);
+      setMessages((prev) => [...(prev || []).slice(0, -1), message]);
     };
 
     pusherClient.bind("incoming-message", messageHandler);
@@ -102,7 +97,7 @@ export default function ChatBody() {
           {messageStatus === "loading" && (
             <Spinner className="grid h-screen place-items-center" />
           )}
-          {(messages ?? messagesData)?.map((msg, index) => (
+          {messages?.map((msg, index) => (
             <Message
               key={msg.date.toString() + index}
               receiverImage={receiverData?.image}

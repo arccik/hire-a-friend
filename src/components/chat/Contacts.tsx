@@ -38,13 +38,10 @@ export default function Contacts({ onClose }: PropType) {
         {contactsData?.map((contact) => (
           <User
             onClick={() => handleCloseButton(contact.contactId)}
-            key={contact.id}
+            key={contact.contactId}
             isFocusable
             name={contact.name}
-            className={cn(
-              "w-full animate-appearance-in cursor-pointer content-start justify-start p-2 text-black hover:bg-slate-200",
-              // selected === contact.id && "bg-slate-300",
-            )}
+            className="w-full animate-appearance-in cursor-pointer content-start justify-start p-2 text-black hover:bg-slate-200"
             avatarProps={{
               src: contact.image ?? "",
             }}

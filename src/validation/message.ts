@@ -4,6 +4,7 @@ export const messageSchema = z.object({
   sender: z.string(),
   message: z.string(),
   date: z.date(),
+  receiver: z.string(),
 });
 
 

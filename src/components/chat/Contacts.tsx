@@ -44,7 +44,7 @@ export default function Contacts({ onClose }: PropType) {
       </div>
       <div className="flex flex-col items-start overflow-auto md:mt-5">
         {!contactsData?.length && (
-          <p className="h-12 p-2 text-center text-lg font-semibold  text-slate-500 md:p-3">
+          <p className=" h-full w-full py-10 text-center  text-lg font-semibold text-slate-500 md:p-3">
             No contacts
           </p>
         )}

@@ -108,23 +108,6 @@ export default function ProfilePage() {
                 )}
                 <div className="lg:order-3 lg:w-4/12 lg:self-center lg:text-right">
                   <div className="flex justify-end gap-5 py-6 sm:mt-0">
-                    <div className="mr-4 p-3 text-center">
-                      <span className="block font-bold tracking-wide text-gray-600">
-                        {data.city}
-                      </span>
-                      <p className="text-sm text-orange-500">City</p>
-                    </div>
-                    <div className="mr-4 p-3 text-center">
-                      <span className=" flex gap-2 font-semibold tracking-wide text-gray-600">
-                        {gender?.name}
-                        {gender && <gender.Icon />}
-                      </span>
-                      <p className="text-sm text-orange-500">Gender</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full px-4 lg:order-1 lg:w-4/12">
-                  <div className="flex justify-center md:py-4 md:pt-8 lg:pt-4">
                     {!data?.hidePrice && (
                       <div className="mr-4 p-3 text-center">
                         <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
@@ -136,6 +119,16 @@ export default function ProfilePage() {
                         </span>
                       </div>
                     )}
+                    <div className="mr-4 p-3 text-center">
+                      <span className="block font-bold tracking-wide text-gray-600">
+                        {data.city}
+                      </span>
+                      <p className="text-sm text-orange-500">City</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full px-4 lg:order-1 lg:w-4/12">
+                  <div className="flex justify-center md:py-4 md:pt-8 lg:pt-4">
                     {data?.photos && (
                       <div className="mr-4 p-3 text-center">
                         <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">

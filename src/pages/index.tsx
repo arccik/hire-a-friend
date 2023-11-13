@@ -71,11 +71,7 @@ export default function HomePage() {
       <section className="mx-auto mt-10 md:container">
         <div className="m-5">
           <p className="text-6xl font-semibold ">Events and Activities</p>
-          <p className="mb-10 text-xl">
-            Don not let loneliness linger.
-            {/* Don not let loneliness linger. It is time to reach out and connect
-            with people who understand what it means to seek a friend */}
-          </p>
+          <p className="mb-10 text-xl">Don not let loneliness linger.</p>
         </div>
 
         <Features />

@@ -28,7 +28,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           />
         </Head>
         <Header />
-        <ChatBox />
+        {/* <ChatBox /> */}
         <Component {...pageProps} />
 
         <ToastContainer

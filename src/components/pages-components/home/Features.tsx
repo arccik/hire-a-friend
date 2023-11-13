@@ -10,7 +10,7 @@ export default function Features() {
 
   return (
     <>
-      <div className="m-5 grid grid-cols-1 gap-4 sm:grid-cols-4">
+      <div className="m-5 grid grid-cols-1 gap-4 sm:grid-cols-2  lg:grid-cols-4">
         {toDisplay.map((item, index) => (
           <Card
             as={Link}

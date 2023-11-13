@@ -6,21 +6,21 @@ import ChatBody from "./ChatBody";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import usePusher from "~/hooks/usePusher";
+// import usePusher from "~/hooks/usePusher";
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
-  const { data: userSession } = useSession();
+  const { data: userSession } = useSession({ required: true });
 
-  const messages = usePusher({
-    sender: userSession?.user.id!,
-    receiver: chatId!,
-  });
+  // const messages = usePusher({
+  //   sender: userSession?.user.id ?? "",
+  //   receiver: chatId!,
+  // });
 
-  console.log("Pusher Messages: ", { messages });
+  // console.log("Pusher Messages: ", { messages });
 
   useEffect(() => {
     // to disable scrolling of site when chat open

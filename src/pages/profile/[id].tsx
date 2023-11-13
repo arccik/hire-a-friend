@@ -159,8 +159,6 @@ export default function ProfilePage() {
                 <ActionButtons
                   rate={data.Rate}
                   id={data.id}
-                  image={data.image}
-                  name={data.name}
                   refetch={() => void refetch()}
                 />
 

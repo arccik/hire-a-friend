@@ -8,19 +8,11 @@ import { api } from "~/utils/api";
 
 type PropType = {
   id: string;
-  image: string | null;
-  name: string | null;
   rate: Rate[];
   refetch: () => void;
 };
 
-export default function ActionButtons({
-  id,
-  image,
-  name,
-  rate,
-  refetch,
-}: PropType) {
+export default function ActionButtons({ id, rate, refetch }: PropType) {
   const { data: userSession } = useSession();
   const router = useRouter();
   const addContact = api.chat.addContact.useMutation();

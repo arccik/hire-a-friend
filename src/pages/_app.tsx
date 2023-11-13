@@ -12,7 +12,8 @@ import "~/styles/globals.css";
 import Header from "~/components/Layout/Header";
 import Footer from "~/components/Layout/Footer";
 import Head from "next/head";
-import ChatBox from "~/components/chat/Chat";
+
+
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -26,9 +27,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
             name="viewport"
             content="width=device-width, initial-scale=1, maximum-scale=1"
           />
+
+          <meta
+            name="description"
+            content="The platform helps creating meaningful connections and financial opportunities"
+          />
+          <title>Rent My Time</title>
         </Head>
         <Header />
-        {/* <ChatBox /> */}
         <Component {...pageProps} />
 
         <ToastContainer

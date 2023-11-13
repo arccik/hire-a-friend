@@ -6,7 +6,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 export default function Message({
-  sender,
   receiverImage,
   message,
   date,
@@ -21,7 +20,6 @@ export default function Message({
   const isSender = userSession?.user.id !== receiver;
 
   const imgUrl = (isSender ? userSession?.user.image : receiverImage) ?? "";
-
 
   return (
     <div className={cn("flex", isSender ? "justify-end" : "justify-start")}>

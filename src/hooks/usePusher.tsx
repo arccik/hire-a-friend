@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { pusherClient } from "~/utils/pusher";
-import { MessageResponse } from "~/validation/message";
+import type { MessageResponse } from "~/validation/message";
 
 type PropType = {
   sender: string;

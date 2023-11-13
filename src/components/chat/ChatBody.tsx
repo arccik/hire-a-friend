@@ -14,11 +14,14 @@ import ChatFooter from "./ChatFooter";
 import { toast } from "react-toastify";
 
 export default function ChatBody() {
+  const { data: userSession } = useSession({ required: true });
   const chatRef = useRef<HTMLDivElement | null>(null);
+
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
+
   const router = useRouter();
-  const { data: userSession } = useSession({ required: true });
+  const [messages, setMessages] = useState<MessageResponse[] | undefined>();
 
   const pusherKey = pusherHrefConstructor(userSession?.user.id ?? "", chatId!);
 
@@ -28,27 +31,32 @@ export default function ChatBody() {
     api.chat.getMessages.useQuery(chatId!, {
       enabled: !!chatId,
     });
-
-  const [messages, setMessages] = useState<MessageResponse[] | undefined>();
-
   const { data: receiverData } = api.user.getOne.useQuery(
     { id: chatId! },
     { enabled: !!chatId },
   );
 
   useEffect(() => {
-    if (!messages && messagesData) setMessages(messagesData);
     if (chatRef.current) {
       chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
     }
-  }, [messages, messagesData]);
+  }, [messages]);
+
+  useEffect(() => {
+    setMessages(messagesData);
+  }, [messagesData]);
+
+  console.log("CHAT :::::>>>>>> ", messages);
+
   useEffect(() => {
     if (!chatId || !userSession?.user.id) return;
     pusherClient.subscribe(pusherKey);
 
     const messageHandler = (message: MessageResponse) => {
       setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
-      toast.info("New Message");
+      if (message.receiver === userSession.user.id) {
+        toast.info("New Message");
+      }
     };
 
     pusherClient.bind("incoming-message", messageHandler);

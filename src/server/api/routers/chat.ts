@@ -45,8 +45,7 @@ export const chatRouter = createTRPCRouter({
       const isExist = await ctx.prisma.user.findFirst({
         include: { contacts: true },
         where: {
-          id: ctx.session.user.id,
-          contacts: { some: { href: searchParams } },
+          contactId: input.id,
         },
       });
 

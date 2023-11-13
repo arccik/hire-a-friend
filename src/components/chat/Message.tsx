@@ -18,9 +18,10 @@ export default function Message({
 }) {
   const { data: userSession } = useSession();
 
-  const isSender = userSession?.user.id === sender;
+  const isSender = userSession?.user.id !== receiver;
 
   const imgUrl = (isSender ? userSession?.user.image : receiverImage) ?? "";
+
 
   return (
     <div className={cn("flex", isSender ? "justify-end" : "justify-start")}>

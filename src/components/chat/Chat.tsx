@@ -6,6 +6,7 @@ import ChatBody from "./ChatBody";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import usePusher from "~/hooks/usePusher";
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
@@ -13,6 +14,13 @@ export default function ChatBox() {
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
+
+  const messages = usePusher({
+    sender: userSession?.user.id!,
+    receiver: chatId!,
+  });
+
+  console.log("Pusher Messages: ", { messages });
 
   useEffect(() => {
     // to disable scrolling of site when chat open

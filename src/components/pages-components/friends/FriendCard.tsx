@@ -7,7 +7,7 @@ export default function FriendCard({ item }: { item: User }) {
   const router = useRouter();
 
   const hobbies =
-    item.hobbies.length > 8 ? item.hobbies.slice(0, 8) : item.hobbies;
+    item.hobbies.length > 6 ? item.hobbies.slice(0, 6) : item.hobbies;
   return (
     <div
       className=" flex w-full max-w-full cursor-pointer drop-shadow-md hover:rounded-xl hover:drop-shadow-lg"

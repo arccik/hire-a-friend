@@ -58,6 +58,7 @@ const SignInPage = () => {
                 autoComplete="email"
                 placeholder="email@example.com"
                 errorMessage={errors.email?.message}
+                isInvalid={!!errors.email}
               />
               <Input
                 {...register("password")}
@@ -67,12 +68,14 @@ const SignInPage = () => {
                 type="password"
                 placeholder="Type your password"
                 errorMessage={errors.password?.message}
+                isInvalid={!!errors.password}
               />
 
               <Button
                 isDisabled={!!errors.email || !!errors.password}
                 type="submit"
-                color="primary"
+                color="warning"
+                variant="bordered"
                 className="w-full"
               >
                 Login
@@ -81,6 +84,8 @@ const SignInPage = () => {
               <Button
                 onClick={() => void signIn("google")}
                 fullWidth
+                // color="warning"
+                className="bg-orange-500/70"
                 startContent={<FaGoogle />}
               >
                 Login with Google
@@ -92,6 +97,15 @@ const SignInPage = () => {
                   className="font-medium text-primary-600 hover:underline "
                 >
                   Forgot your password ?
+                </Link>
+              </p>
+              <p className="text-sm font-light text-gray-500">
+                Do not have an account?
+                <Link
+                  href="/auth/sign-up"
+                  className="ml-1 font-medium text-primary-600 hover:underline"
+                >
+                  Sign Up
                 </Link>
               </p>
             </form>

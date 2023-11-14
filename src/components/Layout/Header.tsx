@@ -26,7 +26,7 @@ export default function Header() {
   const userMenuItems = [
     {
       id: 1,
-      title: "Browse",
+      title: "Find People",
       href: "/profiles",
     },
     {
@@ -49,7 +49,7 @@ export default function Header() {
   const guestMenuItems = [
     {
       id: 2,
-      title: "Browse",
+      title: "Find People",
       href: "/profiles",
     },
 
@@ -58,16 +58,16 @@ export default function Header() {
       title: "Contact Us",
       href: "/contact-us",
     },
-    {
-      id: 6,
-      title: "Sign Up",
-      href: "/auth/sign-up",
-    },
-    {
-      id: 5,
-      title: "Login",
-      href: "/auth/sign-in",
-    },
+    // {
+    //   id: 6,
+    //   title: "Sign Up",
+    //   href: "/auth/sign-up",
+    // },
+    // {
+    //   id: 5,
+    //   title: "Login",
+    //   href: "/auth/sign-in",
+    // },
   ];
 
   const menu = userSession?.user.id ? userMenuItems : guestMenuItems;
@@ -78,7 +78,7 @@ export default function Header() {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      <NavbarContent className="md:hidden" justify="start">
+      <NavbarContent className="md:hidden" justify="end">
         <NavbarBrand as={Link} href="/">
           <GiTimeTrap
             size="2rem"
@@ -145,7 +145,7 @@ export default function Header() {
                 as={Link}
                 color="warning"
                 href="/auth/sign-up"
-                variant="flat"
+                variant="bordered"
               >
                 Sign Up
               </Button>
@@ -154,35 +154,7 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="md:hidden" justify="end">
-        {/* <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[10rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-          placeholder="Type to search..."
-          size="sm"
-          startContent={<RiSearchLine size={18} />}
-          type="search"
-          
-        /> */}
         <SearchBar router={router} />
-
-        {/* {userSession?.user.id && (
-          <Avatar
-            isBordered
-            className="transition-transform"
-            size="sm"
-            as={Link}
-            href={`/profile/${userSession.user.id}`}
-            src={
-              userSession?.user.image ??
-              "/assets/images/avatar-placeholder.jpeg"
-            }
-          />
-        )} */}
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />

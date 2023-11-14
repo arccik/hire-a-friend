@@ -55,7 +55,7 @@ export type UserValidationType = z.infer<typeof userValidation>;
 
 export const signUpSchema = z
   .object({
-    email: z.string().min(3, "Required").email(),
+    email: z.string().min(3, "Email is required").email(),
 
     password: z.string().min(3, "Password must have more than 8 characters"),
     confirmPassword: z
@@ -71,7 +71,7 @@ export const signUpSchema = z
   });
 export const loginSchema = z.object({
   email: z.string().min(3, "Required").email(),
-  password: z.string().min(3, "You must enter a password"),
+  password: z.string().min(3, "Password is required"),
 });
 
 export type SignUpSchemaType = z.infer<typeof signUpSchema>;

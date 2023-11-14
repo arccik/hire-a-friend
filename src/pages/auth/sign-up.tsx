@@ -109,7 +109,8 @@ export default function SignUpPage() {
               <Button
                 isDisabled={Object.entries(errors).length > 0}
                 type="submit"
-                color="primary"
+                color="warning"
+                variant="bordered"
                 className="w-full"
               >
                 Create an account
@@ -118,6 +119,8 @@ export default function SignUpPage() {
               <Button
                 onClick={() => void signIn("google")}
                 fullWidth
+                color="warning"
+                className="bg-orange-500/50"
                 startContent={<FaGoogle />}
               >
                 Login with Google

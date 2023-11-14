@@ -13,7 +13,7 @@ export default function ChatBox() {
   const router = useRouter();
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
-  const { data: userSession } = useSession({ required: true });
+  const { data: userSession } = useSession();
 
   // const messages = usePusher({
   //   sender: userSession?.user.id ?? "",

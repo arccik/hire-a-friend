@@ -3,6 +3,7 @@ import { userRouter } from "./routers/user";
 import { friendRouter } from "./routers/friend";
 import { uploaderRouter } from "./routers/file-upload";
 import { chatRouter } from "./routers/chat";
+import { emailRouter } from "./routers/email";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   friend: friendRouter,
   uploader: uploaderRouter,
   chat: chatRouter,
+  email: emailRouter,
 });
 
 // export type definition of API

@@ -7,6 +7,19 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 
 export const emailRouter = createTRPCRouter({
+  contactUs: protectedProcedure
+    .input(
+      z.object({ email: z.string(), subject: z.string(), message: z.string() }),
+    )
+    .mutation(async ({ input }) => {
+      await transporter.sendMail({
+        from: env.EMAIL_FROM,
+        to: env.EMAIL_FROM,
+        subject: `URGENT: Rent My Time | Contact Us - ${input.email} `,
+        html: `<p>Email: ${input.email}</p><p>Subject: ${input.subject}</p><p>Message: ${input.message}</p>`,
+      });
+      return { message: "Email sent" };
+    }),
   sendGreetings: protectedProcedure
     .input(z.object({ email: z.string() }))
     .query(async ({ input }) => {

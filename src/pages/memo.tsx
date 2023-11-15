@@ -79,7 +79,7 @@ export default function MemoPage() {
               </p>
               <p>
                 Thank you for being a part of our [Website/App] community. We
-                look forward to connecting you with the perfect solution.
+                look to connecting you with the perfect solution.
               </p>
               <p>Warm regards,</p>
             </div>

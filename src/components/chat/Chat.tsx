@@ -6,6 +6,10 @@ import ChatBody from "./ChatBody";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { pusherClient } from "~/utils/pusher";
+import { toast } from "react-toastify";
+import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
+import { MessageResponse } from "~/validation/message";
 // import usePusher from "~/hooks/usePusher";
 
 export default function ChatBox() {
@@ -33,6 +37,24 @@ export default function ChatBox() {
       document.body.style.overflow = "visible";
     };
   }, [showChat]);
+
+  useEffect(() => {
+    if (!chatId || !userSession?.user.id) return;
+    const pusherKey = pusherHrefConstructor(userSession.user.id, chatId);
+    pusherClient.subscribe(pusherKey);
+
+    const messageHandler = (message: MessageResponse) => {
+      console.log("New MEssage: >> ", message);
+      toast.info("New Message");
+    };
+
+    pusherClient.bind("incoming-message", messageHandler);
+
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unbind("incoming-message", messageHandler);
+    };
+  }, []);
 
   const handleChatButtonClick = () => {
     if (showChat) {

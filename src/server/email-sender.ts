@@ -2,13 +2,12 @@ import nodemailer from "nodemailer";
 import { env } from "~/env.mjs";
 
 export const transporter = nodemailer.createTransport({
-  host: "smtp.forwardemail.net",
+  host: "smtp.gmail.com",
   port: 465,
   secure: true,
   auth: {
-    // TODO: replace `user` and `pass` values from <https://forwardemail.net>
     user: env.EMAIL_USER,
-    pass: env.EMAIL_PASS,
+    pass: env.GOOGLE_APP_PASSWORD,
   },
 });
 

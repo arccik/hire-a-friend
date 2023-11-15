@@ -32,7 +32,8 @@ export const env = createEnv({
     PUSHER_APP_SECRET: z.string().min(1),
     EMAIL_FROM: z.string().min(1),
     EMAIL_USER: z.string().min(1),
-    EMAIL_PASS: z.string().min(1)
+    EMAIL_PASS: z.string().min(1),
+    GOOGLE_APP_PASSWORD: z.string().min(1),
   },
 
   /**
@@ -69,7 +70,8 @@ export const env = createEnv({
     NEXT_PUBLIC_PUSHER_APP_KEY: process.env.NEXT_PUBLIC_PUSHER_APP_KEY,
     EMAIL_FROM: process.env.EMAIL_FROM,
     EMAIL_PASS: process.env.EMAIL_PASS,
-    EMAIL_USER: process.env.EMAIL_USER
+    EMAIL_USER: process.env.EMAIL_USER,
+    GOOGLE_APP_PASSWORD: process.env.GOOGLE_APP_PASSWORD
 
 
   },

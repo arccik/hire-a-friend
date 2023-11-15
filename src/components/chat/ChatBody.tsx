@@ -46,26 +46,24 @@ export default function ChatBody() {
     setMessages(messagesData);
   }, [messagesData]);
 
-  console.log("CHAT :::::>>>>>> ", messages);
+  // useEffect(() => {
+  //   if (!chatId || !userSession?.user.id) return;
+  //   pusherClient.subscribe(pusherKey);
 
-  useEffect(() => {
-    if (!chatId || !userSession?.user.id) return;
-    pusherClient.subscribe(pusherKey);
+  //   const messageHandler = (message: MessageResponse) => {
+  //     setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
+  //     if (message.receiver === userSession.user.id) {
+  //       toast.info("New Message");
+  //     }
+  //   };
 
-    const messageHandler = (message: MessageResponse) => {
-      setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
-      if (message.receiver === userSession.user.id) {
-        toast.info("New Message");
-      }
-    };
+  //   pusherClient.bind("incoming-message", messageHandler);
 
-    pusherClient.bind("incoming-message", messageHandler);
-
-    return () => {
-      pusherClient.unsubscribe(pusherKey);
-      pusherClient.unbind("incoming-message", messageHandler);
-    };
-  }, [chatId]);
+  //   return () => {
+  //     pusherClient.unsubscribe(pusherKey);
+  //     pusherClient.unbind("incoming-message", messageHandler);
+  //   };
+  // }, [chatId]);
 
   const handleBackButton = () => {
     delete router.query.chat;

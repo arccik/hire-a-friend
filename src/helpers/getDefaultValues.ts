@@ -25,6 +25,7 @@ export default function getDefaultValues(
     price: props.price ?? undefined,
     hidePrice: props.hidePrice ?? false,
     phoneNumber: props.phoneNumber ?? "",
+    zodiacSign: props.zodiacSign ?? "",
     appearance: {
       height: props.appearance?.height ?? "",
       weight: props.appearance?.weight ?? "",

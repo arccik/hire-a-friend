@@ -38,6 +38,7 @@ export const userValidation = z.object({
   activated: z.boolean().optional(),
   earnings: z.string().optional(),
   feedback: z.array(z.string()).optional(),
+  zodiacSign: z.string().optional(),
 
   password: z.string().optional(),
 

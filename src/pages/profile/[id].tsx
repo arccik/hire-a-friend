@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/react";
+import { Card, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -17,6 +17,7 @@ import GoBackButton from "~/components/features/GoBackButton";
 import Head from "next/head";
 import ActionButtons from "~/components/pages-components/profile/ActionButtons";
 import Languages from "~/components/pages-components/profile/Languages";
+import { zodiacSigns } from "~/data/zodiac-sign-list";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -39,6 +40,8 @@ export default function ProfilePage() {
   if (data?.userType === "Customer") return <CustomerProfile data={data} />;
 
   const gender = genders.find((g) => g.id.toString() == data?.gender);
+
+  const zodiacSign = zodiacSigns.find((s) => s.id === Number(data.zodiacSign));
 
   return (
     <main className="profile-page">
@@ -165,9 +168,6 @@ export default function ProfilePage() {
                 <div className="mx-auto mb-10 mt-10 max-w-2xl text-left text-gray-600">
                   {data?.about}
                 </div>
-                <div className="mx-auto mb-10 mt-10 flex flex-row justify-center gap-4 md:w-2/3">
-                  <Gallery imagesUrl={data?.photos} />
-                </div>
               </div>
 
               <ActivityAndHobby
@@ -175,9 +175,32 @@ export default function ProfilePage() {
                 activities={data.activities}
               />
               <Languages languages={data.languages} />
-
+              <div className="mx-auto mb-10 mt-10 flex flex-row justify-center gap-4 md:w-2/3">
+                <Gallery imagesUrl={data?.photos} />
+              </div>
               <ApearanceTable data={data?.appearance} />
-
+              <div className="mx-auto mt-5 md:w-96">
+                {/* <Card shadow="sm" className="rounded-xl p-4 hover:bg-slate-50"> */}
+                <div className="flex justify-between">
+                  {zodiacSign && (
+                    <div className="mx-auto">
+                      <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
+                        Zodiac Sign
+                      </p>
+                      {zodiacSign?.Icon({ size: "4rem", color: "orange" })}
+                      {zodiacSign?.name}
+                    </div>
+                  )}
+                  <div className="mx-auto">
+                    <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
+                      Gender
+                    </p>
+                    {gender?.Icon({ size: "4rem", color: "orange" })}
+                    {gender?.name}
+                  </div>
+                </div>
+                {/* </Card> */}
+              </div>
               {data.lastLogin && (
                 <div className="mt-10 text-xs text-slate-400">
                   <p>Last Visit: {data.lastLogin.toLocaleDateString()}</p>

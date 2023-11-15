@@ -20,6 +20,7 @@ import UploadCoverImage from "./UploadCoverImage";
 import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
 import getDefaultValues from "~/helpers/getDefaultValues";
+import ZodiacSelect from "./ZodiacSelect";
 
 export default function BigForm(props: BigFormPropType) {
   const updateUser = api.user.update.useMutation({
@@ -44,6 +45,8 @@ export default function BigForm(props: BigFormPropType) {
     },
   });
 
+  console.log("BIG FORM PROPS: ", props);
+
   const {
     register,
     handleSubmit,
@@ -58,6 +61,7 @@ export default function BigForm(props: BigFormPropType) {
 
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
     updateUser.mutate({ ...data, id: props.userId });
+    console.log("SUBMIT DATA: ", data);
   };
 
   return (
@@ -133,6 +137,12 @@ export default function BigForm(props: BigFormPropType) {
         <UploadGalleryImages setValue={setValue} imgUrls={props.photos} />
 
         <Apearance register={register} errors={errors} getValues={getValues} />
+        <ZodiacSelect
+          register={register}
+          errors={errors}
+          value={getValues("zodiacSign")}
+        />
+
         <div className="flex flex-row">
           <div className="border-b border-gray-900/10">
             <h2 className="text-base font-semibold leading-7 text-gray-900">

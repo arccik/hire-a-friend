@@ -39,8 +39,11 @@ export default function ChatBox() {
   }, [showChat]);
 
   useEffect(() => {
-    if (!chatId || !userSession?.user.id) return;
-    const pusherKey = pusherHrefConstructor(userSession.user.id, chatId);
+    
+    const pusherKey = pusherHrefConstructor(
+      userSession?.user.id ?? "",
+      chatId!,
+    );
     pusherClient.subscribe(pusherKey);
 
     const messageHandler = (message: MessageResponse) => {

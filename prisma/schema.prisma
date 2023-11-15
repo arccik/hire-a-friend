@@ -1,20 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
 
 datasource db {
-    // provider = "sqlite"
     provider = "postgresql"
-
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url       = env("DATABASE_URL")
-    directUrl = env("DIRECT_URL")
 }
 
 // Necessary for Next auth
@@ -54,25 +44,21 @@ model User {
     accounts      Account[]
     sessions      Session[]
     password      String?
-
     firstName String?
     lastName  String?
     age       Int?
     about     String?
     photos    String[]
-
     country String?
     street  String?
     city    String?
     state   String?
     zipCode String?
-
     phoneNumber String?
     gender      String?
     birthday    DateTime?
     activities  String[]
     hobbies     String[]
-
     experties String?
     price     Float?
     hidePrice Boolean?
@@ -80,26 +66,22 @@ model User {
     activated Boolean?
     earnings  String?
     feedback  String[]
-
     lastLogin DateTime?
-
     isOffering Boolean?
     userType   UserType?
-
     followers Follower[]
-
     status       String?
     appearance   Appearance? @relation(fields: [appearanceId], references: [id])
     appearanceId String?
     views        Int         @default(0)
     Comment      Comment[]
     Rate         Rate[]
-
     availableHours String?
     contactId      String?
     contacts       Contact[]
     createdAt      DateTime  @default(now())
     updatedAt      DateTime  @updatedAt
+    zodiacSign    String?
 }
 
 model Rate {

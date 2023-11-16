@@ -1,4 +1,4 @@
-import { Card, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -187,7 +187,7 @@ export default function ProfilePage() {
                       <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
                         Zodiac Sign
                       </p>
-                      {zodiacSign?.Icon({ size: "4rem", color: "orange" })}
+                      {zodiacSign?.Icon({ size: "2rem", color: "orange" })}
                       {zodiacSign?.name}
                     </div>
                   )}
@@ -195,7 +195,7 @@ export default function ProfilePage() {
                     <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
                       Gender
                     </p>
-                    {gender?.Icon({ size: "4rem", color: "orange" })}
+                    {gender?.Icon({ size: "2rem", color: "orange" })}
                     {gender?.name}
                   </div>
                 </div>

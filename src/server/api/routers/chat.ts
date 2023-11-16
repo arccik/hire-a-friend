@@ -125,6 +125,7 @@ export const chatRouter = createTRPCRouter({
         cluster: "eu",
         useTLS: true,
       });
-      await pusherServer.trigger(querySting, "incoming-message", message);
+      console.log("RECEIVER ID: ", input.receiver);
+      await pusherServer.trigger(input.receiver, "incoming-message", message);
     }),
 });

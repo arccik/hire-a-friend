@@ -3,7 +3,6 @@ import {
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
   Button,
   NavbarMenuToggle,
   NavbarMenu,
@@ -19,8 +18,7 @@ import Link from "next/link";
 import { GiTimeTrap } from "react-icons/gi";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import SeachBar from "./SeachBar";
-import SearchBar from "./SeachBar";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -33,11 +31,7 @@ export default function Header() {
       title: "Find People",
       href: "/profiles",
     },
-    {
-      id: 2,
-      title: "Dashboard",
-      href: "/dashboard",
-    },
+
     {
       id: 3,
       title: "Profile",
@@ -48,30 +42,35 @@ export default function Header() {
       title: "Edit Profile",
       href: "/auth/update-profile",
     },
+    {
+      id: 5,
+      title: "SignOut",
+      href: "/auth/sign-out",
+    },
   ];
 
   const guestMenuItems = [
     {
-      id: 2,
+      id: 1,
       title: "Find People",
       href: "/profiles",
     },
 
     {
-      id: 4,
+      id: 2,
       title: "Contact Us",
       href: "/contact-us",
     },
-    // {
-    //   id: 6,
-    //   title: "Sign Up",
-    //   href: "/auth/sign-up",
-    // },
-    // {
-    //   id: 5,
-    //   title: "Login",
-    //   href: "/auth/sign-in",
-    // },
+    {
+      id: 3,
+      title: "Contact Us",
+      href: "/contact-us",
+    },
+    {
+      id: 4,
+      title: "About Us",
+      href: "/about-us",
+    },
   ];
 
   const menu = userSession?.user.id ? userMenuItems : guestMenuItems;
@@ -101,7 +100,7 @@ export default function Header() {
           <p className="ml-2 font-bold text-inherit">Rent My Time</p>
         </NavbarBrand>
 
-        {/* Larg Screen Menu */}
+        {/* Larg Screen Menu
         {menu.map((item) => (
           <NavbarItem key={item.id}>
             <Link color="foreground" href={item.href}>
@@ -116,11 +115,11 @@ export default function Header() {
           >
             <button onClick={() => void signOut()}>Logout</button>
           </NavbarItem>
-        )}
+        )} */}
       </NavbarContent>
 
       <NavbarContent justify="end" className="hidden md:flex">
-        <SeachBar router={router} />
+        <SearchBar router={router} />
         {/* <NavbarItem> */}
         {userSession?.user.id ? (
           <Dropdown placement="bottom-end">
@@ -147,11 +146,24 @@ export default function Header() {
               >
                 Profile
               </DropdownItem>
-              <DropdownItem key="Settings">Settings</DropdownItem>
-              <DropdownItem key="find people">People</DropdownItem>
-              <DropdownItem key="system">System</DropdownItem>
-              <DropdownItem key="configurations">Configurations</DropdownItem>
-              <DropdownItem key="help_and_feedback">
+              <DropdownItem
+                key="Settings"
+                as={Link}
+                href="/auth/update-profile"
+              >
+                Settings
+              </DropdownItem>
+              <DropdownItem key="find people" as={Link} href="/profiles">
+                People
+              </DropdownItem>
+              {/* <DropdownItem key="system">System</DropdownItem> */}
+              <DropdownItem key="configurations" as={Link} href="/contact-us">
+                Contact Us
+              </DropdownItem>
+              <DropdownItem key="configurations" as={Link} href="/about-us">
+                About Us
+              </DropdownItem>
+              <DropdownItem key="help_and_feedback" as={Link} href="/memo">
                 Help & Feedback
               </DropdownItem>
               <DropdownItem
@@ -165,7 +177,7 @@ export default function Header() {
           </Dropdown>
         ) : (
           <>
-            <Button
+            {/* <Button
               as={Link}
               // color="success"
               href="/auth/sign-in"
@@ -173,7 +185,7 @@ export default function Header() {
               className="mr-2"
             >
               Login
-            </Button>
+            </Button> */}
             <Button
               as={Link}
               color="warning"
@@ -207,13 +219,13 @@ export default function Header() {
           </NavbarMenuItem>
         ))}
 
-        {userSession?.user.id && (
+        {/* {userSession?.user.id && (
           <NavbarMenuItem key="Sign Out" className="mt-5 text-2xl">
             <button onClick={() => void signOut()} className="text-red-500">
               Logout
             </button>
           </NavbarMenuItem>
-        )}
+        )} */}
       </NavbarMenu>
     </Navbar>
   );

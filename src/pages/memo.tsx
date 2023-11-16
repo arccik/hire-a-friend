@@ -17,8 +17,11 @@ export default function MemoPage() {
             </div>
             <div className="md:7/12 lg:w-6/12">
               <h2 className="text-2xl font-bold text-gray-900 md:text-4xl">
-                Rent My Time
+                Help & Feedback
               </h2>
+              <div className="h-screen">
+                <p>TO BE UPDATED</p>
+              </div>
               <p>
                 We are thrilled to introduce you to the perfect solution for all
                 your needs. Our platform is dedicated to connecting individuals

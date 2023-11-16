@@ -17,7 +17,7 @@ export default function SearchPage() {
   return (
     <main className="m-3 md:m-10">
       <Title text="Search Result" />
-      <div className="mt-10">
+      <div className="mt-10 grid grid-flow-row grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
         {people[0].map((person) => (
           <FriendCard item={person} key={person.id} />
         ))}

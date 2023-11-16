@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
 import { useRouter } from "next/router";
 import { Spinner, User } from "@nextui-org/react";
-import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { pusherClient } from "~/utils/pusher";
 import { useSession } from "next-auth/react";
 
@@ -22,8 +21,6 @@ export default function ChatBody() {
 
   const router = useRouter();
   const [messages, setMessages] = useState<MessageResponse[] | undefined>();
-
-  const pusherKey = pusherHrefConstructor(userSession?.user.id ?? "", chatId!);
 
   console.log("Rerender!");
 
@@ -46,24 +43,21 @@ export default function ChatBody() {
     setMessages(messagesData);
   }, [messagesData]);
 
-  // useEffect(() => {
-  //   if (!chatId || !userSession?.user.id) return;
-  //   pusherClient.subscribe(pusherKey);
+  useEffect(() => {
+    if (!chatId || !userSession?.user.id) return;
+    pusherClient.subscribe(chatId);
 
-  //   const messageHandler = (message: MessageResponse) => {
-  //     setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
-  //     if (message.receiver === userSession.user.id) {
-  //       toast.info("New Message");
-  //     }
-  //   };
+    const messageHandler = (message: MessageResponse) => {
+      setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
+    };
 
-  //   pusherClient.bind("incoming-message", messageHandler);
+    pusherClient.bind("incoming-message", messageHandler);
 
-  //   return () => {
-  //     pusherClient.unsubscribe(pusherKey);
-  //     pusherClient.unbind("incoming-message", messageHandler);
-  //   };
-  // }, [chatId]);
+    return () => {
+      pusherClient.unsubscribe(chatId);
+      pusherClient.unbind("incoming-message", messageHandler);
+    };
+  }, [chatId]);
 
   const handleBackButton = () => {
     delete router.query.chat;

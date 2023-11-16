@@ -8,9 +8,9 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { pusherClient } from "~/utils/pusher";
 import { toast } from "react-toastify";
-import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { MessageResponse } from "~/validation/message";
-// import usePusher from "~/hooks/usePusher";
+import { BiMessage } from "react-icons/bi";
+import Notification from "./Notification";
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
@@ -18,13 +18,6 @@ export default function ChatBox() {
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
-
-  // const messages = usePusher({
-  //   sender: userSession?.user.id ?? "",
-  //   receiver: chatId!,
-  // });
-
-  // console.log("Pusher Messages: ", { messages });
 
   useEffect(() => {
     // to disable scrolling of site when chat open
@@ -39,16 +32,27 @@ export default function ChatBox() {
   }, [showChat]);
 
   useEffect(() => {
-    
-    const pusherKey = pusherHrefConstructor(
-      userSession?.user.id ?? "",
-      chatId!,
-    );
+    const pusherKey = userSession?.user.id;
+    if (!pusherKey) return;
+
     pusherClient.subscribe(pusherKey);
 
     const messageHandler = (message: MessageResponse) => {
-      console.log("New MEssage: >> ", message);
-      toast.info("New Message");
+      if (message.sender === pusherKey) return;
+      toast.success(
+        <Notification msg={message.message} sender={message.sender} />,
+        {
+          icon: <BiMessage size="2rem" />,
+          onClick: () =>
+            void router.push({
+              query: {
+                ...router.query,
+                showChat: true,
+                chat: message.sender,
+              },
+            }),
+        },
+      );
     };
 
     pusherClient.bind("incoming-message", messageHandler);
@@ -57,7 +61,7 @@ export default function ChatBox() {
       pusherClient.unsubscribe(pusherKey);
       pusherClient.unbind("incoming-message", messageHandler);
     };
-  }, []);
+  }, [userSession?.user.id]);
 
   const handleChatButtonClick = () => {
     if (showChat) {

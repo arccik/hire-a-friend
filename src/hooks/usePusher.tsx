@@ -1,27 +1,25 @@
 import { useEffect, useState } from "react";
-import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { pusherClient } from "~/utils/pusher";
 import type { MessageResponse } from "~/validation/message";
 
 type PropType = {
-  sender: string;
-  receiver: string;
+  receiver?: string | null;
 };
 
-export default function usePusher({ sender, receiver }: PropType) {
-  const pusherKey = pusherHrefConstructor(sender, receiver);
-  const [messages, setMessages] = useState<MessageResponse[]>();
+export default function useNewMessage({ receiver }: PropType) {
+  const [messages, setMessages] = useState<MessageResponse>();
   useEffect(() => {
-    pusherClient.subscribe(pusherKey);
+    if (!receiver) return;
+    pusherClient.subscribe(receiver);
 
     const messageHandler = (message: MessageResponse) => {
-      setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
+      setMessages(message);
     };
 
     pusherClient.bind("incoming-message", messageHandler);
 
     return () => {
-      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unsubscribe(receiver);
       pusherClient.unbind("incoming-message", messageHandler);
     };
   }, []);

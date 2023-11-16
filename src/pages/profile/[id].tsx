@@ -112,7 +112,7 @@ export default function ProfilePage() {
                 <div className="lg:order-3 lg:w-4/12 lg:self-center lg:text-right">
                   <div className="flex justify-end gap-5 py-6 sm:mt-0">
                     {!data?.hidePrice && (
-                      <div className="mr-4 p-3 text-center">
+                      <div className="mr-4 mt-3 text-center">
                         <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
                           £ {data?.price?.toString()}
                         </span>
@@ -130,17 +130,9 @@ export default function ProfilePage() {
                         <p className="text-sm text-orange-500">City</p>
                       </div>
                     )}
-                    {data.age && (
-                      <div className="mr-4 p-3 text-center">
-                        <span className="block font-bold tracking-wide text-gray-600">
-                          {data.age}
-                        </span>
-                        <p className="text-sm text-orange-500">Age</p>
-                      </div>
-                    )}
                   </div>
                 </div>
-                <div className="w-full px-4 lg:order-1 lg:w-4/12">
+                <div className="w-full px-4 lg:order-1 lg:w-1/2">
                   <div className="flex justify-center md:py-4 md:pt-8 lg:pt-4">
                     {data?.photos && (
                       <div className="mr-4 p-3 text-center">
@@ -198,9 +190,20 @@ export default function ProfilePage() {
                         Zodiac Sign
                       </p>
                       {zodiacSign?.Icon({ size: "2rem", color: "orange" })}
-                      <p className="text-xs leading-6 text-gray-400">
+                      <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
                         {zodiacSign?.name}
                       </p>
+                    </div>
+                  )}
+                  {data.age && (
+                    <div className="mr-4 p-3 text-center text-lg">
+                      <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
+                        Age
+                      </p>
+                      <span className="block font-bold tracking-wide text-orange-500">
+                        {data.age}
+                      </span>
+                      <p></p>
                     </div>
                   )}
                   <div className="mx-auto">
@@ -208,7 +211,7 @@ export default function ProfilePage() {
                       Gender
                     </p>
                     {gender?.Icon({ size: "2rem", color: "orange" })}
-                    <p className="text-xs leading-6 text-gray-400">
+                    <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
                       {gender?.name}
                     </p>
                   </div>

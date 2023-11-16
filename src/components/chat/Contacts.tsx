@@ -52,7 +52,7 @@ export default function Contacts({ onClose, receiverId }: PropType) {
         {contactsData?.map((contact) => (
           <div
             key={contact.contactId}
-            className="group flex w-full animate-appearance-in cursor-pointer content-start items-center  justify-between p-2 text-black hover:bg-slate-200"
+            className="flex w-full animate-appearance-in cursor-pointer content-start items-center  justify-between p-2 text-black hover:bg-slate-200"
           >
             <User
               onClick={() => handleCloseButton(contact.contactId)}
@@ -63,10 +63,10 @@ export default function Contacts({ onClose, receiverId }: PropType) {
                 src: contact.image ?? "",
               }}
             />
-            <VscClose
+            {/* <VscClose
               className="hidden group-hover:block"
               onClick={() => handleDeleteButton(contact.contactId)}
-            />
+            /> */}
           </div>
         ))}
       </div>

@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 
 import { type MessageResponse } from "~/validation/message";
 import ChatFooter from "./ChatFooter";
-import { toast } from "react-toastify";
 
 export default function ChatBody() {
   const { data: userSession } = useSession({ required: true });

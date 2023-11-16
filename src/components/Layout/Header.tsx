@@ -55,11 +55,10 @@ export default function Header() {
       title: "Find People",
       href: "/profiles",
     },
-
     {
       id: 2,
-      title: "Contact Us",
-      href: "/contact-us",
+      title: "About Us",
+      href: "/about-us",
     },
     {
       id: 3,
@@ -70,6 +69,11 @@ export default function Header() {
       id: 4,
       title: "About Us",
       href: "/about-us",
+    },
+    {
+      id: 4,
+      title: "Sign Up",
+      href: "/auth/sign-up",
     },
   ];
 

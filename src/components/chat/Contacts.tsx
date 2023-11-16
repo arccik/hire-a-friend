@@ -7,8 +7,9 @@ import { toast } from "react-toastify";
 
 type PropType = {
   onClose: () => void;
+  receiverId: string;
 };
-export default function Contacts({ onClose }: PropType) {
+export default function Contacts({ onClose, receiverId }: PropType) {
   const router = useRouter();
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
@@ -51,7 +52,7 @@ export default function Contacts({ onClose }: PropType) {
         {contactsData?.map((contact) => (
           <div
             key={contact.contactId}
-            className="group flex w-full animate-appearance-in cursor-pointer content-start items-center justify-start justify-between p-2 text-black hover:bg-slate-200"
+            className="group flex w-full animate-appearance-in cursor-pointer content-start items-center  justify-between p-2 text-black hover:bg-slate-200"
           >
             <User
               onClick={() => handleCloseButton(contact.contactId)}

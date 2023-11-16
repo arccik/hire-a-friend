@@ -12,6 +12,12 @@ import { MessageResponse } from "~/validation/message";
 import { BiMessage } from "react-icons/bi";
 import Notification from "./Notification";
 
+type PusherReponseType = {
+  sender: string;
+  href: string;
+  receiver: string;
+};
+
 export default function ChatBox() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -54,12 +60,30 @@ export default function ChatBox() {
         },
       );
     };
-
+    const newContactHandler = (newContact: PusherReponseType) => {
+      if (newContact.receiver !== pusherKey) return;
+      toast.success(
+        <Notification msg={"New Contact!"} sender={newContact.sender} />,
+        {
+          icon: <BiMessage size="2rem" />,
+          onClick: () =>
+            void router.push({
+              query: {
+                ...router.query,
+                showChat: true,
+                chat: newContact.receiver,
+              },
+            }),
+        },
+      );
+    };
     pusherClient.bind("incoming-message", messageHandler);
+    pusherClient.bind("new-contact", newContactHandler);
 
     return () => {
       pusherClient.unsubscribe(pusherKey);
       pusherClient.unbind("incoming-message", messageHandler);
+      pusherClient.unbind("new-contact", newContactHandler);
     };
   }, [userSession?.user.id]);
 
@@ -100,7 +124,14 @@ export default function ChatBox() {
           exit={{ opacity: 0, x: 100 }}
           className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)] w-full flex-col overflow-x-scroll  rounded-xl  border bg-slate-50 md:w-96 md:shadow-md"
         >
-          {chatId ? <ChatBody /> : <Contacts onClose={handleChatButtonClick} />}
+          {chatId ? (
+            <ChatBody />
+          ) : (
+            <Contacts
+              onClose={handleChatButtonClick}
+              receiverId={userSession.user.id}
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>

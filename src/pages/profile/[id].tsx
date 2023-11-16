@@ -122,12 +122,22 @@ export default function ProfilePage() {
                         </span>
                       </div>
                     )}
-                    <div className="mr-4 p-3 text-center">
-                      <span className="block font-bold tracking-wide text-gray-600">
-                        {data.city}
-                      </span>
-                      <p className="text-sm text-orange-500">City</p>
-                    </div>
+                    {data.city && (
+                      <div className="mr-4 p-3 text-center">
+                        <span className="block font-bold tracking-wide text-gray-600">
+                          {data.city}
+                        </span>
+                        <p className="text-sm text-orange-500">City</p>
+                      </div>
+                    )}
+                    {data.age && (
+                      <div className="mr-4 p-3 text-center">
+                        <span className="block font-bold tracking-wide text-gray-600">
+                          {data.age}
+                        </span>
+                        <p className="text-sm text-orange-500">Age</p>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="w-full px-4 lg:order-1 lg:w-4/12">
@@ -188,7 +198,9 @@ export default function ProfilePage() {
                         Zodiac Sign
                       </p>
                       {zodiacSign?.Icon({ size: "2rem", color: "orange" })}
-                      {zodiacSign?.name}
+                      <p className="text-xs leading-6 text-gray-400">
+                        {zodiacSign?.name}
+                      </p>
                     </div>
                   )}
                   <div className="mx-auto">
@@ -196,7 +208,9 @@ export default function ProfilePage() {
                       Gender
                     </p>
                     {gender?.Icon({ size: "2rem", color: "orange" })}
-                    {gender?.name}
+                    <p className="text-xs leading-6 text-gray-400">
+                      {gender?.name}
+                    </p>
                   </div>
                 </div>
                 {/* </Card> */}

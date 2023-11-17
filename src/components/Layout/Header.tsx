@@ -12,6 +12,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  User,
 } from "@nextui-org/react";
 
 import Link from "next/link";
@@ -44,8 +45,7 @@ export default function Header() {
     },
     {
       id: 5,
-      title: "SignOut",
-      href: "/auth/sign-out",
+      title: "Log Out",
     },
   ];
 
@@ -65,15 +65,16 @@ export default function Header() {
       title: "Contact Us",
       href: "/contact-us",
     },
+
     {
-      id: 4,
-      title: "About Us",
-      href: "/about-us",
-    },
-    {
-      id: 4,
+      id: 5,
       title: "Sign Up",
       href: "/auth/sign-up",
+    },
+    {
+      id: 6,
+      title: "Login",
+      href: "/auth/sign-in",
     },
   ];
 
@@ -211,12 +212,29 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <NavbarMenu>
+        {userSession?.user && (
+          <NavbarMenuItem
+            key="User Avatar"
+            className="mt-5 flex justify-between text-2xl"
+          >
+            <User
+              as={Link}
+              href={`/profile/${userSession.user.id}`}
+              name={userSession.user.email}
+              onClick={() => setIsMenuOpen(false)}
+              avatarProps={{ src: userSession.user.image ?? "" }}
+            />
+          </NavbarMenuItem>
+        )}
         {menu.map((item) => (
           <NavbarMenuItem key={item.id} className="mt-5 text-2xl">
             <Link
               className="w-full"
-              href={item.href}
-              onClick={() => setIsMenuOpen(false)}
+              href={item.href ?? ""}
+              onClick={() => {
+                if (item.title === "Log Out") void signOut();
+                setIsMenuOpen(false);
+              }}
             >
               {item.title}
             </Link>

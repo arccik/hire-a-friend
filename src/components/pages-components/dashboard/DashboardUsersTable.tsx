@@ -3,7 +3,6 @@ import { api } from "~/utils/api";
 
 export default function DashboardUsersTable() {
   const { data: usersData, status } = api.user.lastFiveUsers.useQuery();
-  console.log("DashboardUsersTable", usersData);
   if (status === "loading") return <p>Loading...</p>;
   return (
     <div id="last-users">

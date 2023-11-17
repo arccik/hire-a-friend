@@ -4,7 +4,7 @@ import { FaCity, FaPoundSign, FaGrinHearts } from "react-icons/fa";
 
 export default function ChipList({ data }: { data: User & { Rate: Rate[] } }) {
   return (
-    <div className="flex flex-row justify-center gap-1">
+    <div className="my-4 flex flex-row justify-center gap-1">
       {data.city && (
         <Chip
           startContent={<FaCity size={18} />}

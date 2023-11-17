@@ -19,26 +19,35 @@ import ActionButtons from "~/components/pages-components/profile/ActionButtons";
 import Languages from "~/components/pages-components/profile/Languages";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
 import ChipList from "~/components/pages-components/profile/ChipList";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
+  const { data: userSession } = useSession();
 
   const { data, status, refetch } = api.user.getOne.useQuery(
     { id },
     { enabled: !!id },
   );
+  const { data: blockedUser } = api.chat.isBlocked.useQuery(
+    { userId: id, contactId: userSession?.user.id ?? "" },
+    { enabled: !!userSession?.user.id },
+  );
 
-  if (status === "loading")
+  if (status === "loading") {
     return (
       <Spinner
         size="lg"
         className="flex h-screen items-center justify-center"
       />
     );
+  }
   if (status === "error" || !data) return <DisplayError />;
 
   if (data?.userType === "Customer") return <CustomerProfile data={data} />;
+
+  if (blockedUser?.blocked) return <p>This User is blocked</p>;
 
   const gender = genders.find((g) => g.id.toString() == data?.gender);
 

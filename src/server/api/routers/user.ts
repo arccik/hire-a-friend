@@ -8,6 +8,7 @@ import {
 } from "~/server/api/trpc";
 import { clientSchema } from "~/validation/client-form";
 import { userValidation, signUpSchema } from "~/validation/member";
+// import bcrypt from "bcrypt";
 
 export const userRouter = createTRPCRouter({
   signUp: publicProcedure
@@ -24,6 +25,9 @@ export const userRouter = createTRPCRouter({
           message: "User already exists.",
         });
       } else {
+        // const hashedPassword = await argon2.hash(input.password, {
+        //   saltLength: 10,
+        // });
         return ctx.prisma.user.create({
           data: {
             email: input.email,

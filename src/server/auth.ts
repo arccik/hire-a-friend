@@ -8,6 +8,7 @@ import {
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
+// import bcrypt from "bcrypt";
 
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
@@ -88,6 +89,7 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
         if (!email || !password) return null;
+
         const user = await prisma.user.findFirst({
           where: {
             email,
@@ -95,6 +97,19 @@ export const authOptions: NextAuthOptions = {
           },
         });
         if (!user) return null;
+        // const hashedPassword = await argon2.hash(password, { saltLength: 10 });
+
+        // const isValidPassword = await argon2.verify(
+        //   user.password,
+        //   hashedPassword,
+        // );
+
+        // console.log("COMPARED PASSWROD: ", {
+        //   match: isValidPassword,
+        //   db: user.password,
+        //   input: hashedPassword,
+        // });
+        // if (!isValidPassword) return null;
         await prisma.user.update({
           where: {
             id: user.id,

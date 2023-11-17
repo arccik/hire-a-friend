@@ -45,7 +45,6 @@ export default function BigForm(props: BigFormPropType) {
     },
   });
 
-  console.log("BIG FORM PROPS: ", props);
 
   const {
     register,
@@ -61,7 +60,6 @@ export default function BigForm(props: BigFormPropType) {
 
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
     updateUser.mutate({ ...data, id: props.userId });
-    console.log("SUBMIT DATA: ", data);
   };
 
   return (

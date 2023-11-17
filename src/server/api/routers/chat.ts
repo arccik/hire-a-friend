@@ -28,13 +28,14 @@ export const chatRouter = createTRPCRouter({
 
   getContacts: protectedProcedure.query(async ({ ctx }) => {
     const response = await ctx.prisma.contact.findMany({
-      where: { userId: ctx.session?.user.id },
+      where: { userId: ctx.session?.user.id, blocked: false },
       include: { user: true },
     });
     const contacts = response.map((data) => ({
       image: data.user.image,
       name: data.user.name,
       contactId: data.contactId,
+      id: data.id,
     }));
     return contacts;
   }),
@@ -56,12 +57,13 @@ export const chatRouter = createTRPCRouter({
         },
       });
 
-      if (!!isExist) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Contact already exist",
-        });
-      }
+      if (!!isExist) return;
+      // {
+      //   throw new TRPCError({
+      //     code: "BAD_REQUEST",
+      //     message: "Contact already exist",
+      //   });
+      // }
       await pusherServer.trigger(input.id, "new-contact", {
         receiver: input.id,
         sender: ctx.session.user.id,
@@ -87,8 +89,17 @@ export const chatRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.contact.deleteMany({
-        where: { contactId: input.id, userId: ctx.session?.user.id },
+        where: { contactId: input.id },
       });
+    }),
+  blockContact: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const response = await ctx.prisma.contact.update({
+        where: { id: input.id },
+        data: { blocked: true },
+      });
+      return response;
     }),
   deleteMessages: protectedProcedure
     .input(z.object({ messageId: z.string(), contactId: z.string() }))
@@ -119,11 +130,11 @@ export const chatRouter = createTRPCRouter({
   addMessage: protectedProcedure
     .input(messageSchema)
     .mutation(async ({ ctx, input }) => {
-      if (!input.sender)
-        return new TRPCError({
-          message: "Sender is required",
-          code: "BAD_REQUEST",
-        });
+      if (!input.sender) return;
+      const isBlocked = await ctx.prisma.contact.findFirst({
+        where: { userId: ctx.session.user.id, contactId: input.receiver },
+      });
+      if (isBlocked) return;
       const querySting = pusherHrefConstructor(
         ctx.session.user.id,
         input.receiver,
@@ -138,7 +149,18 @@ export const chatRouter = createTRPCRouter({
       };
       await redis.sadd(querySting, message);
 
-      console.log("RECEIVER ID: ", input.receiver);
       await pusherServer.trigger(input.receiver, "incoming-message", message);
+    }),
+  isBlocked: protectedProcedure
+    .input(z.object({ contactId: z.string(), userId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.contact.findFirst({
+        where: {
+          userId: input.userId,
+          contactId: input.contactId,
+          blocked: true,
+        },
+        select: { blocked: true },
+      });
     }),
 });

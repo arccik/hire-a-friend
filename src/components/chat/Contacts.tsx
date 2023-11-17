@@ -1,22 +1,45 @@
 import { useRouter } from "next/router";
-import { User } from "@nextui-org/react";
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  User,
+} from "@nextui-org/react";
 import { api } from "~/utils/api";
 import { TfiClose } from "react-icons/tfi";
-import { VscClose } from "react-icons/vsc";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import { toast } from "react-toastify";
+import Link from "next/link";
+import { useState } from "react";
+import ActionButtonsModal from "./ActionButtonModal";
 
 type PropType = {
   onClose: () => void;
-  receiverId: string;
 };
-export default function Contacts({ onClose, receiverId }: PropType) {
+export default function Contacts({ onClose }: PropType) {
+  const [showBlockModal, setShowBlockModal] = useState<string | null>(null);
   const router = useRouter();
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
   const deleteContact = api.chat.deleteContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
-      toast.success("Contact deleted");
+      toast.success(`Contact Deleted!`);
+      await refetchContacts();
+    },
+  });
+  const blockContact = api.chat.blockContact.useMutation({
+    onError: (e) => toast.error(e.message),
+    onSuccess: async () => {
+      toast.success(`Contact blocked!`);
       await refetchContacts();
     },
   });
@@ -27,8 +50,19 @@ export default function Contacts({ onClose, receiverId }: PropType) {
     void router.replace({ pathname, query }, undefined, { shallow: true });
   };
 
+  const handleModalAction = (id: string) => {
+    const func =
+      showBlockModal === "block" ? handleBlockButton : handleDeleteButton;
+    setShowBlockModal(null);
+    func(id);
+    void refetchContacts();
+  };
   const handleDeleteButton = (id: string) => {
     deleteContact.mutate({ id });
+  };
+
+  const handleBlockButton = (id: string) => {
+    blockContact.mutate({ id });
   };
 
   return (
@@ -63,13 +97,78 @@ export default function Contacts({ onClose, receiverId }: PropType) {
                 src: contact.image ?? "",
               }}
             />
-            {/* <VscClose
-              className="hidden group-hover:block"
-              onClick={() => handleDeleteButton(contact.contactId)}
-            /> */}
+
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="ghost" size="sm">
+                  <BsThreeDotsVertical />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem
+                  key="Profile"
+                  as={Link}
+                  href={`/profile/${contact.contactId}`}
+                >
+                  Profile
+                </DropdownItem>
+                <DropdownItem
+                  key="block"
+                  color="danger"
+                  onClick={() => setShowBlockModal("block")}
+                >
+                  Block User
+                </DropdownItem>
+                <DropdownItem
+                  key="delete"
+                  className="text-danger"
+                  color="danger"
+                  onClick={() => setShowBlockModal("delete")}
+                >
+                  Delete
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Modal
+              isOpen={!!showBlockModal}
+              placement="auto"
+              onOpenChange={() => setShowBlockModal(null)}
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1 uppercase">
+                      {showBlockModal} User
+                    </ModalHeader>
+                    <ModalBody>
+                      <p>
+                        Are you sure you want to {showBlockModal} this user?
+                      </p>
+                      <p className="text-sm text-red-500">
+                        This action cannot be undone.
+                      </p>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="danger" variant="light" onPress={onClose}>
+                        No
+                      </Button>
+                      <Button
+                        color="primary"
+                        onPress={onClose}
+                        onClick={() => handleModalAction(contact.id)}
+                      >
+                        Yes
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
           </div>
         ))}
       </div>
+      {/* <ActionButtonsModal isOpen={showBlockModal} title="Delete" /> */}
+      {/* For Action Buttons */}
     </>
   );
 }

@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { pusherClient } from "~/utils/pusher";
 import { toast } from "react-toastify";
-import { MessageResponse } from "~/validation/message";
+import { type MessageResponse } from "~/validation/message";
 import { BiMessage } from "react-icons/bi";
 import Notification from "./Notification";
 
@@ -124,14 +124,7 @@ export default function ChatBox() {
           exit={{ opacity: 0, x: 100 }}
           className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)] w-full flex-col overflow-x-scroll  rounded-xl  border bg-slate-50 md:w-96 md:shadow-md"
         >
-          {chatId ? (
-            <ChatBody />
-          ) : (
-            <Contacts
-              onClose={handleChatButtonClick}
-              receiverId={userSession.user.id}
-            />
-          )}
+          {chatId ? <ChatBody /> : <Contacts onClose={handleChatButtonClick} />}
         </motion.div>
       )}
     </AnimatePresence>

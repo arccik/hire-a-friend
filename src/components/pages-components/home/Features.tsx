@@ -19,7 +19,6 @@ export default function Features() {
             shadow="sm"
             key={index}
             isPressable
-            onPress={() => console.log("item pressed")}
           >
             <CardBody className="overflow-visible">
               <div className="mx-auto  text-center align-middle duration-200 hover:scale-110">

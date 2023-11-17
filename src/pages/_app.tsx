@@ -32,7 +32,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
             name="description"
             content="The platform helps creating meaningful connections and financial opportunities"
           />
-          <title>Rent My Time</title>
+          <title>
+            Rent My Time | Companionship, a listening ear, or a way to earn
+            extra income
+          </title>
         </Head>
         <Header />
         <Component {...pageProps} />

@@ -18,6 +18,7 @@ import Head from "next/head";
 import ActionButtons from "~/components/pages-components/profile/ActionButtons";
 import Languages from "~/components/pages-components/profile/Languages";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
+import ChipList from "~/components/pages-components/profile/ChipList";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -47,8 +48,8 @@ export default function ProfilePage() {
     <main className="profile-page">
       <Head>
         <title>
-          {data?.name} | Explore services, companionship, interests and hobbies
-          on my profile
+          {data?.name} Profile | Offer companionship, services and company |
+          Check my interests and hobbies
         </title>
       </Head>
       <section className="relative block h-[300px] lg:h-[400px]">
@@ -109,51 +110,6 @@ export default function ProfilePage() {
                     </div>
                   </div>
                 )}
-                <div className="lg:order-3 lg:w-4/12 lg:self-center lg:text-right">
-                  <div className="flex justify-end gap-5 py-6 sm:mt-0">
-                    {!data?.hidePrice && (
-                      <div className="mr-4 mt-3 text-center">
-                        <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
-                          £ {data?.price?.toString()}
-                        </span>
-
-                        <span className="text-sm text-orange-500">
-                          Per Hour
-                        </span>
-                      </div>
-                    )}
-                    {data.city && (
-                      <div className="mr-4 p-3 text-center">
-                        <span className="block font-bold tracking-wide text-gray-600">
-                          {data.city}
-                        </span>
-                        <p className="text-sm text-orange-500">City</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="w-full px-4 lg:order-1 lg:w-1/2">
-                  <div className="flex justify-center md:py-4 md:pt-8 lg:pt-4">
-                    {data?.photos && (
-                      <div className="mr-4 p-3 text-center">
-                        <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
-                          {data.photos.length}
-                        </span>
-                        <span className="text-sm text-orange-500">Photos</span>
-                      </div>
-                    )}
-                    {data.Rate && (
-                      <div className="p-3 text-center lg:mr-4">
-                        <span className="block text-xl font-bold uppercase tracking-wide text-gray-600">
-                          {data.Rate.length}
-                        </span>
-                        <span className="text-sm text-orange-500">
-                          {data.Rate.length > 1 ? "Likes" : "Like"}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
               </div>
               <div className="text-center md:mt-2">
                 <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
@@ -171,6 +127,7 @@ export default function ProfilePage() {
                   {data?.about}
                 </div>
               </div>
+              <ChipList data={data} />
 
               <ActivityAndHobby
                 hobbies={data.hobbies}
@@ -181,9 +138,8 @@ export default function ProfilePage() {
                 <Gallery imagesUrl={data?.photos} />
               </div>
               <ApearanceTable data={data?.appearance} />
-              <div className="mx-auto mt-5 md:w-96">
-                {/* <Card shadow="sm" className="rounded-xl p-4 hover:bg-slate-50"> */}
-                <div className="flex justify-between">
+              <div className="mx-auto mt-5 flex flex-row justify-center md:w-96">
+                <div className="flex justify-between gap-10">
                   {zodiacSign && (
                     <div className="mx-auto">
                       <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
@@ -196,14 +152,14 @@ export default function ProfilePage() {
                     </div>
                   )}
                   {data.age && (
-                    <div className="mr-4 p-3 text-center text-lg">
+                    <div className="mx-auto">
                       <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
                         Age
                       </p>
-                      <span className="block font-bold tracking-wide text-orange-500">
-                        {data.age}
-                      </span>
-                      <p></p>
+                      <p className="text-2xl text-orange-500"> {data.age}</p>
+                      <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
+                        years
+                      </p>
                     </div>
                   )}
                   <div className="mx-auto">
@@ -216,7 +172,6 @@ export default function ProfilePage() {
                     </p>
                   </div>
                 </div>
-                {/* </Card> */}
               </div>
               {data.lastLogin && (
                 <div className="mt-10 text-xs text-slate-400">

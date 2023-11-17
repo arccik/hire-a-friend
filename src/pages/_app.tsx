@@ -1,19 +1,34 @@
-import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { type AppType } from "next/app";
 import { NextUIProvider } from "@nextui-org/react";
+import Head from "next/head";
+import { type AppType } from "next/app";
+import { type Session } from "next-auth";
 
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { api } from "~/utils/api";
-
-import "~/styles/globals.css";
 import Header from "~/components/Layout/Header";
 import Footer from "~/components/Layout/Footer";
-import Head from "next/head";
 
+import "react-toastify/dist/ReactToastify.css";
+import "~/styles/globals.css";
 
+const meta = [
+  {
+    name: "viewport",
+    content: "width=device-width, initial-scale=1, maximum-scale=1",
+  },
+  {
+    name: "description",
+    content:
+      "The platform helps creating meaningful connections and financial opportunities",
+  },
+  {
+    name: "title",
+    content:
+      "Rent My Time | Companionship, a listening ear, or a way to earn extra income",
+  },
+];
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -23,33 +38,20 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <NextUIProvider>
       <SessionProvider session={session}>
         <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1"
-          />
+          {meta.map((meta) => (
+            <meta key={meta.name} {...meta} />
+          ))}
 
-          <meta
-            name="description"
-            content="The platform helps creating meaningful connections and financial opportunities"
-          />
-          <title>
-            Rent My Time | Companionship, a listening ear, or a way to earn
-            extra income
-          </title>
+          <title>{meta.at(-1)?.content}</title>
         </Head>
         <Header />
         <Component {...pageProps} />
 
         <ToastContainer
           position="bottom-center"
-          autoClose={1000}
-          hideProgressBar={false}
           newestOnTop={false}
-          closeOnClick
-          pauseOnFocusLoss
           theme="colored"
           draggable
-          pauseOnHover
         />
         <Footer />
       </SessionProvider>

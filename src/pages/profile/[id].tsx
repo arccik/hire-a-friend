@@ -127,6 +127,7 @@ export default function ProfilePage() {
                 <p className="-mt-4 text-slate-400">{data.experties}</p>
 
                 <ActionButtons
+                  isAvailable={data.activated}
                   rate={data.Rate}
                   id={data.id}
                   refetch={() => void refetch()}

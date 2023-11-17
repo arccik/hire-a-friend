@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
+import { boolean, z } from "zod";
 
 import {
   createTRPCRouter,
@@ -112,6 +112,14 @@ export const userRouter = createTRPCRouter({
       return ctx.prisma.user.update({
         where: { id: ctx.session.user.id },
         data: input,
+      });
+    }),
+  makeActive: protectedProcedure
+    .input(z.object({ id: z.string(), status: z.boolean() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.user.update({
+        where: { id: input.id },
+        data: { activated: input.status },
       });
     }),
 });

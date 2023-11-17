@@ -47,6 +47,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           newestOnTop={false}
           closeOnClick
           pauseOnFocusLoss
+          theme="colored"
           draggable
           pauseOnHover
         />

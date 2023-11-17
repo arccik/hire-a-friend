@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, Switch } from "@nextui-org/react";
 import type { Rate } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -10,12 +10,22 @@ type PropType = {
   id: string;
   rate: Rate[];
   refetch: () => void;
+  isAvailable: boolean | null;
 };
 
-export default function ActionButtons({ id, rate, refetch }: PropType) {
+export default function ActionButtons({
+  id,
+  rate,
+  refetch,
+  isAvailable,
+}: PropType) {
   const { data: userSession } = useSession();
   const router = useRouter();
   const addContact = api.chat.addContact.useMutation();
+  const makeActive = api.user.makeActive.useMutation({
+    onError: () => toast.error("Something went wrong :("),
+    onSuccess: () => toast.success("Status successfully change"),
+  });
   const isRated =
     userSession?.user &&
     rate.some((v: Rate) => v.voterId === userSession?.user?.id);
@@ -68,6 +78,13 @@ export default function ActionButtons({ id, rate, refetch }: PropType) {
       { shallow: true },
     );
   };
+
+  const handleActivateClick = (status: boolean) => {
+    makeActive.mutate({
+      id: id,
+      status,
+    });
+  };
   return (
     <div className="mb-2 mt-0 flex justify-center gap-5 text-sm font-bold leading-normal text-gray-400">
       <div className="flex justify-end gap-5 py-6 sm:mt-0">
@@ -81,12 +98,22 @@ export default function ActionButtons({ id, rate, refetch }: PropType) {
         </Button>
 
         {userSession?.user.id === id ? (
-          <Button
-            variant="bordered"
-            onClick={() => void router.push("/auth/update-profile")}
-          >
-            Edit
-          </Button>
+          <>
+            <Button
+              variant="bordered"
+              onClick={() => void router.push("/auth/update-profile")}
+            >
+              Edit
+            </Button>
+            <Switch
+              color="warning"
+              // isSelected={!!isAvailable}
+              defaultSelected={!!isAvailable}
+              onValueChange={handleActivateClick}
+            >
+              Available
+            </Switch>
+          </>
         ) : (
           <Button
             onClick={handleChatClick}

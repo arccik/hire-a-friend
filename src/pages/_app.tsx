@@ -1,12 +1,12 @@
 import { SessionProvider } from "next-auth/react";
 import { NextUIProvider } from "@nextui-org/react";
+import { api } from "~/utils/api";
 import Head from "next/head";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 
 import { ToastContainer } from "react-toastify";
 
-import { api } from "~/utils/api";
 import Header from "~/components/layout/Header";
 import Footer from "~/components/layout/Footer";
 

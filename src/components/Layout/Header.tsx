@@ -20,6 +20,7 @@ import { GiTimeTrap } from "react-icons/gi";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import SearchBar from "./SearchBar";
+import { AiOutlineSetting } from "react-icons/ai";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -27,24 +28,33 @@ export default function Header() {
   const router = useRouter();
 
   const userMenuItems = [
+    // {
+    //   id: 1,
+    //   title: "Edit Profile",
+    //   href: "/auth/update-profile",
+    // },
     {
-      id: 1,
-      title: "Find People",
+      id: 2,
+      title: "Make Connections",
       href: "/profiles",
     },
-
     {
       id: 3,
-      title: "Profile",
-      href: `/profile/${userSession?.user.id}`,
+      title: "About Us",
+      href: "/about-us",
     },
     {
       id: 4,
-      title: "Edit Profile",
-      href: "/auth/update-profile",
+      title: "Contact Us",
+      href: "/contact-us",
     },
     {
       id: 5,
+      title: "Terms & conditions",
+      href: "/docs/terms-conditions",
+    },
+    {
+      id: 6,
       title: "Log Out",
     },
   ];
@@ -215,7 +225,7 @@ export default function Header() {
         {userSession?.user && (
           <NavbarMenuItem
             key="User Avatar"
-            className="mt-5 flex justify-between text-2xl"
+            className="mt-5 flex items-center justify-between text-2xl"
           >
             <User
               as={Link}
@@ -223,6 +233,13 @@ export default function Header() {
               name={userSession.user.email}
               onClick={() => setIsMenuOpen(false)}
               avatarProps={{ src: userSession.user.image ?? "" }}
+            />
+            <AiOutlineSetting
+              href="/auth/update-profile"
+              onClick={() => {
+                void router.push("/auth/update-profile");
+                setIsMenuOpen(false);
+              }}
             />
           </NavbarMenuItem>
         )}

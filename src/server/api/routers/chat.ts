@@ -1,4 +1,4 @@
-import { TRPCError } from "@trpc/server";
+// import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { redis } from "~/utils/redis";
 
@@ -88,9 +88,11 @@ export const chatRouter = createTRPCRouter({
   deleteContact: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.contact.deleteMany({
-        where: { contactId: input.id },
+      const contact = await ctx.prisma.contact.delete({
+        where: { id: input.id },
       });
+      await redis.del(contact.href);
+      return contact;
     }),
   blockContact: protectedProcedure
     .input(z.object({ id: z.string() }))
@@ -100,6 +102,14 @@ export const chatRouter = createTRPCRouter({
         data: { blocked: true },
       });
       return response;
+    }),
+  unblockContact: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.contact.updateMany({
+        where: { contactId: input.id, userId: ctx.session.user.id },
+        data: { blocked: false },
+      });
     }),
   deleteMessages: protectedProcedure
     .input(z.object({ messageId: z.string(), contactId: z.string() }))
@@ -154,10 +164,11 @@ export const chatRouter = createTRPCRouter({
   isBlocked: protectedProcedure
     .input(z.object({ contactId: z.string(), userId: z.string() }))
     .query(({ ctx, input }) => {
+      const { userId, contactId } = input;
       return ctx.prisma.contact.findFirst({
         where: {
-          userId: input.userId,
-          contactId: input.contactId,
+          userId,
+          contactId,
           blocked: true,
         },
         select: { blocked: true },

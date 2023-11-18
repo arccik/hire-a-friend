@@ -19,7 +19,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useState } from "react";
-import ActionButtonsModal from "./ActionButtonModal";
 
 type PropType = {
   onClose: () => void;
@@ -77,7 +76,7 @@ export default function Contacts({ onClose }: PropType) {
           onClick={onClose}
         />
       </div>
-      <div className="flex flex-col items-start overflow-auto md:mt-5">
+      <div className="flex flex-col items-start overflow-auto overflow-x-hidden   md:mt-5">
         {!contactsData?.length && (
           <p className=" h-full w-full py-10 text-center  text-lg font-semibold text-slate-500 md:p-3">
             No contacts
@@ -86,7 +85,7 @@ export default function Contacts({ onClose }: PropType) {
         {contactsData?.map((contact) => (
           <div
             key={contact.contactId}
-            className="flex w-full animate-appearance-in cursor-pointer content-start items-center  justify-between p-2 text-black hover:bg-slate-200"
+            className="flex w-full animate-appearance-in cursor-pointer content-start items-center justify-between p-2 text-black hover:bg-slate-200"
           >
             <User
               onClick={() => handleCloseButton(contact.contactId)}
@@ -100,11 +99,16 @@ export default function Contacts({ onClose }: PropType) {
 
             <Dropdown>
               <DropdownTrigger>
-                <Button variant="ghost" size="sm">
+                <Button
+                  variant="shadow"
+                  isIconOnly
+                  className="rounded-full bg-transparent"
+                  size="sm"
+                >
                   <BsThreeDotsVertical />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
+              <DropdownMenu aria-label="Contact Actions">
                 <DropdownItem
                   key="Profile"
                   as={Link}
@@ -167,8 +171,6 @@ export default function Contacts({ onClose }: PropType) {
           </div>
         ))}
       </div>
-      {/* <ActionButtonsModal isOpen={showBlockModal} title="Delete" /> */}
-      {/* For Action Buttons */}
     </>
   );
 }

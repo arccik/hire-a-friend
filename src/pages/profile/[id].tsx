@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -30,8 +30,14 @@ export default function ProfilePage() {
     { id },
     { enabled: !!id },
   );
+
+  const unblockUser = api.chat.unblockContact.useMutation({
+    onError: (e) =>
+      console.error("Fail to unblock user, something went wrong", e.message),
+    onSuccess: async () => await refetch(),
+  });
   const { data: blockedUser } = api.chat.isBlocked.useQuery(
-    { userId: id, contactId: userSession?.user.id ?? "" },
+    { contactId: id, userId: userSession?.user.id ?? "" },
     { enabled: !!userSession?.user.id },
   );
 
@@ -48,7 +54,20 @@ export default function ProfilePage() {
 
   if (data?.userType === "Customer") return <CustomerProfile data={data} />;
 
-  if (blockedUser?.blocked) return <p>This User is blocked</p>;
+  if (blockedUser?.blocked) {
+    return (
+      <div className="flex flex-col justify-center">
+        <p className="m-10 text-center">You have blocked this user.</p>
+        <Button
+          className="mx-auto w-10"
+          size="sm"
+          onClick={() => unblockUser.mutate({ id })}
+        >
+          Unblock
+        </Button>
+      </div>
+    );
+  }
 
   const gender = genders.find((g) => g.id.toString() == data?.gender);
 
@@ -125,7 +144,7 @@ export default function ProfilePage() {
                 <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
                   {data?.name}
                 </h3>
-                <p className="-mt-4 mb-5 text-slate-400">{data.experties}</p>
+                <p className="-mt-4 text-slate-400">{data.experties}</p>
 
                 <ActionButtons
                   isAvailable={data.activated}
@@ -173,15 +192,17 @@ export default function ProfilePage() {
                       </p>
                     </div>
                   )}
-                  <div className="mx-auto">
-                    <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
-                      Gender
-                    </p>
-                    {gender?.Icon({ size: "2rem", color: "orange" })}
-                    <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
-                      {gender?.name}
-                    </p>
-                  </div>
+                  {gender && (
+                    <div className="mx-auto">
+                      <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
+                        Gender
+                      </p>
+                      {gender?.Icon({ size: "2rem", color: "orange" })}
+                      <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
+                        {gender?.name}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
               {data.lastLogin && (

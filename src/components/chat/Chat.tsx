@@ -113,7 +113,7 @@ export default function ChatBox() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0.5, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="fixed bottom-5 right-5 z-50 flex cursor-pointer  flex-col hover:scale-105 hover:text-slate-600"
+        className="fixed bottom-5 right-5 z-50 flex cursor-pointer flex-col  overflow-x-hidden hover:scale-105 hover:text-slate-600"
       >
         <IoMdChatboxes size="2rem" onClick={handleChatButtonClick} />
       </motion.div>
@@ -122,7 +122,7 @@ export default function ChatBox() {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 100 }}
-          className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)] w-full flex-col overflow-x-scroll  rounded-xl  border bg-slate-50 md:w-96 md:shadow-md"
+          className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)] w-full flex-col overflow-y-scroll  rounded-xl  border bg-slate-50 md:w-96 md:shadow-md"
         >
           {chatId ? <ChatBody /> : <Contacts onClose={handleChatButtonClick} />}
         </motion.div>

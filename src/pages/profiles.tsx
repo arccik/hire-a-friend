@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Discover a diverse range of profiles on our platform. Whether you're looking for companionship, a listening ear, or opportunities to earn extra income, we connect people with shared interests, fostering meaningful connections and financial opportunities. Start your journey today!",
 };
 
-const HEADLINE_TITLE = "Find People";
+const HEADLINE_TITLE = "Make Connections";
 
 export default function FriendsPage() {
   const router = useRouter();

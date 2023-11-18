@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { boolean, z } from "zod";
+import { z } from "zod";
 
 import {
   createTRPCRouter,

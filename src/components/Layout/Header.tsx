@@ -51,10 +51,15 @@ export default function Header() {
     {
       id: 5,
       title: "Terms & conditions",
-      href: "/docs/terms-conditions",
+      href: "/docs/terms-and-conditions",
     },
     {
       id: 6,
+      title: "Privacy Policy",
+      href: "/docs/privacy-policy",
+    },
+    {
+      id: 7,
       title: "Log Out",
     },
   ];
@@ -62,7 +67,7 @@ export default function Header() {
   const guestMenuItems = [
     {
       id: 1,
-      title: "Find People",
+      title: "Make Connections",
       href: "/profiles",
     },
     {
@@ -75,14 +80,24 @@ export default function Header() {
       title: "Contact Us",
       href: "/contact-us",
     },
-
+    {
+      id: 4,
+      title: "Terms & conditions",
+      href: "/docs/terms-and-conditions",
+    },
     {
       id: 5,
+      title: "Privacy Policy",
+      href: "/docs/privacy-policy",
+    },
+
+    {
+      id: 6,
       title: "Sign Up",
       href: "/auth/sign-up",
     },
     {
-      id: 6,
+      id: 7,
       title: "Login",
       href: "/auth/sign-in",
     },
@@ -168,8 +183,8 @@ export default function Header() {
               >
                 Settings
               </DropdownItem>
-              <DropdownItem key="find people" as={Link} href="/profiles">
-                People
+              <DropdownItem key="Make Connections" as={Link} href="/profiles">
+                Make Connections
               </DropdownItem>
               {/* <DropdownItem key="system">System</DropdownItem> */}
               <DropdownItem key="configurations" as={Link} href="/contact-us">
@@ -179,6 +194,20 @@ export default function Header() {
                 About Us
               </DropdownItem>
               <DropdownItem key="help_and_feedback" as={Link} href="/memo">
+                Terms and conditions
+              </DropdownItem>
+              <DropdownItem
+                key="help_and_feedback"
+                as={Link}
+                href="/docs/terms-and-conditions"
+              >
+                Privacy Policy
+              </DropdownItem>
+              <DropdownItem
+                key="help_and_feedback"
+                as={Link}
+                href="/docs/privacy-policy"
+              >
                 Help & Feedback
               </DropdownItem>
               <DropdownItem

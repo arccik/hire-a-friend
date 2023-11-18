@@ -19,7 +19,6 @@ export const friendRouter = createTRPCRouter({
   }),
   filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
     const options: Record<string, string | boolean | object | null> = {};
-    // const options: { [key: string]: string | boolean | object } = {};
     if (!!input.status) options.status = input.status;
     if (input.activities?.has && input.activities.has !== "null") {
       options.activities = input.activities;
@@ -32,12 +31,15 @@ export const friendRouter = createTRPCRouter({
     const skip = (input.page - 1) * pageSize;
     const take = pageSize;
     options.userType = "Friend";
+
+    const users = ctx.prisma.user.findMany({
+      where: { ...options },
+      skip,
+      take,
+    });
+
     return ctx.prisma.$transaction([
-      ctx.prisma.user.findMany({
-        where: { ...options },
-        skip,
-        take,
-      }),
+      users,
       ctx.prisma.user.count({ where: { ...options } }),
     ]);
   }),

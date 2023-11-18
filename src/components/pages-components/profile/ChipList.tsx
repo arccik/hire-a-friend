@@ -14,16 +14,18 @@ export default function ChipList({ data }: { data: User & { Rate: Rate[] } }) {
           {data.city}
         </Chip>
       )}
-      {!data?.hidePrice && (
+      {!data?.hidePrice && data.price && (
         <Chip startContent={<FaPoundSign />} variant="flat">
           {data?.price}
           <span className="text-xs text-slate-600"> per hour</span>
         </Chip>
       )}
 
-      <Chip startContent={<FaGrinHearts size={18} />} variant="flat">
-        {data.Rate.length}
-      </Chip>
+      {!!data.Rate.length && (
+        <Chip startContent={<FaGrinHearts size={18} />} variant="flat">
+          {data.Rate.length}
+        </Chip>
+      )}
     </div>
   );
 }

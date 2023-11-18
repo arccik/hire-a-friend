@@ -7,8 +7,8 @@ import { type Session } from "next-auth";
 import { ToastContainer } from "react-toastify";
 
 import { api } from "~/utils/api";
-import Header from "~/components/Layout/Header";
-import Footer from "~/components/Layout/Footer";
+import Header from "~/components/layout/Header";
+import Footer from "~/components/layout/Footer";
 
 import "react-toastify/dist/ReactToastify.css";
 import "~/styles/globals.css";

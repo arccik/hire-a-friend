@@ -7,8 +7,8 @@ import {
   contactUsFormSchema,
 } from "~/validation/contac-us-form";
 import { useState } from "react";
-import { api } from "~/utils/api";
-import { toast } from "react-toastify";
+// import { api } from "~/utils/api";
+// import { toast } from "react-toastify";
 
 export default function ContactUsPage() {
   const [msgSent, setMessageSent] = useState(false);
@@ -62,7 +62,7 @@ export default function ContactUsPage() {
           We are happy to hear from you.
         </p>
         <form
-          className="mx-auto my-5 flex w-96 flex-col gap-5"
+          className="mx-auto my-5 flex w-full flex-col gap-5 md:w-96"
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
         >
           <Input

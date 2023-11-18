@@ -34,7 +34,7 @@ export default function HomePage() {
               radius="full"
               className="mt-10 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
             >
-              Find People
+              Make Connections
             </Button>
           </div>
         </div>

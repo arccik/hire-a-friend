@@ -116,7 +116,23 @@ export const userRouter = createTRPCRouter({
     }),
   makeActive: protectedProcedure
     .input(z.object({ id: z.string(), status: z.boolean() }))
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: { id: input.id },
+      });
+      if (
+        !user?.name ||
+        !user?.age ||
+        !user?.image ||
+        !user?.activities.length
+      ) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "To activate your account, please fill in all the required fields.",
+        });
+      }
+
       return ctx.prisma.user.update({
         where: { id: input.id },
         data: { activated: input.status },

@@ -2,6 +2,7 @@ import { Button, Switch } from "@nextui-org/react";
 import type { Rate } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { MdThumbUpAlt } from "react-icons/md";
 import { toast } from "react-toastify";
 import { api } from "~/utils/api";
@@ -19,12 +20,21 @@ export default function ActionButtons({
   refetch,
   isAvailable,
 }: PropType) {
+  const [activated, setActivated] = useState(!!isAvailable);
   const { data: userSession } = useSession();
   const router = useRouter();
   const addContact = api.chat.addContact.useMutation();
   const makeActive = api.user.makeActive.useMutation({
-    onError: () => toast.error("Something went wrong :("),
-    onSuccess: () => toast.success("Status successfully change"),
+    onError: (e) => {
+      if (e.message.includes("fields")) {
+        toast.error(e.message);
+        setActivated(false);
+      }
+    },
+    onSuccess: () => {
+      toast.success("Status successfully change");
+      setActivated(true);
+    },
   });
   const isRated =
     userSession?.user &&
@@ -87,7 +97,7 @@ export default function ActionButtons({
   };
   return (
     <div className="mb-2 mt-0 flex justify-center gap-5 text-sm font-bold leading-normal text-gray-400">
-      <div className="flex justify-end gap-5 py-6 sm:mt-0">
+      <div className="mx-5 my-6 space-x-4 sm:mt-0">
         <Button
           color="warning"
           variant={isRated ? "light" : "flat"}
@@ -105,13 +115,15 @@ export default function ActionButtons({
             >
               Edit
             </Button>
+            <br />
+            <br />
             <Switch
               color="warning"
-              // isSelected={!!isAvailable}
-              defaultSelected={!!isAvailable}
+              // defaultSelected={activated}
+              isSelected={activated}
               onValueChange={handleActivateClick}
             >
-              Available
+              Activate
             </Switch>
           </>
         ) : (

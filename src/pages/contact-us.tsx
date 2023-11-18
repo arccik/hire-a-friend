@@ -7,22 +7,22 @@ import {
   contactUsFormSchema,
 } from "~/validation/contac-us-form";
 import { useState } from "react";
-// import { api } from "~/utils/api";
-// import { toast } from "react-toastify";
+import { api } from "~/utils/api";
+import { toast } from "react-toastify";
 
 export default function ContactUsPage() {
   const [msgSent, setMessageSent] = useState(false);
 
-  // const sendEmail = api.email.contactUs.useMutation({
-  //   onSuccess: () => {
-  //     toast.success("Message sent successfully");
-  //     setMessageSent(true);
-  //   },
-  //   onError: () => {
-  //     toast.error("Error sending message");
-  //     setMessageSent(false);
-  //   },
-  // });
+  const sendEmail = api.email.contactUs.useMutation({
+    onSuccess: (e) => {
+      toast.success(`Message sent successfully, ${e.message}`);
+      // setMessageSent(true);
+    },
+    onError: (e) => {
+      toast.error(`Error sending message: ${e.message}`);
+      // setMessageSent(false);
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -33,8 +33,7 @@ export default function ContactUsPage() {
 
   const onSubmit: SubmitHandler<ContactUsForm> = (data): void => {
     console.log(data);
-    setMessageSent(true);
-    // sendEmail.mutate(data);
+    sendEmail.mutate(data);
   };
 
   if (msgSent) {

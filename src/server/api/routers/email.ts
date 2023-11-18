@@ -2,22 +2,27 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { transporter } from "~/server/email-sender";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 import { env } from "~/env.mjs";
 
 export const emailRouter = createTRPCRouter({
-  contactUs: protectedProcedure
+  contactUs: publicProcedure
     .input(
       z.object({ email: z.string(), subject: z.string(), message: z.string() }),
     )
     .mutation(async ({ input }) => {
-      await transporter.sendMail({
+      const emailResponse = await transporter.sendMail({
         from: env.EMAIL_FROM,
         to: env.EMAIL_FROM,
         subject: `URGENT: Rent My Time | Contact Us - ${input.email} `,
         html: `<p>Email: ${input.email}</p><p>Subject: ${input.subject}</p><p>Message: ${input.message}</p>`,
       });
+      console.log("EMAIL RESPONSE : ", emailResponse);
       return { message: "Email sent" };
     }),
   sendGreetings: protectedProcedure

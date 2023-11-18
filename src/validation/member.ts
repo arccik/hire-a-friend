@@ -19,7 +19,7 @@ export const userValidation = z.object({
       message: "Age must be a number",
     }),
   about: z.string().optional(),
-  photos: z.array(z.string()).optional(),
+  photos: z.array(z.string()).max(8).optional(),
 
   country: z.string().optional(),
   street: z.string().optional(),

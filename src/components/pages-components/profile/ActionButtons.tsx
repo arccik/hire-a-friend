@@ -33,7 +33,7 @@ export default function ActionButtons({
     },
     onSuccess: () => {
       toast.success("Status successfully change");
-      setActivated(true);
+      setActivated((prev) => !prev);
     },
   });
   const isRated =

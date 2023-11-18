@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type UseFormSetValue } from "react-hook-form";
+import { FieldErrors, type UseFormSetValue } from "react-hook-form";
 import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { type UserValidationType } from "~/validation/member";
@@ -7,13 +7,17 @@ import { type UserValidationType } from "~/validation/member";
 import ImageGallery from "../features/ImageGallery";
 import { toast } from "react-toastify";
 import { Spinner } from "@nextui-org/react";
+import { cn } from "~/lib/utils";
+import { MdOutlineCloudUpload } from "react-icons/md";
 
 export default function UploadImageGallery({
   setValue,
   imgUrls,
+  errors,
 }: {
   setValue: UseFormSetValue<UserValidationType>;
   imgUrls: string[] | null;
+  errors: FieldErrors<UserValidationType>;
 }) {
   const getUploaderURL = api.uploader.getUrl.useMutation();
 
@@ -26,12 +30,13 @@ export default function UploadImageGallery({
   const [imageUrls, setImageUrls] = useState<string[] | null>(imgUrls);
   const [isLoading, setIsLoading] = useState(false);
 
+  const isFull = !!(imageUrls && imageUrls?.length >= 8);
+
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     const file = event.target.files?.[0];
-    if (!file) return;
-
+    if (!file || isFull) return;
     setIsLoading(true);
     const { url, fields } = await getUploaderURL.mutateAsync({
       fileName: file.name,
@@ -69,40 +74,43 @@ export default function UploadImageGallery({
           imagesUrl={imageUrls}
           handleDeleteImage={handleDeleteImage}
         />
-        {isLoading && <Spinner className="w-20" color="warning" />}
+        {isLoading && <Spinner className="mx-auto my-5 w-20" color="warning" />}
+
         <div className="flex justify-center">
           <label
             htmlFor="dropzone-file"
-            className=" flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100"
+            className={cn(
+              " flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100",
+              {
+                "cursor-not-allowed opacity-50": isLoading || isFull,
+                "bg-red-500 hover:bg-red-300": errors.photos?.message,
+              },
+            )}
           >
             <div className="flex flex-col items-center justify-center pb-6 pt-5">
-              <svg
-                className="mb-4 h-8 w-8 text-gray-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 16"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                />
-              </svg>
-              <p className="mb-2 text-sm text-gray-500 ">
-                <span className="font-semibold">Click to upload</span> or drag
-                and drop
-              </p>
-              <p className="text-xs text-gray-500 ">
-                SVG, PNG, JPG or GIF (MAX. 800x400px)
-              </p>
+              <MdOutlineCloudUpload size="3rem" />
+              {isFull ? (
+                <p className="text-xs text-red-500">
+                  Maximum picture limit reached. Delete old images to upload new
+                  ones.
+                </p>
+              ) : (
+                <>
+                  <p className="mb-2 text-sm text-gray-500 ">
+                    <span className="font-semibold">Click to upload</span> or
+                    drag and drop
+                  </p>
+                  <p className="text-xs text-gray-500 ">
+                    PNG, JPG or GIF (MAX. 5MB)
+                  </p>
+                </>
+              )}
             </div>
             <input
               id="dropzone-file"
               type="file"
               className="hidden"
+              disabled={isFull}
               onChange={(event) => void handleFileUpload(event)}
             />
           </label>

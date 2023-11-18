@@ -121,11 +121,11 @@ export default function ProfilePage() {
                   </div>
                 )}
               </div>
-              <div className="text-center md:mt-2">
+              <div className="my-5 text-center md:mt-2">
                 <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
                   {data?.name}
                 </h3>
-                <p className="-mt-4 text-slate-400">{data.experties}</p>
+                <p className="-mt-4 mb-5 text-slate-400">{data.experties}</p>
 
                 <ActionButtons
                   isAvailable={data.activated}
@@ -134,7 +134,7 @@ export default function ProfilePage() {
                   refetch={() => void refetch()}
                 />
 
-                <div className="mx-auto mb-10 mt-10 max-w-2xl text-left text-gray-600">
+                <div className="mx-auto max-w-2xl text-left text-gray-600">
                   {data?.about}
                 </div>
               </div>
@@ -145,7 +145,7 @@ export default function ProfilePage() {
                 activities={data.activities}
               />
               <Languages languages={data.languages} />
-              <div className="mx-auto mb-10 mt-10 flex flex-row justify-center gap-4 md:w-2/3">
+              <div className="mx-auto mb-10 mt-10 grid grid-cols-2 justify-center gap-4 md:w-2/3 md:grid-cols-4">
                 <Gallery imagesUrl={data?.photos} />
               </div>
               <ApearanceTable data={data?.appearance} />

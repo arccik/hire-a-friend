@@ -131,7 +131,11 @@ export default function MemberForm(props: BigFormPropType) {
             getValues={getValues}
           />
         </div>
-        <UploadGalleryImages setValue={setValue} imgUrls={props.photos} />
+        <UploadGalleryImages
+          setValue={setValue}
+          imgUrls={props.photos}
+          errors={errors}
+        />
 
         <Apearance register={register} errors={errors} getValues={getValues} />
 

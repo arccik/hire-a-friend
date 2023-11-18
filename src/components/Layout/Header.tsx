@@ -92,11 +92,6 @@ export default function Header() {
     },
 
     {
-      id: 6,
-      title: "Sign Up",
-      href: "/auth/sign-up",
-    },
-    {
       id: 7,
       title: "Login",
       href: "/auth/sign-in",

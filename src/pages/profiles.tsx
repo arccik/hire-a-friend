@@ -62,7 +62,10 @@ export default function FriendsPage() {
         <Filter />
 
         {filterStatus === "loading" && (
-          <Spinner className="mt-10 flex items-center align-middle" />
+          <Spinner
+            color="warning"
+            className="mt-10 flex items-center align-middle"
+          />
         )}
 
         {toDisplay && toDisplay[0].length === 0 && (

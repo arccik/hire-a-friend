@@ -20,9 +20,9 @@ import UploadCoverImage from "./UploadCoverImage";
 import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
 import getDefaultValues from "~/helpers/getDefaultValues";
-import ZodiacSelect from "./ZodiacSelect";
+import Languages from "./Languages";
 
-export default function BigForm(props: BigFormPropType) {
+export default function MemberForm(props: BigFormPropType) {
   const updateUser = api.user.update.useMutation({
     onSuccess: () => {
       toast.success(
@@ -44,7 +44,6 @@ export default function BigForm(props: BigFormPropType) {
       console.error("[update profile]: something went wrong: ", error.message);
     },
   });
-
 
   const {
     register,
@@ -135,14 +134,9 @@ export default function BigForm(props: BigFormPropType) {
         <UploadGalleryImages setValue={setValue} imgUrls={props.photos} />
 
         <Apearance register={register} errors={errors} getValues={getValues} />
-        <ZodiacSelect
-          register={register}
-          errors={errors}
-          value={getValues("zodiacSign")}
-        />
 
         <div className="flex flex-row">
-          <div className="border-b border-gray-900/10">
+          <div className="my-10">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Interests/Activities
             </h2>
@@ -175,6 +169,7 @@ export default function BigForm(props: BigFormPropType) {
             />
           </div>
         </div>
+        <Languages errors={errors} register={register} setValue={setValue} />
         <PriceField
           register={register}
           errors={errors}

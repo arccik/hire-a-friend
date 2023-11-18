@@ -69,7 +69,7 @@ export default function UploadImageGallery({
           imagesUrl={imageUrls}
           handleDeleteImage={handleDeleteImage}
         />
-        {isLoading && <Spinner className="w-20" />}
+        {isLoading && <Spinner className="w-20" color="warning" />}
         <div className="flex justify-center">
           <label
             htmlFor="dropzone-file"

@@ -36,9 +36,7 @@ const MyForm: React.FC<PropType> = ({ name, image, city }) => {
     },
   });
 
-  console.log("Little Form>>>> ", errors);
   const onSubmit = (data: ClientFormData) => {
-    console.log(data);
     updateUser.mutate(data);
   };
 

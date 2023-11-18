@@ -25,6 +25,7 @@ export default function InputField({
           placeholder="type here"
           radius="sm"
           errorMessage={errors[fieldName]?.message as string}
+          isInvalid={!!errors[fieldName]}
         />
       </div>
     </div>

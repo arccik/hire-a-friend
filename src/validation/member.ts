@@ -12,10 +12,12 @@ export const userValidation = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   age: z
-    .number()
-    .min(18, "Must be over 18 to use our service")
+    .number({ invalid_type_error: "Required" })
+    .min(18, "Must be over 18 to use service")
     .max(99, "Must be under 100")
-    .optional(),
+    .refine((data) => !isNaN(data), {
+      message: "Age must be a number",
+    }),
   about: z.string().optional(),
   photos: z.array(z.string()).optional(),
 
@@ -30,7 +32,15 @@ export const userValidation = z.object({
   birthday: z.date().optional(),
   activities: z.array(z.string()).optional(),
   hobbies: z.array(z.string()).optional(),
-  price: z.number().optional(),
+  price: z.number({ invalid_type_error: "Required" }).refine(
+    (data) => {
+      const numericValue = Number(data);
+      return !isNaN(numericValue);
+    },
+    {
+      message: "Please enter a valid price",
+    },
+  ),
   hidePrice: z.boolean().optional(),
   isOffering: z.boolean().optional(),
   languages: z.array(z.string()).optional(),
@@ -52,6 +62,10 @@ export const userValidation = z.object({
     ethnicity: z.string().optional(),
   }),
 });
+  // .refine((data) => !data.hidePrice, {
+  //   message: "Required",
+  //   path: ["price"],
+  // });
 export type UserValidationType = z.infer<typeof userValidation>;
 
 export const signUpSchema = z

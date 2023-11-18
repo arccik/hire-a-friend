@@ -46,6 +46,7 @@ export default function InterestActivities({
           );
         }}
         errorMessage={errors[type]?.message}
+        isInvalid={!!errors[type]}
       >
         {(item) => (
           <SelectItem

@@ -14,7 +14,10 @@ export default function UpdateProfile() {
 
   if (status === "loading")
     return (
-      <Spinner className="mt-10 flex h-screen items-center align-middle" />
+      <Spinner
+        color="warning"
+        className="mt-10 flex h-screen items-center align-middle"
+      />
     );
   if (status === "error") return <DisplayError />;
 

@@ -39,6 +39,7 @@ export default function ProfilePage() {
     return (
       <Spinner
         size="lg"
+        color="warning"
         className="flex h-screen items-center justify-center"
       />
     );

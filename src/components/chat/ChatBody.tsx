@@ -94,7 +94,10 @@ export default function ChatBody() {
       <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
         <div className="mx-auto mb-16 w-full space-y-4">
           {messageStatus === "loading" && (
-            <Spinner className="grid h-screen place-items-center" />
+            <Spinner
+              className="grid h-screen place-items-center"
+              color="warning"
+            />
           )}
           {messages?.map((msg, index) => (
             <Message

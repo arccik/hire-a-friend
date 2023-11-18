@@ -8,7 +8,7 @@ type PropType = {
 
 export default function Notification({ msg, sender }: PropType) {
   const { data: senderData, status } = api.user.getOne.useQuery({ id: sender });
-  if (status === "loading") return <Spinner />;
+  if (status === "loading") return <Spinner color="warning" />;
   return (
     <>
       <p className="text-xs font-bold"> New Message</p>

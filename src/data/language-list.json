@@ -1,0 +1,62 @@
+[
+  {
+    "value": "English",
+    "label": "English"
+  },
+  {
+    "value": "French",
+    "label": "French"
+  },
+  {
+    "value": "Spanish",
+    "label": "Spanish"
+  },
+  {
+    "value": "German",
+    "label": "German"
+  },
+  {
+    "value": "Portuguese",
+    "label": "Portuguese"
+  },
+  {
+    "value": "Russian",
+    "label": "Russian"
+  },
+  {
+    "value": "Mandarin Chinese",
+    "label": "Mandarin Chinese"
+  },
+  {
+    "value": "Japanese",
+    "label": "Japanese"
+  },
+  {
+    "value": "Hindi",
+    "label": "Hindi"
+  },
+  {
+    "value": "Arabic",
+    "label": "Arabic"
+  },
+  {
+    "value": "Bengali",
+    "label": "Bengali"
+  },
+  {
+    "value": "Urdu",
+    "label": "Urdu"
+  },
+  {
+    "value": "Indonesian (Bahasa Indonesia)",
+    "label": "Indonesian (Bahasa Indonesia)"
+  },
+  {
+    "value": "Swahili",
+    "label": "Swahili"
+  },
+  {
+    "value": "Korean",
+    "label": "Korean"
+  }
+]

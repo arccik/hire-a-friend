@@ -50,6 +50,7 @@ export default function PriceField({
                   </div>
                 }
                 type="number"
+                isInvalid={!!errors.price}
               />
             </motion.div>
           )}

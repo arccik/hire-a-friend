@@ -1,7 +1,6 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
-import { IconType } from "react-icons";
-import { PropsType } from "~/types/memberFormPropsType";
+import { type PropsType } from "~/types/memberFormPropsType";
 
 export default function ZodiacSelect({
   register,

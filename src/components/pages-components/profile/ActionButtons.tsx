@@ -1,4 +1,4 @@
-import { Button, Switch, user } from "@nextui-org/react";
+import { Button, Switch } from "@nextui-org/react";
 import type { Rate } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";

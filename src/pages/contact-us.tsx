@@ -16,11 +16,11 @@ export default function ContactUsPage() {
   const sendEmail = api.email.contactUs.useMutation({
     onSuccess: (e) => {
       toast.success(`Message sent successfully, ${e.message}`);
-      // setMessageSent(true);
+      setMessageSent(true);
     },
     onError: (e) => {
       toast.error(`Error sending message: ${e.message}`);
-      // setMessageSent(false);
+      setMessageSent(false);
     },
   });
   const {
@@ -32,7 +32,6 @@ export default function ContactUsPage() {
   });
 
   const onSubmit: SubmitHandler<ContactUsForm> = (data): void => {
-    console.log(data);
     sendEmail.mutate(data);
   };
 

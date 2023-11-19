@@ -10,6 +10,7 @@ import { type UserType } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
+import { FaHandHoldingHeart, FaHandHoldingUsd } from "react-icons/fa";
 
 type PropType = {
   title: string;
@@ -26,7 +27,7 @@ export default function MembershipCard({
   image,
   memberType,
 }: PropType) {
-   useSession({ required: true });
+  useSession({ required: true });
   const router = useRouter();
   const changeStatus = api.user.changeMemberStatus.useMutation({
     onSuccess: () => {
@@ -40,11 +41,13 @@ export default function MembershipCard({
     });
   };
   return (
-    <Card className="py-4">
+    <Card className="border border-orange-500 py-4">
       <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
-        <h4 className="text-large font-bold">{title}</h4>
+        <h4 className="text-2xl font-bold">{title}</h4>
         <small className="mb-1 text-default-500">{description}</small>
-        <p className="text-tiny font-bold uppercase">{subtitle}</p>
+        <p className="text-tiny font-bold uppercase text-orange-500">
+          {subtitle}
+        </p>
       </CardHeader>
       <CardBody className="items-center overflow-visible py-2">
         {image ? (
@@ -52,13 +55,18 @@ export default function MembershipCard({
         ) : (
           <br />
         )}
+        {memberType === "Friend" ? (
+          <FaHandHoldingHeart size="5rem" />
+        ) : (
+          <FaHandHoldingUsd size="5rem" />
+        )}
       </CardBody>
       <CardFooter>
         <Button
           onClick={handleClick}
           fullWidth
-          color="primary"
-          variant="bordered"
+          className="bg-orange-500 text-white hover:scale-95"
+          variant="flat"
         >
           Select
         </Button>

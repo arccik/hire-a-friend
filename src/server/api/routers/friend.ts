@@ -32,8 +32,16 @@ export const friendRouter = createTRPCRouter({
     const take = pageSize;
     options.userType = "Friend";
 
+    // options.NOT = {
+    //   blockedBy: {
+    //     has: ctx.session?.user.id,
+    //   },
+    // };
+
     const users = ctx.prisma.user.findMany({
-      where: { ...options },
+      where: {
+        ...options,
+      },
       skip,
       take,
     });

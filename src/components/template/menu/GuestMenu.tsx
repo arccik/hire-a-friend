@@ -47,10 +47,10 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
                     </DropdownItem>
                   ))}
                 </DropdownSection>
-                <DropdownItem key="login" as={Link} href="/auth/sign-up">
+                <DropdownItem key="signUp" as={Link} href="/auth/sign-up">
                   Sign Up
                 </DropdownItem>
-                <DropdownItem key="login" as={Link} href="/auth/sign-in">
+                <DropdownItem key="signIn" as={Link} href="/auth/sign-in">
                   Login
                 </DropdownItem>
               </DropdownMenu>
@@ -80,7 +80,7 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
               Sign Up
             </Link>
           </NavbarMenuItem>
-          <NavbarMenuItem onClick={() => setIsMenuOpen(false)} key="login">
+          <NavbarMenuItem onClick={() => setIsMenuOpen(false)} key="login-btn">
             <Link className="w-full" href="/auth/sign-in">
               Login
             </Link>

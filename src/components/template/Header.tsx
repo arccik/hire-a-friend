@@ -1,15 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
 
 import Link from "next/link";
 import { GiTimeTrap } from "react-icons/gi";
 import { useSession } from "next-auth/react";
-import AuthMenu from "./AuthMenu";
-import GuestMenu from "./GuestMenu";
-import SearchBar from "./SearchBar";
+import AuthMenu from "./menu/AuthMenu";
+import GuestMenu from "./menu/GuestMenu";
+// import SearchBar from "./SearchBar";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: userSession } = useSession();
 
   return (

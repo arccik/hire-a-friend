@@ -56,7 +56,7 @@ export default function ChatBody() {
       pusherClient.unsubscribe(chatId);
       pusherClient.unbind("incoming-message", messageHandler);
     };
-  }, [chatId]);
+  }, [chatId, userSession?.user.id]);
 
   const handleBackButton = () => {
     delete router.query.chat;

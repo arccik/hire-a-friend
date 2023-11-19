@@ -24,6 +24,7 @@ export default function InterestActivities({
         isMultiline={true}
         selectionMode="multiple"
         placeholder="Select"
+        isRequired={type === "activities" ? true : false}
         {...register(type)}
         onSelectionChange={(e) => setValue(type, [...e] as string[])}
         onChange={(e) => {

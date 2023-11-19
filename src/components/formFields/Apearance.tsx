@@ -49,6 +49,7 @@ export default function Apearance({
             radius="sm"
             label="Age"
             size="lg"
+            isRequired
             type="number"
             {...register("age", { valueAsNumber: true, value: 0 })}
             errorMessage={errors.age?.message}

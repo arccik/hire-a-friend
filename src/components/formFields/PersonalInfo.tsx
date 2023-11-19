@@ -59,6 +59,7 @@ export default function PersonalInformation({ register, errors }: PropsType) {
           <InputField
             errors={errors}
             title="City"
+            required={true}
             register={register}
             fieldName="city"
           />

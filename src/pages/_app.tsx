@@ -71,7 +71,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <ToastContainer
           position="bottom-center"
           newestOnTop={false}
-          theme="colored"
+          // theme="colored"
           draggable
         />
         <Footer />

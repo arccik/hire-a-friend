@@ -142,10 +142,12 @@ export default function MemberForm(props: BigFormPropType) {
         <div className="flex flex-row">
           <div className="my-10">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Interests/Activities
+              Activities/Interests
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              Listing various interests helps attract the right clients for you.
+              Curate your choices from the list and watch the connections
+              unfold. Precision matters – pick your preferences, and let the
+              cool collaborations come to you
             </p>
 
             <InterestActivities

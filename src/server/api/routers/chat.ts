@@ -144,7 +144,7 @@ export const chatRouter = createTRPCRouter({
       const isBlocked = await ctx.prisma.contact.findFirst({
         where: { userId: ctx.session.user.id, contactId: input.receiver },
       });
-      if (isBlocked) return;
+      if (isBlocked?.blocked) return;
       const querySting = pusherHrefConstructor(
         ctx.session.user.id,
         input.receiver,

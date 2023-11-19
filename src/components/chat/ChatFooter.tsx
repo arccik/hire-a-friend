@@ -18,7 +18,9 @@ export default function ChatFooter({ setMessages, chatId }: PropType) {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
-  const addMessage = api.chat.addMessage.useMutation();
+  const addMessage = api.chat.addMessage.useMutation({
+    onError: (e) => console.error("Add MEssage ERROR: ", e.message),
+  });
 
   const handleMessageSend = () => {
     if (!message || !userSession?.user.id || !chatId) return;

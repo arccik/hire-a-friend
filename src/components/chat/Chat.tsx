@@ -24,6 +24,7 @@ export default function ChatBox() {
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
+  const userId = userSession?.user.id;
 
   useEffect(() => {
     // to disable scrolling of site when chat open
@@ -38,42 +39,49 @@ export default function ChatBox() {
   }, [showChat]);
 
   useEffect(() => {
-    const pusherKey = userSession?.user.id;
-    if (!pusherKey) return;
-
-    pusherClient.subscribe(pusherKey);
+    if (!userId) return;
+    pusherClient.subscribe(userId);
 
     const messageHandler = (message: MessageResponse) => {
-      if (message.sender === pusherKey) return;
+      if (message.sender === userId) return;
       toast.success(
         <Notification msg={message.message} sender={message.sender} />,
         {
           icon: <BiMessage size="2rem" />,
           onClick: () =>
-            void router.push({
-              query: {
-                ...router.query,
-                showChat: true,
-                chat: message.sender,
+            void router.push(
+              {
+                query: {
+                  ...router.query,
+                  showChat: true,
+                  chat: message.sender,
+                },
               },
-            }),
+              undefined,
+              { shallow: true },
+            ),
         },
       );
     };
     const newContactHandler = (newContact: PusherReponseType) => {
-      if (newContact.receiver !== pusherKey) return;
+      if (newContact.receiver !== userId) return;
       toast.success(
         <Notification msg={"New Contact!"} sender={newContact.sender} />,
         {
           icon: <BiMessage size="2rem" />,
           onClick: () =>
-            void router.push({
-              query: {
-                ...router.query,
-                showChat: true,
-                chat: newContact.receiver,
+            void router.push(
+              {
+                query: {
+                  ...router.query,
+                  showChat: true,
+                  chat: newContact.receiver,
+                },
               },
-            }),
+
+              undefined,
+              { shallow: true },
+            ),
         },
       );
     };
@@ -81,11 +89,11 @@ export default function ChatBox() {
     pusherClient.bind("new-contact", newContactHandler);
 
     return () => {
-      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unsubscribe(userId);
       pusherClient.unbind("incoming-message", messageHandler);
       pusherClient.unbind("new-contact", newContactHandler);
     };
-  }, [userSession?.user.id]);
+  }, [userId]);
 
   const handleChatButtonClick = () => {
     if (showChat) {

@@ -7,6 +7,7 @@ import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import type { UserValidationType } from "~/validation/member";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 export default function UploadCoverImage({
   setValue,
@@ -15,6 +16,9 @@ export default function UploadCoverImage({
   setValue: UseFormSetValue<UserValidationType>;
   imgUrl: string | null;
 }) {
+  const [imageUrl, setImageUrl] = useState<string | null>(imgUrl);
+
+  const { data: userSession } = useSession();
   const getUploaderURL = api.uploader.getUrl.useMutation();
   const fileDeleter = api.uploader.delete.useMutation({
     onSuccess: () => {
@@ -25,8 +29,6 @@ export default function UploadCoverImage({
     },
   });
 
-  const [imageUrl, setImageUrl] = useState<string | null>(imgUrl);
-
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
@@ -34,7 +36,7 @@ export default function UploadCoverImage({
     if (!file) return;
 
     const { url, fields } = await getUploaderURL.mutateAsync({
-      fileName: file.name,
+      fileName: userSession?.user.id ?? "",
       fileType: file.type,
     });
     const savedImageUrl = await uploadFileToAWS({ url, fields, file });

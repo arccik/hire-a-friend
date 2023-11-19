@@ -1,10 +1,9 @@
-import { Button } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import Image from "next/image";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { api } from "~/utils/api";
-import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 
 type PropsType = {
@@ -16,19 +15,13 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
   const { data: userSession, update } = useSession();
   const getUploaderURL = api.uploader.getUrl.useMutation();
   const [imageUrl, setImageUrl] = useState(imgUrl);
-
-  const fileDeleter = api.uploader.delete.useMutation({
-    onSuccess: () => {
-      toast.success("File Succesfully deleted!");
-    },
-    onError: () => {
-      toast.error("File not deleted. Something went wrong!");
-    },
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const fileDeleter = api.uploader.delete.useMutation();
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
+    setIsLoading(true);
     const file = event.target.files?.[0];
 
     if (!file) return;
@@ -45,8 +38,9 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
       setImageUrl(savedImageUrl);
       await update({ image: savedImageUrl });
     }
+    setIsLoading(false);
   };
-
+  if (isLoading) return <Spinner />;
   return (
     <div className="mt-2 flex items-center gap-x-3">
       {imageUrl ? (

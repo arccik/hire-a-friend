@@ -205,6 +205,13 @@ export default function ProfilePage() {
                   )}
                 </div>
               </div>
+
+              <ActionButtons
+                isAvailable={data.activated}
+                rate={data.Rate}
+                id={data.id}
+                refetch={() => void refetch()}
+              />
               {data.lastLogin && (
                 <div className="mt-10 text-xs text-slate-400">
                   <p>Last Visit: {data.lastLogin.toLocaleDateString()}</p>

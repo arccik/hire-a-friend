@@ -1,10 +1,11 @@
 import { Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { NextRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { RiSearchLine, RiCloseLine } from "react-icons/ri";
 
-export default function SearchBar({ router }: { router: NextRouter }) {
+export default function SearchBar() {
+  const router = useRouter();
   const [show, setShow] = useState(false);
 
   const handleButtonClick = () => {

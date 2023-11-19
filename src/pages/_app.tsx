@@ -4,14 +4,19 @@ import { api } from "~/utils/api";
 import Head from "next/head";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
+// import { hotjar } from "react-hotjar";
+
+// import { useEffect } from "react";
 
 import { ToastContainer } from "react-toastify";
 
 import Header from "~/components/template/Header";
 import Footer from "~/components/template/Footer";
 
-import "react-toastify/dist/ReactToastify.css";
+import Script from "next/script";
+
 import "~/styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const meta = [
   {
@@ -34,6 +39,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  // useEffect(() => {
+  //   hotjar.initialize(3742068, 6);
+  // }, []);
+
   return (
     <NextUIProvider>
       <SessionProvider session={session}>
@@ -43,11 +52,27 @@ const MyApp: AppType<{ session: Session | null }> = ({
           ))}
 
           <title>{meta.at(-1)?.content}</title>
+          {/* google analytics */}
         </Head>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-196SYMT6WG" />
+        <Script id="google-analytics">
+          {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+    
+              gtag('config', 'G-196SYMT6WG');
+            `}
+        </Script>
         <Header />
         <Component {...pageProps} />
 
-        <ToastContainer position="top-right" newestOnTop={false} draggable />
+        <ToastContainer
+          position="bottom-center"
+          newestOnTop={false}
+          theme="colored"
+          draggable
+        />
         <Footer />
       </SessionProvider>
     </NextUIProvider>

@@ -49,7 +49,7 @@ export default function ChatBox() {
         {
           icon: <BiMessage size="2rem" />,
           onClick: () =>
-            router.push(
+            void router.push(
               {
                 query: {
                   ...router.query,

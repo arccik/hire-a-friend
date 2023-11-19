@@ -35,9 +35,9 @@ export const emailRouter = createTRPCRouter({
         html: `<p>Welcome To Rent My Time ${input.email.split("@")[0]}</p>`,
       });
     }),
-  passwordResetRequest: protectedProcedure
+  passwordResetRequest: publicProcedure
     .input(z.object({ email: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findFirst({
         where: { email: input.email },
       });
@@ -48,7 +48,7 @@ export const emailRouter = createTRPCRouter({
         });
       }
       await transporter.sendMail({
-        from: env.EMAIL_FROM,
+        from: `Rent My Time | Reset Password <${env.EMAIL_FROM}>`,
         to: input.email,
         subject: "Reset Password",
         html: `<p>Click <a href="${env.NEXTAUTH_URL}/reset-password?user.id=${user.id}">here</a> to reset your password</p>`,

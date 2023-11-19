@@ -9,30 +9,50 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+import { SiMinutemailer } from "react-icons/si";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/utils/api";
-import { type SignUpSchemaType, signUpSchema } from "~/validation/member";
-import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
+import z from "zod";
+import { useState } from "react";
 
 export default function ResetPasswordPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [emailSent, setEmailSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const createUser = api.user.signUp.useMutation();
+  const sendEmail = api.email.passwordResetRequest.useMutation({
+    onSuccess: () => {
+      setEmailSent(true);
+      setIsLoading(false);
+      toast.success("Email Sent, check your inbox");
+    },
+    onError: (error) => {
+      setEmailSent(false);
+      setIsLoading(false);
+      toast.error(`Couldn't send email ${error.message} `);
+    },
+    onMutate: () => setIsLoading(true),
+  });
+
+  const schema = z.object({
+    email: z.string().email(),
+  });
+
+  type SchemaType = z.infer<typeof schema>;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-  } = useForm<SignUpSchemaType>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<SchemaType>({
+    resolver: zodResolver(schema),
   });
-  const onSubmit: SubmitHandler<SignUpSchemaType> = (data): void => {
-    createUser
-      .mutateAsync(data)
-      .then(() => console.log("ALL GOOD"))
-      .catch(() => setError("email", { message: "User alredy exist!" }));
+  const onSubmit: SubmitHandler<SchemaType> = (data) => {
+    sendEmail.mutate({ email: data.email });
   };
+
   return (
     <section className="bg-gray-50">
       <div className="mx-auto flex h-[32rem] flex-col items-center justify-center px-6 py-8 lg:py-0">
@@ -44,45 +64,53 @@ export default function ResetPasswordPage() {
         </div>
 
         <Card fullWidth className="max-w-xl md:w-1/2">
-          <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
-              Reset your password
-            </h1>
+          {!emailSent ? (
+            <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
+                Reset your password
+              </h1>
 
-            <form
-              className="space-y-4 md:space-y-6"
-              onSubmit={(event) => void handleSubmit(onSubmit)(event)}
-            >
-              <Input
-                {...register("email")}
-                label="Email"
-                variant="bordered"
-                autoComplete="email"
-                placeholder="email@example.com"
-                errorMessage={errors.email?.message}
+              <form
+                className="space-y-4 md:space-y-6"
+                onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+              >
+                <Input
+                  {...register("email")}
+                  label="Email"
+                  variant="bordered"
+                  autoComplete="email"
+                  placeholder="email@example.com"
+                  errorMessage={errors.email?.message}
+                  isInvalid={!!errors.email}
+                />
+
+                <Button
+                  color="primary"
+                  type="submit"
+                  isLoading={isLoading}
+                  className="w-full"
+                >
+                  Reset Password
+                </Button>
+              </form>
+              <Button
+                className="m-0 p-0 text-xs text-slate-500"
+                variant="light"
+                onPress={onOpen}
+              >
+                Don&apos;t remember Email ?
+              </Button>
+            </div>
+          ) : (
+            <p className="p-5 text-center text-2xl font-bold">
+              Reset password link sent{" "}
+              <SiMinutemailer
+                className="mx-auto mt-10 text-orange-500"
+                size="5rem"
               />
-            </form>
-            <Button
-              className="m-0 p-0 text-xs text-slate-500"
-              variant="light"
-              onPress={onOpen}
-            >
-              Don&apos;t remember Email ?
-            </Button>
-            <Button
-              onClick={() =>
-                void signIn("email", {
-                  email: "arccik@gmail.com",
-                  callbackUrl: "/change-password",
-                })
-              }
-              type="submit"
-              color="primary"
-              className="w-full"
-            >
-              Reset Password
-            </Button>
-          </div>
+              <br /> Check your inbox
+            </p>
+          )}
         </Card>
       </div>
       <Modal isOpen={isOpen} placement="auto" onOpenChange={onOpenChange}>
@@ -101,7 +129,7 @@ export default function ResetPasswordPage() {
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" onPress={onClose}>
-                  Accept
+                  Ok
                 </Button>
               </ModalFooter>
             </>

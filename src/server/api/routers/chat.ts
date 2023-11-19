@@ -95,17 +95,41 @@ export const chatRouter = createTRPCRouter({
       return contact;
     }),
   blockContact: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ contactId: z.string(), userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: { id: input.userId },
+      });
+
+      if (!user) return;
+
+      user.blockedBy.push(ctx.session.user.id);
+      await ctx.prisma.user.update({
+        where: { id: input.userId },
+        data: {
+          blockedBy: user.blockedBy,
+        },
+      });
+
       const response = await ctx.prisma.contact.update({
-        where: { id: input.id },
+        where: { id: input.contactId },
         data: { blocked: true },
       });
+
       return response;
     }),
   unblockContact: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findFirst({ where: { id: input.id } });
+      if (!user) return;
+      user.blockedBy = user.blockedBy.filter((v) => v !== ctx.session.user.id);
+      await ctx.prisma.user.update({
+        where: { id: input.id },
+        data: {
+          blockedBy: user.blockedBy,
+        },
+      });
       return ctx.prisma.contact.updateMany({
         where: { contactId: input.id, userId: ctx.session.user.id },
         data: { blocked: false },

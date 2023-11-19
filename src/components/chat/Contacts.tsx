@@ -49,19 +49,24 @@ export default function Contacts({ onClose }: PropType) {
     void router.replace({ pathname, query }, undefined, { shallow: true });
   };
 
-  const handleModalAction = (id: string) => {
+  type FuncType = {
+    contactId: string;
+    userId: string;
+  };
+  const handleModalAction = ({ contactId, userId }: FuncType) => {
     const func =
       showBlockModal === "block" ? handleBlockButton : handleDeleteButton;
     setShowBlockModal(null);
-    func(id);
+    func({ contactId, userId });
     void refetchContacts();
   };
-  const handleDeleteButton = (id: string) => {
-    deleteContact.mutate({ id });
+  const handleDeleteButton = ({ contactId, userId }: FuncType) => {
+    deleteContact.mutate({ id: contactId });
   };
 
-  const handleBlockButton = (id: string) => {
-    blockContact.mutate({ id });
+  const handleBlockButton = ({ contactId, userId }: FuncType) => {
+    blockContact.mutate({ contactId, userId });
+    console.log("Handlae Block ", contactsData);
   };
 
   return (
@@ -159,7 +164,12 @@ export default function Contacts({ onClose }: PropType) {
                       <Button
                         color="primary"
                         onPress={onClose}
-                        onClick={() => handleModalAction(contact.id)}
+                        onClick={() =>
+                          handleModalAction({
+                            contactId: contact.id,
+                            userId: contact.contactId,
+                          })
+                        }
                       >
                         Yes
                       </Button>

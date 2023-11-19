@@ -82,6 +82,7 @@ model User {
     createdAt      DateTime    @default(now())
     updatedAt      DateTime    @updatedAt
     zodiacSign     String?
+    blockedBy      String[]
 }
 
 model Rate {

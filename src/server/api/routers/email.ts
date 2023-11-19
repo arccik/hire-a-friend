@@ -11,30 +11,6 @@ import {
 import { env } from "~/env.mjs";
 
 export const emailRouter = createTRPCRouter({
-  contactUs: publicProcedure
-    .input(
-      z.object({ email: z.string(), subject: z.string(), message: z.string() }),
-    )
-    .mutation(async ({ input }) => {
-      const emailResponse = await transporter.sendMail({
-        from: env.EMAIL_FROM,
-        to: env.EMAIL_FROM,
-        subject: `URGENT: Rent My Time | Contact Us - ${input.email} `,
-        html: `<p>Email: ${input.email}</p><p>Subject: ${input.subject}</p><p>Message: ${input.message}</p>`,
-      });
-      console.log("EMAIL RESPONSE : ", emailResponse);
-      return { message: "Email sent" };
-    }),
-  sendGreetings: protectedProcedure
-    .input(z.object({ email: z.string() }))
-    .query(async ({ input }) => {
-      await transporter.sendMail({
-        from: env.EMAIL_FROM,
-        to: input.email,
-        subject: `Welcome To Rent My Time ${input.email.split("@")[0]}`,
-        html: `<p>Welcome To Rent My Time ${input.email.split("@")[0]}</p>`,
-      });
-    }),
   passwordResetRequest: publicProcedure
     .input(z.object({ email: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -55,6 +31,32 @@ export const emailRouter = createTRPCRouter({
       });
       return { message: "Email sent" };
     }),
+  contactUs: publicProcedure
+    .input(
+      z.object({ email: z.string(), subject: z.string(), message: z.string() }),
+    )
+    .mutation(async ({ input }) => {
+      const emailResponse = await transporter.sendMail({
+        from: input.email,
+        to: env.EMAIL_FROM,
+        subject: `URGENT: Rent My Time | Contact Us - ${input.email} `,
+        html: `<p>Email: ${input.email}</p><p>Subject: ${input.subject}</p><p>Message: ${input.message}</p>`,
+      });
+      console.log("EMAIL RESPONSE : ", emailResponse);
+      return { message: "Email sent" };
+    }),
+  reportUser: protectedProcedure
+    .input(z.object({ email: z.string(), id: z.string() }))
+    .mutation(async ({ input }) => {
+      await transporter.sendMail({
+        from: env.EMAIL_FROM,
+        to: env.EMAIL_FROM,
+        subject: `URGENT: Rent My Time | Report User - by ${input.email} `,
+        html: `<div><p>Reporter: ${input.email}</p><p>User ${input.id} harassing or violating our community guidelines</p></div>`,
+      });
+      return { message: "Email sent" };
+    }),
+
   newMessageReceived: protectedProcedure
     .input(z.object({ email: z.string() }))
     .query(async ({ input }) => {

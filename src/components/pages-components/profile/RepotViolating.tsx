@@ -7,9 +7,30 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { api } from "~/utils/api";
 
 export default function ReportViolating() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { data: userSession } = useSession();
+  const router = useRouter();
+  const reportUser = api.email.reportUser.useMutation({
+    onSuccess: () => toast.success("Report has been sent!"),
+    onError: () =>
+      toast.error(
+        "Something went wrong! Please contact admin though Contac Us form",
+      ),
+  });
+
+  const handleReportUser = () => {
+    if (!userSession?.user.id) return;
+    reportUser.mutate({
+      email: userSession.user.email!,
+      id: router.query.id as string,
+    });
+  };
   return (
     <div className=" border-t border-gray-200 py-10 text-center">
       <div className="flex flex-wrap justify-center">
@@ -49,7 +70,11 @@ export default function ReportViolating() {
                     <Button color="danger" variant="light" onPress={onClose}>
                       No
                     </Button>
-                    <Button color="primary" onPress={onClose}>
+                    <Button
+                      color="primary"
+                      onPress={onClose}
+                      onClick={handleReportUser}
+                    >
                       Yes
                     </Button>
                   </ModalFooter>

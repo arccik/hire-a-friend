@@ -60,7 +60,7 @@ export default function Contacts({ onClose }: PropType) {
     func({ contactId, userId });
     void refetchContacts();
   };
-  const handleDeleteButton = ({ contactId, userId }: FuncType) => {
+  const handleDeleteButton = ({ contactId }: FuncType) => {
     deleteContact.mutate({ id: contactId });
   };
 

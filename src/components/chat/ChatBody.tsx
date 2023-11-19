@@ -43,7 +43,7 @@ export default function ChatBody() {
   }, [messagesData]);
 
   useEffect(() => {
-    if (!chatId || !userSession?.user.id) return;
+    if (!chatId) return;
     pusherClient.subscribe(chatId);
 
     const messageHandler = (message: MessageResponse) => {

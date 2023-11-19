@@ -3,6 +3,7 @@ import { cn } from "~/lib/utils";
 import { type MessageResponse } from "~/validation/message";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Image from "next/image";
 dayjs.extend(relativeTime);
 
 export default function Message({
@@ -29,10 +30,12 @@ export default function Message({
           isSender ? "flex-row-reverse" : "flex-row",
         )}
       >
-        <img
+        <Image
+          width={40}
+          height={40}
           src={imgUrl}
           alt="avatar"
-          className="inline-block h-10 w-10 rounded-full"
+          className="rounded-full"
         />
         <div className="mr-4" />
         <div

@@ -1,5 +1,6 @@
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
+import { randomUUID } from "crypto";
 
 import { z } from "zod";
 import { env } from "~/env.mjs";
@@ -10,7 +11,7 @@ export const uploaderRouter = createTRPCRouter({
     .input(z.object({ fileName: z.string(), fileType: z.string() }))
     .mutation(async ({ input }) => {
       const s3Client = new S3Client({});
-      const fileName = new Date().toDateString() + "-" + input.fileName;
+      const fileName = randomUUID() + "-" + input.fileName;
       return await createPresignedPost(s3Client, {
         Bucket: env.AWS_BUCKET_NAME,
         Key: fileName,

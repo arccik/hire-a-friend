@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { TfiClose } from "react-icons/tfi";
@@ -30,8 +31,10 @@ export default function ChatHeader({
     <div className="flex items-center justify-between border-b p-2">
       <div className="flex items-center">
         {avatar && (
-          <img
-            className="h-10 w-10 rounded-full"
+          <Image
+            width={40}
+            height={40}
+            className="rounded-full"
             src={avatar}
             alt={name + " Image"}
           />

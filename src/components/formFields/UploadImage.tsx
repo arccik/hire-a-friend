@@ -36,14 +36,14 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
       fileDeleter.mutate({ url: imageUrl });
     }
     const { url, fields } = await getUploaderURL.mutateAsync({
-      fileName: file.name,
+      fileName: userSession?.user.id ?? "",
       fileType: file.type,
     });
     const savedImageUrl = await uploadFileToAWS({ url, fields, file });
     if (savedImageUrl) {
       setValue(savedImageUrl);
       setImageUrl(savedImageUrl);
-      await update({ user: { ...userSession?.user, image: savedImageUrl } });
+      await update({ image: savedImageUrl });
     }
   };
 

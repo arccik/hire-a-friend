@@ -65,6 +65,7 @@ export default function ChatBox() {
     };
     const newContactHandler = (newContact: PusherReponseType) => {
       if (newContact.receiver !== userId) return;
+
       toast.success(
         <Notification msg={"New Contact!"} sender={newContact.sender} />,
         {

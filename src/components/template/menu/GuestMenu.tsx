@@ -64,7 +64,7 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />
         </NavbarContent>
-        <NavbarMenu className="mt-5 gap-6">
+        <NavbarMenu className="gap-6 pt-5">
           {menuItems.map((item, index) => (
             <NavbarMenuItem
               key={`${item.title}-${index}`}

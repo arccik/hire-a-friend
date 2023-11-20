@@ -64,7 +64,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
               gtag('config', 'G-196SYMT6WG');
             `}
         </Script>
-        <Script src="https://sdk.amazonaws.com/js/aws-sdk-2.1499.0.min.js" />
         <Header />
         <Component {...pageProps} />
 

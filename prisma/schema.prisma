@@ -89,7 +89,7 @@ model Rate {
     id           String @id @default(cuid())
     voterId      String
     targetUserId String
-    user         User   @relation(fields: [targetUserId], references: [id])
+    user         User   @relation(fields: [targetUserId], references: [id] ,onDelete: Cascade)
     rating       Int    @default(1)
 }
 

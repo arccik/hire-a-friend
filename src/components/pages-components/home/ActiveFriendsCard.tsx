@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import { type User } from "@prisma/client";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ActiveFriendsCard(props: User) {
   return (
@@ -13,19 +14,18 @@ export default function ActiveFriendsCard(props: User) {
       as={Link}
       href={`/profile/${props.id}`}
     >
-      <CardBody>
+      <CardBody className="relative h-64">
         {props.image && (
           <Image
+            fill
             alt={props.id}
-            className="object-cover"
-            height="auto"
+            className="rounded-2xl object-cover p-1"
             src={props.image}
-            width={160}
           />
         )}
       </CardBody>
       <p className="text-center font-semibold text-slate-700">{props.name}</p>
-      <CardFooter className="gap-4">
+      <CardFooter className="justify-between gap-4">
         <div className="flex gap-1">
           <p className="flex text-small font-semibold text-default-400">
             {props.city}
@@ -35,7 +35,7 @@ export default function ActiveFriendsCard(props: User) {
           <p className="text-small font-semibold text-default-400">
             {props.age}
           </p>
-          <p className="text-small text-default-400">yers</p>
+          <p className="text-small text-default-400">years</p>
         </div>
       </CardFooter>
     </Card>

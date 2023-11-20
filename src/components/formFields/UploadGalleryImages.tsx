@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { Spinner } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 import { MdOutlineCloudUpload } from "react-icons/md";
-import { useSession } from "next-auth/react";
 
 export default function UploadImageGallery({
   setValue,
@@ -20,7 +19,6 @@ export default function UploadImageGallery({
   imgUrls: string[] | null;
   errors: FieldErrors<UserValidationType>;
 }) {
-  const { data: userSession } = useSession();
   const getUploaderURL = api.uploader.getUrl.useMutation();
 
   const deleteImage = api.uploader.delete.useMutation({
@@ -40,11 +38,17 @@ export default function UploadImageGallery({
     const file = event.target.files?.[0];
     if (!file || isFull) return;
     setIsLoading(true);
+    // const fileName = randomBytes(16).toString("hex");
+    // const fileWithName = new File([file], fileName);
     const { url, fields } = await getUploaderURL.mutateAsync({
-      fileName: userSession?.user.id ?? "",
       fileType: file.type,
+      fileName: file.name,
     });
-    const savedImageUrl = await uploadFileToAWS({ url, fields, file });
+    const savedImageUrl = await uploadFileToAWS({
+      url,
+      fields,
+      file,
+    });
     if (savedImageUrl) {
       setValue(
         "photos",

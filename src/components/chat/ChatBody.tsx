@@ -12,7 +12,7 @@ import { type MessageResponse } from "~/validation/message";
 import ChatFooter from "./ChatFooter";
 
 export default function ChatBody() {
-  const { data: userSession } = useSession({ required: true });
+  useSession({ required: true });
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   const searchParams = useSearchParams();

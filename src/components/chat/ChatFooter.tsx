@@ -37,7 +37,9 @@ export default function ChatFooter({ setMessages, chatId }: PropType) {
     addMessage.mutate(sendData);
     setMessage("");
   };
-
+  const handleEmojiClickt = () => {
+    setShowEmojiPicker((prev) => !prev);
+  };
   return (
     <div className="absolute inset-x-0 bottom-0 z-40 flex h-auto w-full items-center justify-around  gap-3 bg-background/70  p-2  backdrop-blur-lg backdrop-saturate-150">
       {showEmojiPicker && (
@@ -53,7 +55,7 @@ export default function ChatFooter({ setMessages, chatId }: PropType) {
       )}
 
       <TfiFaceSmile
-        onClick={() => setShowEmojiPicker((prev) => !prev)}
+        onClick={handleEmojiClickt}
         size={30}
         className="cursor-pointer rounded-full  p-1 hover:bg-indigo-50"
       />

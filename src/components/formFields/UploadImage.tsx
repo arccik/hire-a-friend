@@ -5,6 +5,7 @@ import Image from "next/image";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
+import { randomBytes } from "crypto";
 
 type PropsType = {
   setValue: (value: string) => void;
@@ -12,7 +13,7 @@ type PropsType = {
 };
 
 export default function UploadImage({ setValue, imgUrl }: PropsType) {
-  const { data: userSession, update } = useSession();
+  const { update } = useSession();
   const getUploaderURL = api.uploader.getUrl.useMutation();
   const [imageUrl, setImageUrl] = useState(imgUrl);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,11 +29,18 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
     if (imageUrl) {
       fileDeleter.mutate({ url: imageUrl });
     }
+    const fileName = randomBytes(16).toString("hex");
+    const fileWithName = new File([file], fileName);
+
     const { url, fields } = await getUploaderURL.mutateAsync({
-      fileName: userSession?.user.id ?? "",
+      fileName: fileWithName.name,
       fileType: file.type,
     });
-    const savedImageUrl = await uploadFileToAWS({ url, fields, file });
+    const savedImageUrl = await uploadFileToAWS({
+      url,
+      fields,
+      file: fileWithName,
+    });
     if (savedImageUrl) {
       setValue(savedImageUrl);
       setImageUrl(savedImageUrl);

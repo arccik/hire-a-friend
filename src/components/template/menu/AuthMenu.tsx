@@ -65,14 +65,15 @@ export default function AuthMenu({
                     {entry.title}
                   </DropdownItem>
                 ))}
-                <DropdownItem
-                  key="login"
-                  onClick={() => void signOut()}
-                  color="danger"
-                >
-                  Sign Out
-                </DropdownItem>
               </DropdownSection>
+              <DropdownItem
+                key="login"
+                className="-mt-3"
+                onClick={() => void signOut()}
+                color="danger"
+              >
+                Sign Out
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>

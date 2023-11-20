@@ -71,7 +71,7 @@ model User {
     userType       UserType?
     followers      Follower[]
     status         String?
-    appearance     Appearance? @relation(fields: [appearanceId], references: [id])
+    appearance     Appearance? @relation(fields: [appearanceId], references: [id], onDelete: Cascade)
     appearanceId   String?
     views          Int         @default(0)
     Comment        Comment[]
@@ -96,7 +96,7 @@ model Rate {
 model Follower {
     id     String @id @default(cuid())
     userId String
-    user   User   @relation(fields: [userId], references: [id])
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Appearance {
@@ -136,7 +136,7 @@ model Contact {
     id        String  @id @default(uuid())
     userId    String
     href      String
-    user      User    @relation(fields: [contactId], references: [id])
+    user      User    @relation(fields: [contactId], references: [id], onDelete: Cascade)
     contactId String
     blocked   Boolean @default(false)
 

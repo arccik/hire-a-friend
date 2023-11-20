@@ -30,4 +30,9 @@ export const menuItems: MenuItem[] = [
     title: "Privacy Policy",
     href: "/docs/privacy-policy",
   },
+  {
+    id: 6,
+    title: "FAQ",
+    href: "/help-feedback",
+  },
 ];

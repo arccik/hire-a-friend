@@ -82,7 +82,11 @@ const SignInPage = () => {
               </Button>
               <Divider text="OR" />
               <Button
-                onClick={() => void signIn("google")}
+                onClick={() =>
+                  void signIn("google", {
+                    callbackUrl: "/auth/choose-member-type",
+                  })
+                }
                 fullWidth
                 // color="warning"
                 className="bg-orange-500/70"

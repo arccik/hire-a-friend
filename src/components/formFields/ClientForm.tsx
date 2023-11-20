@@ -43,7 +43,7 @@ const MyForm: React.FC<PropType> = ({ name, image, city }) => {
   return (
     <div className="mx-auto w-full  md:w-1/2">
       <p className="text-center text-2xl font-bold text-primary-500 md:text-3xl">
-        Welcome to our Registration Page!
+        Welcome to Registration Page!
       </p>
       <p className="-mt-1 text-center text-xs text-slate-400">
         Fill out the registration form below to create your account.

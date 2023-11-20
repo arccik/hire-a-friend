@@ -29,17 +29,15 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
     if (imageUrl) {
       fileDeleter.mutate({ url: imageUrl });
     }
-    const fileName = randomBytes(16).toString("hex");
-    const fileWithName = new File([file], fileName);
 
     const { url, fields } = await getUploaderURL.mutateAsync({
-      fileName: fileWithName.name,
+      fileName: file.name,
       fileType: file.type,
     });
     const savedImageUrl = await uploadFileToAWS({
       url,
       fields,
-      file: fileWithName,
+      file,
     });
     if (savedImageUrl) {
       setValue(savedImageUrl);

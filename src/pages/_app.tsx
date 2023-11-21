@@ -76,7 +76,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <Component {...pageProps} />
 
         <ToastContainer
-          position="bottom-center"
+          position="top-right"
           newestOnTop={false}
           // theme="colored"
           draggable

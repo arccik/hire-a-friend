@@ -4,15 +4,16 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type LoginSchemaType, loginSchema } from "~/validation/member";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import Divider from "~/components/features/Divider";
 import { FaGoogle } from "react-icons/fa";
 
 const SignInPage = () => {
   const { data: userSession } = useSession();
-  const router = useRouter();
 
-  if (userSession?.user.id) void router.push("/");
+  if (userSession?.user.id) {
+    void Router.push(`/profile/${userSession?.user.id}`);
+  }
 
   const {
     register,
@@ -30,7 +31,7 @@ const SignInPage = () => {
     if (!response?.ok) {
       setError("email", { message: "Invalid email or password" });
     } else {
-      await router.push("/");
+      await Router.push("/");
     }
   };
 

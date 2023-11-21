@@ -1,16 +1,19 @@
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoMdChatboxes } from "react-icons/io";
-import Contacts from "./Contacts";
-import { useSearchParams } from "next/navigation";
-import ChatBody from "./ChatBody";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-import { pusherClient } from "~/utils/pusher";
-import { toast } from "react-toastify";
-import { type MessageResponse } from "~/validation/message";
 import { BiMessage } from "react-icons/bi";
+import { toast } from "react-toastify";
+import { pusherClient } from "~/utils/pusher";
+import { type MessageResponse } from "~/validation/message";
 import Notification from "./Notification";
+import Contacts from "./Contacts";
+import ChatBody from "./ChatBody";
+import {
+  handleRouterNavigation,
+  handleRouterRemoveQuery,
+} from "~/helpers/searchParams";
 
 type PusherReponseType = {
   sender: string;
@@ -20,7 +23,6 @@ type PusherReponseType = {
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
@@ -48,18 +50,7 @@ export default function ChatBox() {
         <Notification msg={message.message} sender={message.sender} />,
         {
           icon: <BiMessage size="2rem" />,
-          onClick: () =>
-            void router.push(
-              {
-                query: {
-                  ...router.query,
-                  showChat: true,
-                  chat: message.sender,
-                },
-              },
-              undefined,
-              { shallow: true },
-            ),
+          onClick: () => handleRouterNavigation({ chat: message.sender }),
         },
       );
     };
@@ -70,19 +61,7 @@ export default function ChatBox() {
         <Notification msg={"New Contact!"} sender={newContact.sender} />,
         {
           icon: <BiMessage size="2rem" />,
-          onClick: () =>
-            void router.push(
-              {
-                query: {
-                  ...router.query,
-                  showChat: true,
-                  chat: newContact.receiver,
-                },
-              },
-
-              undefined,
-              { shallow: true },
-            ),
+          onClick: () => handleRouterNavigation({ chat: newContact.receiver }),
         },
       );
     };
@@ -98,18 +77,9 @@ export default function ChatBox() {
 
   const handleChatButtonClick = () => {
     if (showChat) {
-      delete router.query.showChat;
-      void router.replace({ query: router.query }, undefined, {
-        shallow: true,
-      });
+      handleRouterRemoveQuery("showChat");
     } else {
-      void router.replace(
-        {
-          query: { ...router.query, showChat: true },
-        },
-        undefined,
-        { shallow: true },
-      );
+      handleRouterNavigation({ showChat: true });
     }
   };
   if (!userSession) return null;

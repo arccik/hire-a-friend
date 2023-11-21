@@ -95,6 +95,7 @@ export default function AuthMenu({
               avatarProps={{ src: session.user.image ?? "" }}
             />
           </NavbarMenuItem>
+
           {menuItems.map((item, index) => (
             <NavbarMenuItem
               key={`${item.href}-${index}`}

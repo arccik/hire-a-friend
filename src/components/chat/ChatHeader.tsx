@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { TfiClose } from "react-icons/tfi";
+import { handleRouterRemoveQuery } from "~/helpers/searchParams";
 
 type PropType = {
   setShowChat: (value: boolean) => void;
@@ -11,20 +11,10 @@ type PropType = {
   id: string;
 };
 
-export default function ChatHeader({
-  setShowChat,
-  name,
-  status,
-  avatar,
-  id,
-}: PropType) {
-  const router = useRouter();
-
+export default function ChatHeader({ setShowChat, name, status, avatar, id }: PropType) {
   const handleCloseButton = () => {
     setShowChat(false);
-    const { pathname, query } = router;
-    delete router.query.showChat;
-    void router.replace({ pathname, query }, undefined, { shallow: true });
+    handleRouterRemoveQuery("showChat");
   };
 
   return (

@@ -8,7 +8,7 @@ import {
 } from "@nextui-org/react";
 import { type UserType } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { api } from "~/utils/api";
 import { FaHandHoldingHeart, FaHandHoldingUsd } from "react-icons/fa";
 
@@ -28,10 +28,9 @@ export default function MembershipCard({
   memberType,
 }: PropType) {
   useSession({ required: true });
-  const router = useRouter();
   const changeStatus = api.user.changeMemberStatus.useMutation({
     onSuccess: () => {
-      void router.replace(`/auth/update-profile`);
+      void Router.replace(`/auth/update-profile`);
     },
   });
 

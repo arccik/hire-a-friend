@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 
 import { type MessageResponse } from "~/validation/message";
 import ChatFooter from "./ChatFooter";
+import { handleRouterRemoveQuery } from "~/helpers/searchParams";
 
 export default function ChatBody() {
   useSession({ required: true });
@@ -18,7 +19,6 @@ export default function ChatBody() {
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
 
-  const router = useRouter();
   const [messages, setMessages] = useState<MessageResponse[] | undefined>();
 
   console.log("Rerender!");
@@ -59,13 +59,11 @@ export default function ChatBody() {
   }, [chatId]);
 
   const handleBackButton = () => {
-    delete router.query.chat;
-    void router.replace({ query: router.query }, undefined, { shallow: true });
+    handleRouterRemoveQuery("chat");
   };
 
   const handleCloseButton = () => {
-    delete router.query.showChat;
-    void router.replace({ query: router.query }, undefined, { shallow: true });
+    handleRouterRemoveQuery("showChat");
   };
 
   return (

@@ -1,14 +1,14 @@
 import { Pagination, Spinner } from "@nextui-org/react";
+import { useSearchParams } from "next/navigation";
+import type { Metadata } from "next/types";
 import DisplayError from "~/components/features/DisplayError";
 import Title from "~/components/features/Title";
 import FriendCard from "~/components/pages-components/friends/FriendCard";
 import Filter from "~/components/pages-components/friends/Filter";
 import { api } from "~/utils/api";
-import { useRouter } from "next/router";
-import { useSearchParams } from "next/navigation";
 import ClearFilter from "~/components/pages-components/friends/ClearFilterButton";
 // import PaginationOrange from "~/components/features/PaginationOrange";
-import type { Metadata } from "next/types";
+import { handleRouterNavigation } from "~/helpers/searchParams";
 
 export const metadata: Metadata = {
   title: "Explore Profiles for Companionship and Services | RentMyTime",
@@ -19,8 +19,6 @@ export const metadata: Metadata = {
 const HEADLINE_TITLE = "Make Connections";
 
 export default function FriendsPage() {
-  const router = useRouter();
-
   const searchParams = useSearchParams();
   const activities = searchParams.get("activities");
   const status = searchParams.get("status");
@@ -67,10 +65,13 @@ export default function FriendsPage() {
             className="mt-10 flex items-center align-middle"
           />
         )}
-
-        {toDisplay && toDisplay[0].length === 0 && (
-          <ClearFilter show={true} router={router} />
+        {searchValue && (
+          <p className="m-2 text-center text-xs text-orange-500">
+            Clear Search
+          </p>
         )}
+
+        {toDisplay && toDisplay[0].length === 0 && <ClearFilter show={true} />}
 
         <div className="grid grid-flow-row gap-2 md:grid-cols-2 md:gap-4 lg:grid-cols-3  2xl:grid-cols-4">
           {toDisplay
@@ -94,15 +95,7 @@ export default function FriendsPage() {
             isCompact
             showShadow
             page={page}
-            onChange={(p) =>
-              void router.push(
-                { pathname: router.pathname, query: { page: p } },
-                undefined,
-                {
-                  shallow: true,
-                },
-              )
-            }
+            onChange={(p) => handleRouterNavigation({ page: p })}
             variant="light"
           />
         )}

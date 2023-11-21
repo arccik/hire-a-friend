@@ -13,10 +13,11 @@ export default function InputField({
   title?: string;
   required?: boolean;
 }) {
+  console.log(fieldName, required);
   return (
     <div className="sm:col-span-4">
       <label
-        htmlFor="name"
+        htmlFor={fieldName}
         className="block text-sm font-medium leading-6 text-gray-900"
       >
         {title ? title : fieldName}
@@ -29,7 +30,7 @@ export default function InputField({
           autoComplete={fieldName}
           placeholder="type here"
           radius="sm"
-          isRequired={required}
+          isRequired={!!required}
           errorMessage={errors[fieldName]?.message as string}
           isInvalid={!!errors[fieldName]}
         />

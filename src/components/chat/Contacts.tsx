@@ -19,6 +19,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useState } from "react";
+import { handleRouterNavigation } from "~/helpers/searchParams";
 
 type PropType = {
   onClose: () => void;
@@ -43,10 +44,8 @@ export default function Contacts({ onClose }: PropType) {
     },
   });
 
-  const handleCloseButton = (index: string) => {
-    const { pathname, query } = router;
-    router.query.chat = index;
-    void router.replace({ pathname, query }, undefined, { shallow: true });
+  const handleContactButtonClick = (contactId: string) => {
+    handleRouterNavigation({ chat: contactId });
   };
 
   type FuncType = {
@@ -93,7 +92,7 @@ export default function Contacts({ onClose }: PropType) {
             className="flex w-full animate-appearance-in cursor-pointer content-start items-center justify-between p-2 text-black hover:bg-slate-200"
           >
             <User
-              onClick={() => handleCloseButton(contact.contactId)}
+              onClick={() => handleContactButtonClick(contact.contactId)}
               key={contact.contactId}
               isFocusable
               name={contact.name}

@@ -11,7 +11,9 @@ export default function FriendCard({ item }: { item: User }) {
   return (
     <div
       className=" flex w-full max-w-full cursor-pointer drop-shadow-md hover:rounded-xl hover:drop-shadow-lg"
-      onClick={() => void router.push(`/profile/${item.id}`)}
+      onClick={() => {
+        void router.push(`/profile/${item.id}`);
+      }}
     >
       {item?.image && (
         <Image

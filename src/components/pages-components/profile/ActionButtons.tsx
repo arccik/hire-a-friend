@@ -1,10 +1,11 @@
+import { useState } from "react";
+import Link from "next/link";
+import { toast } from "react-toastify";
 import { Button, Switch } from "@nextui-org/react";
 import type { Rate } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import { MdThumbUpAlt } from "react-icons/md";
-import { toast } from "react-toastify";
+import { handleRouterNavigation } from "~/helpers/searchParams";
 import { api } from "~/utils/api";
 
 type PropType = {
@@ -22,7 +23,6 @@ export default function ActionButtons({
 }: PropType) {
   const [activated, setActivated] = useState(!!isAvailable);
   const { data: userSession } = useSession();
-  const router = useRouter();
 
   const addContact = api.chat.addContact.useMutation();
   const makeActive = api.user.makeActive.useMutation({
@@ -51,11 +51,7 @@ export default function ActionButtons({
         return toast.info(
           <div className="flex">
             <p>Login to rate this profile</p>
-            <Button
-              className="ml-4"
-              size="sm"
-              onClick={() => void router.push("/auth/sign-in")}
-            >
+            <Button className="ml-4" size="sm" as={Link} href="/auth/sign-in">
               Login
             </Button>
           </div>,
@@ -68,11 +64,7 @@ export default function ActionButtons({
       return toast.info(
         <div className="flex">
           <p>Have to be logged in</p>
-          <Button
-            className="ml-4"
-            size="sm"
-            onClick={() => void router.push("/auth/sign-in")}
-          >
+          <Button className="ml-4" size="sm" as={Link} href="/auth/sign-in">
             Login
           </Button>
         </div>,
@@ -81,13 +73,7 @@ export default function ActionButtons({
     addContact.mutate({
       id: id,
     });
-    void router.replace(
-      {
-        query: { ...router.query, chat: id, showChat: true },
-      },
-      undefined,
-      { shallow: true },
-    );
+    handleRouterNavigation({ chat: id, showChat: true });
   };
 
   const handleActivateClick = (status: boolean) => {
@@ -110,10 +96,7 @@ export default function ActionButtons({
 
         {userSession?.user.id === id ? (
           <>
-            <Button
-              variant="bordered"
-              onClick={() => void router.push("/auth/update-profile")}
-            >
+            <Button variant="bordered" as={Link} href="/auth/update-profile">
               Edit
             </Button>
             <br />

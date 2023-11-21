@@ -7,6 +7,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import genders from "~/data/gender-list.json";
 import { useRouter } from "next/router";
 import { citiesList } from "~/data/cities-list";
+import {
+  clearSearchParams,
+  handleRouterNavigation,
+} from "~/helpers/searchParams";
 
 export default function Filter() {
   const [showFilter, setShowFilter] = useState(false);
@@ -25,10 +29,8 @@ export default function Filter() {
       {shouldRenderClearBtn && (
         <div
           onClick={() => {
-            void router.push({
-              query: router.query.page ? { page: router.query.page } : null,
-            });
             setShowFilter(false);
+            clearSearchParams();
           }}
           className="flex cursor-pointer text-xs text-red-400"
         >
@@ -59,9 +61,7 @@ export default function Filter() {
               labelPlacement="outside"
               name="gender"
               onChange={(e) => {
-                void router.push({
-                  query: { ...router.query, gender: e.target.value },
-                });
+                handleRouterNavigation({ gender: e.target.value });
               }}
             >
               {genders.map((gender) => (
@@ -75,9 +75,7 @@ export default function Filter() {
               size="sm"
               labelPlacement="outside"
               onChange={(e) => {
-                void router.push({
-                  query: { ...router.query, status: e.target.value },
-                });
+                handleRouterNavigation({ status: e.target.value });
               }}
             >
               {["Online", "Offline"].map((status) => (
@@ -93,9 +91,7 @@ export default function Filter() {
               name="activities"
               labelPlacement="outside"
               onChange={(e) => {
-                void router.push({
-                  query: { ...router.query, activities: e.target.value },
-                });
+                handleRouterNavigation({ activities: e.target.value });
               }}
             >
               {activitiesList.map((activity) => (
@@ -107,9 +103,7 @@ export default function Filter() {
               labelPlacement="outside"
               size="sm"
               onChange={(e) => {
-                void router.push({
-                  query: { ...router.query, city: e.target.value },
-                });
+                handleRouterNavigation({ city: e.target.value });
               }}
             >
               {citiesList.map((city) => (

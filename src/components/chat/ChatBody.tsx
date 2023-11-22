@@ -3,7 +3,6 @@ import Message from "./Message";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
-import { useRouter } from "next/router";
 import { Spinner, User } from "@nextui-org/react";
 import { pusherClient } from "~/utils/pusher";
 import { useSession } from "next-auth/react";

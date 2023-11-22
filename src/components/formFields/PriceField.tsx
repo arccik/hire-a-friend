@@ -42,14 +42,17 @@ export default function PriceField({
               <Input
                 label="Price"
                 placeholder="0.00"
-                errorMessage={errors.price?.message}
+                type="number"
+                defaultValue="0"
+                min={0}
+                step={0.1}
+                errorMessage={errors.price?.message?.toString()}
                 {...register("price", { valueAsNumber: true })}
                 startContent={
                   <div className="pointer-events-none flex items-center">
                     <span className="text-small text-default-400">£</span>
                   </div>
                 }
-                type="number"
                 isInvalid={!!errors.price}
               />
             </motion.div>

@@ -7,7 +7,6 @@ import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import type { UserValidationType } from "~/validation/member";
 import Image from "next/image";
 import { toast } from "react-toastify";
-import { randomBytes } from "crypto";
 
 export default function UploadCoverImage({
   setValue,

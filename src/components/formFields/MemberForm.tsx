@@ -62,6 +62,7 @@ export default function MemberForm(props: BigFormPropType) {
     updateUser.mutate({ ...data, id: props.userId });
   };
 
+  console.log("BIG FORM ERROR: ", errors);
   return (
     <>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>

@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import {
   Button,
   Dropdown,
@@ -26,7 +25,6 @@ type PropType = {
 };
 export default function Contacts({ onClose }: PropType) {
   const [showBlockModal, setShowBlockModal] = useState<string | null>(null);
-  const router = useRouter();
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
   const deleteContact = api.chat.deleteContact.useMutation({
@@ -183,4 +181,3 @@ export default function Contacts({ onClose }: PropType) {
     </>
   );
 }
-

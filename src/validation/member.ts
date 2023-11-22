@@ -34,7 +34,9 @@ export const userValidation = z
     birthday: z.date().optional(),
     activities: z.array(z.string()).optional(),
     hobbies: z.array(z.string()).optional(),
-    price: z.number({ invalid_type_error: "Required" }),
+
+    price: z.any().optional(),
+
     hidePrice: z.boolean().optional(),
     isOffering: z.boolean().optional(),
     languages: z.array(z.string()).optional(),
@@ -56,24 +58,17 @@ export const userValidation = z
       ethnicity: z.string().optional(),
     }),
   })
-  .refine(
-    (data) => {
-      // Check if hidePrice is false and if the price is provided
-      console.log("REFING VALIDATION::: ", data);
-      const hidePrice = data?.hidePrice;
-      const price = data?.price;
-
-      if (hidePrice === false) {
-        return price !== undefined && !isNaN(price);
-      }
-
-      // If hidePrice is true, no validation needed
-      return true;
-    },
-    {
-      message: "Price is required when hidePrice is false",
-    },
-  );
+  .superRefine((data, ctx) => {
+    if (!data.price && !data.hidePrice) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["price"],
+        message: "Price Required, to hide price checkbox above",
+      });
+    }
+  });
+ 
+  
   
 export type UserValidationType = z.infer<typeof userValidation>;
 

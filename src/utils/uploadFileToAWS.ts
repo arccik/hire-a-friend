@@ -11,7 +11,6 @@ export default async function uploadFileToAWS({
 }): Promise<string | void> {
   try {
     const compressedImage = await compressImage(file);
-    console.log("Compressed image: ", compressedImage);
 
     if (!("Blob" in window && compressedImage instanceof Blob)) {
       throw new Error("Faild to compress image");

@@ -12,13 +12,25 @@ type PropType = {
   data: Appearance | null | undefined;
 };
 
+function formatString(inputString: string) {
+  // Split the input string into words
+  const words = inputString.split(/(?=[A-Z])/);
+
+  // Capitalize the first letter of each word and join them with a space
+  const formattedString = words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  return formattedString;
+}
+
 export default function ApearanceTable({ data }: PropType) {
   const toDisplay = Object.entries(data ?? [])
     .filter((value) => value[1] !== "" && value[0] !== "id")
     .map(([key, value]) => {
       return (
         <TableRow key={key}>
-          <TableCell>{key}</TableCell>
+          <TableCell>{formatString(key)}</TableCell>
           <TableCell>
             <b>{value}</b>
           </TableCell>

@@ -13,7 +13,6 @@ export default function InputField({
   title?: string;
   required?: boolean;
 }) {
-  console.log(fieldName, required);
   return (
     <div className="sm:col-span-4">
       <label

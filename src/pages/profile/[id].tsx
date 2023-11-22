@@ -85,7 +85,13 @@ export default function ProfilePage() {
         <GoBackButton />
 
         {data?.coverImage && (
-          <Image fill src={data?.coverImage} alt={"cover Image" + data?.name} />
+          <Image
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+            src={data?.coverImage}
+            alt={"cover Image" + data?.name}
+          />
         )}
         {data?.coverImage && (
           <div
@@ -134,7 +140,8 @@ export default function ProfilePage() {
                         height={500}
                         alt={data?.name + " Profile Image"}
                         src={data?.image}
-                        className=" -mt-24 rounded-full border-none shadow-xl"
+                        className=" -mt-24 rounded-full border-none object-cover shadow-xl"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>
                   </div>

@@ -1,5 +1,6 @@
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
+import { v4 as uuidv4 } from "uuid";
 
 import { z } from "zod";
 import { env } from "~/env.mjs";
@@ -11,18 +12,35 @@ export const uploaderRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const s3Client = new S3Client({});
 
-      return await createPresignedPost(s3Client, {
-        Bucket: env.AWS_BUCKET_NAME,
-        Key: input.fileName,
-        Fields: {
-          key: input.fileName,
-          "Content-Type": input.fileType,
+      return await createPresignedPost(
+        s3Client,
+        {
+          Bucket: env.AWS_BUCKET_NAME,
+          Key: uuidv4(),
+          Conditions: [
+            ["content-length-range", 0, 10485760], // up to 10 MB
+            ["starts-with", "$Content-Type", input.fileType],
+          ],
+          Fields: {
+            acl: "public-read",
+            "Content-Type": input.fileType,
+          },
+          Expires: 600,
         },
-        Expires: 600, // seconds
-        Conditions: [
-          ["content-length-range", 0, 10048576], // up to 10 MB
-        ],
-      });
+
+        //   {
+        //   Bucket: env.AWS_BUCKET_NAME,
+        //   Key: input.fileName,
+        //   Fields: {
+        //     key: input.fileName,
+        //     "Content-Type": input.fileType,
+        //   },
+        //   Expires: 600, // seconds
+        //   Conditions: [
+        //     ["content-length-range", 0, 10048576], // up to 10 MB
+        //   ],
+        // }
+      );
     }),
   delete: protectedProcedure
     .input(z.object({ url: z.string() }))

@@ -33,17 +33,17 @@ export default function UploadCoverImage({
   ): Promise<void> => {
     const file = event.target.files?.[0];
     if (!file) return;
-    const fileName = randomBytes(16).toString("hex");
-    const fileWithName = new File([file], fileName);
+    // const fileName = randomBytes(16).toString("hex");
+    // const fileWithName = new File([file], fileName);
 
     const { url, fields } = await getUploaderURL.mutateAsync({
       fileType: file.type,
-      fileName: fileWithName.name,
+      fileName: file.name,
     });
     const savedImageUrl = await uploadFileToAWS({
       url,
       fields,
-      file: fileWithName,
+      file,
     });
     if (savedImageUrl) {
       setValue("coverImage", savedImageUrl);

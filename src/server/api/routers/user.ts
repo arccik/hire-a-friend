@@ -46,7 +46,7 @@ export const userRouter = createTRPCRouter({
     });
   }),
   update: protectedProcedure
-    .input(userValidation.extend({ id: z.string() }))
+    .input(userValidation)
     .mutation(({ ctx, input }) => {
       const { appearance, ...rest } = input;
       return ctx.prisma.user.update({

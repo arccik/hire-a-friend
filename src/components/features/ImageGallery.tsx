@@ -38,7 +38,7 @@ export default function ImageGallery({
               <Image
                 isZoomed
                 width={240}
-                alt="NextUI Fruit Image with Zoom"
+                alt={`gallery image ${index}`}
                 src={img}
                 onClick={() => openLightboxOnSlide(index + 1)}
               />

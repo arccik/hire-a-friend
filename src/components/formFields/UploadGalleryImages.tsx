@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Spinner } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { v1 } from "uuid";
 
 export default function UploadImageGallery({
   setValue,
@@ -20,7 +21,6 @@ export default function UploadImageGallery({
   errors: FieldErrors<UserValidationType>;
 }) {
   const getUploaderURL = api.uploader.getUrl.useMutation();
-
   const deleteImage = api.uploader.delete.useMutation({
     onError: () => {
       toast.error("File not deleted. Something went wrong!");
@@ -115,6 +115,7 @@ export default function UploadImageGallery({
             <input
               id="dropzone-file"
               type="file"
+              name={v1()}
               className="hidden"
               disabled={isFull}
               onChange={(event) => void handleFileUpload(event)}

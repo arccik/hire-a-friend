@@ -25,7 +25,10 @@ export default function ActiveFriendsCard(props: User) {
         )}
       </CardBody>
       <p className="text-center font-semibold text-slate-700">{props.name}</p>
-      <CardFooter className="justify-between gap-4">
+      <p className="-mt-1 text-center text-sm text-slate-400">
+        {props.experties}
+      </p>
+      <CardFooter className="justify-between pt-1">
         <div className="flex gap-1">
           <p className="flex text-small font-semibold text-default-400">
             {props.city}

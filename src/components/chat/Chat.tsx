@@ -30,7 +30,8 @@ export default function ChatBox() {
 
   useEffect(() => {
     // to disable scrolling of site when chat open
-    if (showChat) {
+    const isDesktop = window.innerWidth >= 768;
+    if (showChat && !isDesktop) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "visible";

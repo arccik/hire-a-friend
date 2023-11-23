@@ -23,7 +23,7 @@ export default function getDefaultValues(
     experties: props.experties ?? undefined,
     age: props.age ?? NaN,
     price: props.price ?? NaN,
-    hidePrice: props.hidePrice ?? false,
+    hidePrice: !!props.hidePrice,
     phoneNumber: props.phoneNumber ?? "",
     zodiacSign: props.zodiacSign ?? "",
     appearance: {

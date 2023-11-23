@@ -16,6 +16,8 @@ import { type Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { menuItems } from "./menu-items";
+import { AiFillSetting } from "react-icons/ai";
+import { VscSignOut } from "react-icons/vsc";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,9 +61,21 @@ export default function AuthMenu({
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">{session.user.email}</p>
               </DropdownItem>
+              <DropdownItem
+                as={Link}
+                startContent={<AiFillSetting />}
+                href={`/auth/update-profile`}
+              >
+                Update Profile
+              </DropdownItem>
               <DropdownSection>
                 {menuItems.map((entry) => (
-                  <DropdownItem key={entry.href} as={Link} href={entry.href}>
+                  <DropdownItem
+                    startContent={entry.icon}
+                    key={entry.href}
+                    as={Link}
+                    href={entry.href}
+                  >
                     {entry.title}
                   </DropdownItem>
                 ))}
@@ -71,6 +85,7 @@ export default function AuthMenu({
                 className="-mt-3"
                 onClick={() => void signOut()}
                 color="danger"
+                startContent={<VscSignOut color="red" />}
               >
                 Sign Out
               </DropdownItem>

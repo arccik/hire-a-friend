@@ -52,7 +52,7 @@ export default function ContactUsPage() {
 
   return (
     <main className="p-5">
-      <Card className="mx-auto place-content-center p-5 md:w-1/2">
+      <Card className="mx-auto place-content-center p-5 lg:w-1/2">
         <p className="text-center text-xl font-bold text-orange-500">
           Contact Us
         </p>
@@ -60,7 +60,7 @@ export default function ContactUsPage() {
           We are happy to hear from you.
         </p>
         <form
-          className="mx-auto my-5 flex w-full flex-col gap-5 md:w-96"
+          className="mx-auto my-5 flex w-full flex-col gap-5 "
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
         >
           <Input

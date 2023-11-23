@@ -25,11 +25,12 @@ export default function PriceField({
       <div>
         <Checkbox
           className="mb-5"
+          defaultSelected={showPriceField}
           {...register("hidePrice")}
-          defaultChecked={true}
           onChange={(e) => setValue("hidePrice", e.target.checked)}
         >
-          Don&apos;t show the price on my page
+          {/* Don&apos;t show the price on my page */}
+          Hide Price
         </Checkbox>
         <AnimatePresence>
           {!showPriceField && (

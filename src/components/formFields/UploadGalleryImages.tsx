@@ -1,8 +1,6 @@
 import { useState } from "react";
-import type { FieldErrors, UseFormSetValue } from "react-hook-form";
 import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
-import { type UserValidationType } from "~/validation/member";
 
 import ImageGallery from "../features/ImageGallery";
 import { toast } from "react-toastify";
@@ -10,16 +8,13 @@ import { Spinner } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { v1 } from "uuid";
+import { ImageUploadType } from "~/types/imageUpload";
 
 export default function UploadImageGallery({
   setValue,
   imgUrls,
   errors,
-}: {
-  setValue: UseFormSetValue<UserValidationType>;
-  imgUrls: string[] | null;
-  errors: FieldErrors<UserValidationType>;
-}) {
+}: ImageUploadType) {
   const getUploaderURL = api.uploader.getUrl.useMutation();
   const deleteImage = api.uploader.delete.useMutation({
     onError: () => {

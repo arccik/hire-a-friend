@@ -28,15 +28,13 @@ export default function FriendsPage() {
   const page = paramPage ? parseInt(paramPage) : 1;
   const searchValue = searchParams.get("search") ?? undefined;
 
-  const { data: filterData, status: filterStatus } = api.friend.filter.useQuery(
-    {
-      activities: { has: activities },
-      status,
-      gender,
-      city,
-      page,
-    },
-  );
+  const { data, status: filterStatus } = api.friend.filter.useQuery({
+    activities: { has: activities },
+    status,
+    gender,
+    city,
+    page,
+  });
 
   const { data: searchResult } = api.friend.search.useQuery(
     { value: searchValue, page },
@@ -45,8 +43,7 @@ export default function FriendsPage() {
 
   if (filterStatus === "error") return <DisplayError />;
 
-  const toDisplay =
-    (searchResult && searchResult) ?? (filterData && filterData);
+  const toDisplay = (searchResult && searchResult) ?? (data && data);
 
   return (
     <main className="m-3 md:m-10">

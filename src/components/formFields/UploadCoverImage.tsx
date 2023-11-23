@@ -1,12 +1,14 @@
 import { Badge } from "@nextui-org/react";
 import { useState } from "react";
-import { type UseFormSetValue } from "react-hook-form";
+import { FieldErrors, type UseFormSetValue } from "react-hook-form";
 import { FaPhotoVideo } from "react-icons/fa";
 import { api } from "~/utils/api";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import type { UserValidationType } from "~/validation/member";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { v1 } from "uuid";
+import { MdOutlineCloudUpload } from "react-icons/md";
 
 export default function UploadCoverImage({
   setValue,
@@ -83,39 +85,27 @@ export default function UploadCoverImage({
   }
 
   return (
-    <div className="col-span-full">
+    <div className="flex justify-center">
       <label
-        htmlFor="cover-photo"
-        className="block text-sm font-medium leading-6 text-gray-900"
+        htmlFor="dropzone-file"
+        className="flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100"
       >
-        Cover photo
-      </label>
-      <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-        <div className="text-center">
-          <FaPhotoVideo
-            className="mx-auto h-12 w-12 text-gray-300"
-            aria-hidden="true"
-          />
-          <div className="mt-4 flex text-sm leading-6 text-gray-600">
-            <label
-              htmlFor="file-upload"
-              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-            >
-              <span>Upload a file</span>
-              <input
-                id="file-upload"
-                type="file"
-                className="sr-only"
-                onChange={(event) => void handleFileUpload(event)}
-              />
-            </label>
-            <p className="pl-1">or drag and drop</p>
-          </div>
-          <p className="text-xs leading-5 text-gray-600">
-            PNG, JPG, GIF up to 4MB
+        <div className="flex flex-col items-center justify-center pb-6 pt-5">
+          <MdOutlineCloudUpload size="3rem" />
+          <p className="mb-2 text-sm text-gray-500 ">
+            <span className="font-semibold">Click to upload</span> or drag and
+            drop
           </p>
+          <p className="text-xs text-gray-500 ">PNG, JPG or GIF (MAX. 5MB)</p>
         </div>
-      </div>
+        <input
+          id="dropzone-file"
+          type="file"
+          name={v1()}
+          className="hidden"
+          onChange={(event) => void handleFileUpload(event)}
+        />
+      </label>
     </div>
   );
 }

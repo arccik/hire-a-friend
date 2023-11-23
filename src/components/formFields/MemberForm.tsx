@@ -31,7 +31,7 @@ export default function MemberForm(props: BigFormPropType) {
           <b>Successfully Saved!</b>
           <Button
             size="sm"
-            className="text-xs"
+            className="bg-orange-500 text-xs text-white"
             as={Link}
             href={`/profile/${props.id}`}
           >
@@ -62,7 +62,6 @@ export default function MemberForm(props: BigFormPropType) {
     updateUser.mutate({ ...data, id: props.userId });
   };
 
-  console.log("BIG FORM ERROR: ", errors);
   return (
     <>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>

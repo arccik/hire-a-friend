@@ -13,6 +13,8 @@ import {
 import Link from "next/link";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { menuItems } from "./menu-items";
+import { VscSignIn } from "react-icons/vsc";
+import { GiTimeTrap } from "react-icons/gi";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,20 +41,38 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
                   />
                 </div>
               </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownMenu aria-label="Profile Actions" variant="bordered">
                 <DropdownSection>
                   {menuItems.map((entry) => (
-                    <DropdownItem key={entry.href} as={Link} href={entry.href}>
+                    <DropdownItem
+                      key={entry.href}
+                      as={Link}
+                      startContent={entry.icon}
+                      href={entry.href}
+                    >
                       {entry.title}
                     </DropdownItem>
                   ))}
                 </DropdownSection>
-                <DropdownItem key="signUp" as={Link} href="/auth/sign-up">
-                  Sign Up
-                </DropdownItem>
-                <DropdownItem key="signIn" as={Link} href="/auth/sign-in">
-                  Login
-                </DropdownItem>
+                <DropdownSection>
+                  <DropdownItem
+                    key="signUp"
+                    startContent={<GiTimeTrap />}
+                    as={Link}
+                    href="/auth/sign-up"
+                  >
+                    Sign Up
+                  </DropdownItem>
+                  <DropdownItem
+                    color="warning"
+                    startContent={<VscSignIn />}
+                    key="signIn"
+                    as={Link}
+                    href="/auth/sign-in"
+                  >
+                    Login
+                  </DropdownItem>
+                </DropdownSection>
               </DropdownMenu>
             </Dropdown>
           </NavbarItem>
@@ -69,18 +89,30 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
             <NavbarMenuItem
               key={`${item.title}-${index}`}
               onClick={() => setIsMenuOpen(false)}
+              className="flex items-center gap-3 transition-transform hover:scale-105 hover:text-orange-500"
             >
+              <span>{item.icon}</span>
               <Link className="w-full" href={item.href}>
                 {item.title}
               </Link>
             </NavbarMenuItem>
           ))}
-          <NavbarMenuItem onClick={() => setIsMenuOpen(false)} key="SignUp">
+          <NavbarMenuItem
+            onClick={() => setIsMenuOpen(false)}
+            key="SignUp"
+            className="flex items-center gap-3 transition-transform hover:scale-105 hover:text-orange-500"
+          >
+            <VscSignIn color="green" />
             <Link className="w-full" href="/auth/sign-up">
               Sign Up
             </Link>
           </NavbarMenuItem>
-          <NavbarMenuItem onClick={() => setIsMenuOpen(false)} key="login-btn">
+          <NavbarMenuItem
+            onClick={() => setIsMenuOpen(false)}
+            key="login-btn"
+            className="flex items-center gap-3 transition-transform hover:scale-105 hover:text-orange-500"
+          >
+            <VscSignIn color="green" />
             <Link className="w-full" href="/auth/sign-in">
               Login
             </Link>

@@ -84,15 +84,16 @@ export default function ProfilePage() {
       <section className="relative block h-[300px] lg:h-[400px]">
         <GoBackButton />
 
-        {data?.coverImage && (
-          <Image
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
-            src={data?.coverImage}
-            alt={"cover Image" + data?.name}
-          />
-        )}
+        <Image
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className=" object-cover opacity-50 backdrop-blur-lg"
+          src={
+            data?.coverImage ??
+            "/assets/images/abstracts_pattern_with_funny_shapes_black_and_wh.jpg"
+          }
+          alt={"cover Image" + data?.name}
+        />
         {data?.coverImage && (
           <div
             className="absolute top-0 h-full w-full bg-cover bg-center"

@@ -114,9 +114,10 @@ export default function AuthMenu({
           {menuItems.map((item, index) => (
             <NavbarMenuItem
               key={`${item.href}-${index}`}
-              className="my-2"
               onClick={() => setIsMenuOpen(false)}
+              className="my-2 flex items-center gap-3 transition-transform hover:scale-105 hover:text-orange-500"
             >
+              <span>{item.icon}</span>
               <Link className="w-full" href={item.href ?? ""}>
                 {item.title}
               </Link>
@@ -127,7 +128,9 @@ export default function AuthMenu({
             onClick={() => {
               void signOut();
             }}
+            className="my-2 flex items-center gap-3 transition-transform hover:scale-105 hover:text-orange-500"
           >
+            <VscSignOut />
             <p
               className="cursor-pointer text-red-500"
               onClick={() => setIsMenuOpen(false)}

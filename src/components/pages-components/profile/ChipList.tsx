@@ -1,6 +1,6 @@
 import { Chip } from "@nextui-org/react";
 import type { Rate, User } from "@prisma/client";
-import { FaCity, FaPoundSign, FaGrinHearts } from "react-icons/fa";
+import { FaCity, FaPoundSign, FaHeart } from "react-icons/fa";
 
 export default function ChipList({ data }: { data: User & { Rate: Rate[] } }) {
   return (
@@ -22,7 +22,10 @@ export default function ChipList({ data }: { data: User & { Rate: Rate[] } }) {
       )}
 
       {!!data.Rate.length && (
-        <Chip startContent={<FaGrinHearts size={18} />} variant="flat">
+        <Chip
+          startContent={<FaHeart size={18} className="text-red-500" />}
+          variant="flat"
+        >
           {data.Rate.length}
         </Chip>
       )}

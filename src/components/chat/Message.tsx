@@ -35,12 +35,12 @@ export default function Message({
           height={40}
           src={imgUrl}
           alt="avatar"
-          className="rounded-full"
+          className="h-10 w-10 rounded-full"
         />
         <div className="mr-4" />
         <div
           className={cn(
-            "relative max-w-xl rounded-xl  px-4 py-2",
+            "relative max-w-xl whitespace-normal  rounded-xl px-4 py-2",
             isSender
               ? "rounded-tr-none bg-blue-600"
               : "rounded-tl-none bg-green-600",

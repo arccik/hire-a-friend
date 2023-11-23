@@ -7,11 +7,9 @@ export default function InputField({
   fieldName,
   title,
   errors,
-  required,
 }: PropsType & {
   fieldName: keyof UserValidationType;
   title?: string;
-  required?: boolean;
 }) {
   return (
     <div className="sm:col-span-4">
@@ -29,7 +27,6 @@ export default function InputField({
           autoComplete={fieldName}
           placeholder="type here"
           radius="sm"
-          isRequired={!!required}
           errorMessage={errors[fieldName]?.message as string}
           isInvalid={!!errors[fieldName]}
         />

@@ -6,7 +6,7 @@ import { GiTimeTrap } from "react-icons/gi";
 import { useSession } from "next-auth/react";
 import AuthMenu from "./menu/AuthMenu";
 import GuestMenu from "./menu/GuestMenu";
-// import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,15 +28,19 @@ export default function Header() {
         </NavbarBrand>
       </NavbarContent>
 
-      {userSession?.user ? (
-        <AuthMenu
-          session={userSession}
-          isMenuOpen={isMenuOpen}
-          setIsMenuOpen={setIsMenuOpen}
-        />
-      ) : (
-        <GuestMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      )}
+      <NavbarContent justify="end">
+        <SearchBar />
+
+        {userSession?.user ? (
+          <AuthMenu
+            session={userSession}
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+          />
+        ) : (
+          <GuestMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+        )}
+      </NavbarContent>
     </Navbar>
   );
 }

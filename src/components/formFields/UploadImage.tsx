@@ -5,7 +5,6 @@ import Image from "next/image";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
-import { randomBytes } from "crypto";
 
 type PropsType = {
   setValue: (value: string) => void;

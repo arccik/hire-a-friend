@@ -1,5 +1,5 @@
 import { SessionProvider } from "next-auth/react";
-import { NextUIProvider } from "@nextui-org/react";
+import { Card, CardBody, NextUIProvider } from "@nextui-org/react";
 import { api } from "~/utils/api";
 import Head from "next/head";
 import { type AppType } from "next/app";
@@ -14,6 +14,7 @@ import Script from "next/script";
 
 import "~/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import { GiTimeTrap } from "react-icons/gi";
 
 const meta = [
   {
@@ -36,6 +37,29 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  if (!session?.user) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Card className="w-96 border-orange-500">
+          <CardBody>
+            <div className="mb-10 flex">
+              <GiTimeTrap
+                size="2rem"
+                className="mr-2 rounded-md bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white shadow-lg"
+              />
+              <p className="font-bold text-inherit">Rent My Time</p>
+            </div>
+            <p>
+              Please note that our website is currently{" "}
+              <b className="underline"> under construction</b>, but we&apos;re
+              working hard to bring you an enhanced and exciting experience.
+              <br /> Thank you for your patience!
+            </p>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
   return (
     <NextUIProvider>
       <SessionProvider session={session}>

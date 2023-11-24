@@ -66,13 +66,18 @@ export default function ChatBox() {
         },
       );
     };
+    const onlineStatusHandler = (value: unknown) => {
+      console.log("online Status", value);
+    };
     pusherClient.bind("incoming-message", messageHandler);
     pusherClient.bind("new-contact", newContactHandler);
+    // pusherClient.bind("online", onlineStatusHandler);
 
     return () => {
       pusherClient.unsubscribe(userId);
       pusherClient.unbind("incoming-message", messageHandler);
       pusherClient.unbind("new-contact", newContactHandler);
+      // pusherClient.unbind("online", onlineStatusHandler);
     };
   }, [userId]);
 

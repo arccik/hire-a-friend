@@ -185,6 +185,11 @@ export const chatRouter = createTRPCRouter({
 
       await pusherServer.trigger(input.receiver, "incoming-message", message);
     }),
+    setOnlineStatus: protectedProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
+      await pusherServer.trigger(input, "online", {userId: ctx.session.user.id});
+      return { message: "Online status set successfully" };
+    
+    }),
   isBlocked: protectedProcedure
     .input(z.object({ contactId: z.string(), userId: z.string() }))
     .query(({ ctx, input }) => {

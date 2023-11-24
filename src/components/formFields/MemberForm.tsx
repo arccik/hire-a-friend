@@ -13,7 +13,7 @@ import Apearance from "./Apearance";
 import InterestActivities from "./InterestActivities";
 import PersonalInformation from "./PersonalInfo";
 import InputField from "../features/InputField";
-import NotifyBy from "./NotifyBy";
+// import NotifyBy from "./NotifyBy";
 import Link from "next/link";
 import UploadImage from "./UploadImage";
 import UploadCoverImage from "./UploadCoverImage";
@@ -185,7 +185,7 @@ export default function MemberForm(props: BigFormPropType) {
           setValue={setValue}
         />
 
-        <NotifyBy />
+        {/* <NotifyBy /> */}
         <div className="fixed inset-x-0 bottom-0 z-40 flex h-auto w-full items-center justify-center gap-4 bg-background/70 p-1 backdrop-blur-lg backdrop-saturate-150">
           <div className="w-1/4">
             <Button

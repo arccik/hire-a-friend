@@ -9,6 +9,8 @@ import { api } from "~/utils/api";
 import ClearFilter from "~/components/pages-components/friends/ClearFilterButton";
 // import PaginationOrange from "~/components/features/PaginationOrange";
 import { handleRouterNavigation } from "~/helpers/searchParams";
+import FilterButton from "~/components/pages-components/friends/FilterButton";
+import { citiesList } from "~/data/cities-list";
 
 export const metadata: Metadata = {
   title: "Explore Profiles for Companionship and Services | RentMyTime",
@@ -23,7 +25,9 @@ export default function FriendsPage() {
   const activities = searchParams.get("activities");
   const status = searchParams.get("status");
   const gender = searchParams.get("gender");
-  const city = searchParams.get("city");
+  const cityIndex = searchParams.get("city") ?? undefined;
+
+  const city = citiesList.find((v) => v.id == +cityIndex!);
   const paramPage = searchParams.get("page");
   const page = paramPage ? parseInt(paramPage) : 1;
   const searchValue = searchParams.get("search") ?? undefined;
@@ -32,7 +36,7 @@ export default function FriendsPage() {
     activities: { has: activities },
     status,
     gender,
-    city,
+    city: city?.label,
     page,
   });
 
@@ -54,18 +58,14 @@ export default function FriendsPage() {
         </p>
       </div>
       <div className="mx-auto h-full w-full max-w-screen-2xl content-center  pb-10">
-        <Filter />
+        {/* <Filter /> */}
+        <FilterButton />
 
         {filterStatus === "loading" && (
           <Spinner
             color="warning"
             className="mt-10 flex items-center align-middle"
           />
-        )}
-        {searchValue && (
-          <p className="m-2 text-center text-xs text-orange-500">
-            Clear Search
-          </p>
         )}
 
         {toDisplay && toDisplay[0].length === 0 && <ClearFilter show={true} />}
@@ -77,11 +77,6 @@ export default function FriendsPage() {
               ))
             : null}
         </div>
-        {searchResult && searchResult[0].length === 0 && (
-          <p className="mt-10 text-center text-lg text-gray-400">
-            No results found
-          </p>
-        )}
 
         {toDisplay && Math.ceil(toDisplay[1] / toDisplay[0]?.length) > 1 && (
           <Pagination

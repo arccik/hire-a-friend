@@ -12,13 +12,12 @@ import ChatFooter from "./ChatFooter";
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
 
 export default function ChatBody() {
+  const [messages, setMessages] = useState<MessageResponse[] | undefined>();
   useSession({ required: true });
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
-
-  const [messages, setMessages] = useState<MessageResponse[] | undefined>();
 
   console.log("Rerender!");
 

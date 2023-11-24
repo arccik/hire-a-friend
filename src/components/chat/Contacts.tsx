@@ -1,30 +1,14 @@
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  User,
-} from "@nextui-org/react";
 import { api } from "~/utils/api";
 import { TfiClose } from "react-icons/tfi";
-import { BsThreeDotsVertical } from "react-icons/bs";
 
 import { toast } from "react-toastify";
-import Link from "next/link";
-import { useState } from "react";
 import { handleRouterNavigation } from "~/helpers/searchParams";
+import ContactItem from "./ContactItem";
 
 type PropType = {
   onClose: () => void;
 };
 export default function Contacts({ onClose }: PropType) {
-  const [showBlockModal, setShowBlockModal] = useState<string | null>(null);
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
   const deleteContact = api.chat.deleteContact.useMutation({
@@ -50,10 +34,12 @@ export default function Contacts({ onClose }: PropType) {
     contactId: string;
     userId: string;
   };
-  const handleModalAction = ({ contactId, userId }: FuncType) => {
-    const func =
-      showBlockModal === "block" ? handleBlockButton : handleDeleteButton;
-    setShowBlockModal(null);
+  const handleModalAction = ({
+    contactId,
+    userId,
+    type,
+  }: FuncType & { type: "block" | "delete" }) => {
+    const func = type === "block" ? handleBlockButton : handleDeleteButton;
     func({ contactId, userId });
     void refetchContacts();
   };
@@ -63,7 +49,6 @@ export default function Contacts({ onClose }: PropType) {
 
   const handleBlockButton = ({ contactId, userId }: FuncType) => {
     blockContact.mutate({ contactId, userId });
-    console.log("Handlae Block ", contactsData);
   };
 
   return (
@@ -85,97 +70,11 @@ export default function Contacts({ onClose }: PropType) {
           </p>
         )}
         {contactsData?.map((contact) => (
-          <div
-            key={contact.contactId}
-            className="flex w-full animate-appearance-in cursor-pointer content-start items-center justify-between p-2 text-black hover:bg-slate-200"
-          >
-            <User
-              onClick={() => handleContactButtonClick(contact.contactId)}
-              key={contact.contactId}
-              isFocusable
-              name={contact.name}
-              avatarProps={{
-                src: contact.image ?? "",
-              }}
-            />
-
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  variant="shadow"
-                  isIconOnly
-                  className="rounded-full bg-transparent"
-                  size="sm"
-                >
-                  <BsThreeDotsVertical />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Contact Actions">
-                <DropdownItem
-                  key="Profile"
-                  as={Link}
-                  href={`/profile/${contact.contactId}`}
-                >
-                  Profile
-                </DropdownItem>
-                <DropdownItem
-                  key="block"
-                  color="danger"
-                  onClick={() => setShowBlockModal("block")}
-                >
-                  Block User
-                </DropdownItem>
-                <DropdownItem
-                  key="delete"
-                  className="text-danger"
-                  color="danger"
-                  onClick={() => setShowBlockModal("delete")}
-                >
-                  Delete
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <Modal
-              isOpen={!!showBlockModal}
-              placement="auto"
-              onOpenChange={() => setShowBlockModal(null)}
-            >
-              <ModalContent>
-                {(onClose) => (
-                  <>
-                    <ModalHeader className="flex flex-col gap-1 uppercase">
-                      {showBlockModal} User
-                    </ModalHeader>
-                    <ModalBody>
-                      <p>
-                        Are you sure you want to {showBlockModal} this user?
-                      </p>
-                      <p className="text-sm text-red-500">
-                        This action cannot be undone.
-                      </p>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="danger" variant="light" onPress={onClose}>
-                        No
-                      </Button>
-                      <Button
-                        color="primary"
-                        onPress={onClose}
-                        onClick={() =>
-                          handleModalAction({
-                            contactId: contact.id,
-                            userId: contact.contactId,
-                          })
-                        }
-                      >
-                        Yes
-                      </Button>
-                    </ModalFooter>
-                  </>
-                )}
-              </ModalContent>
-            </Modal>
-          </div>
+          <ContactItem
+            contact={contact}
+            handleContactButtonClick={handleContactButtonClick}
+            handleModalAction={handleModalAction}
+          />
         ))}
       </div>
     </>

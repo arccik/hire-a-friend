@@ -24,7 +24,6 @@ export const handleRouterNavigation = (
 export const handleRouterRemoveQuery = (queryToRemove: string) => {
   const { [queryToRemove]: _, ...remainingQuery } = Router.query;
 
-  console.log("handleRouterRemoveQuery", { remainingQuery, _ });
   void Router.replace({ query: remainingQuery }, undefined, {
     shallow: true,
   });

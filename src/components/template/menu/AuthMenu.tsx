@@ -43,7 +43,9 @@ export default function AuthMenu({
             <DropdownTrigger>
               <Avatar
                 isBordered
+                radius="md"
                 as="button"
+                color="warning"
                 className="bg-orange-500 transition-transform"
                 name={session.user.name ?? ""}
                 size="sm"

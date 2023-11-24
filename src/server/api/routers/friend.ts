@@ -26,7 +26,11 @@ export const friendRouter = createTRPCRouter({
       delete options.activities;
     }
     if (input.gender && input.gender !== "null") options.gender = input.gender;
-    if (input.city && input.city !== "null") options.city = input.city;
+    if (input.city && input.city !== "null") {
+      options.city = input.city;
+    } else {
+      delete options.city;
+    }
     const pageSize = 9;
     const skip = (input.page - 1) * pageSize;
     const take = pageSize;

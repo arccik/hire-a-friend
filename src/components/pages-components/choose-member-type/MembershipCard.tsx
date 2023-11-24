@@ -50,7 +50,7 @@ export default function MembershipCard({
       </CardHeader>
       <CardBody className="items-center overflow-visible py-2">
         {image ? (
-          <Image alt="Card background" src={image} width={270} />
+          <Image alt="Card background" src={image} width={270} height="auto" />
         ) : (
           <br />
         )}

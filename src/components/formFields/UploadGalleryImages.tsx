@@ -8,7 +8,7 @@ import { Spinner } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { v1 } from "uuid";
-import { ImageUploadType } from "~/types/imageUpload";
+import { type ImageUploadType } from "~/types/imageUpload";
 
 export default function UploadImageGallery({
   setValue,

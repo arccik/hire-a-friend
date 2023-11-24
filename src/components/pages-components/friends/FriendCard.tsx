@@ -17,7 +17,7 @@ export default function FriendCard({ item }: { item: User }) {
     >
       {item?.image && (
         <Image
-          className="`w-36 flex-none  overflow-hidden  rounded-l-xl rounded-tr-none bg-center object-cover"
+          className="`w-36 h-auto flex-none  overflow-hidden  rounded-l-xl rounded-tr-none bg-center object-cover"
           src={item.image}
           width={144}
           height={0}

@@ -4,7 +4,6 @@ import type { Metadata } from "next/types";
 import DisplayError from "~/components/features/DisplayError";
 import Title from "~/components/features/Title";
 import FriendCard from "~/components/pages-components/friends/FriendCard";
-import Filter from "~/components/pages-components/friends/Filter";
 import { api } from "~/utils/api";
 import ClearFilter from "~/components/pages-components/friends/ClearFilterButton";
 // import PaginationOrange from "~/components/features/PaginationOrange";

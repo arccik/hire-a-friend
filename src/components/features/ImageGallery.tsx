@@ -38,6 +38,7 @@ export default function ImageGallery({
               <Image
                 isZoomed
                 width={240}
+                height="auto"
                 alt={`gallery image ${index}`}
                 src={img}
                 onClick={() => openLightboxOnSlide(index + 1)}

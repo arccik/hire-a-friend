@@ -14,7 +14,7 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { ContactItem } from "~/types/ContactItem";
+import { type ContactItem } from "~/types/ContactItem";
 
 type FuncType = {
   contactId: string;

@@ -15,7 +15,7 @@ export const friendRouter = createTRPCRouter({
     }),
 
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany();
+    return ctx.prisma.user.findMany({ select: { password: false } });
   }),
   filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
     const options: Record<string, string | boolean | object | null> = {};
@@ -48,6 +48,7 @@ export const friendRouter = createTRPCRouter({
       },
       skip,
       take,
+      // select: { password: false },
     });
 
     return ctx.prisma.$transaction([
@@ -75,6 +76,7 @@ export const friendRouter = createTRPCRouter({
           },
           skip,
           take,
+          // select: { password: false },
         }),
         ctx.prisma.user.count({
           where: {
@@ -107,9 +109,3 @@ export const friendRouter = createTRPCRouter({
       }
     }),
 });
-
-
-// id?: string
-//   voterId: string
-//   targetUserId: string
-//   rating?: number

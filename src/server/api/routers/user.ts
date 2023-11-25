@@ -76,10 +76,11 @@ export const userRouter = createTRPCRouter({
           id: input.id,
         },
         include: { appearance: true, Rate: true },
+
       });
     }),
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany();
+    return ctx.prisma.user.findMany({ select: { password: false } });
   }),
   getActiveFriends: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({
@@ -87,6 +88,7 @@ export const userRouter = createTRPCRouter({
         // activated: true,
         userType: "Friend",
       },
+      // select: { password: false },
     });
   }),
   changeMemberStatus: protectedProcedure
@@ -104,6 +106,7 @@ export const userRouter = createTRPCRouter({
     return ctx.prisma.user.findMany({
       where: { createdAt: { gt: new Date(Date.now() - 50 * 60 * 1000) } },
       take: 5,
+      // select: { password: false },
     });
   }),
   updateClientProfile: protectedProcedure

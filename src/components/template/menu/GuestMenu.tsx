@@ -41,7 +41,7 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
                   />
                 </div>
               </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="bordered">
+              <DropdownMenu aria-label="Dropdown menu" variant="bordered">
                 <DropdownSection>
                   {menuItems.map((entry) => (
                     <DropdownItem

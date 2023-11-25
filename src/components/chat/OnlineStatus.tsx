@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserStatusType } from "~/types/userStatusHandler";
+import { type UserStatusType } from "~/types/userStatusHandler";
 import { api } from "~/utils/api";
 import { pusherClient } from "~/utils/pusher";
 

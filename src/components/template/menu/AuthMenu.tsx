@@ -52,7 +52,7 @@ export default function AuthMenu({
                 src={session.user.image ?? ""}
               />
             </DropdownTrigger>
-            <DropdownMenu aria-label="Profile Actions" variant="flat">
+            <DropdownMenu aria-label="Dropdown Menu" variant="flat">
               <DropdownItem
                 key="signed-in-us"
                 className="h-14 gap-2"

@@ -71,6 +71,7 @@ export default function Contacts({ onClose }: PropType) {
         )}
         {contactsData?.map((contact) => (
           <ContactItem
+            key={contact.id}
             contact={contact}
             handleContactButtonClick={handleContactButtonClick}
             handleModalAction={handleModalAction}

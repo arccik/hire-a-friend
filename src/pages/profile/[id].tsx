@@ -69,10 +69,11 @@ export default function ProfilePage() {
     );
   }
 
-  const gender = genders.find((g) => g.id.toString() == data?.gender);
+  const genderSign = genders.find((g) => g.id.toString() == data?.gender);
 
   const zodiacSign = zodiacSigns.find((s) => s.id === Number(data.zodiacSign));
 
+  console.log("COVER IMAGE: ", data.coverImage);
   return (
     <main className="profile-page">
       <Head>
@@ -89,12 +90,13 @@ export default function ProfilePage() {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className=" object-cover opacity-50 backdrop-blur-lg"
           src={
-            data?.coverImage ??
-            "/assets/images/abstracts_pattern_with_funny_shapes_black_and_wh.jpg"
+            !!data?.coverImage
+              ? data.coverImage
+              : "/assets/images/abstracts_pattern_with_funny_shapes_black_and_wh.jpg"
           }
           alt={"cover Image" + data?.name}
         />
-        {data?.coverImage && (
+        {/* {data?.coverImage && (
           <div
             className="absolute top-0 h-full w-full bg-cover bg-center"
             style={{
@@ -106,7 +108,7 @@ export default function ProfilePage() {
               className="absolute h-full w-full bg-black opacity-50"
             ></span>
           </div>
-        )}
+        )} */}
         <div
           className="pointer-events-none absolute bottom-0 left-0 right-0 top-auto h-[70px] w-full overflow-hidden"
           style={{ transform: "translateZ(0px)" }}
@@ -200,14 +202,14 @@ export default function ProfilePage() {
                       </p>
                     </div>
                   )}
-                  {gender && (
+                  {genderSign && (
                     <div className="mx-auto">
                       <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
                         Gender
                       </p>
-                      {gender?.Icon({ size: "2rem", color: "orange" })}
+                      {genderSign?.Icon({ size: "2rem", color: "orange" })}
                       <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
-                        {gender?.name}
+                        {genderSign?.name}
                       </p>
                     </div>
                   )}

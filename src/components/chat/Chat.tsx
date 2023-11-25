@@ -15,7 +15,7 @@ import {
   handleRouterRemoveQuery,
 } from "~/helpers/searchParams";
 import { api } from "~/utils/api";
-import { UserStatusType } from "~/types/userStatusHandler";
+import { type UserStatusType } from "~/types/userStatusHandler";
 
 type PusherReponseType = {
   sender: string;
@@ -29,9 +29,8 @@ export default function ChatBox() {
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
   const userId = userSession?.user.id;
-  const [onlineUsers, setOnlineUsers] = useState<Record<string, string>[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState<Record<string, string>>({});
 
-  // console.log({ onlineUsers });
   const changeUserStatus = api.chat.setUserStatus.useMutation();
 
   const setupBodyOverflow = () => {
@@ -51,6 +50,7 @@ export default function ChatBox() {
   useEffect(() => {
     if (!userId) return;
     pusherClient.subscribe(userId);
+    pusherClient.subscribe("user-status");
 
     const messageHandler = (message: MessageResponse) => {
       if (message.sender === userId) return;
@@ -73,23 +73,25 @@ export default function ChatBox() {
         },
       );
     };
-    // const onlineStatusHandler = ({ userId, status }: UserStatusType) => {
-    //   setOnlineUsers((prevOnlineUsers) => [
-    //     ...prevOnlineUsers,
-    //     { [userId]: status },
-    //   ]);
-    // };
+    const onlineStatusHandler = ({ userId, status }: UserStatusType) => {
+      setOnlineUsers((prevOnlineUsers) => ({
+        ...prevOnlineUsers,
+        [userId]: status,
+      }));
+    };
     pusherClient.bind("incoming-message", messageHandler);
     pusherClient.bind("new-contact", newContactHandler);
-    // pusherClient.bind("user-status", onlineStatusHandler);
+    pusherClient.bind("status-change", onlineStatusHandler);
 
     changeUserStatus.mutate({ status: "Online" });
+
     return () => {
       pusherClient.unsubscribe(userId);
+      pusherClient.unsubscribe("user-status");
       pusherClient.unbind("incoming-message", messageHandler);
       pusherClient.unbind("new-contact", newContactHandler);
-      // pusherClient.unbind("user-status", onlineStatusHandler);
-      // changeUserStatus.mutate({ status: "Offline" });
+      pusherClient.unbind("status-change", onlineStatusHandler);
+      changeUserStatus.mutate({ status: "Offline" });
     };
   }, [userId]);
 

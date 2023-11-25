@@ -7,11 +7,12 @@ import ContactItem from "./ContactItem";
 
 type PropType = {
   onClose: () => void;
-  onlines: Record<string, string>[];
+  onlines: Record<string, string>;
 };
 export default function Contacts({ onClose, onlines }: PropType) {
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
+
   const deleteContact = api.chat.deleteContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
@@ -19,6 +20,7 @@ export default function Contacts({ onClose, onlines }: PropType) {
       await refetchContacts();
     },
   });
+
   const blockContact = api.chat.blockContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
@@ -66,9 +68,17 @@ export default function Contacts({ onClose, onlines }: PropType) {
       </div>
       <div className="flex flex-col items-start overflow-auto overflow-x-hidden   md:mt-5">
         {!contactsData?.length && (
-          <p className=" h-full w-full py-10 text-center  text-lg font-semibold text-slate-500 md:p-3">
-            No contacts
-          </p>
+          <>
+            <p className=" h-full w-full py-10 text-center  text-lg font-semibold text-slate-500 md:p-3">
+              No contacts
+            </p>
+            <p className="h-full w-full p-3 py-10  text-center text-xs font-semibold text-slate-500">
+              To start chatting, simply explore profiles and find someone who
+              piques your interest. Once you&apos;ve found a match, press
+              &apos;Send Message&apos; on their profile to break the ice and
+              begin a delightful conversation.
+            </p>
+          </>
         )}
         {contactsData?.map((contact) => (
           <ContactItem
@@ -76,7 +86,7 @@ export default function Contacts({ onClose, onlines }: PropType) {
             contact={contact}
             handleContactButtonClick={handleContactButtonClick}
             handleModalAction={handleModalAction}
-            online={"Ooonline"}
+            online={onlines[contact.contactId] ?? "Offline"}
           />
         ))}
       </div>

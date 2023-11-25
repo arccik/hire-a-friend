@@ -11,6 +11,7 @@ import {
   User,
   NavbarItem,
   DropdownSection,
+  Button,
 } from "@nextui-org/react";
 import { type Session } from "next-auth";
 import { signOut } from "next-auth/react";
@@ -102,7 +103,10 @@ export default function AuthMenu({
           />
         </NavbarContent>
         <NavbarMenu>
-          <NavbarMenuItem onClick={() => setIsMenuOpen(false)}>
+          <NavbarMenuItem
+            className="flex items-center justify-between"
+            onClick={() => setIsMenuOpen(false)}
+          >
             <User
               as={Link}
               href={`/profile/${session.user.id}`}
@@ -111,6 +115,18 @@ export default function AuthMenu({
               description={session.user.email ?? ""}
               avatarProps={{ src: session.user.image ?? "" }}
             />
+            <Button
+              isIconOnly
+              aria-label="Like"
+              radius="lg"
+              variant="light"
+              color="warning"
+              as={Link}
+              onPress={() => setIsMenuOpen(false)}
+              href="/auth/update-profile"
+            >
+              <AiFillSetting />
+            </Button>
           </NavbarMenuItem>
 
           {menuItems.map((item, index) => (

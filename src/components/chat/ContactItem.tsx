@@ -37,6 +37,7 @@ export default function ContactItem({
 }: PropType) {
   const [showBlockModal, setShowBlockModal] = useState<string | null>(null);
 
+  console.log("Contact Item-online", online);
   return (
     <div
       key={contact.contactId}
@@ -47,7 +48,7 @@ export default function ContactItem({
         key={contact.contactId}
         isFocusable
         name={contact.name}
-        description={online ?? "Offline"}
+        description={online}
         avatarProps={{
           src: contact.image ?? "",
         }}

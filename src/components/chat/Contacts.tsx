@@ -7,8 +7,9 @@ import ContactItem from "./ContactItem";
 
 type PropType = {
   onClose: () => void;
+  onlines: Record<string, string>[];
 };
-export default function Contacts({ onClose }: PropType) {
+export default function Contacts({ onClose, onlines }: PropType) {
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
   const deleteContact = api.chat.deleteContact.useMutation({
@@ -75,6 +76,7 @@ export default function Contacts({ onClose }: PropType) {
             contact={contact}
             handleContactButtonClick={handleContactButtonClick}
             handleModalAction={handleModalAction}
+            online={"Ooonline"}
           />
         ))}
       </div>

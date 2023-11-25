@@ -35,7 +35,7 @@ export default function Message({
           height={40}
           src={imgUrl}
           alt="avatar"
-          className="h-10 w-10 rounded-full"
+          className="h-10 w-10 rounded-full object-cover"
         />
         <div className="mr-4" />
         <div
@@ -46,7 +46,9 @@ export default function Message({
               : "rounded-tl-none bg-green-600",
           )}
         >
-          <span className="text-md font-medium text-white">{message}</span>
+          <span className="text-md break-all font-medium text-white">
+            {message}
+          </span>
         </div>
         {isLast && (
           <span className="absolute -bottom-4 right-32 text-[0.7rem] text-black">

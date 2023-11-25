@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import FsLightbox from "fslightbox-react";
 import { Badge, Image } from "@nextui-org/react";
-import { RiDeleteBin2Fill } from "react-icons/ri";
+import { MdDeleteForever } from "react-icons/md";
 
 export default function ImageGallery({
   imagesUrl,
@@ -26,13 +26,14 @@ export default function ImageGallery({
 
   return (
     <>
-      <div className="flex flex-row flex-wrap justify-center gap-2">
+      <div className="flex flex-row flex-wrap justify-center gap-2 ">
         {imagesUrl.map((img, index) => (
           <Fragment key={`${img} --- ${index} --`}>
             <Badge
-              content={<RiDeleteBin2Fill size="1rem" />}
-              color="danger"
-              className="cursor-pointe m-2 cursor-pointer hover:text-red-100"
+              content={<MdDeleteForever size={20} />}
+              size="lg"
+              variant="faded"
+              className=" cursor-pointer hover:border-red-200 hover:bg-red-400 hover:text-white"
               onClick={() => handleDeleteImage(img)}
             >
               <Image

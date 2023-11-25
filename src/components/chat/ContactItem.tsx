@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { type ContactItem } from "~/types/ContactItem";
 
-type FuncType = {
+type ModalActionType = {
   contactId: string;
   userId: string;
   type: "block" | "delete";
@@ -25,13 +25,15 @@ type FuncType = {
 type PropType = {
   contact: ContactItem;
   handleContactButtonClick: (contactId: string) => void;
-  handleModalAction: ({ contactId, userId }: FuncType) => void;
+  handleModalAction: ({ contactId, userId }: ModalActionType) => void;
+  online?: string;
 };
 
 export default function ContactItem({
   contact,
   handleContactButtonClick,
   handleModalAction,
+  online,
 }: PropType) {
   const [showBlockModal, setShowBlockModal] = useState<string | null>(null);
 
@@ -45,7 +47,7 @@ export default function ContactItem({
         key={contact.contactId}
         isFocusable
         name={contact.name}
-        description={<p className="text-red-500">Online</p>}
+        description={online ?? "Offline"}
         avatarProps={{
           src: contact.image ?? "",
         }}

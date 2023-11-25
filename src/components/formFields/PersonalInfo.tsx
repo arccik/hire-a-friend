@@ -67,7 +67,7 @@ export default function PersonalInformation({ register, errors }: PropsType) {
         <div className="sm:col-span-2">
           <InputField
             errors={errors}
-            title="State"
+            title="County"
             register={register}
             fieldName="state"
           />

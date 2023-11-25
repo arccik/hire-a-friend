@@ -73,7 +73,6 @@ export default function ProfilePage() {
 
   const zodiacSign = zodiacSigns.find((s) => s.id === Number(data.zodiacSign));
 
-  console.log("COVER IMAGE: ", data.coverImage);
   return (
     <main className="profile-page">
       <Head>
@@ -163,7 +162,7 @@ export default function ProfilePage() {
                   refetch={() => void refetch()}
                 />
 
-                <div className="mx-auto max-w-2xl text-left text-gray-600">
+                <div className="mx-auto max-w-2xl whitespace-break-spaces text-left text-gray-600">
                   {data?.about}
                 </div>
               </div>

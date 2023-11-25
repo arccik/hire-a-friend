@@ -12,11 +12,11 @@ type PropsType = {
 };
 
 export default function UploadImage({ setValue, imgUrl }: PropsType) {
-  const { update } = useSession();
   const getUploaderURL = api.uploader.getUrl.useMutation();
   const [imageUrl, setImageUrl] = useState(imgUrl);
   const [isLoading, setIsLoading] = useState(false);
   const fileDeleter = api.uploader.delete.useMutation();
+  const { data: userSession } = useSession();
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -41,7 +41,10 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
     if (savedImageUrl) {
       setValue(savedImageUrl);
       setImageUrl(savedImageUrl);
-      await update({ image: savedImageUrl });
+      if (userSession) {
+        userSession.user.image = savedImageUrl;
+        await fetch("/api/auth/session");
+      }
     }
     setIsLoading(false);
   };

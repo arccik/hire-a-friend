@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,6 +14,8 @@ import {
   handleRouterNavigation,
   handleRouterRemoveQuery,
 } from "~/helpers/searchParams";
+import { api } from "~/utils/api";
+import { UserStatusType } from "~/types/userStatusHandler";
 
 type PusherReponseType = {
   sender: string;
@@ -27,15 +29,20 @@ export default function ChatBox() {
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
   const userId = userSession?.user.id;
+  const [onlineUsers, setOnlineUsers] = useState<Record<string, string>[]>([]);
+
+  // console.log({ onlineUsers });
+  const changeUserStatus = api.chat.setUserStatus.useMutation();
+
+  const setupBodyOverflow = () => {
+    const isDesktop = window.innerWidth >= 768;
+    document.body.style.overflow =
+      showChat && !isDesktop ? "hidden" : "visible";
+  };
 
   useEffect(() => {
     // to disable scrolling of site when chat open
-    const isDesktop = window.innerWidth >= 768;
-    if (showChat && !isDesktop) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "visible";
-    }
+    setupBodyOverflow();
     return () => {
       document.body.style.overflow = "visible";
     };
@@ -66,18 +73,23 @@ export default function ChatBox() {
         },
       );
     };
-    const onlineStatusHandler = (value: unknown) => {
-      console.log("online Status", value);
-    };
+    // const onlineStatusHandler = ({ userId, status }: UserStatusType) => {
+    //   setOnlineUsers((prevOnlineUsers) => [
+    //     ...prevOnlineUsers,
+    //     { [userId]: status },
+    //   ]);
+    // };
     pusherClient.bind("incoming-message", messageHandler);
     pusherClient.bind("new-contact", newContactHandler);
-    // pusherClient.bind("online", onlineStatusHandler);
+    // pusherClient.bind("user-status", onlineStatusHandler);
 
+    changeUserStatus.mutate({ status: "Online" });
     return () => {
       pusherClient.unsubscribe(userId);
       pusherClient.unbind("incoming-message", messageHandler);
       pusherClient.unbind("new-contact", newContactHandler);
-      // pusherClient.unbind("online", onlineStatusHandler);
+      // pusherClient.unbind("user-status", onlineStatusHandler);
+      // changeUserStatus.mutate({ status: "Offline" });
     };
   }, [userId]);
 
@@ -109,7 +121,11 @@ export default function ChatBox() {
           exit={{ opacity: 0, x: 100 }}
           className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)] w-full flex-col overflow-y-scroll  rounded-xl  border bg-slate-50 md:w-96 md:shadow-md"
         >
-          {chatId ? <ChatBody /> : <Contacts onClose={handleChatButtonClick} />}
+          {chatId ? (
+            <ChatBody />
+          ) : (
+            <Contacts onlines={onlineUsers} onClose={handleChatButtonClick} />
+          )}
         </motion.div>
       )}
     </AnimatePresence>

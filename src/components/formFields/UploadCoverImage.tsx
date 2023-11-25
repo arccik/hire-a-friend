@@ -7,7 +7,7 @@ import type { UserValidationType } from "~/validation/member";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { v1 } from "uuid";
-import { MdOutlineCloudUpload } from "react-icons/md";
+import { MdOutlineCloudUpload, MdDeleteForever } from "react-icons/md";
 
 export default function UploadCoverImage({
   setValue,
@@ -66,8 +66,9 @@ export default function UploadCoverImage({
           Cover photo
         </label>
         <Badge
-          content="X"
+          content={<MdDeleteForever size={20} />}
           size="lg"
+          variant="faded"
           className="mt-2 cursor-pointer hover:bg-red-400"
           onClick={handleDelete}
         >
@@ -76,7 +77,7 @@ export default function UploadCoverImage({
             height="400"
             alt="cover image"
             src={imageUrl}
-            className="object-cover"
+            className="rounded-lg object-cover"
           />
         </Badge>
       </div>
@@ -92,8 +93,7 @@ export default function UploadCoverImage({
         <div className="flex flex-col items-center justify-center pb-6 pt-5">
           <MdOutlineCloudUpload size="3rem" />
           <p className="mb-2 text-sm text-gray-500 ">
-            <span className="font-semibold">Click to upload</span> or drag and
-            drop
+            <span className="font-semibold">Click to upload</span>
           </p>
           <p className="text-xs text-gray-500 ">PNG, JPG or GIF (MAX. 5MB)</p>
         </div>

@@ -85,7 +85,10 @@ export default function UploadCoverImage({
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="col-span-full">
+      <p className="col-span-full text-sm font-medium  text-gray-900">
+        Cover Image
+      </p>
       <label
         htmlFor="dropzone-file"
         className="flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100"

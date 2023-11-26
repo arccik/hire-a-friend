@@ -1,6 +1,6 @@
-import { Button, Checkbox, Input, Card } from "@nextui-org/react";
+import { Button, Checkbox, Input, Card, Tabs, Tab } from "@nextui-org/react";
 import Link from "next/link";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/utils/api";
 import { type SignUpSchemaType, signUpSchema } from "~/validation/member";
@@ -14,6 +14,7 @@ export default function SignUpPage() {
   const createUser = api.user.signUp.useMutation();
   const { data: userSession } = useSession();
   const router = useRouter();
+
   if (userSession?.user.id) {
     void router.push("/");
   }
@@ -24,19 +25,18 @@ export default function SignUpPage() {
     setValue,
     clearErrors,
     setError,
+    control,
   } = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
   });
   const onSubmit: SubmitHandler<SignUpSchemaType> = (data): void => {
     createUser
       .mutateAsync(data)
-      .then(async (_) => {
+      .then(async () => {
         await signIn("credentials", {
           email: data.email,
           password: data.password,
-          // redirect: false,
-
-          callbackUrl: "/auth/choose-member-type",
+          callbackUrl: `/auth/update-profile`,
         });
         toast.success("User Successfully Created!");
       })
@@ -79,7 +79,32 @@ export default function SignUpPage() {
                 placeholder="Type your password again"
                 errorMessage={errors.confirmPassword?.message}
               />
-
+              <div className="flex flex-col">
+                <p className="text-center text-sm font-bold text-orange-500">
+                  User Type
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Controller
+                    control={control}
+                    name="userType"
+                    defaultValue="Friend"
+                    render={({ field }) => (
+                      <Tabs
+                        color="warning"
+                        aria-label="Tabs colors"
+                        radius="lg"
+                        selectedKey={field.value}
+                        onSelectionChange={(key) => {
+                          field.onChange(key);
+                        }}
+                      >
+                        <Tab key="Customer" title="Rent Time" />
+                        <Tab key="Friend" title="Offer Time" />
+                      </Tabs>
+                    )}
+                  />
+                </div>
+              </div>
               <div className="flex items-start ">
                 <div className="flex h-5 items-center ">
                   <Checkbox
@@ -106,6 +131,7 @@ export default function SignUpPage() {
                   </Checkbox>
                 </div>
               </div>
+
               <Button
                 isDisabled={Object.entries(errors).length > 0}
                 type="submit"

@@ -95,19 +95,7 @@ export default function ProfilePage() {
           }
           alt={"cover Image" + data?.name}
         />
-        {/* {data?.coverImage && (
-          <div
-            className="absolute top-0 h-full w-full bg-cover bg-center"
-            style={{
-              backgroundImage: data.coverImage,
-            }}
-          >
-            <span
-              id="blackOverlay"
-              className="absolute h-full w-full bg-black opacity-50"
-            ></span>
-          </div>
-        )} */}
+
         <div
           className="pointer-events-none absolute bottom-0 left-0 right-0 top-auto h-[70px] w-full overflow-hidden"
           style={{ transform: "translateZ(0px)" }}
@@ -221,11 +209,11 @@ export default function ProfilePage() {
                 id={data.id}
                 refetch={() => void refetch()}
               />
-              {data.lastLogin && (
+              {/* {data.lastLogin && (
                 <div className="mt-10 text-xs text-slate-400">
                   <p>Last Visit: {data.lastLogin.toLocaleDateString()}</p>
                 </div>
-              )}
+              )} */}
               <ReportViolating />
             </div>
           </div>

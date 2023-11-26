@@ -32,6 +32,7 @@ export const userRouter = createTRPCRouter({
           data: {
             email: input.email,
             password: input.password,
+            userType: input.userType,
           },
         });
       }

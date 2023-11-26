@@ -26,7 +26,7 @@ export default function OnlineStatus({ userId }: { userId: string | null }) {
       pusherClient.unsubscribe("online-status");
       changeUserStatus.mutate({ status: "Offline" });
     };
-  }, [userId]);
+  }, [userId, changeUserStatus]);
 
   return userStatus;
 }

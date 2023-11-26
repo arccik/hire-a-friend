@@ -32,7 +32,7 @@ export default function ReportViolating() {
     });
   };
   return (
-    <div className=" border-t border-gray-200 py-10 text-center">
+    <div className="mt-10 border-t border-gray-200 py-10 text-center">
       <div className="flex flex-wrap justify-center">
         <div className="w-full px-4 lg:w-9/12">
           <p className="text-tiny leading-relaxed text-gray-700">

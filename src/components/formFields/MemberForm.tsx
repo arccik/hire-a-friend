@@ -21,7 +21,7 @@ import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
 import getDefaultValues from "~/helpers/getDefaultValues";
 import Languages from "./Languages";
-import Availability from "./Availability";
+// import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {
   const updateUser = api.user.update.useMutation({
@@ -53,7 +53,6 @@ export default function MemberForm(props: BigFormPropType) {
     getValues,
     setValue,
     watch,
-    control,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
     defaultValues: getDefaultValues(props),
@@ -63,7 +62,6 @@ export default function MemberForm(props: BigFormPropType) {
     updateUser.mutate({ ...data, id: props.userId });
   };
 
-  console.log("BIG FORM ERROR", { errors, value: watch("availability") });
 
   return (
     <>
@@ -125,6 +123,7 @@ export default function MemberForm(props: BigFormPropType) {
                   imgUrl={props.image}
                 />
               </div>
+
               <UploadCoverImage setValue={setValue} imgUrl={props.coverImage} />
             </div>
           </div>

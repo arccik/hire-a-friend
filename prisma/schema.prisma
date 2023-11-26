@@ -35,54 +35,55 @@ model Session {
 }
 
 model User {
-    id             String      @id @default(cuid())
-    name           String?
-    email          String?     @unique
-    emailVerified  DateTime?
-    image          String?
-    coverImage     String?
-    accounts       Account[]
-    sessions       Session[]
-    password       String?
-    firstName      String?
-    lastName       String?
-    age            Int?
-    about          String?
-    photos         String[]
-    country        String?
-    street         String?
-    city           String?
-    state          String?
-    zipCode        String?
-    phoneNumber    String?
-    gender         String?
-    birthday       DateTime?
-    activities     String[]
-    hobbies        String[]
-    experties      String?
-    price          Float?
-    hidePrice      Boolean?
-    languages      String[]
-    activated      Boolean?
-    earnings       String?
-    feedback       String[]
-    lastLogin      DateTime?
-    isOffering     Boolean?
-    userType       UserType?
-    followers      Follower[]
-    status         String?
-    appearance     Appearance? @relation(fields: [appearanceId], references: [id], onDelete: Cascade)
-    appearanceId   String?
-    views          Int         @default(0)
-    Comment        Comment[]
-    Rate           Rate[]
-    availableHours String?
-    contactId      String?
-    contacts       Contact[]
-    createdAt      DateTime    @default(now())
-    updatedAt      DateTime    @updatedAt
-    zodiacSign     String?
-    blockedBy      String[]
+    id               String      @id @default(cuid())
+    name             String?
+    email            String?     @unique
+    emailVerified    DateTime?
+    image            String?
+    coverImage       String?
+    accounts         Account[]
+    sessions         Session[]
+    password         String?
+    firstName        String?
+    lastName         String?
+    age              Int?
+    about            String?
+    photos           String[]
+    country          String?
+    street           String?
+    city             String?
+    state            String?
+    zipCode          String?
+    phoneNumber      String?
+    gender           String?
+    birthday         DateTime?
+    activities       String[]
+    hobbies          String[]
+    experties        String?
+    price            Float?
+    hidePrice        Boolean?
+    languages        String[]
+    activated        Boolean?
+    earnings         String?
+    feedback         String[]
+    lastLogin        DateTime?
+    isOffering       Boolean?
+    userType         UserType?
+    followers        Follower[]
+    status           String?
+    appearance       Appearance? @relation(fields: [appearanceId], references: [id], onDelete: Cascade)
+    appearanceId     String?
+    views            Int         @default(0)
+    Comment          Comment[]
+    Rate             Rate[]
+    availableHours   String?
+    contactId        String?
+    contacts         Contact[]
+    createdAt        DateTime    @default(now())
+    updatedAt        DateTime    @updatedAt
+    zodiacSign       String?
+    blockedBy        String[]
+    socialMediaLinks String[]
 
     availability Availability[]
 }
@@ -148,14 +149,14 @@ model Contact {
 }
 
 model Availability {
-    id        String   @id @default(cuid())
-    monday      String?
-    tuesday     String?
-    wednesday   String?
-    thursday    String?
-    friday      String?
-    saturday    String?
-    sunday      String?
-    userId String
-    user   User   @relation(fields: [userId], references: [id])
+    id        String  @id @default(cuid())
+    monday    String?
+    tuesday   String?
+    wednesday String?
+    thursday  String?
+    friday    String?
+    saturday  String?
+    sunday    String?
+    userId    String
+    user      User    @relation(fields: [userId], references: [id])
 }

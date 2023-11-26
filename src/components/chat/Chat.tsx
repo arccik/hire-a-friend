@@ -33,14 +33,15 @@ export default function ChatBox() {
 
   const changeUserStatus = api.chat.setUserStatus.useMutation();
 
-  const setupBodyOverflow = () => {
-    const isDesktop = window.innerWidth >= 768;
-    document.body.style.overflow =
-      showChat && !isDesktop ? "hidden" : "visible";
-  };
+
 
   useEffect(() => {
     // to disable scrolling of site when chat open
+    const setupBodyOverflow = () => {
+      const isDesktop = window.innerWidth >= 768;
+      document.body.style.overflow =
+        showChat && !isDesktop ? "hidden" : "visible";
+    };
     setupBodyOverflow();
     return () => {
       document.body.style.overflow = "visible";

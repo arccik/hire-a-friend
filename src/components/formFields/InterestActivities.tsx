@@ -25,19 +25,16 @@ export default function InterestActivities({
         isMultiline={true}
         selectionMode="multiple"
         placeholder="Select"
-        isRequired={type === "activities" ? true : false}
         {...register(type)}
         onSelectionChange={(e) => setValue(type, [...e] as string[])}
         onChange={(e) => {
           if (type === "hobbies") return;
           setValue(type, e.target.value.split(","));
         }}
-        classNames={
-          {
-            // base: "max-w-lg",
-            // trigger: "min-h-unit-12 py-2",
-          }
-        }
+        classNames={{
+          base: "max-w-lg",
+          trigger: "min-h-unit-12 py-2",
+        }}
         renderValue={(items) => {
           return (
             <div className="flex flex-wrap gap-2">

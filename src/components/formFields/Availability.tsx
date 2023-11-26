@@ -1,8 +1,6 @@
-import React, { useState } from "react";
 import { Checkbox, Input } from "@nextui-org/react";
-import { type PropsType } from "~/types/memberFormPropsType";
-import { Control, Controller } from "react-hook-form";
-import { UserValidationType } from "~/validation/member";
+import { type Control, Controller } from "react-hook-form";
+import { type UserValidationType } from "~/validation/member";
 
 const days = [
   "monday",
@@ -19,7 +17,6 @@ export default function Availability({
 }: {
   control: Control<UserValidationType>;
 }) {
-  const [showDay, setShowDay] = useState<string[]>([]);
   return (
     <div className="border-b border-slate-400/50 pb-12">
       <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -56,11 +53,11 @@ export default function Availability({
                       label={day.toLocaleUpperCase()}
                       size="lg"
                       startContent="Start"
-                      value={field.value?.split("-")[0] || ""}
+                      value={field.value?.split("-")[0] ?? ""}
                       onChange={(e) =>
                         field.onChange(
                           `${e.target.value}-${
-                            field.value?.split("-")[1] || ""
+                            field.value?.split("-")[1] ?? ""
                           }`,
                         )
                       }
@@ -72,10 +69,10 @@ export default function Availability({
                       radius="sm"
                       size="lg"
                       startContent="End"
-                      value={field.value?.split("-")[1] || ""}
+                      value={field.value?.split("-")[1] ?? ""}
                       onChange={(e) =>
                         field.onChange(
-                          `${field.value?.split("-")[0] || ""}-${
+                          `${field.value?.split("-")[0] ?? ""}-${
                             e.target.value
                           }`,
                         )

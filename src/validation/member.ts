@@ -1,4 +1,4 @@
-import type { Appearance, Availability, User } from "@prisma/client";
+import type { Appearance, User } from "@prisma/client";
 import { z } from "zod";
 
 export const userValidation = z
@@ -25,7 +25,7 @@ export const userValidation = z
 
     country: z.string().optional(),
     street: z.string().optional(),
-    city: z.string(),
+    city: z.string().min(2, "Required"),
     state: z.string().optional(),
     zipCode: z.string().optional(),
 
@@ -94,6 +94,7 @@ export const signUpSchema = z
     terms: z
       .literal<boolean>(true)
       .refine((v) => v, "Terms and condition must be accepted"),
+    userType: z.enum(["Friend", "Customer"]),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

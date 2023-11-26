@@ -11,6 +11,7 @@ export default function Languages({ register, errors, setValue }: PropType) {
         Languages
       </h2>
       <Select
+        translate="no"
         items={languages}
         label="Select languages you can speak"
         variant="bordered"

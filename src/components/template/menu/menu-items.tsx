@@ -2,10 +2,9 @@ import {
   FaUserFriends,
   FaInfo,
   FaMailBulk,
-  FaFoursquare,
   FaRegQuestionCircle,
 } from "react-icons/fa";
-import { MdOutlinePolicy } from "react-icons/md";
+import { MdOutlinePolicy, MdPolicy } from "react-icons/md";
 
 type MenuItem = {
   id: number;
@@ -37,7 +36,7 @@ export const menuItems: MenuItem[] = [
     id: 4,
     title: "Terms & conditions",
     href: "/docs/terms-and-conditions",
-    icon: <FaFoursquare />,
+    icon: <MdPolicy />,
   },
   {
     id: 5,

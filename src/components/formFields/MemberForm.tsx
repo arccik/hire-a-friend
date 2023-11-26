@@ -21,9 +21,9 @@ import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
 import getDefaultValues from "~/helpers/getDefaultValues";
 import Languages from "./Languages";
+import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {
-
   const updateUser = api.user.update.useMutation({
     onSuccess: () => {
       toast.success(
@@ -53,6 +53,7 @@ export default function MemberForm(props: BigFormPropType) {
     getValues,
     setValue,
     watch,
+    control,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
     defaultValues: getDefaultValues(props),
@@ -61,6 +62,8 @@ export default function MemberForm(props: BigFormPropType) {
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
     updateUser.mutate({ ...data, id: props.userId });
   };
+
+  console.log("BIG FORM ERROR", { errors, value: watch("availability") });
 
   return (
     <>
@@ -186,6 +189,12 @@ export default function MemberForm(props: BigFormPropType) {
         />
 
         {/* <NotifyBy /> */}
+
+        {/* <Availability
+          // errors={errors}
+          // setValue={setValue}
+          control={control}
+        /> */}
         <div className="fixed inset-x-0 bottom-0 z-40 flex h-auto w-full items-center justify-center gap-4 bg-background/70 p-1 backdrop-blur-lg backdrop-saturate-150">
           <div className="w-1/4">
             <Button

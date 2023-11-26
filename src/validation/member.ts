@@ -1,4 +1,4 @@
-import type { Appearance, User } from "@prisma/client";
+import type { Appearance, Availability, User } from "@prisma/client";
 import { z } from "zod";
 
 export const userValidation = z
@@ -48,6 +48,19 @@ export const userValidation = z
 
     password: z.string().optional(),
 
+    availability: z
+      .object({
+        id: z.string().optional(),
+        monday: z.string().optional(),
+        tuesday: z.string().optional(),
+        wednesday: z.string().optional(),
+        thursday: z.string().optional(),
+        friday: z.string().optional(),
+        saturday: z.string().optional(),
+        sunday: z.string().optional(),
+      })
+      .optional(),
+
     appearance: z.object({
       id: z.string().optional(),
       height: z.string().optional(),
@@ -67,9 +80,7 @@ export const userValidation = z
       });
     }
   });
- 
-  
-  
+
 export type UserValidationType = z.infer<typeof userValidation>;
 
 export const signUpSchema = z

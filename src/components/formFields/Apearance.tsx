@@ -23,6 +23,7 @@ export default function Apearance({
         <div className="mt-6 grid w-full gap-5 md:grid-cols-2">
           <Select
             label="Gender"
+            translate="no"
             placeholder="Select a gender"
             className="max-w-xs"
             {...register("gender")}
@@ -49,7 +50,7 @@ export default function Apearance({
             radius="sm"
             label="Age"
             size="lg"
-            isRequired
+            // isRequired
             type="number"
             {...register("age", { valueAsNumber: true, value: 0 })}
             errorMessage={errors.age?.message}

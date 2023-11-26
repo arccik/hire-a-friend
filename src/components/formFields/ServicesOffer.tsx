@@ -11,6 +11,7 @@ export default function ServicesOffer() {
     <div className="flex w-full max-w-xs flex-col gap-2">
       <Select
         label="Activities"
+        translate="no"
         variant="bordered"
         selectionMode="multiple"
         placeholder="Select services you offer"

@@ -9,6 +9,7 @@ export default function ZodiacSelect({
   return (
     <Select
       items={zodiacSigns}
+      translate="no"
       label="Zodiac Sign"
       {...register("zodiacSign")}
       variant="bordered"

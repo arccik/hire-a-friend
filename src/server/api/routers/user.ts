@@ -37,18 +37,19 @@ export const userRouter = createTRPCRouter({
       }
     }),
   create: publicProcedure.input(userValidation).mutation(({ ctx, input }) => {
-    const { appearance, ...rest } = input;
+    const { availability, appearance, ...rest } = input;
     return ctx.prisma.user.create({
       data: {
         ...rest,
         appearance: { create: appearance },
+        availability: { create: availability },
       },
     });
   }),
   update: protectedProcedure
     .input(userValidation)
     .mutation(({ ctx, input }) => {
-      const { appearance, ...rest } = input;
+      const { availability, appearance, ...rest } = input;
       return ctx.prisma.user.update({
         where: {
           id: input.id,
@@ -56,6 +57,7 @@ export const userRouter = createTRPCRouter({
         data: {
           ...rest,
           appearance: { create: appearance },
+          availability: { create: availability },
         },
       });
     }),
@@ -75,8 +77,7 @@ export const userRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
-        include: { appearance: true, Rate: true },
-
+        include: { appearance: true, Rate: true, availability: true },
       });
     }),
   getAll: publicProcedure.query(({ ctx }) => {

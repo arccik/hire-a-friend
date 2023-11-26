@@ -58,6 +58,16 @@ export const chatRouter = createTRPCRouter({
       });
 
       if (!!isExist) return;
+
+
+      
+      const isFriendHas = await ctx.prisma.contact.findFirst({
+        where: {
+          userId: input.id,
+          contactId: ctx.session.user.id,
+        },
+      });
+      if (!!isFriendHas) return;
       // {
       //   throw new TRPCError({
       //     code: "BAD_REQUEST",

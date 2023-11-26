@@ -83,13 +83,15 @@ model User {
     updatedAt      DateTime    @updatedAt
     zodiacSign     String?
     blockedBy      String[]
+
+    availability Availability[]
 }
 
 model Rate {
     id           String @id @default(cuid())
     voterId      String
     targetUserId String
-    user         User   @relation(fields: [targetUserId], references: [id] ,onDelete: Cascade)
+    user         User   @relation(fields: [targetUserId], references: [id], onDelete: Cascade)
     rating       Int    @default(1)
 }
 
@@ -143,4 +145,17 @@ model Contact {
     // @@unique([userId, id], name: "user_id")
     // @@index([userId])
     // @@map("Contact")
+}
+
+model Availability {
+    id        String   @id @default(cuid())
+    monday      String?
+    tuesday     String?
+    wednesday   String?
+    thursday    String?
+    friday      String?
+    saturday    String?
+    sunday      String?
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
 }

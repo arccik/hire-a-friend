@@ -17,6 +17,7 @@ export default function InterestActivities({
   return (
     <fieldset>
       <Select
+        translate="no"
         items={values}
         label={type.toUpperCase()}
         variant="bordered"

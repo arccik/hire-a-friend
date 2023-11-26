@@ -31,10 +31,12 @@ export const friendRouter = createTRPCRouter({
     } else {
       delete options.city;
     }
+
     const pageSize = 9;
     const skip = (input.page - 1) * pageSize;
     const take = pageSize;
     options.userType = "Friend";
+    options.activated = true;
 
     // options.NOT = {
     //   blockedBy: {

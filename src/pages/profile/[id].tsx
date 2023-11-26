@@ -20,6 +20,7 @@ import Languages from "~/components/pages-components/profile/Languages";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
 import ChipList from "~/components/pages-components/profile/ChipList";
 import { useSession } from "next-auth/react";
+import Alert from "~/components/pages-components/profile/Alert";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -87,7 +88,7 @@ export default function ProfilePage() {
         <Image
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className=" object-cover opacity-50 backdrop-blur-lg"
+          className="object-cover opacity-50 backdrop-blur-lg"
           src={
             !!data?.coverImage
               ? data.coverImage
@@ -143,6 +144,14 @@ export default function ProfilePage() {
                 </h3>
                 <p className="-mt-4 text-slate-400">{data.experties}</p>
 
+                <Alert
+                  show={
+                    !data?.name ||
+                    !data?.age ||
+                    !data?.image ||
+                    !data?.activities.length
+                  }
+                />
                 <ActionButtons
                   isAvailable={data.activated}
                   rate={data.Rate}

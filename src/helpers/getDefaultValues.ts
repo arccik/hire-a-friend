@@ -19,13 +19,16 @@ export default function getDefaultValues(
     firstName: props.firstName ?? "",
     lastName: props.lastName ?? "",
     name: props.name ?? "",
-    activities: props.activities ?? undefined,
+    activities: props.activities ?? [],
     experties: props.experties ?? undefined,
     age: props.age ?? NaN,
     price: props.price ?? NaN,
     hidePrice: !!props.hidePrice,
     phoneNumber: props.phoneNumber ?? "",
     zodiacSign: props.zodiacSign ?? "",
+    preferedAgeRange: !!props.preferedAgeRange?.length
+      ? props.preferedAgeRange
+      : [18, 99],
     appearance: {
       height: props.appearance?.height ?? "",
       weight: props.appearance?.weight ?? "",

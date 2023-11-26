@@ -32,7 +32,12 @@ export const userValidation = z
     phoneNumber: z.string().optional(),
     gender: z.string().optional(),
     birthday: z.date().optional(),
-    activities: z.array(z.string()).optional(),
+    activities: z
+      .array(z.string())
+      .min(
+        1,
+        "Please select activities to communicate your preferences and showcase what you are willing to engage in.",
+      ),
     hobbies: z.array(z.string()).optional(),
 
     price: z.any().optional(),
@@ -48,6 +53,7 @@ export const userValidation = z
 
     password: z.string().optional(),
 
+    preferedAgeRange: z.array(z.number()).optional(),
     availability: z
       .object({
         id: z.string().optional(),

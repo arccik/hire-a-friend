@@ -85,7 +85,8 @@ model User {
     blockedBy        String[]
     socialMediaLinks String[]
 
-    availability Availability[]
+    availability     Availability[]
+    preferedAgeRange Int[]
 }
 
 model Rate {

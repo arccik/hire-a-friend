@@ -12,7 +12,6 @@ export default function OnlineStatus({ userId }: { userId: string | null }) {
     const channel = pusherClient.subscribe("online-status");
 
     const handleUserStatusReponse = (data: UserStatusType) => {
-      console.log("USer Status Change :::: ", { data });
       if (data.userId === userId) {
         setUserStatus(data?.status);
       }

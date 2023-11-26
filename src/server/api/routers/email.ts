@@ -42,7 +42,6 @@ export const emailRouter = createTRPCRouter({
         subject: `URGENT: Rent My Time | Contact Us - ${input.email} `,
         html: `<p>Email: ${input.email}</p><p>Subject: ${input.subject}</p><p>Message: ${input.message}</p>`,
       });
-      console.log("EMAIL RESPONSE : ", emailResponse);
       return { message: "Email sent" };
     }),
   reportUser: protectedProcedure

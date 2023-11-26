@@ -21,6 +21,7 @@ import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
 import getDefaultValues from "~/helpers/getDefaultValues";
 import Languages from "./Languages";
+import PreferedAgeRange from "./PreferedAgeRange";
 // import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {
@@ -53,6 +54,7 @@ export default function MemberForm(props: BigFormPropType) {
     getValues,
     setValue,
     watch,
+    control,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
     defaultValues: getDefaultValues(props),
@@ -61,7 +63,6 @@ export default function MemberForm(props: BigFormPropType) {
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
     updateUser.mutate({ ...data, id: props.userId });
   };
-
 
   return (
     <>
@@ -149,7 +150,7 @@ export default function MemberForm(props: BigFormPropType) {
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Curate your choices from the list and watch the connections
-              unfold. Precision matters – pick your preferences, and let the
+              unfold. Precision matters - pick your preferences, and let the
               cool collaborations come to you
             </p>
 
@@ -186,6 +187,7 @@ export default function MemberForm(props: BigFormPropType) {
           watch={watch}
           setValue={setValue}
         />
+        <PreferedAgeRange control={control} />
 
         {/* <NotifyBy /> */}
 

@@ -29,7 +29,6 @@
 //   });
 
 //   const onSubmit: SubmitHandler<FormValues> = (data) => {
-//     console.log(data);
 //   };
 
 //   const selectedDay = watch("day");

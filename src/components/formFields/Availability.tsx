@@ -12,11 +12,11 @@ const days = [
   "sunday",
 ] as const;
 
-export default function Availability({
-  control,
-}: {
+type PropType = {
   control: Control<UserValidationType>;
-}) {
+};
+
+export default function Availability({ control }: PropType) {
   return (
     <div className="border-b border-slate-400/50 pb-12">
       <h2 className="text-base font-semibold leading-7 text-gray-900">

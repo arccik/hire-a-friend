@@ -1,15 +1,6 @@
-import { useSearchParams } from "next/navigation";
-import Router from "next/router";
 import MembershipCard from "~/components/pages-components/choose-member-type/MembershipCard";
 
 export default function ChooseMemberTypePage() {
-  const searchParams = useSearchParams();
-  const userType = searchParams.get("userType");
-
-  if (userType) {
-    void Router.replace(`/auth/update-profile`);
-    return <div>Redirecting...</div>;
-  }
   return (
     <section className="w-full">
       <div className="container mx-auto p-5">

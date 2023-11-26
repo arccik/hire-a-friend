@@ -37,7 +37,6 @@ export default function ContactItem({
 }: PropType) {
   const [showBlockModal, setShowBlockModal] = useState<string | null>(null);
 
-  console.log("Contact Item-online", online);
   return (
     <div
       key={contact.contactId}

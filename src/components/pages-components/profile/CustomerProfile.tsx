@@ -6,22 +6,26 @@ import type { User } from "@prisma/client";
 import Head from "next/head";
 import { FaCity } from "react-icons/fa";
 import ReportViolating from "./RepotViolating";
+import { useSession } from "next-auth/react";
 
 type PropType = {
   data: User;
 };
 
 export default function CustomerProfile({ data }: PropType) {
+  const { data: userSession } = useSession();
   return (
     <section className="m-2 flex place-content-center md:m-10">
       <Head>
         <title>Custumer Profile Page</title>
       </Head>
-      <div className="absolute right-5">
-        <Chip variant="dot" color="primary">
-          Customer Profile
-        </Chip>
-      </div>
+      {userSession?.user && userSession.user.id !== data.id && (
+        <div className="absolute right-5">
+          <Chip variant="dot" color="primary">
+            Customer Profile
+          </Chip>
+        </div>
+      )}
       <div className="mx-auto my-10 max-w-lg rounded-lg bg-white p-5 shadow-md">
         {data.image && (
           <Image

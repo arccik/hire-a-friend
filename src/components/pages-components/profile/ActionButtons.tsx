@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { MdThumbUpAlt } from "react-icons/md";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import { api } from "~/utils/api";
+import { AiFillSetting } from "react-icons/ai";
 
 type PropType = {
   id: string;
@@ -96,7 +97,12 @@ export default function ActionButtons({
 
         {userSession?.user.id === id ? (
           <>
-            <Button variant="bordered" as={Link} href="/auth/update-profile">
+            <Button
+              startContent={<AiFillSetting className="text-orange-500" />}
+              variant="bordered"
+              as={Link}
+              href="/auth/update-profile"
+            >
               Edit
             </Button>
             <br />

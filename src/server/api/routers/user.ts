@@ -125,7 +125,6 @@ export const userRouter = createTRPCRouter({
       const user = await ctx.prisma.user.findFirst({
         where: { id: input.id },
       });
-      console.log("ACTIVATE USER : :::: :: :: ", user);
       if (
         !user?.name ||
         !user?.age ||

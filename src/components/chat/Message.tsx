@@ -4,6 +4,7 @@ import { type MessageResponse } from "~/validation/message";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
+import { Avatar } from "@nextui-org/react";
 dayjs.extend(relativeTime);
 
 export default function Message({
@@ -30,11 +31,11 @@ export default function Message({
           isSender ? "flex-row-reverse" : "flex-row",
         )}
       >
-        <Image
-          width={40}
-          height={40}
+        <Avatar
+          // width={40}
+          // height={40}
           src={imgUrl}
-          alt="avatar"
+          alt="Your avatar"
           className="h-10 w-10 rounded-full object-cover"
         />
         <div className="mr-4" />

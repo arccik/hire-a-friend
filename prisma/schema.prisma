@@ -87,6 +87,7 @@ model User {
 
     availability     Availability[]
     preferedAgeRange Int[]
+    Notification     Notification[]
 }
 
 model Rate {
@@ -104,7 +105,7 @@ model Follower {
 }
 
 model Appearance {
-    id        String  @id @default(uuid())
+    id        String  @id @default(cuid())
     height    String?
     weight    String?
     hairColor String?
@@ -123,7 +124,7 @@ model VerificationToken {
 }
 
 model Comment {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     text      String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -137,7 +138,7 @@ enum UserType {
 }
 
 model Contact {
-    id        String  @id @default(uuid())
+    id        String  @id @default(cuid())
     userId    String
     href      String
     user      User    @relation(fields: [contactId], references: [id], onDelete: Cascade)
@@ -159,5 +160,15 @@ model Availability {
     saturday  String?
     sunday    String?
     userId    String
-    user      User    @relation(fields: [userId], references: [id])
+    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+    id        String   @id @default(cuid())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    message   String
+    createdAt DateTime @default(now())
+    isRead    Boolean  @default(false)
+    image     String
 }

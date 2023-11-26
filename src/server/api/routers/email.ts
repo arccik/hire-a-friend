@@ -36,12 +36,12 @@ export const emailRouter = createTRPCRouter({
       z.object({ email: z.string(), subject: z.string(), message: z.string() }),
     )
     .mutation(async ({ input }) => {
-      const emailResponse = await transporter.sendMail({
-        from: input.email,
-        to: env.EMAIL_FROM,
-        subject: `URGENT: Rent My Time | Contact Us - ${input.email} `,
-        html: `<p>Email: ${input.email}</p><p>Subject: ${input.subject}</p><p>Message: ${input.message}</p>`,
-      });
+       await transporter.sendMail({
+         from: input.email,
+         to: env.EMAIL_FROM,
+         subject: `URGENT: Rent My Time | Contact Us - ${input.email} `,
+         html: `<p>Email: ${input.email}</p><p>Subject: ${input.subject}</p><p>Message: ${input.message}</p>`,
+       });
       return { message: "Email sent" };
     }),
   reportUser: protectedProcedure

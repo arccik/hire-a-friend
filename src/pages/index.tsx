@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <main className="m-2 md:m-0">
       <section className="grid min-h-screen grid-flow-row md:grid-cols-2">
-        <Lottie animationData={sayHiData} className="delay-300" loop={true} />
+        <Lottie animationData={sayHiData} loop={false} />
         <div className="m-5 flex flex-col justify-center">
           <p className="text-6xl font-semibold md:text-8xl">
             Tired of being alone?
@@ -71,7 +71,13 @@ export default function HomePage() {
       <section className="mx-auto mt-10 md:container">
         <div className="m-5">
           <p className="text-6xl font-semibold ">Events and Activities</p>
-          <p className="mb-10 text-xl">Don not let loneliness linger.</p>
+          <p className="mb-10 text-xl">
+            Discover a world of connection and engagement through our diverse
+            range of events and activities. From lively meetups to enriching
+            workshops, there&apos;s always something happening. Dive into the
+            excitement and create unforgettable memories with like-minded
+            individuals.
+          </p>
         </div>
 
         <Features />
@@ -79,11 +85,13 @@ export default function HomePage() {
       <section className="mx-auto mt-32 md:container">
         <div className="m-5">
           <p className="mb-10 text-6xl font-semibold ">
-            Check who is Available now
+            Connect with Those Available Now
           </p>
           <p className="mb-10 text-xl">
-            It is time to reach out and connect with people who understand what
-            it means to seek a friend
+            It&apos;s time to reach out and connect with individuals who truly
+            understand the value of friendship. Explore their profiles and find
+            the one that suits your needs. Let&apos;s make the world a better
+            place together!{" "}
           </p>
         </div>
 
@@ -94,8 +102,14 @@ export default function HomePage() {
         <div className="flex flex-col justify-center md:ml-10">
           <p className="text-7xl font-semibold">Our Vision</p>
           <p className="mt-10 text-xl">
-            We want to be the first platform to connect people with people who
-            share the same interests and experiences.
+            Our vision goes beyond just connecting people — it&apos;s about
+            breaking the ice of loneliness. In a world where making connections
+            can be challenging, we are on a mission to redefine how individuals
+            forge meaningful bonds. Imagine a platform where the currency is
+            time, and loneliness becomes a thing of the past. Our vision is to
+            create a space where every rented moment is a step towards breaking
+            down barriers and building bridges of genuine connection. Join us in
+            reshaping the way we connect, one rented moment at a time.
           </p>
         </div>
         <Lottie animationData={bubbleProfileAnimationData} />

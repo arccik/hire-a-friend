@@ -19,6 +19,7 @@ import Link from "next/link";
 import { menuItems } from "./menu-items";
 import { AiFillSetting } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
+import NotificationCenter from "../NotificationCenter";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,6 +40,9 @@ export default function AuthMenu({
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />
         </NavbarContent>
+        <NavbarItem>
+          <NotificationCenter />
+        </NavbarItem>
         <NavbarItem>
           <Dropdown placement="bottom-end">
             <DropdownTrigger>

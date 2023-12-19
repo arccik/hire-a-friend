@@ -118,8 +118,8 @@ export default function ActionButtons({
         ) : (
           <Button
             onClick={handleChatClick}
-            color="success"
-            className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white hover:border hover:border-orange-500"
+            // color="success"
+            className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white"
             type="button"
             variant="flat"
           >

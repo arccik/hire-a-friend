@@ -146,10 +146,11 @@ export default function ProfilePage() {
 
                 <Alert
                   show={
-                    !data?.name ||
-                    !data?.age ||
-                    !data?.image ||
-                    !data?.activities.length
+                    (!data?.name ||
+                      !data?.age ||
+                      !data?.image ||
+                      !data?.activities.length) &&
+                    data.id === userSession?.user.id
                   }
                 />
                 <ActionButtons

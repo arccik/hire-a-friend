@@ -3,12 +3,12 @@ import { useSearchParams } from "next/navigation";
 import type { Metadata } from "next/types";
 import DisplayError from "~/components/features/DisplayError";
 import Title from "~/components/features/Title";
-import FriendCard from "~/components/pages-components/friends/FriendCard";
+import FriendCard from "~/components/pages-components/profiles/FriendCard";
 import { api } from "~/utils/api";
-import ClearFilter from "~/components/pages-components/friends/ClearFilterButton";
+import ClearFilter from "~/components/pages-components/profiles/ClearFilterButton";
 // import PaginationOrange from "~/components/features/PaginationOrange";
 import { handleRouterNavigation } from "~/helpers/searchParams";
-import FilterButton from "~/components/pages-components/friends/FilterButton";
+import FilterButton from "~/components/pages-components/profiles/FilterButton";
 import { citiesList } from "~/data/cities-list";
 
 export const metadata: Metadata = {

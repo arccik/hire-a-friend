@@ -73,7 +73,7 @@ export default function FilterButton() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">Filter</ModalHeader>
-              <ModalBody className="gap-8">
+              <ModalBody>
                 <Select
                   label="Select a gender"
                   size="sm"
@@ -113,7 +113,9 @@ export default function FilterButton() {
                   labelPlacement="outside"
                   selectedKeys={selectedActivities}
                   onChange={(e) => {
-                    handleRouterNavigation({ activities: e.target.value });
+                    handleRouterNavigation({
+                      activities: e.target.value,
+                    });
                   }}
                 >
                   {activitiesList.map((activity, index) => (

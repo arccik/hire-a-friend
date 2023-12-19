@@ -1,7 +1,7 @@
 import { useSearchParams } from "next/navigation";
 import DisplayError from "~/components/features/DisplayError";
 import Title from "~/components/features/Title";
-import FriendCard from "~/components/pages-components/friends/FriendCard";
+import FriendCard from "~/components/pages-components/profiles/FriendCard";
 import { api } from "~/utils/api";
 
 export default function SearchPage() {

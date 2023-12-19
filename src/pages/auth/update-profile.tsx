@@ -1,9 +1,9 @@
 import { Card, Spinner } from "@nextui-org/react";
-import MemberForm from "../../components/formFields/MemberForm";
+import MemberForm from "../../components/form/MemberForm";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import DisplayError from "~/components/features/DisplayError";
-import CustomerForm from "~/components/formFields/CustomerForm";
+import CustomerForm from "~/components/form/CustomerForm";
 // import VerticalMenu from "~/components/pages-components/update-profile/VerticalMenu";
 
 export default function UpdateProfile() {

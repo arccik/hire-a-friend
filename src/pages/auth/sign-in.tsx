@@ -2,7 +2,7 @@ import { Button, Input, Card } from "@nextui-org/react";
 import Link from "next/link";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type LoginSchemaType, loginSchema } from "~/validation/member";
+import { type LoginSchemaType, loginSchema } from "~/validation/sign-up";
 import { signIn, useSession } from "next-auth/react";
 import Router from "next/router";
 import Divider from "~/components/features/Divider";

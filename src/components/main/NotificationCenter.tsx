@@ -1,70 +1,81 @@
 import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-  DropdownItem,
-  Button,
-  User,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
   Avatar,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Badge,
 } from "@nextui-org/react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { FaBell } from "react-icons/fa";
+import { IoMdNotificationsOutline } from "react-icons/io";
+
+import { api } from "~/utils/api";
 
 export default function NotificationCenter() {
+  const { data, refetch } = api.notify.getUnread.useQuery();
+
+  // console.log("get Unread notify", data);
   return (
-    <Dropdown
-      showArrow
-      radius="sm"
-      classNames={{
-        base: "before:bg-default-200", // change arrow background
-        content: "p-0 border-small border-divider bg-background",
-      }}
-    >
-      <DropdownTrigger>
-        <Button
-          isIconOnly
-          variant="ghost"
-          className="border-none"
-          disableRipple
-        >
-          <FaBell size="2rem" />
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu
-        aria-label="Custom item styles"
-        disabledKeys={["profile"]}
-        className="p-3"
-        itemClasses={{
-          base: [
-            "rounded-md",
-            "text-default-500",
-            "transition-opacity",
-            "data-[hover=true]:text-foreground",
-            "data-[hover=true]:bg-default-100",
-            "dark:data-[hover=true]:bg-default-50",
-            "data-[selectable=true]:focus:bg-default-50",
-            "data-[pressed=true]:opacity-70",
-            "data-[focus-visible=true]:ring-default-500",
-          ],
-        }}
-      >
-        <DropdownSection aria-label="Profile & Actions" showDivider>
-          <DropdownItem
-            isReadOnly
-            key="profile"
-            className="flex h-14 w-40 gap-2 opacity-100"
+    <Popover showArrow placement="bottom">
+      <Badge color="danger" content={data} isInvisible={!data} shape="circle">
+        <PopoverTrigger>
+          <Button
+            isIconOnly
+            variant="ghost"
+            className="border-none"
+            radius="lg"
           >
-            <Avatar
-              name="Junior Garcia"
-              classNames={{
-                name: "text-default-600",
-              }}
-            />
-            <p>Some text will go here</p>
-          </DropdownItem>
-        </DropdownSection>
-      </DropdownMenu>
-    </Dropdown>
+            <IoMdNotificationsOutline className="text-2xl transition-transform" />
+          </Button>
+        </PopoverTrigger>
+      </Badge>
+      <PopoverContent className="p-1">
+        <NotificationItems refetch={() => void refetch()} />
+      </PopoverContent>
+    </Popover>
   );
 }
+
+const NotificationItems = ({ refetch }: { refetch: () => void }) => {
+  const { data: notifications } = api.notify.getAll.useQuery();
+
+  const setRead = api.notify.setRead.useMutation({
+    onSuccess: () => refetch(),
+    onError: () => console.error("Notification did't update"),
+  });
+
+  const handleNotificationClick = (id: string) => {
+    console.log("NOTOFICATION CLICKED", id);
+    setRead.mutate(id);
+  };
+  return (
+    <Card shadow="none" className="max-w-[400px] border-none bg-transparent">
+      <CardHeader>Notifications</CardHeader>
+      <CardBody className="px-0 py-0 ">
+        {notifications?.map((value) => (
+          <div
+            key={value.id}
+            onClick={() => handleNotificationClick(value.id)}
+            className="flex cursor-pointer items-center rounded-lg p-3 hover:bg-slate-50"
+          >
+            <Avatar
+              className="mr-2"
+              size="sm"
+              src={value.image}
+              alt="Notification image"
+            />
+
+            <p className="pl-px text-small">
+              {value.message}
+              <span aria-label="confetti" role="img">
+                🎉
+              </span>
+            </p>
+          </div>
+        ))}
+      </CardBody>
+    </Card>
+  );
+};

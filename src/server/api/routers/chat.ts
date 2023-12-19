@@ -17,6 +17,7 @@ const pusherServer = new PusherServer({
   useTLS: true,
 });
 
+
 export const chatRouter = createTRPCRouter({
   getContact: protectedProcedure
     .input(z.object({ id: z.string() }))
@@ -52,22 +53,21 @@ export const chatRouter = createTRPCRouter({
       );
       const isExist = await ctx.prisma.contact.findFirst({
         where: {
-          userId: ctx.session.user.id,
-          contactId: input.id,
+          OR: [
+            {
+              userId: ctx.session.user.id,
+              contactId: input.id,
+            },
+            {
+              userId: input.id,
+              contactId: ctx.session.user.id,
+            },
+          ],
         },
       });
 
       if (!!isExist) return;
 
-
-      
-      const isFriendHas = await ctx.prisma.contact.findFirst({
-        where: {
-          userId: input.id,
-          contactId: ctx.session.user.id,
-        },
-      });
-      if (!!isFriendHas) return;
       // {
       //   throw new TRPCError({
       //     code: "BAD_REQUEST",
@@ -80,6 +80,17 @@ export const chatRouter = createTRPCRouter({
         href: searchParams,
       });
 
+      const user = await ctx.prisma.user.findFirst({
+        where: { id: input.id },
+      });
+
+      await ctx.prisma.notification.create({
+        data: {
+          userId: input.id,
+          message: `${user?.name} added you to contacts`,
+          image: user?.image ?? "",
+        },
+      });
       return await ctx.prisma.contact.createMany({
         data: [
           {

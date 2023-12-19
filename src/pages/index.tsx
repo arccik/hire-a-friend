@@ -32,7 +32,7 @@ export default function HomePage() {
               as={Link}
               href="/profiles"
               radius="full"
-              className="mt-10 animate-bounce bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg  hover:from-yellow-500 hover:to-pink-500 hover:drop-shadow-lg"
+              className="mt-10 animate-bounce bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg transition-all duration-400  hover:from-yellow-500 hover:to-pink-500 hover:drop-shadow-lg"
             >
               Make Connections
             </Button>

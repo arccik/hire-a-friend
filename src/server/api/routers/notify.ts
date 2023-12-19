@@ -10,6 +10,14 @@ export const notifyRouter = createTRPCRouter({
       },
     });
   }),
+  getUnread: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.notification.count({
+      where: {
+        userId: ctx.session.user.id,
+        isRead: false,
+      },
+    });
+  }),
   getInfinityScroll: protectedProcedure
     .input(z.object({ cursor: z.string() }))
     .query(({ ctx, input }) => {
@@ -41,7 +49,7 @@ export const notifyRouter = createTRPCRouter({
         },
       });
     }),
-  read: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+  setRead: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.prisma.notification.update({
       where: {
         id: input,
@@ -51,6 +59,18 @@ export const notifyRouter = createTRPCRouter({
       },
     });
   }),
+  setAllRead: protectedProcedure
+    .input(z.array(z.string()))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.notification.updateMany({
+        where: {
+          id: { in: input },
+        },
+        data: {
+          isRead: true,
+        },
+      });
+    }),
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.prisma.notification.delete({
       where: {

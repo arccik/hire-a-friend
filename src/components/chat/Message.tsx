@@ -3,7 +3,6 @@ import { cn } from "~/lib/utils";
 import { type MessageResponse } from "~/validation/message";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Image from "next/image";
 import { Avatar } from "@nextui-org/react";
 dayjs.extend(relativeTime);
 

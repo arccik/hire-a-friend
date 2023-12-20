@@ -32,7 +32,7 @@ export default function ProfilePage() {
     { enabled: !!id },
   );
 
-  const unblockUser = api.chat.unblockContact.useMutation({
+  const unblockUser = api.contact.unblockContact.useMutation({
     onError: (e) =>
       console.error("Fail to unblock user, something went wrong", e.message),
     onSuccess: async () => await refetch(),

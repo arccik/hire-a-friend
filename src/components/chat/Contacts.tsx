@@ -11,9 +11,9 @@ type PropType = {
 };
 export default function Contacts({ onClose, onlines }: PropType) {
   const { data: contactsData, refetch: refetchContacts } =
-    api.chat.getContacts.useQuery();
+    api.contact.getContacts.useQuery();
 
-  const deleteContact = api.chat.deleteContact.useMutation({
+  const deleteContact = api.contact.deleteContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
       toast.success(`Contact Deleted!`);
@@ -21,7 +21,7 @@ export default function Contacts({ onClose, onlines }: PropType) {
     },
   });
 
-  const blockContact = api.chat.blockContact.useMutation({
+  const blockContact = api.contact.blockContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
       toast.success(`Contact blocked!`);

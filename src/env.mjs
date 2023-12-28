@@ -44,7 +44,8 @@ export const env = createEnv({
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
     NEXT_PUBLIC_AWS_S3_BACKET_URL: z.string().min(1),
-    NEXT_PUBLIC_PUSHER_APP_KEY: z.string().min(1)
+    NEXT_PUBLIC_PUSHER_APP_KEY: z.string().min(1),
+    NEXT_PUBLIC_AWS_WEBSOCKET: z.string().min(1),
   },
 
   /**
@@ -71,9 +72,8 @@ export const env = createEnv({
     EMAIL_FROM: process.env.EMAIL_FROM,
     EMAIL_PASS: process.env.EMAIL_PASS,
     EMAIL_USER: process.env.EMAIL_USER,
-    GOOGLE_APP_PASSWORD: process.env.GOOGLE_APP_PASSWORD
-
-
+    GOOGLE_APP_PASSWORD: process.env.GOOGLE_APP_PASSWORD,
+    NEXT_PUBLIC_AWS_WEBSOCKET: process.env.NEXT_PUBLIC_AWS_WEBSOCKET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { contactHrefConstructor } from "~/helpers/chatHrefConstructor";
 
 export const contactsRouter = createTRPCRouter({
   getContact: protectedProcedure
@@ -9,7 +10,6 @@ export const contactsRouter = createTRPCRouter({
         where: { userId: input.id },
       });
     }),
-
   getContacts: protectedProcedure.query(async ({ ctx }) => {
     const response = await ctx.prisma.contact.findMany({
       where: { userId: ctx.session?.user.id, blocked: false },
@@ -70,6 +70,55 @@ export const contactsRouter = createTRPCRouter({
       return ctx.prisma.contact.updateMany({
         where: { contactId: input.id, userId: ctx.session.user.id },
         data: { blocked: false },
+      });
+    }),
+  addContact: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const searchParams = contactHrefConstructor(
+        ctx.session?.user.id,
+        input.id,
+      );
+      const isExist = await ctx.prisma.contact.findFirst({
+        where: {
+          userId: ctx.session.user.id,
+          contactId: input.id,
+        },
+      });
+
+      if (!!isExist) return;
+
+      const isFriendHas = await ctx.prisma.contact.findFirst({
+        where: {
+          userId: input.id,
+          contactId: ctx.session.user.id,
+        },
+      });
+      if (!!isFriendHas) return;
+      // {
+      //   throw new TRPCError({
+      //     code: "BAD_REQUEST",
+      //     message: "Contact already exist",
+      //   });
+      // }
+
+      return await ctx.prisma.contact.createMany({
+        data: [
+          {
+            userId: ctx.session?.user.id,
+            href: searchParams,
+            contactId: input.id,
+          },
+          {
+            userId: input.id,
+            href: searchParams,
+            contactId: ctx.session?.user.id,
+          },
+        ],
       });
     }),
 });

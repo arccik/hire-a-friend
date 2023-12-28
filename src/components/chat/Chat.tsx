@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import useWebSocket, { ReadyState } from "react-use-websocket";
 import { IoMdChatboxes } from "react-icons/io";
 import { BiMessage } from "react-icons/bi";
 import { toast } from "react-toastify";
@@ -16,6 +17,7 @@ import {
 } from "~/helpers/searchParams";
 import { api } from "~/utils/api";
 import { type UserStatusType } from "~/types/userStatusHandler";
+import { env } from "~/env.mjs";
 
 type PusherReponseType = {
   sender: string;
@@ -31,9 +33,28 @@ export default function ChatBox() {
   const userId = userSession?.user.id;
   const [onlineUsers, setOnlineUsers] = useState<Record<string, string>>({});
 
+  const { data: userContacts } = api.contact.getContacts.useQuery();
+
+  const contactList = userContacts?.map((contact) => contact.id);
+  const { sendJsonMessage, readyState, lastJsonMessage, lastMessage } =
+    useWebSocket(env.NEXT_PUBLIC_AWS_WEBSOCKET, {
+      onOpen: () => {
+        sendJsonMessage({ userId });
+        console.log("websocket open");
+      },
+      onMessage: (e) => {
+        console.log("OnMEssage:::::: ", e);
+      },
+    });
+
   const changeUserStatus = api.chat.setUserStatus.useMutation();
 
-
+  console.log("USER CONTACTS ", {
+    contactList,
+    lastJsonMessage,
+    readyState,
+    lastMessage,
+  });
 
   useEffect(() => {
     // to disable scrolling of site when chat open
@@ -50,6 +71,8 @@ export default function ChatBox() {
 
   useEffect(() => {
     if (!userId) return;
+    sendJsonMessage({ userId });
+    sendJsonMessage({ userId, contactList });
     pusherClient.subscribe(userId);
     pusherClient.subscribe("user-status");
 
@@ -63,6 +86,7 @@ export default function ChatBox() {
         },
       );
     };
+
     const newContactHandler = (newContact: PusherReponseType) => {
       if (newContact.receiver !== userId) return;
 

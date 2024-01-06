@@ -1,5 +1,6 @@
 import { Avatar } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+import formatMessageDateTime from "~/helpers/formatMessageDateTime";
 import { cn } from "~/lib/utils";
 import { Message } from "~/types/Socket";
 
@@ -31,16 +32,21 @@ export default function MessageBubble({
           className="h-10 w-10 rounded-full object-cover"
         />
         <div className="mr-4" />
-        <div
-          className={cn(
-            "relative max-w-xl whitespace-normal  rounded-xl px-4 py-2",
-            isSender
-              ? "rounded-tr-none bg-blue-600"
-              : "rounded-tl-none bg-green-600",
-          )}
-        >
-          <span className="text-md break-all font-medium text-white">
-            {message}
+        <div className="flex flex-col">
+          <div
+            className={cn(
+              "relative max-w-xl whitespace-normal  rounded-xl px-4 py-2",
+              isSender
+                ? "rounded-tr-none bg-blue-600"
+                : "rounded-tl-none bg-green-600",
+            )}
+          >
+            <span className="text-md break-all font-medium text-white">
+              {message}
+            </span>
+          </div>
+          <span className="text-end text-[10px] text-slate-600">
+            {formatMessageDateTime(timestamp)}
           </span>
         </div>
         {/* {isLast && (

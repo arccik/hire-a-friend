@@ -1,40 +1,35 @@
 import { Input } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import { useState } from "react";
 import { RiMailSendLine } from "react-icons/ri";
 import { TfiFaceSmile } from "react-icons/tfi";
 import data from "@emoji-mart/data"; // you can do this lazy loading
 import Picker from "@emoji-mart/react"; // you can do this lazy loading
 import { api } from "~/utils/api";
-import type { MessageResponse } from "~/validation/message";
+import { type SendMessage } from "~/types/Socket";
 
 type PropType = {
-  setMessages: Dispatch<SetStateAction<MessageResponse[] | undefined>>;
   chatId: string | null;
+  sendMessage: (data: SendMessage) => void;
 };
 
-export default function ChatFooter({ setMessages, chatId }: PropType) {
+export default function ChatFooter({ chatId, sendMessage }: PropType) {
   const { data: userSession } = useSession();
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
-  const addMessage = api.chat.addMessage.useMutation({
-    onError: (e) => console.error("Add MEssage ERROR: ", e.message),
-  });
+  // const addMessage = api.chat.addMessage.useMutation({
+  //   onError: (e) => console.error("Add MEssage ERROR: ", e.message),
+  // });
 
-  const handleMessageSend = () => {
+  const handleMessageSend = async () => {
     if (!message || !userSession?.user.id || !chatId) return;
-    // if (chatRef.current) {
-    //   chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
-    // }
-    const sendData = {
+    sendMessage({
       message,
-      sender: userSession.user.id,
-      receiver: chatId,
-      date: new Date(),
-    };
-    setMessages((prev) => [...(prev ?? []), sendData]);
-    addMessage.mutate(sendData);
+      to: chatId,
+      from: userSession.user.id,
+      timestamp: new Date().toISOString(),
+    });
     setMessage("");
   };
   const handleEmojiClickt = () => {
@@ -53,7 +48,6 @@ export default function ChatFooter({ setMessages, chatId }: PropType) {
           />
         </div>
       )}
-
       <TfiFaceSmile
         onClick={handleEmojiClickt}
         size={30}

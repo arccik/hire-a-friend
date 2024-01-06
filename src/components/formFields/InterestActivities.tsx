@@ -1,4 +1,4 @@
-import { type PropsType } from "~/types/memberFormPropsType";
+import { type PropsType } from "~/types/MemberFormPropsType";
 import activities from "~/data/activities.json";
 import hobbies from "~/data/hobby-list.json";
 import { Chip, Select, SelectItem } from "@nextui-org/react";

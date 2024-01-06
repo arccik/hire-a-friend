@@ -1,4 +1,4 @@
-import { type PropsType } from "~/types/memberFormPropsType";
+import { type PropsType } from "~/types/MemberFormPropsType";
 
 import InputField from "../features/InputField";
 

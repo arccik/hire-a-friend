@@ -20,3 +20,11 @@ export default function Notification({ msg, sender }: PropType) {
     </>
   );
 }
+
+// toast.success(
+  //     <Notification msg={"New Contact!"} sender={newContact.sender} />,
+  //     {
+  //       icon: <BiMessage size="2rem" />,
+  //       onClick: () => handleRouterNavigation({ chat: newContact.receiver }),
+  //     },
+  //   );

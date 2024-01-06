@@ -1,30 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import Message from "./Message";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
 import { Spinner, User } from "@nextui-org/react";
-import { pusherClient } from "~/utils/pusher";
 import { useSession } from "next-auth/react";
 
-import { type MessageResponse } from "~/validation/message";
 import ChatFooter from "./ChatFooter";
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
+import useChat from "~/hooks/useChat";
+
+import MessageBubble from "./MessageBubble";
+import { Message, SendMessage } from "~/types/Socket";
 
 export default function ChatBody() {
-  const [messages, setMessages] = useState<MessageResponse[] | undefined>();
+  const [messageHistory, setMessageHistory] = useState<Message[]>([]);
+  const { messages, sendMessage, readyState } = useChat();
   useSession({ required: true });
   const chatRef = useRef<HTMLDivElement | null>(null);
-
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
 
-  console.log("Rerender!");
-
-  const { data: messagesData, status: messageStatus } =
-    api.chat.getMessages.useQuery(chatId!, {
-      enabled: !!chatId,
-    });
   const { data: receiverData } = api.user.getOne.useQuery(
     { id: chatId! },
     { enabled: !!chatId },
@@ -34,27 +29,8 @@ export default function ChatBody() {
     if (chatRef.current) {
       chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
     }
+    setMessageHistory((prev) => [...new Set([...prev, ...messages])]);
   }, [messages]);
-
-  useEffect(() => {
-    setMessages(messagesData);
-  }, [messagesData]);
-
-  useEffect(() => {
-    if (!chatId) return;
-    pusherClient.subscribe(chatId);
-
-    const messageHandler = (message: MessageResponse) => {
-      setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
-    };
-
-    pusherClient.bind("incoming-message", messageHandler);
-
-    return () => {
-      pusherClient.unsubscribe(chatId);
-      pusherClient.unbind("incoming-message", messageHandler);
-    };
-  }, [chatId]);
 
   const handleBackButton = () => {
     handleRouterRemoveQuery("chat");
@@ -62,6 +38,12 @@ export default function ChatBody() {
 
   const handleCloseButton = () => {
     handleRouterRemoveQuery("showChat");
+  };
+
+  const handleSendMessage = (data: SendMessage) => {
+    console.log("handleSendMessage", { data });
+    sendMessage(data);
+    setMessageHistory((prev) => [...prev, data]);
   };
 
   return (
@@ -89,23 +71,18 @@ export default function ChatBody() {
 
       <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
         <div className="mx-auto mb-16 w-full space-y-4">
-          {messageStatus === "loading" && (
+          {readyState !== 1 && (
             <Spinner
               className="grid h-screen place-items-center"
               color="warning"
             />
           )}
-          {messages?.map((msg, index) => (
-            <Message
-              key={msg.message + index}
-              {...msg}
-              receiverImage={receiverData?.image}
-              isLast={messages.length === index + 1}
-            />
+          {messageHistory?.map((msg, index) => (
+            <MessageBubble key={msg.from + index} {...msg} />
           ))}
         </div>
       </div>
-      <ChatFooter setMessages={setMessages} chatId={chatId} />
+      <ChatFooter chatId={chatId} sendMessage={handleSendMessage} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { type PropsType } from "~/types/memberFormPropsType";
+import { type PropsType } from "~/types/MemberFormPropsType";
 
 type PropType = Required<
   Pick<PropsType, "register" | "errors" | "getValues" | "watch" | "setValue">

@@ -1,6 +1,6 @@
 import { Input, Select, SelectItem } from "@nextui-org/react";
 
-import { type PropsType } from "~/types/memberFormPropsType";
+import { type PropsType } from "~/types/MemberFormPropsType";
 import genders from "~/data/gender-list.json";
 import ZodiacSelect from "./ZodiacSelect";
 

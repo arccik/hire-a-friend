@@ -5,17 +5,6 @@ import { redis } from "~/utils/redis";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { pusherHrefConstructor } from "~/helpers/chatHrefConstructor";
 import { messageSchema, type MessageResponse } from "~/validation/message";
-import PusherServer from "pusher";
-
-import { env } from "~/env.mjs";
-
-const pusherServer = new PusherServer({
-  appId: env.PUSHER_APP_ID,
-  key: env.NEXT_PUBLIC_PUSHER_APP_KEY,
-  secret: env.PUSHER_APP_SECRET,
-  cluster: "eu",
-  useTLS: true,
-});
 
 export const chatRouter = createTRPCRouter({
   addContact: protectedProcedure
@@ -51,11 +40,11 @@ export const chatRouter = createTRPCRouter({
       //     message: "Contact already exist",
       //   });
       // }
-      await pusherServer.trigger(input.id, "new-contact", {
-        receiver: input.id,
-        sender: ctx.session.user.id,
-        href: searchParams,
-      });
+      // await pusherServer.trigger(input.id, "new-contact", {
+      //   receiver: input.id,
+      //   sender: ctx.session.user.id,
+      //   href: searchParams,
+      // });
 
       return await ctx.prisma.contact.createMany({
         data: [
@@ -121,15 +110,15 @@ export const chatRouter = createTRPCRouter({
       };
       await redis.sadd(querySting, message);
 
-      await pusherServer.trigger(input.receiver, "incoming-message", message);
+      // await pusherServer.trigger(input.receiver, "incoming-message", message);
     }),
   setUserStatus: protectedProcedure
     .input(z.object({ status: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      await pusherServer.trigger("user-status", "status-change", {
-        userId: ctx.session.user.id,
-        status: input.status,
-      });
+      // await pusherServer.trigger("user-status", "status-change", {
+      //   userId: ctx.session.user.id,
+      //   status: input.status,
+      // });
       return { message: "Online status set successfully" };
     }),
   isBlocked: protectedProcedure

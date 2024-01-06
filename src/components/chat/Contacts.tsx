@@ -7,9 +7,9 @@ import ContactItem from "./ContactItem";
 
 type PropType = {
   onClose: () => void;
-  onlines: Record<string, string>;
 };
-export default function Contacts({ onClose, onlines }: PropType) {
+
+export default function Contacts({ onClose }: PropType) {
   const { data: contactsData, refetch: refetchContacts } =
     api.contact.getContacts.useQuery();
 
@@ -86,7 +86,7 @@ export default function Contacts({ onClose, onlines }: PropType) {
             contact={contact}
             handleContactButtonClick={handleContactButtonClick}
             handleModalAction={handleModalAction}
-            online={onlines[contact.contactId] ?? "Offline"}
+            online="Could be online - check"
           />
         ))}
       </div>

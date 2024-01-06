@@ -2,123 +2,30 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import useWebSocket, { ReadyState } from "react-use-websocket";
 import { IoMdChatboxes } from "react-icons/io";
-import { BiMessage } from "react-icons/bi";
-import { toast } from "react-toastify";
-import { pusherClient } from "~/utils/pusher";
-import { type MessageResponse } from "~/validation/message";
-import Notification from "./Notification";
 import Contacts from "./Contacts";
 import ChatBody from "./ChatBody";
 import {
   handleRouterNavigation,
   handleRouterRemoveQuery,
 } from "~/helpers/searchParams";
-import { api } from "~/utils/api";
-import { type UserStatusType } from "~/types/userStatusHandler";
-import { env } from "~/env.mjs";
-
-type PusherReponseType = {
-  sender: string;
-  href: string;
-  receiver: string;
-};
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
-  const userId = userSession?.user.id;
-  const [onlineUsers, setOnlineUsers] = useState<Record<string, string>>({});
-
-  const { data: userContacts } = api.contact.getContacts.useQuery();
-
-  const contactList = userContacts?.map((contact) => contact.id);
-  const { sendJsonMessage, readyState, lastJsonMessage, lastMessage } =
-    useWebSocket(env.NEXT_PUBLIC_AWS_WEBSOCKET, {
-      onOpen: () => {
-        sendJsonMessage({ userId });
-        console.log("websocket open");
-      },
-      onMessage: (e) => {
-        console.log("OnMEssage:::::: ", e);
-      },
-    });
-
-  const changeUserStatus = api.chat.setUserStatus.useMutation();
-
-  console.log("USER CONTACTS ", {
-    contactList,
-    lastJsonMessage,
-    readyState,
-    lastMessage,
-  });
 
   useEffect(() => {
-    // to disable scrolling of site when chat open
-    const setupBodyOverflow = () => {
-      const isDesktop = window.innerWidth >= 768;
-      document.body.style.overflow =
-        showChat && !isDesktop ? "hidden" : "visible";
-    };
-    setupBodyOverflow();
+    // disable scrolling on mobile when chat open
+    const isDesktop = window.innerWidth >= 768;
+    document.body.style.overflow =
+      showChat && !isDesktop ? "hidden" : "visible";
     return () => {
       document.body.style.overflow = "visible";
     };
   }, [showChat]);
-
-  useEffect(() => {
-    if (!userId) return;
-    sendJsonMessage({ userId });
-    sendJsonMessage({ userId, contactList });
-    pusherClient.subscribe(userId);
-    pusherClient.subscribe("user-status");
-
-    const messageHandler = (message: MessageResponse) => {
-      if (message.sender === userId) return;
-      toast.success(
-        <Notification msg={message.message} sender={message.sender} />,
-        {
-          icon: <BiMessage size="2rem" />,
-          onClick: () => handleRouterNavigation({ chat: message.sender }),
-        },
-      );
-    };
-
-    const newContactHandler = (newContact: PusherReponseType) => {
-      if (newContact.receiver !== userId) return;
-
-      toast.success(
-        <Notification msg={"New Contact!"} sender={newContact.sender} />,
-        {
-          icon: <BiMessage size="2rem" />,
-          onClick: () => handleRouterNavigation({ chat: newContact.receiver }),
-        },
-      );
-    };
-    const onlineStatusHandler = ({ userId, status }: UserStatusType) => {
-      setOnlineUsers((prevOnlineUsers) => ({
-        ...prevOnlineUsers,
-        [userId]: status,
-      }));
-    };
-    pusherClient.bind("incoming-message", messageHandler);
-    pusherClient.bind("new-contact", newContactHandler);
-    pusherClient.bind("status-change", onlineStatusHandler);
-
-    changeUserStatus.mutate({ status: "Online" });
-
-    return () => {
-      pusherClient.unsubscribe(userId);
-      pusherClient.unsubscribe("user-status");
-      pusherClient.unbind("incoming-message", messageHandler);
-      pusherClient.unbind("new-contact", newContactHandler);
-      pusherClient.unbind("status-change", onlineStatusHandler);
-      changeUserStatus.mutate({ status: "Offline" });
-    };
-  }, [userId]);
+  if (!userSession) return null;
 
   const handleChatButtonClick = () => {
     if (showChat) {
@@ -127,7 +34,6 @@ export default function ChatBox() {
       handleRouterNavigation({ showChat: true });
     }
   };
-  if (!userSession) return null;
 
   return (
     <AnimatePresence>
@@ -148,11 +54,7 @@ export default function ChatBox() {
           exit={{ opacity: 0, x: 100 }}
           className="fixed bottom-0 right-0  z-50 flex h-[calc(100%-100px)] w-full flex-col overflow-y-scroll  rounded-xl  border bg-slate-50 md:w-96 md:shadow-md"
         >
-          {chatId ? (
-            <ChatBody />
-          ) : (
-            <Contacts onlines={onlineUsers} onClose={handleChatButtonClick} />
-          )}
+          {chatId ? <ChatBody /> : <Contacts onClose={handleChatButtonClick} />}
         </motion.div>
       )}
     </AnimatePresence>

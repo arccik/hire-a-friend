@@ -14,7 +14,6 @@ export default function useChat() {
     useWebSocket<SocketResponse>(env.NEXT_PUBLIC_AWS_WEBSOCKET, {
       onOpen: () => {
         sendJsonMessage({ userId });
-        // sendJsonMessage({ action: "contactList", userId, contacts });
         console.log("websocket open");
       },
     });
@@ -23,13 +22,20 @@ export default function useChat() {
     sendJsonMessage({ action: "sendPrivate", ...data });
   };
 
+  const notifyOnlineMembers = (contacts: string[]) => {
+    sendJsonMessage({ action: "contactList", userId, contacts });
+  };
   console.log("USSE CHAT HOOK", { lastJsonMessage, readyState, messages });
 
   useEffect(() => {
     if (lastJsonMessage && "body" in lastJsonMessage) {
       setMessages((prev) => [...prev, lastJsonMessage.body]);
+      return;
+    }
+    if (lastJsonMessage && "onlineMembers" in lastJsonMessage) {
+      console.log("Contact LIST :::: ", lastJsonMessage.onlineMembers);
     }
   }, [lastJsonMessage]);
 
-  return { messages, sendMessage, readyState };
+  return { messages, sendMessage, readyState, notifyOnlineMembers };
 }

@@ -4,12 +4,19 @@ import { TfiClose } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import ContactItem from "./ContactItem";
+import useChat from "~/hooks/useChat";
 
-type PropType = {
+type ContactsProp = {
   onClose: () => void;
 };
 
-export default function Contacts({ onClose }: PropType) {
+type ModalActionParams = {
+  contactId: string;
+  userId: string;
+  type?: "block" | "delete";
+};
+
+export default function Contacts({ onClose }: ContactsProp) {
   const { data: contactsData, refetch: refetchContacts } =
     api.contact.getContacts.useQuery();
 
@@ -33,24 +40,20 @@ export default function Contacts({ onClose }: PropType) {
     handleRouterNavigation({ chat: contactId });
   };
 
-  type FuncType = {
-    contactId: string;
-    userId: string;
-  };
   const handleModalAction = ({
     contactId,
     userId,
     type,
-  }: FuncType & { type: "block" | "delete" }) => {
+  }: ModalActionParams) => {
     const func = type === "block" ? handleBlockButton : handleDeleteButton;
     func({ contactId, userId });
     void refetchContacts();
   };
-  const handleDeleteButton = ({ contactId }: FuncType) => {
+  const handleDeleteButton = ({ contactId }: ModalActionParams) => {
     deleteContact.mutate({ id: contactId });
   };
 
-  const handleBlockButton = ({ contactId, userId }: FuncType) => {
+  const handleBlockButton = ({ contactId, userId }: ModalActionParams) => {
     blockContact.mutate({ contactId, userId });
   };
 

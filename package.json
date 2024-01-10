@@ -13,6 +13,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.485.0",
     "@aws-sdk/client-s3": "^3.427.0",
+    "@aws-sdk/lib-dynamodb": "^3.485.0",
     "@aws-sdk/s3-presigned-post": "^3.427.0",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",

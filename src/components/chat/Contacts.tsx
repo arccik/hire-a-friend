@@ -11,15 +11,15 @@ type ContactsProp = {
 };
 
 type ModalActionParams = {
-  contactId: string;
-  userId: string;
+  id: string;
   type?: "block" | "delete";
 };
 
 export default function Contacts({ onClose }: ContactsProp) {
+  // const { data: contactsData, refetch: refetchContacts } =
+  //   api.contact.getContacts.useQuery();
   const { data: contactsData, refetch: refetchContacts } =
-    api.contact.getContacts.useQuery();
-
+    api.chat.getContacts.useQuery();
   const deleteContact = api.contact.deleteContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
@@ -40,21 +40,17 @@ export default function Contacts({ onClose }: ContactsProp) {
     handleRouterNavigation({ chat: contactId });
   };
 
-  const handleModalAction = ({
-    contactId,
-    userId,
-    type,
-  }: ModalActionParams) => {
+  const handleModalAction = ({ id, type }: ModalActionParams) => {
     const func = type === "block" ? handleBlockButton : handleDeleteButton;
-    func({ contactId, userId });
+    func({ id });
     void refetchContacts();
   };
-  const handleDeleteButton = ({ contactId }: ModalActionParams) => {
-    deleteContact.mutate({ id: contactId });
+  const handleDeleteButton = ({ id }: ModalActionParams) => {
+    deleteContact.mutate({ id });
   };
 
-  const handleBlockButton = ({ contactId, userId }: ModalActionParams) => {
-    blockContact.mutate({ contactId, userId });
+  const handleBlockButton = ({ id }: ModalActionParams) => {
+    blockContact.mutate({ id });
   };
 
   return (
@@ -83,15 +79,18 @@ export default function Contacts({ onClose }: ContactsProp) {
             </p>
           </>
         )}
-        {contactsData?.map((contact) => (
-          <ContactItem
-            key={contact.id}
-            contact={contact}
-            handleContactButtonClick={handleContactButtonClick}
-            handleModalAction={handleModalAction}
-            online="Could be online - check"
-          />
-        ))}
+        {contactsData?.map((contact) => {
+          if (!contact) return;
+          return (
+            <ContactItem
+              key={contact.id}
+              contact={contact}
+              handleContactButtonClick={handleContactButtonClick}
+              handleModalAction={handleModalAction}
+              online="Could be online - check"
+            />
+          );
+        })}
       </div>
     </>
   );

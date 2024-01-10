@@ -13,5 +13,5 @@ export function pusherHrefConstructor(id1: string, id2: string) {
 }
 export function contactHrefConstructor(id1: string, id2: string) {
   const sortedIds = [id1, id2].sort();
-  return `pusher-${sortedIds[0]}-${sortedIds[1]}`;
+  return `contacts-${sortedIds[0]}-${sortedIds[1]}`;
 }

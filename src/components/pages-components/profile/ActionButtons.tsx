@@ -8,6 +8,7 @@ import { MdThumbUpAlt } from "react-icons/md";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import { api } from "~/utils/api";
 import { AiFillSetting } from "react-icons/ai";
+import { saveContact } from "~/utils/ddb";
 
 type PropType = {
   id: string;
@@ -25,7 +26,9 @@ export default function ActionButtons({
   const [activated, setActivated] = useState(!!isAvailable);
   const { data: userSession } = useSession();
 
-  const addContact = api.chat.addContact.useMutation();
+  const userId = userSession?.user?.id;
+
+  const saveContact = api.chat.saveContact.useMutation();
   const makeActive = api.user.makeActive.useMutation({
     onError: (e) => {
       if (e.message.includes("fields")) {
@@ -39,8 +42,7 @@ export default function ActionButtons({
     },
   });
   const isRated =
-    userSession?.user &&
-    rate.some((v: Rate) => v.voterId === userSession?.user?.id);
+    userSession?.user && rate.some((v: Rate) => v.voterId === userId);
 
   const rateUser = api.friend.vote.useMutation({
     onSuccess: () => {
@@ -71,9 +73,7 @@ export default function ActionButtons({
         </div>,
       );
     }
-    addContact.mutate({
-      id: id,
-    });
+    saveContact.mutate(id);
     handleRouterNavigation({ chat: id, showChat: true });
   };
 
@@ -95,7 +95,7 @@ export default function ActionButtons({
           {isRated ? "Rated" : "Rate"}
         </Button>
 
-        {userSession?.user.id === id ? (
+        {userId === id ? (
           <>
             <Button
               startContent={<AiFillSetting className="text-orange-500" />}

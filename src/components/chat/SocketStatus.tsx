@@ -1,10 +1,14 @@
 import { Button, Spinner } from "@nextui-org/react";
 import { ReadyState } from "react-use-websocket";
+import { api } from "~/utils/api";
 
 type Props = {
   readyState: ReadyState;
 };
 export default function SocketStatus({ readyState }: Props) {
+  const handlePageReload = () => {
+    window.location.reload();
+  };
   switch (readyState) {
     case ReadyState.OPEN:
       return null;
@@ -16,27 +20,32 @@ export default function SocketStatus({ readyState }: Props) {
     case ReadyState.CLOSING:
       return (
         <>
+          <Button onClick={handlePageReload} variant="light" color="primary">
+            Reload
+          </Button>
           <Spinner
             className="grid h-screen place-items-center"
             color="warning"
           />
-          <Button onClick={() => window.location.reload}>Refresh Page</Button>
         </>
       );
     case ReadyState.CLOSED:
       return (
-        <>
-          <Spinner
-            className="grid h-screen place-items-center"
-            color="warning"
-          />
-          <Button>Refresh Page</Button>
-        </>
+        <div className="flex flex-col justify-center gap-10">
+          <Spinner className="grid  place-items-center" color="warning" />
+          <Button
+            onClick={handlePageReload}
+            className="mx-auto"
+            variant="light"
+            color="primary"
+          >
+            Reload
+          </Button>
+        </div>
       );
     case ReadyState.UNINSTANTIATED:
       return <Button> Retry</Button>;
     default:
       return null;
   }
-  return null;
 }

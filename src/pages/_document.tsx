@@ -7,6 +7,7 @@ export default function Document() {
         <body>
           <Main />
           <NextScript />
+          {/* For google analytics  | open issue on github */}
           <script> </script>
         </body>
       </Head>

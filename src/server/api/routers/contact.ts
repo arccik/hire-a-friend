@@ -32,24 +32,24 @@ export const contactsRouter = createTRPCRouter({
       return contact;
     }),
   blockContact: protectedProcedure
-    .input(z.object({ contactId: z.string(), userId: z.string() }))
+    .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findFirst({
-        where: { id: input.userId },
+        where: { id: input.id },
       });
 
       if (!user) return;
 
       user.blockedBy.push(ctx.session.user.id);
       await ctx.prisma.user.update({
-        where: { id: input.userId },
+        where: { id: input.id },
         data: {
           blockedBy: user.blockedBy,
         },
       });
 
       const response = await ctx.prisma.contact.update({
-        where: { id: input.contactId },
+        where: { id: input.id },
         data: { blocked: true },
       });
 

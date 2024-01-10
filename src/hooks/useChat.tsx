@@ -25,7 +25,6 @@ export default function useChat() {
   const notifyOnlineMembers = (contacts: string[]) => {
     sendJsonMessage({ action: "contactList", userId, contacts });
   };
-  console.log("USSE CHAT HOOK", { lastJsonMessage, readyState, messages });
 
   useEffect(() => {
     if (lastJsonMessage && "body" in lastJsonMessage) {

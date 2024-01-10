@@ -12,7 +12,7 @@ import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
 
 export default function HomePage() {
   return (
-    <main className="m-2 md:m-0">
+    <main className="container mx-auto">
       <section className="grid min-h-screen grid-flow-row md:grid-cols-2">
         <Lottie animationData={sayHiData} loop={false} />
         <div className="m-5 flex flex-col justify-center">

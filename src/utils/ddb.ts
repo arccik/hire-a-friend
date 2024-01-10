@@ -1,65 +1,84 @@
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
-  DynamoDBClient,
-  GetItemCommand,
-  GetItemCommandInput,
-  GetItemCommandOutput,
-  AttributeValue,
-} from "@aws-sdk/client-dynamodb";
+  PutCommand,
+  GetCommand,
+  DeleteCommand,
+  UpdateCommand,
+} from "@aws-sdk/lib-dynamodb";
+import { env } from "~/env.mjs";
 
-const dynamoDBClient = new DynamoDBClient({ region: "eu-west-2" });
+const client = new DynamoDBClient({
+  region: "eu-west-2",
+  credentials: {
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+  },
+});
 
-// Define the structure of your DynamoDB item
-interface MyDynamoDBItem {
-  messageId: string;
+type PutMessageParams = {
+  primaryKey: string;
   senderId: string;
-  timestamp: string;
+  recipientId: string;
   message: string;
-}
-
-// Interface for the result of GetItemCommand with the original Item type
-interface MyGetItemCommandOutput extends GetItemCommandOutput {
-  Item?: Record<string, AttributeValue>;
-}
-
-export default function getData(): Promise<MyGetItemCommandOutput | null> {
-  const params: GetItemCommandInput = {
+  timestamp: string;
+};
+type SaveContactParams = {
+  userId: string;
+  contactId: string;
+};
+export const saveMessage = async (item: PutMessageParams) => {
+  const params = {
+    TableName: "ChatHistory",
+    Item: item,
+  };
+  const command = new PutCommand(params);
+  return client.send(command);
+};
+// chatId example > userId:recipientId
+export const getMessage = async (chatId: string) => {
+  const params = {
     TableName: "ChatHistory",
     Key: {
-      messageId: { S: "yourMessageId" }, // Adjust as needed
+      primaryKey: { S: chatId },
     },
   };
-  return createRequest(params);
-}
-
-async function createRequest(
-  params: GetItemCommandInput,
-): Promise<MyGetItemCommandOutput | null> {
-  const command = new GetItemCommand(params);
-
-  try {
-    const result = await dynamoDBClient.send(command);
-
-    if (result.Item) {
-      // Parse and return the DynamoDB item with the specific structure
-      return result;
-    } else {
-      console.log("Item not found");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching data from DynamoDB:", error);
-    throw error;
-  }
-}
-
-// function parseDynamoDBItem(
-//   item: Record<string, AttributeValue>,
-// ): MyDynamoDBItem {
-//   // Parse and extract values from the DynamoDB item
-//   return {
-//     messageId: item.messageId.S ?? "",
-//     senderId: item.senderId.S ?? "",
-//     timestamp: item.timestamp.S ?? "",
-//     message: item.message.S ?? "",
-//   };
-// }
+  const command = new GetCommand(params);
+  return client.send(command);
+};
+export const deleteMessage = (chatId: string) => {
+  const params = {
+    TableName: "ChatHistory",
+    Key: {
+      primaryKey: { S: chatId },
+    },
+  };
+  const command = new DeleteCommand(params);
+  return client.send(command);
+};
+export const saveContact = ({ userId, contactId }: SaveContactParams) => {
+  const params = {
+    TableName: "ChatContactsList",
+    Key: {
+      userId,
+    },
+    UpdateExpression: "ADD #contactsIds :contactId",
+    ExpressionAttributeNames: {
+      "#contactsIds": "contactsIds",
+    },
+    ExpressionAttributeValues: {
+      ":contactId": [contactId],
+    },
+  };
+  const command = new UpdateCommand(params);
+  return client.send(command);
+};
+export const deleteContact = (id: string) => {
+  const params = {
+    TableName: "ChatContactsList",
+    Key: {
+      id: { S: id },
+    },
+  };
+  const command = new DeleteCommand(params);
+  return client.send(command);
+};

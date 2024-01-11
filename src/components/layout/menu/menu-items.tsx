@@ -34,20 +34,20 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 4,
+    title: "FAQ",
+    href: "/help-feedback",
+    icon: <FaRegQuestionCircle />,
+  },
+  {
+    id: 5,
     title: "Terms & conditions",
     href: "/docs/terms-and-conditions",
     icon: <MdPolicy />,
   },
   {
-    id: 5,
+    id: 6,
     title: "Privacy Policy",
     href: "/docs/privacy-policy",
     icon: <MdOutlinePolicy />,
-  },
-  {
-    id: 6,
-    title: "FAQ",
-    href: "/help-feedback",
-    icon: <FaRegQuestionCircle />,
   },
 ];

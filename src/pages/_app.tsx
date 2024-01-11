@@ -34,6 +34,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  console.log("MY APP SESSION> ", session);
   return (
     <NextUIProvider>
       <SessionProvider session={session}>

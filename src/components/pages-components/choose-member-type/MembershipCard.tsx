@@ -5,6 +5,7 @@ import {
   CardFooter,
   CardHeader,
   Image,
+  Spinner,
 } from "@nextui-org/react";
 import { type UserType } from "@prisma/client";
 import { useSession } from "next-auth/react";
@@ -28,11 +29,16 @@ export default function MembershipCard({
   memberType,
 }: PropType) {
   useSession({ required: true });
+  const { data: isTypeSelected, status } =
+    api.user.isUserTypeChoosen.useQuery();
   const changeStatus = api.user.changeMemberStatus.useMutation({
     onSuccess: () => {
       void Router.replace(`/auth/update-profile`);
     },
   });
+  if (status === "loading") return <Spinner />;
+
+  if (isTypeSelected) void Router.replace(`/auth/update-profile`);
 
   const handleClick = () => {
     changeStatus.mutate({
@@ -54,7 +60,7 @@ export default function MembershipCard({
         ) : (
           <br />
         )}
-        {memberType === "Friend" ? (
+        {memberType === "Customer" ? (
           <FaHandHoldingHeart size="5rem" />
         ) : (
           <FaHandHoldingUsd size="5rem" />

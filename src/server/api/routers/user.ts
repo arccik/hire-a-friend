@@ -104,6 +104,12 @@ export const userRouter = createTRPCRouter({
   count: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.user.count();
   }),
+  isUserTypeChoosen: protectedProcedure.query(({ ctx }) => {
+    return !!ctx.prisma.user.findFirst({
+      where: { id: ctx.session.user.id },
+      select: { userType: true },
+    });
+  }),
   lastFiveUsers: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({
       where: { createdAt: { gt: new Date(Date.now() - 50 * 60 * 1000) } },

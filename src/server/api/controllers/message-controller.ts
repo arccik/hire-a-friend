@@ -16,7 +16,7 @@ type FuncParams = {
 
 export async function saveMessage(message: SaveMessage) {
   const params = {
-    TableName: "ChatHistory",
+    TableName: "History",
     Item: message,
   };
   const command = new PutCommand(params);
@@ -31,18 +31,10 @@ export async function getMessages({
   limit?: number;
 }) {
   const params = {
-    TableName: "ChatHistory",
+    TableName: "History",
     KeyConditionExpression: "primaryKey = :primaryKey",
-    // KeyConditionExpression:
-    //   "primaryKey = :primaryKey AND #timestamp > :timestamp",
-    // ExpressionAttributeNames: {
-    //   "#timestamp": "timestamp",
-    // },
     Limit: limit,
     ScanIndexForward: false,
-    // ExpressionAttributeValues: {
-    //   ":primaryKey": primaryKey,
-    // },
     ExpressionAttributeValues: {
       ":primaryKey": primaryKey,
     },
@@ -55,7 +47,7 @@ export async function getMessages({
 
 export async function deleteMessage({ userId }: FuncParams) {
   const params = {
-    TableName: "ChatHistory",
+    TableName: "History",
     Key: {
       userId,
     },

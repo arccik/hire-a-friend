@@ -5,18 +5,21 @@ import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
 import { User } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 
-import ChatFooter from "./ChatFooter";
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
-import useChat from "~/hooks/useChat";
+
+import ChatFooter from "./ChatFooter";
+import Notification from "./Notification";
 
 import MessageBubble from "./MessageBubble";
 import type { Message } from "~/types/Socket";
 import SocketStatus from "./SocketStatus";
+import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
 
 export default function ChatBody() {
   const [messageHistory, setMessageHistory] = useState<Message[]>([]);
-  const { messages, sendMessage, readyState } = useChat();
+  const { lastJsonMessage, readyState, sendJsonMessage } = useSharedWebSocket();
   useSession({ required: true });
+
   const chatRef = useRef<HTMLDivElement | null>(null);
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
@@ -26,7 +29,7 @@ export default function ChatBody() {
     { enabled: !!chatId },
   );
 
-  const { data: savedMessages, status: getMessagesStatus } =
+  const { data: savedMessages, status: savedMessagesStatus } =
     api.chat.getMessages.useQuery(
       {
         chatId: chatId!,
@@ -34,13 +37,11 @@ export default function ChatBody() {
       { enabled: !!chatId },
     );
 
-  console.log("savedMessages", savedMessages);
-
   useEffect(() => {
     if (savedMessages) {
-      setMessageHistory(savedMessages);
+      setMessageHistory(savedMessages.reverse());
     }
-  }, [getMessagesStatus]);
+  }, [savedMessages]);
 
   useEffect(() => {
     if (chatRef.current) {
@@ -49,11 +50,10 @@ export default function ChatBody() {
   }, [messageHistory]);
 
   useEffect(() => {
-    if (messages?.length) {
-      setMessageHistory((prev) => prev.concat(messages));
+    if (lastJsonMessage && "body" in lastJsonMessage) {
+      setMessageHistory((prev) => [...prev, lastJsonMessage.body]);
     }
-  }, [messages]);
-
+  }, [lastJsonMessage]);
   const handleBackButton = () => {
     handleRouterRemoveQuery("chat");
   };
@@ -63,7 +63,7 @@ export default function ChatBody() {
   };
 
   const handleSendMessage = (data: Message) => {
-    sendMessage(data);
+    sendJsonMessage({ action: ACTIONS.sendPrivate, ...data });
     setMessageHistory((prev) => [...prev, data]);
   };
 
@@ -92,7 +92,7 @@ export default function ChatBody() {
 
       <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
         <div className="mx-auto mb-16 w-full space-y-4">
-          <SocketStatus readyState={readyState} />
+          {/* <SocketStatus readyState={readyState} /> */}
           {messageHistory?.map((msg, index) => (
             <MessageBubble key={msg.timestamp + index} {...msg} />
           ))}

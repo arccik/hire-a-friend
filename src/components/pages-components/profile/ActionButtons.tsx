@@ -8,7 +8,6 @@ import { MdThumbUpAlt } from "react-icons/md";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import { api } from "~/utils/api";
 import { AiFillSetting } from "react-icons/ai";
-import { saveContact } from "~/utils/ddb";
 
 type PropType = {
   id: string;

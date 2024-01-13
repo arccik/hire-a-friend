@@ -10,7 +10,7 @@ import {
 } from "@aws-sdk/lib-dynamodb";
 import { env } from "~/env.mjs";
 
-const client = new DynamoDBClient({
+export const ddbClient = new DynamoDBClient({
   region: "eu-west-2",
   credentials: {
     accessKeyId: env.AWS_ACCESS_KEY_ID,
@@ -19,37 +19,21 @@ const client = new DynamoDBClient({
 });
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
+import { getContacts } from "../controllers/contact-controller";
+import { getMessages, saveMessage } from "../controllers/message-controller";
+import { saveMessageSchema } from "~/validation/message";
 
 export const chatRouter = createTRPCRouter({
   saveMessage: protectedProcedure
-    .input(
-      z.object({
-        primaryKey: z.string(),
-        senderId: z.string(),
-        recipientId: z.string(),
-        message: z.string(),
-        timestamp: z.string(),
-      }),
-    )
+    .input(saveMessageSchema)
     .mutation(async ({ ctx, input }) => {
-      const params = {
-        TableName: "ChatHistory",
-        Item: input,
-      };
-      const command = new PutCommand(params);
-      return await client.send(command);
+      return await saveMessage(input);
     }),
   getMessages: protectedProcedure
     .input(z.object({ chatId: z.string() }))
     .query(async ({ ctx, input: { chatId } }) => {
-      const params = {
-        TableName: "ChatHistory",
-        Key: {
-          primaryKey: { S: chatId },
-        },
-      };
-      const command = new GetCommand(params);
-      return client.send(command);
+      const primaryKey = chatHrefConstructor(chatId, ctx.session.user.id);
+      return await getMessages({ primaryKey });
     }),
   deleteMessage: protectedProcedure
     .input(z.object({ chatId: z.string() }))
@@ -61,7 +45,7 @@ export const chatRouter = createTRPCRouter({
         },
       };
       const command = new DeleteCommand(params);
-      return client.send(command);
+      return ddbClient.send(command);
     }),
   saveContact: protectedProcedure
     .input(z.string())
@@ -86,7 +70,7 @@ export const chatRouter = createTRPCRouter({
         },
       };
       const command = new PutCommand(params);
-      return await client.send(command);
+      return await ddbClient.send(command);
     }),
   getContacts: protectedProcedure.query(async ({ ctx }) => {
     const params = {
@@ -98,7 +82,7 @@ export const chatRouter = createTRPCRouter({
       ProjectionExpression: "contactId",
     };
     const command = new ScanCommand(params);
-    const response = await client.send(command);
+    const response = await ddbClient.send(command);
 
     if (!response.Items) return [];
 
@@ -118,6 +102,9 @@ export const chatRouter = createTRPCRouter({
 
     return Promise.all(result);
   }),
+  getContactsIds: protectedProcedure.query(async ({ ctx }) => {
+    return await getContacts({ userId: ctx.session.user.id });
+  }),
   getContact: protectedProcedure
     .input(z.object({ contactId: z.string() }))
     .query(async ({ ctx, input: { contactId } }) => {
@@ -130,7 +117,7 @@ export const chatRouter = createTRPCRouter({
         },
       };
       const command = new QueryCommand(params);
-      const response = await client.send(command);
+      const response = await ddbClient.send(command);
 
       if (!response.Items) return null;
 
@@ -171,7 +158,7 @@ export const chatRouter = createTRPCRouter({
       };
 
       const command = new DeleteCommand(params);
-      const response = await client.send(command);
+      const response = await ddbClient.send(command);
 
       if (!response) {
         console.log("Contact not found or already deleted.");

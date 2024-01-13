@@ -12,6 +12,7 @@ import Footer from "~/components/layout/Footer";
 import "~/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import Analytics from "~/helpers/Analytics";
+import { WebSocketProvider } from "~/context/websocketProvider";
 
 const meta = [
   {
@@ -34,29 +35,30 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  console.log("MY APP SESSION> ", session);
   return (
     <NextUIProvider>
       <SessionProvider session={session}>
-        <Head>
-          {meta.map((meta) => (
-            <meta key={meta.name} {...meta} />
-          ))}
+        <WebSocketProvider>
+          <Head>
+            {meta.map((meta) => (
+              <meta key={meta.name} {...meta} />
+            ))}
 
-          <title>{meta.at(-1)?.content}</title>
-        </Head>
-        {/* google analytics */}
-        <Analytics />
-        <Header />
-        <Component {...pageProps} />
+            <title>{meta.at(-1)?.content}</title>
+          </Head>
+          {/* google analytics */}
+          <Analytics />
+          <Header />
+          <Component {...pageProps} />
 
-        <ToastContainer
-          position="top-right"
-          newestOnTop={false}
-          // theme="colored"
-          draggable
-        />
-        <Footer />
+          <ToastContainer
+            position="top-right"
+            newestOnTop={false}
+            // theme="colored"
+            draggable
+          />
+          <Footer />
+        </WebSocketProvider>
       </SessionProvider>
     </NextUIProvider>
   );

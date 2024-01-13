@@ -33,7 +33,7 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
           {desktopMenu.map((item) => (
             <NavbarItem
               key={item.title}
-              isActive={searchParams.includes(item.href)}
+              isActive={searchParams?.includes(item.href)}
             >
               <Link color="foreground" href={item.href}>
                 {item.title}

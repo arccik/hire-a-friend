@@ -3,12 +3,7 @@ export type SocketResponse =
       onlineMembers: string[];
     }
   | {
-      body: {
-        from: string;
-        message: string;
-        to: string;
-        timestamp: string;
-      };
+      body: Message;
     }
   | {
       systemMessage: string[];
@@ -21,8 +16,8 @@ export type SendMessage = {
   timestamp: string;
 };
 export type Message = {
-  from: string;
+  senderId: string;
   message: string;
-  to: string;
+  recipientId: string;
   timestamp: string;
 };

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useWebSocket from "react-use-websocket";
 import { env } from "~/env.mjs";
 import { SocketResponse } from "~/types/Socket";
-import type { Message, SendMessage } from "~/types/Socket";
+import type { Message } from "~/types/Socket";
 
 export default function useChat() {
   const { data: userSession } = useSession();
@@ -12,13 +12,19 @@ export default function useChat() {
 
   const { sendJsonMessage, readyState, lastJsonMessage } =
     useWebSocket<SocketResponse>(env.NEXT_PUBLIC_AWS_WEBSOCKET, {
-      onOpen: () => {
-        sendJsonMessage({ userId });
-        console.log("websocket open");
-      },
+      reconnectAttempts: 10,
+      reconnectInterval: 3000,
     });
 
-  const sendMessage = (data: SendMessage) => {
+  useEffect(() => {
+    if (readyState === WebSocket.OPEN) {
+      // Connection is open, send initial message
+      sendJsonMessage({ userId });
+      console.log("WebSocket opened");
+    }
+  }, [readyState, userId]);
+
+  const sendMessage = (data: Message) => {
     sendJsonMessage({ action: "sendPrivate", ...data });
   };
 
@@ -29,12 +35,12 @@ export default function useChat() {
   useEffect(() => {
     if (lastJsonMessage && "body" in lastJsonMessage) {
       setMessages((prev) => [...prev, lastJsonMessage.body]);
-      return;
-    }
-    if (lastJsonMessage && "onlineMembers" in lastJsonMessage) {
+    } else if (lastJsonMessage && "onlineMembers" in lastJsonMessage) {
       console.log("Contact LIST :::: ", lastJsonMessage.onlineMembers);
     }
   }, [lastJsonMessage]);
+
+  console.log("USE CHAT :::: ", lastJsonMessage);
 
   return { messages, sendMessage, readyState, notifyOnlineMembers };
 }

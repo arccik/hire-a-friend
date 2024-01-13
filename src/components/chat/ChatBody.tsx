@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
-import { Spinner, User } from "@nextui-org/react";
+import { User } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 
 import ChatFooter from "./ChatFooter";
@@ -10,7 +10,7 @@ import { handleRouterRemoveQuery } from "~/helpers/searchParams";
 import useChat from "~/hooks/useChat";
 
 import MessageBubble from "./MessageBubble";
-import { Message, SendMessage } from "~/types/Socket";
+import type { Message } from "~/types/Socket";
 import SocketStatus from "./SocketStatus";
 
 export default function ChatBody() {
@@ -26,11 +26,32 @@ export default function ChatBody() {
     { enabled: !!chatId },
   );
 
+  const { data: savedMessages, status: getMessagesStatus } =
+    api.chat.getMessages.useQuery(
+      {
+        chatId: chatId!,
+      },
+      { enabled: !!chatId },
+    );
+
+  console.log("savedMessages", savedMessages);
+
+  useEffect(() => {
+    if (savedMessages) {
+      setMessageHistory(savedMessages);
+    }
+  }, [getMessagesStatus]);
+
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
     }
-    setMessageHistory((prev) => [...new Set([...prev, ...messages])]);
+  }, [messageHistory]);
+
+  useEffect(() => {
+    if (messages?.length) {
+      setMessageHistory((prev) => prev.concat(messages));
+    }
   }, [messages]);
 
   const handleBackButton = () => {
@@ -41,8 +62,7 @@ export default function ChatBody() {
     handleRouterRemoveQuery("showChat");
   };
 
-  const handleSendMessage = (data: SendMessage) => {
-    console.log("handleSendMessage", { data });
+  const handleSendMessage = (data: Message) => {
     sendMessage(data);
     setMessageHistory((prev) => [...prev, data]);
   };
@@ -74,7 +94,7 @@ export default function ChatBody() {
         <div className="mx-auto mb-16 w-full space-y-4">
           <SocketStatus readyState={readyState} />
           {messageHistory?.map((msg, index) => (
-            <MessageBubble key={msg.from + index} {...msg} />
+            <MessageBubble key={msg.timestamp + index} {...msg} />
           ))}
         </div>
       </div>

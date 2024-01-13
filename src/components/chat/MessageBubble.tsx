@@ -8,15 +8,15 @@ type Props = Message & { recipientImage?: string };
 
 export default function MessageBubble({
   message,
-  from,
-  to,
+  senderId,
+  recipientId,
   timestamp,
   recipientImage,
 }: Props) {
   const { data: userSession } = useSession();
-  const isSender = userSession?.user?.id === from;
+  const isSender = userSession?.user?.id === senderId;
 
-  const avatarUrl = isSender ? recipientImage : userSession?.user?.image;
+  const avatarUrl = isSender ? userSession?.user?.image : recipientImage;
 
   return (
     <div className={cn("flex", isSender ? "justify-end" : "justify-start")}>

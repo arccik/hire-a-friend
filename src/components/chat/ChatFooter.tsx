@@ -6,11 +6,11 @@ import { TfiFaceSmile } from "react-icons/tfi";
 import data from "@emoji-mart/data"; // you can do this lazy loading
 import Picker from "@emoji-mart/react"; // you can do this lazy loading
 import { api } from "~/utils/api";
-import { type SendMessage } from "~/types/Socket";
+import { Message, type SendMessage } from "~/types/Socket";
 
 type PropType = {
   chatId: string | null;
-  sendMessage: (data: SendMessage) => void;
+  sendMessage: (data: Message) => void;
 };
 
 export default function ChatFooter({ chatId, sendMessage }: PropType) {
@@ -26,8 +26,8 @@ export default function ChatFooter({ chatId, sendMessage }: PropType) {
     if (!message || !userSession?.user.id || !chatId) return;
     sendMessage({
       message,
-      to: chatId,
-      from: userSession.user.id,
+      recipientId: chatId,
+      senderId: userSession.user.id,
       timestamp: new Date().toISOString(),
     });
     setMessage("");

@@ -4,7 +4,6 @@ import { TfiClose } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import ContactItem from "./ContactItem";
-import useChat from "~/hooks/useChat";
 
 type ContactsProp = {
   onClose: () => void;

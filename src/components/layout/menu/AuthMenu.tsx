@@ -20,6 +20,8 @@ import { menuItems } from "./menu-items";
 import { AiFillSetting } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import NotificationCenter from "../NotificationCenter";
+import { useSharedWebSocket } from "~/context/websocketProvider";
+import { useEffect } from "react";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,6 +34,21 @@ export default function AuthMenu({
   isMenuOpen,
   setIsMenuOpen,
 }: PropType) {
+
+  const { sendJsonMessage, readyState, lastJsonMessage } = useSharedWebSocket();
+
+  useEffect(() => {
+    if (sendJsonMessage) {
+      sendJsonMessage({
+        type: "user-connected",
+      });
+    }
+  }, []);
+
+  console.log("HEADER::::::::::: >>>>> >>>> >> ", {
+    readyState,
+    lastJsonMessage,
+  });
   return (
     <>
       <NavbarContent justify="end" className="hidden sm:flex">

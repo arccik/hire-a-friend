@@ -8,11 +8,11 @@ import { useSession } from "next-auth/react";
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
 
 import ChatFooter from "./ChatFooter";
-import Notification from "./Notification";
+// import Notification from "./Notification";
 
 import MessageBubble from "./MessageBubble";
 import type { Message } from "~/types/Socket";
-import SocketStatus from "./SocketStatus";
+// import SocketStatus from "./SocketStatus";
 import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
 
 export default function ChatBody() {
@@ -94,7 +94,11 @@ export default function ChatBody() {
         <div className="mx-auto mb-16 w-full space-y-4">
           {/* <SocketStatus readyState={readyState} /> */}
           {messageHistory?.map((msg, index) => (
-            <MessageBubble key={msg.timestamp + index} {...msg} />
+            <MessageBubble
+              key={msg.timestamp + index}
+              recipientImage={receiverData?.image}
+              {...msg}
+            />
           ))}
         </div>
       </div>

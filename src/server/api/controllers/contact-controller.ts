@@ -25,7 +25,9 @@ export async function getContacts({
   const command = new ScanCommand(params);
   const response = await ddbClient.send(command);
 
-  const contactIds = response?.Items?.map((item) => item.contactId);
+  const contactIds: string[] | undefined = response?.Items?.map(
+    (item) => item.contactId as string,
+  );
   return contactIds;
 }
 

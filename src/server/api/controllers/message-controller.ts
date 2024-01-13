@@ -1,10 +1,4 @@
-import {
-  PutCommand,
-  GetCommand,
-  DeleteCommand,
-  ScanCommand,
-  QueryCommand,
-} from "@aws-sdk/lib-dynamodb";
+import { PutCommand, DeleteCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { ddbClient } from "../routers/realtime-chat";
 import { Message } from "~/types/Socket";
 import { SaveMessage } from "~/validation/message";

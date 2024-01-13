@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,12 +9,24 @@ import {
   handleRouterNavigation,
   handleRouterRemoveQuery,
 } from "~/helpers/searchParams";
+import { useSharedWebSocket } from "~/context/websocketProvider";
+import { newMessageNotification } from "~/helpers/notifications";
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
   const showChat = searchParams.get("showChat");
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
+  const { lastJsonMessage } = useSharedWebSocket();
+
+  useEffect(() => {
+    if (lastJsonMessage && "body" in lastJsonMessage) {
+      const message = lastJsonMessage.body;
+      newMessageNotification({
+        message,
+      });
+    }
+  }, [lastJsonMessage]);
 
   useEffect(() => {
     // disable scrolling on mobile when chat open
@@ -43,7 +55,7 @@ export default function ChatBox() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0.5, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="fixed bottom-5 right-5 z-50 flex cursor-pointer flex-col  overflow-x-hidden hover:scale-105 hover:text-slate-600"
+        className="fixed bottom-5 right-5 z-10 flex cursor-pointer flex-col overflow-x-hidden hover:scale-105 hover:text-slate-600"
       >
         <IoMdChatboxes size="2rem" onClick={handleChatButtonClick} />
       </motion.div>

@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import React, { createContext, useContext, FC, ReactNode } from "react";
+import React, { createContext, useContext, type ReactNode } from "react";
 import useWebSocket from "react-use-websocket";
 import { env } from "~/env.mjs";
 import type { SocketResponse } from "~/types/Socket";

@@ -1,13 +1,6 @@
 import { z } from "zod";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import {
-  PutCommand,
-  GetCommand,
-  DeleteCommand,
-  UpdateCommand,
-  ScanCommand,
-  QueryCommand,
-} from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { env } from "~/env.mjs";
 
 export const ddbClient = new DynamoDBClient({
@@ -19,7 +12,7 @@ export const ddbClient = new DynamoDBClient({
 });
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
-import { getContacts } from "../controllers/contact-controller";
+import { getContacts, saveContact } from "../controllers/contact-controller";
 import { getMessages, saveMessage } from "../controllers/message-controller";
 import { saveMessageSchema } from "~/validation/message";
 
@@ -52,46 +45,37 @@ export const chatRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const href = chatHrefConstructor(ctx.session.user.id, input);
       const isExist = await ctx.prisma.contact.findFirst({ where: { href } });
-      console.log("isExist", { isExist });
       if (isExist) return;
-      ctx.prisma.contact.create({
+      await ctx.prisma.contact.create({
         data: {
           href,
           userId: ctx.session.user.id,
           contactId: input,
-          blocked: false,
         },
       });
-      const params = {
-        TableName: "Contacts",
-        Item: {
-          userId: ctx.session.user.id,
-          contactId: input,
-        },
-      };
-      const command = new PutCommand(params);
-      return await ddbClient.send(command);
+      return await saveContact({
+        userId: ctx.session.user.id,
+        contactId: input,
+      });
     }),
   getContacts: protectedProcedure.query(async ({ ctx }) => {
-    const params = {
-      TableName: "Contacts",
-      FilterExpression: "userId = :userId", // Filter by userId
-      ExpressionAttributeValues: {
-        ":userId": ctx.session.user.id,
-      },
-      ProjectionExpression: "contactId",
-    };
-    const command = new ScanCommand(params);
-    const response = await ddbClient.send(command);
+    // const params = {
+    //   TableName: "Contacts",
+    //   FilterExpression: "userId = :userId", // Filter by userId
+    //   ExpressionAttributeValues: {
+    //     ":userId": ctx.session.user.id,
+    //   },
+    //   ProjectionExpression: "contactId",
+    // };
+    // const command = new ScanCommand(params);
+    // const response = await ddbClient.send(command);
+    const contactsIds = await getContacts({ userId: ctx.session.user.id });
+    if (!contactsIds) return [];
 
-    if (!response.Items) return [];
-
-    const result = response.Items.map(async (contact) => {
-      if (!contact) return;
+    const result = contactsIds.map(async (id) => {
+      if (!id) return;
       return await ctx.prisma.user.findFirst({
-        where: {
-          id: contact.contactId,
-        },
+        where: { id },
         select: {
           id: true,
           image: true,

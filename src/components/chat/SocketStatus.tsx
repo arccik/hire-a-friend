@@ -1,6 +1,5 @@
 import { Button, Spinner } from "@nextui-org/react";
 import { ReadyState } from "react-use-websocket";
-import { api } from "~/utils/api";
 
 type Props = {
   readyState: ReadyState;

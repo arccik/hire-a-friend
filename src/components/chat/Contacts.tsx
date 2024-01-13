@@ -15,8 +15,7 @@ type ModalActionParams = {
 };
 
 export default function Contacts({ onClose }: ContactsProp) {
-  // const { data: contactsData, refetch: refetchContacts } =
-  //   api.contact.getContacts.useQuery();
+
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
   const deleteContact = api.contact.deleteContact.useMutation({

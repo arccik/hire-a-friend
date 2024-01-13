@@ -5,10 +5,8 @@ import {
   DropdownSection,
   DropdownItem,
   Button,
-  User,
   Avatar,
 } from "@nextui-org/react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import { FaBell } from "react-icons/fa";
 
 export default function NotificationCenter() {

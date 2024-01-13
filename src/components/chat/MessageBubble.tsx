@@ -2,14 +2,13 @@ import { Avatar } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import formatMessageDateTime from "~/helpers/formatMessageDateTime";
 import { cn } from "~/lib/utils";
-import { Message } from "~/types/Socket";
+import type { Message } from "~/types/Socket";
 
-type Props = Message & { recipientImage?: string };
+type Props = Message & { recipientImage?: string | null };
 
 export default function MessageBubble({
   message,
   senderId,
-  recipientId,
   timestamp,
   recipientImage,
 }: Props) {
@@ -27,7 +26,7 @@ export default function MessageBubble({
         )}
       >
         <Avatar
-          src={avatarUrl || ""}
+          src={avatarUrl ?? ""}
           alt="Your avatar"
           className="h-10 w-10 rounded-full object-cover"
         />

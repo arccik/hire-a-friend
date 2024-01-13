@@ -1,4 +1,4 @@
-import { Button, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -19,13 +19,11 @@ import ActionButtons from "~/components/pages-components/profile/ActionButtons";
 import Languages from "~/components/pages-components/profile/Languages";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
 import ChipList from "~/components/pages-components/profile/ChipList";
-import { useSession } from "next-auth/react";
 import Alert from "~/components/pages-components/profile/Alert";
 
 export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
-  const { data: userSession } = useSession();
 
   const { data, status, refetch } = api.user.getOne.useQuery(
     { id },

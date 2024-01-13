@@ -114,7 +114,7 @@ export const chatRouter = createTRPCRouter({
     }),
   setUserStatus: protectedProcedure
     .input(z.object({ status: z.string() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       // await pusherServer.trigger("user-status", "status-change", {
       //   userId: ctx.session.user.id,
       //   status: input.status,

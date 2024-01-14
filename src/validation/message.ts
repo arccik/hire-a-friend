@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 
-
 export const saveMessageSchema = z.object({
   primaryKey: z.string(),
   senderId: z.string(),
@@ -11,6 +10,5 @@ export const saveMessageSchema = z.object({
 });
 
 export type SaveMessage = z.infer<typeof saveMessageSchema>;
-
 
 

@@ -25,14 +25,12 @@ type PropType = {
   contact: ContactItem;
   handleContactButtonClick: (contactId: string) => void;
   handleModalAction: ({ id }: ModalActionType) => void;
-  online?: string;
 };
 
 export default function ContactItem({
   contact,
   handleContactButtonClick,
   handleModalAction,
-  online,
 }: PropType) {
   const [showBlockModal, setShowBlockModal] = useState<string | null>(null);
 
@@ -45,7 +43,7 @@ export default function ContactItem({
         onClick={() => handleContactButtonClick(contact.id)}
         isFocusable
         name={contact.name}
-        description={online}
+        description={contact.online ? "Online" : "Offline"}
         avatarProps={{
           src: contact.image ?? "",
         }}

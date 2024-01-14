@@ -1,77 +1,16 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { contactHrefConstructor } from "~/helpers/chatHrefConstructor";
+import {
+  blockContact,
+  deleteContact,
+  getContact,
+  getContacts,
+  isOnline,
+  saveContact,
+  unblockContact,
+} from "../controllers/contact-controller";
 
 export const contactsRouter = createTRPCRouter({
-  getContact: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.contact.findFirst({
-        where: { userId: input.id },
-      });
-    }),
-  getContacts: protectedProcedure.query(async ({ ctx }) => {
-    const response = await ctx.prisma.contact.findMany({
-      where: { userId: ctx.session?.user.id, blocked: false },
-      include: { user: true },
-    });
-    const contacts = response.map((data) => ({
-      image: data.user.image,
-      name: data.user.name,
-      contactId: data.contactId,
-      id: data.id,
-    }));
-    return contacts;
-  }),
-  deleteContact: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const contact = await ctx.prisma.contact.delete({
-        where: { id: input.id },
-      });
-      return contact;
-    }),
-  blockContact: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const user = await ctx.prisma.user.findFirst({
-        where: { id: input.id },
-      });
-
-      if (!user) return;
-
-      user.blockedBy.push(ctx.session.user.id);
-      await ctx.prisma.user.update({
-        where: { id: input.id },
-        data: {
-          blockedBy: user.blockedBy,
-        },
-      });
-
-      const response = await ctx.prisma.contact.update({
-        where: { id: input.id },
-        data: { blocked: true },
-      });
-
-      return response;
-    }),
-  unblockContact: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const user = await ctx.prisma.user.findFirst({ where: { id: input.id } });
-      if (!user) return;
-      user.blockedBy = user.blockedBy.filter((v) => v !== ctx.session.user.id);
-      await ctx.prisma.user.update({
-        where: { id: input.id },
-        data: {
-          blockedBy: user.blockedBy,
-        },
-      });
-      return ctx.prisma.contact.updateMany({
-        where: { contactId: input.id, userId: ctx.session.user.id },
-        data: { blocked: false },
-      });
-    }),
   addContact: protectedProcedure
     .input(
       z.object({
@@ -79,46 +18,54 @@ export const contactsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const searchParams = contactHrefConstructor(
-        ctx.session?.user.id,
-        input.id,
-      );
-      const isExist = await ctx.prisma.contact.findFirst({
-        where: {
-          userId: ctx.session.user.id,
-          contactId: input.id,
-        },
+      const isExist = await getContact({
+        userId: ctx.session.user.id,
+        contactId: input.id,
       });
 
-      if (!!isExist) return;
+      if (isExist) return;
 
-      const isFriendHas = await ctx.prisma.contact.findFirst({
-        where: {
-          userId: input.id,
-          contactId: ctx.session.user.id,
-        },
+      return saveContact({ userId: ctx.session.user.id, contactId: input.id });
+    }),
+  getContact: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return getContact({ userId: ctx.session.user.id, contactId: input.id });
+    }),
+  getContacts: protectedProcedure.query(async ({ ctx }) => {
+    const contactsIds = await getContacts({ userId: ctx.session.user.id });
+    if (!contactsIds) return null;
+    return Promise.all(
+      contactsIds?.map(async (id) => {
+        const user = await ctx.prisma.user.findFirst({
+          where: { id },
+          select: { id: true, name: true, image: true },
+        });
+        if (!user) return;
+        const online = await isOnline({ userId: id });
+        return { ...user, online };
+      }),
+    );
+  }),
+  deleteContact: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return deleteContact({
+        userId: ctx.session.user.id,
+        contactId: input.id,
       });
-      if (!!isFriendHas) return;
-      // {
-      //   throw new TRPCError({
-      //     code: "BAD_REQUEST",
-      //     message: "Contact already exist",
-      //   });
-      // }
-
-      return await ctx.prisma.contact.createMany({
-        data: [
-          {
-            userId: ctx.session?.user.id,
-            href: searchParams,
-            contactId: input.id,
-          },
-          {
-            userId: input.id,
-            href: searchParams,
-            contactId: ctx.session?.user.id,
-          },
-        ],
+    }),
+  blockContact: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return blockContact({ userId: ctx.session.user.id, contactId: input.id });
+    }),
+  unblockContact: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return unblockContact({
+        userId: ctx.session.user.id,
+        contactId: input.id,
       });
     }),
 });

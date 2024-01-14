@@ -19,7 +19,7 @@ import { saveMessageSchema } from "~/validation/message";
 export const chatRouter = createTRPCRouter({
   saveMessage: protectedProcedure
     .input(saveMessageSchema)
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       return await saveMessage(input);
     }),
   getMessages: protectedProcedure
@@ -30,7 +30,7 @@ export const chatRouter = createTRPCRouter({
     }),
   deleteMessage: protectedProcedure
     .input(z.object({ chatId: z.string() }))
-    .mutation(async ({ ctx, input: { chatId } }) => {
+    .mutation(async ({ input: { chatId } }) => {
       const params = {
         TableName: "ChatHistory",
         Key: {

@@ -17,7 +17,7 @@ type ModalActionParams = {
 export default function Contacts({ onClose }: ContactsProp) {
 
   const { data: contactsData, refetch: refetchContacts } =
-    api.chat.getContacts.useQuery();
+    api.contact.getContacts.useQuery();
   const deleteContact = api.contact.deleteContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
@@ -26,6 +26,7 @@ export default function Contacts({ onClose }: ContactsProp) {
     },
   });
 
+  console.log("Contacts [isOnline] ", contactsData);
   const blockContact = api.contact.blockContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
@@ -78,14 +79,13 @@ export default function Contacts({ onClose }: ContactsProp) {
           </>
         )}
         {contactsData?.map((contact) => {
-          if (!contact) return;
+          if (!contact?.id) return;
           return (
             <ContactItem
               key={contact.id}
               contact={contact}
               handleContactButtonClick={handleContactButtonClick}
               handleModalAction={handleModalAction}
-              online="Could be online - check"
             />
           );
         })}

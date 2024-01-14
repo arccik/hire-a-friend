@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
-import { User } from "@nextui-org/react";
+import { Spinner, User } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
@@ -58,6 +58,7 @@ export default function ChatBody() {
     handleRouterRemoveQuery("chat");
   };
 
+  if (savedMessagesStatus === "loading") return <Spinner />;
   const handleCloseButton = () => {
     handleRouterRemoveQuery("showChat");
   };

@@ -1,8 +1,10 @@
 import { toast } from "react-toastify";
 import { BiMessage } from "react-icons/bi";
-import { handleRouterNavigation } from "./searchParams";
-import { type Message } from "~/types/Socket";
 import Router from "next/router";
+
+import { handleRouterNavigation } from "./searchParams";
+import { type Message } from "~/components/chat/ChatBody";
+
 
 type NewMessageProps = {
   name?: string | null;

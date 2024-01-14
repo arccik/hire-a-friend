@@ -1,6 +1,6 @@
 import { PutCommand, DeleteCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { ddbClient } from "../routers/realtime-chat";
-import type { Message } from "~/types/Socket";
+import type { Message } from "~/components/chat/ChatBody";
 import { type SaveMessage } from "~/validation/message";
 
 type FuncParams = {

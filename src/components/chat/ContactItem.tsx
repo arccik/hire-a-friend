@@ -14,7 +14,13 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { type ContactItem } from "~/types/ContactItem";
+
+type ContactItemProps = {
+  image?: string | null;
+  name?: string | null;
+  id: string;
+  online?: boolean;
+};
 
 type ModalActionType = {
   id: string;
@@ -22,7 +28,7 @@ type ModalActionType = {
 };
 
 type PropType = {
-  contact: ContactItem;
+  contact: ContactItemProps;
   handleContactButtonClick: (contactId: string) => void;
   handleModalAction: ({ id }: ModalActionType) => void;
 };

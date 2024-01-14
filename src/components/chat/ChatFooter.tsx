@@ -5,7 +5,7 @@ import { RiMailSendLine } from "react-icons/ri";
 import { TfiFaceSmile } from "react-icons/tfi";
 import data from "@emoji-mart/data"; // you can do this lazy loading
 import Picker from "@emoji-mart/react"; // you can do this lazy loading
-import type { Message } from "~/types/Socket";
+import type { Message } from "~/components/chat/ChatBody";
 
 type PropType = {
   chatId: string | null;

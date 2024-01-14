@@ -2,7 +2,27 @@ import { useSession } from "next-auth/react";
 import React, { createContext, useContext, type ReactNode } from "react";
 import useWebSocket from "react-use-websocket";
 import { env } from "~/env.mjs";
-import type { SocketResponse } from "~/types/Socket";
+
+import { type Message } from "~/components/chat/ChatBody";
+
+type SocketResponse =
+  | {
+      onlineMembers: string[];
+    }
+  | {
+      body: Message;
+    }
+  | {
+      systemMessage: string[];
+    };
+
+export type SendMessage = {
+  to: string;
+  message: string;
+  from: string;
+  timestamp: string;
+};
+
 
 export enum ACTIONS {
   $connect = "$connect",

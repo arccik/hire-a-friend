@@ -2,7 +2,7 @@ import { Avatar } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import formatMessageDateTime from "~/helpers/formatMessageDateTime";
 import { cn } from "~/lib/utils";
-import type { Message } from "~/types/Socket";
+import type { Message } from "~/components/chat/ChatBody";
 
 type Props = Message & { recipientImage?: string | null };
 

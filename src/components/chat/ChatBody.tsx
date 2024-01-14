@@ -11,9 +11,16 @@ import ChatFooter from "./ChatFooter";
 // import Notification from "./Notification";
 
 import MessageBubble from "./MessageBubble";
-import type { Message } from "~/types/Socket";
+
 // import SocketStatus from "./SocketStatus";
 import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
+
+export type Message = {
+  senderId: string;
+  message: string;
+  recipientId: string;
+  timestamp: string;
+};
 
 export default function ChatBody() {
   const [messageHistory, setMessageHistory] = useState<Message[]>([]);

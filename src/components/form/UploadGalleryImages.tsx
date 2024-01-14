@@ -8,7 +8,15 @@ import { Spinner } from "@nextui-org/react";
 import { cn } from "~/lib/utils";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { v1 } from "uuid";
-import { type ImageUploadType } from "~/types/ImageUpload";
+import { type UserValidationType } from "~/validation/member";
+import { type FieldErrors, type UseFormSetValue } from "react-hook-form";
+
+export type ImageUploadType = {
+  setValue: UseFormSetValue<UserValidationType>;
+  imgUrls: string[] | null;
+  errors: FieldErrors<UserValidationType>;
+};
+
 
 export default function UploadImageGallery({
   setValue,

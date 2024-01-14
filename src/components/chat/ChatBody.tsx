@@ -58,7 +58,13 @@ export default function ChatBody() {
     handleRouterRemoveQuery("chat");
   };
 
-  if (savedMessagesStatus === "loading") return <Spinner />;
+  if (savedMessagesStatus === "loading")
+    return (
+      <Spinner
+        className="flex h-full w-full items-center justify-center"
+        color="warning"
+      />
+    );
   const handleCloseButton = () => {
     handleRouterRemoveQuery("showChat");
   };

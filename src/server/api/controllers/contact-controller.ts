@@ -155,7 +155,7 @@ export async function isOnline({ userId }: { userId: string }) {
 
   try {
     const data = await ddbClient.send(command);
-    console.log("isOnline::: ", data);
+    // console.log("isOnline::: ", data);
     if (!data.Count) return false;
     return true;
   } catch (error) {

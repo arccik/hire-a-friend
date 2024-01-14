@@ -8,7 +8,7 @@ type NewMessageProps = {
   name?: string | null;
   message: Message;
 };
-export const newMessageNotification = ({ name, message }: NewMessageProps) => {
+export const newMessageNotification = ({ message }: NewMessageProps) => {
   if (Router.query.chat === message.senderId && Router.query.showChat) {
     return null;
   }

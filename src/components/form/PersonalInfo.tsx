@@ -1,11 +1,17 @@
-import { type MemberFormProps } from "~/types/MemberFormPropsType";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import { type UserValidationType } from "~/validation/member";
+
+export type PersonalInformationProps = {
+  register: UseFormRegister<UserValidationType>;
+  errors: FieldErrors<UserValidationType>;
+};
 
 import InputField from "../features/InputField";
 
 export default function PersonalInformation({
   register,
   errors,
-}: MemberFormProps) {
+}: PersonalInformationProps) {
   return (
     <div className="border-b border-gray-900/10 pb-12">
       <h2 className="text-base font-semibold leading-7 text-gray-900">

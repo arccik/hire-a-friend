@@ -129,11 +129,7 @@ export default function MemberForm(props: BigFormPropType) {
             </div>
           </div>
 
-          <PersonalInformation
-            register={register}
-            errors={errors}
-            getValues={getValues}
-          />
+          <PersonalInformation register={register} errors={errors} />
         </div>
         <UploadGalleryImages
           setValue={setValue}
@@ -183,7 +179,6 @@ export default function MemberForm(props: BigFormPropType) {
         <PriceField
           register={register}
           errors={errors}
-          getValues={getValues}
           watch={watch}
           setValue={setValue}
         />

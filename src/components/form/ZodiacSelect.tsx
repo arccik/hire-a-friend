@@ -1,11 +1,14 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
-import { type MemberFormProps } from "~/types/MemberFormPropsType";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import { type UserValidationType } from "~/validation/member";
 
-export default function ZodiacSelect({
-  register,
-  value,
-}: MemberFormProps & { value?: string }) {
+type ZodiacSelectProps = {
+  register: UseFormRegister<UserValidationType>;
+  errors: FieldErrors<UserValidationType>;
+  value?: string;
+};
+export default function ZodiacSelect({ register, value }: ZodiacSelectProps) {
   return (
     <Select
       items={zodiacSigns}

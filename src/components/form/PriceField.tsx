@@ -1,21 +1,27 @@
-import { type MemberFormProps } from "~/types/MemberFormPropsType";
-
-type PropType = Required<
-  Pick<
-    MemberFormProps,
-    "register" | "errors" | "getValues" | "watch" | "setValue"
-  >
->;
-
+import type {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import { Checkbox, Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
+
+import { type UserValidationType } from "~/validation/member";
+
+export type PriceFieldProps = {
+  register: UseFormRegister<UserValidationType>;
+  errors: FieldErrors<UserValidationType>;
+  watch: UseFormWatch<UserValidationType>;
+  setValue: UseFormSetValue<UserValidationType>;
+};
 
 export default function PriceField({
   register,
   errors,
   watch,
   setValue,
-}: PropType) {
+}: PriceFieldProps) {
   const showPriceField = watch("hidePrice") ?? false;
   return (
     <fieldset className="mb-10">

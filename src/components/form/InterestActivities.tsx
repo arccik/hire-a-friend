@@ -1,13 +1,20 @@
-import { type MemberFormProps } from "~/types/MemberFormPropsType";
 import activities from "~/data/activities.json";
 import hobbies from "~/data/hobby-list.json";
 import { Chip, Select, SelectItem } from "@nextui-org/react";
+import type {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
+import { type UserValidationType } from "~/validation/member";
 
-type InterestActivitiesProps = Required<Pick<MemberFormProps, "setValue">> &
-  MemberFormProps & {
-    value: string[] | undefined;
-    type: "activities" | "hobbies";
-  };
+type InterestActivitiesProps = {
+  setValue: UseFormSetValue<UserValidationType>;
+  register: UseFormRegister<UserValidationType>;
+  errors: FieldErrors<UserValidationType>;
+  value: string[] | undefined;
+  type: "activities" | "hobbies";
+};
 
 export default function InterestActivities({
   register,

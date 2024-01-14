@@ -1,14 +1,25 @@
 import { Input, Select, SelectItem } from "@nextui-org/react";
 
-import { type MemberFormProps } from "~/types/MemberFormPropsType";
 import genders from "~/data/gender-list.json";
 import ZodiacSelect from "./ZodiacSelect";
+import type {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+} from "react-hook-form";
+import { type UserValidationType } from "~/validation/member";
+
+export type ApearanceProps = {
+  register: UseFormRegister<UserValidationType>;
+  errors: FieldErrors<UserValidationType>;
+  getValues: UseFormGetValues<UserValidationType>;
+};
 
 export default function Apearance({
   register,
   errors,
   getValues,
-}: Required<Pick<MemberFormProps, "getValues">> & MemberFormProps) {
+}: ApearanceProps) {
   const gender = getValues?.("gender");
   return (
     <div className="border-b border-slate-400/50 pb-12">

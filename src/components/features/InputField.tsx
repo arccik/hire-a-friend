@@ -1,19 +1,12 @@
 import { Input } from "@nextui-org/react";
 import type { UserValidationType } from "~/validation/member";
-import type {
-  FieldErrors,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
 
-export type MemberFormProps = {
+export type InputFieldProps = {
   register: UseFormRegister<UserValidationType>;
   errors: FieldErrors<UserValidationType>;
-  getValues?: UseFormGetValues<UserValidationType>;
-  watch?: UseFormWatch<UserValidationType>;
-  setValue?: UseFormSetValue<UserValidationType>;
+  fieldName: keyof UserValidationType;
+  title?: string;
 };
 
 export default function InputField({
@@ -21,10 +14,7 @@ export default function InputField({
   fieldName,
   title,
   errors,
-}: MemberFormProps & {
-  fieldName: keyof UserValidationType;
-  title?: string;
-}) {
+}: InputFieldProps) {
   return (
     <div className="sm:col-span-4">
       <label

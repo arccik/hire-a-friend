@@ -1,10 +1,23 @@
 import { Chip, Select, SelectItem } from "@nextui-org/react";
 import languages from "~/data/language-list.json";
-import { type MemberFormProps } from "~/types/MemberFormPropsType";
+import type {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
+import { type UserValidationType } from "~/validation/member";
 
-type PropType = Required<Pick<MemberFormProps, "setValue">> & MemberFormProps;
+export type LanguagesProps = {
+  register: UseFormRegister<UserValidationType>;
+  errors: FieldErrors<UserValidationType>;
+  setValue: UseFormSetValue<UserValidationType>;
+};
 
-export default function Languages({ register, errors, setValue }: PropType) {
+export default function Languages({
+  register,
+  errors,
+  setValue,
+}: LanguagesProps) {
   return (
     <fieldset className="mb-6">
       <h2 className="mb-2 text-base font-semibold leading-7 text-gray-900">

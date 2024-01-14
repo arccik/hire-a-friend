@@ -71,7 +71,7 @@ export default function ReportViolating() {
                       No
                     </Button>
                     <Button
-                      color="primary"
+                      color="warning"
                       onPress={onClose}
                       onClick={handleReportUser}
                     >

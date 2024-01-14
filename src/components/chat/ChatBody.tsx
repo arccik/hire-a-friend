@@ -1,67 +1,70 @@
 import { useEffect, useRef, useState } from "react";
-import Message from "./Message";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
-import { Spinner, User } from "@nextui-org/react";
-import { pusherClient } from "~/utils/pusher";
+import { User } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 
-import { type MessageResponse } from "~/validation/message";
-import ChatFooter from "./ChatFooter";
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
 
-export default function ChatBody() {
-  const [messages, setMessages] = useState<MessageResponse[] | undefined>();
-  useSession({ required: true });
-  const chatRef = useRef<HTMLDivElement | null>(null);
+import ChatFooter from "./ChatFooter";
+// import Notification from "./Notification";
 
+import MessageBubble from "./MessageBubble";
+import type { Message } from "~/types/Socket";
+// import SocketStatus from "./SocketStatus";
+import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
+
+export default function ChatBody() {
+  const [messageHistory, setMessageHistory] = useState<Message[]>([]);
+  const { lastJsonMessage, readyState, sendJsonMessage } = useSharedWebSocket();
+  useSession({ required: true });
+
+  const chatRef = useRef<HTMLDivElement | null>(null);
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
 
-  console.log("Rerender!");
-
-  const { data: messagesData, status: messageStatus } =
-    api.chat.getMessages.useQuery(chatId!, {
-      enabled: !!chatId,
-    });
   const { data: receiverData } = api.user.getOne.useQuery(
     { id: chatId! },
     { enabled: !!chatId },
   );
 
+  const { data: savedMessages, status: savedMessagesStatus } =
+    api.chat.getMessages.useQuery(
+      {
+        chatId: chatId!,
+      },
+      { enabled: !!chatId },
+    );
+
+  useEffect(() => {
+    if (savedMessages) {
+      setMessageHistory(savedMessages.reverse());
+    }
+  }, [savedMessages]);
+
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTo(0, chatRef.current?.scrollHeight);
     }
-  }, [messages]);
+  }, [messageHistory]);
 
   useEffect(() => {
-    setMessages(messagesData);
-  }, [messagesData]);
-
-  useEffect(() => {
-    if (!chatId) return;
-    pusherClient.subscribe(chatId);
-
-    const messageHandler = (message: MessageResponse) => {
-      setMessages((prev) => [...(prev ?? []).slice(0, -1), message]);
-    };
-
-    pusherClient.bind("incoming-message", messageHandler);
-
-    return () => {
-      pusherClient.unsubscribe(chatId);
-      pusherClient.unbind("incoming-message", messageHandler);
-    };
-  }, [chatId]);
-
+    if (lastJsonMessage && "body" in lastJsonMessage) {
+      setMessageHistory((prev) => [...prev, lastJsonMessage.body]);
+    }
+  }, [lastJsonMessage]);
   const handleBackButton = () => {
     handleRouterRemoveQuery("chat");
   };
 
   const handleCloseButton = () => {
     handleRouterRemoveQuery("showChat");
+  };
+
+  const handleSendMessage = (data: Message) => {
+    sendJsonMessage({ action: ACTIONS.sendPrivate, ...data });
+    setMessageHistory((prev) => [...prev, data]);
   };
 
   return (
@@ -89,23 +92,17 @@ export default function ChatBody() {
 
       <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
         <div className="mx-auto mb-16 w-full space-y-4">
-          {messageStatus === "loading" && (
-            <Spinner
-              className="grid h-screen place-items-center"
-              color="warning"
-            />
-          )}
-          {messages?.map((msg, index) => (
-            <Message
-              key={msg.message + index}
+          {/* <SocketStatus readyState={readyState} /> */}
+          {messageHistory?.map((msg, index) => (
+            <MessageBubble
+              key={msg.timestamp + index}
+              recipientImage={receiverData?.image}
               {...msg}
-              receiverImage={receiverData?.image}
-              isLast={messages.length === index + 1}
             />
           ))}
         </div>
       </div>
-      <ChatFooter setMessages={setMessages} chatId={chatId} />
+      <ChatFooter chatId={chatId} sendMessage={handleSendMessage} />
     </>
   );
 }

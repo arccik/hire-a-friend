@@ -1,5 +1,5 @@
 import { Input } from "@nextui-org/react";
-import { type PropsType } from "~/types/memberFormPropsType";
+import { type PropsType } from "~/types/MemberFormPropsType";
 import { type UserValidationType } from "~/validation/member";
 
 export default function InputField({

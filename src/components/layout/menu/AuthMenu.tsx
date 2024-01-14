@@ -20,6 +20,7 @@ import { menuItems } from "./menu-items";
 import { AiFillSetting } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import NotificationCenter from "../NotificationCenter";
+// import { useSharedWebSocket } from "~/context/websocketProvider";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,6 +33,7 @@ export default function AuthMenu({
   isMenuOpen,
   setIsMenuOpen,
 }: PropType) {
+
   return (
     <>
       <NavbarContent justify="end" className="hidden sm:flex">

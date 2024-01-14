@@ -7,12 +7,15 @@ import {
 import { BsChevronCompactLeft } from "react-icons/bs";
 import { cn } from "~/lib/utils";
 
-type PropsType = {
+type PaginationOrangeProps = {
   total: number;
   onChange: (page: number) => void;
 };
 
-export default function PaginationOrange({ total, onChange }: PropsType) {
+export default function PaginationOrange({
+  total,
+  onChange,
+}: PaginationOrangeProps) {
   const renderItem = ({
     ref,
     value,

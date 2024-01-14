@@ -5,15 +5,20 @@ import { toast } from "react-toastify";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import ContactItem from "./ContactItem";
 
-type PropType = {
+type ContactsProp = {
   onClose: () => void;
-  onlines: Record<string, string>;
 };
-export default function Contacts({ onClose, onlines }: PropType) {
+
+type ModalActionParams = {
+  id: string;
+  type?: "block" | "delete";
+};
+
+export default function Contacts({ onClose }: ContactsProp) {
+
   const { data: contactsData, refetch: refetchContacts } =
     api.chat.getContacts.useQuery();
-
-  const deleteContact = api.chat.deleteContact.useMutation({
+  const deleteContact = api.contact.deleteContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
       toast.success(`Contact Deleted!`);
@@ -21,7 +26,7 @@ export default function Contacts({ onClose, onlines }: PropType) {
     },
   });
 
-  const blockContact = api.chat.blockContact.useMutation({
+  const blockContact = api.contact.blockContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
       toast.success(`Contact blocked!`);
@@ -33,25 +38,17 @@ export default function Contacts({ onClose, onlines }: PropType) {
     handleRouterNavigation({ chat: contactId });
   };
 
-  type FuncType = {
-    contactId: string;
-    userId: string;
-  };
-  const handleModalAction = ({
-    contactId,
-    userId,
-    type,
-  }: FuncType & { type: "block" | "delete" }) => {
+  const handleModalAction = ({ id, type }: ModalActionParams) => {
     const func = type === "block" ? handleBlockButton : handleDeleteButton;
-    func({ contactId, userId });
+    func({ id });
     void refetchContacts();
   };
-  const handleDeleteButton = ({ contactId }: FuncType) => {
-    deleteContact.mutate({ id: contactId });
+  const handleDeleteButton = ({ id }: ModalActionParams) => {
+    deleteContact.mutate({ id });
   };
 
-  const handleBlockButton = ({ contactId, userId }: FuncType) => {
-    blockContact.mutate({ contactId, userId });
+  const handleBlockButton = ({ id }: ModalActionParams) => {
+    blockContact.mutate({ id });
   };
 
   return (
@@ -80,15 +77,18 @@ export default function Contacts({ onClose, onlines }: PropType) {
             </p>
           </>
         )}
-        {contactsData?.map((contact) => (
-          <ContactItem
-            key={contact.id}
-            contact={contact}
-            handleContactButtonClick={handleContactButtonClick}
-            handleModalAction={handleModalAction}
-            online={onlines[contact.contactId] ?? "Offline"}
-          />
-        ))}
+        {contactsData?.map((contact) => {
+          if (!contact) return;
+          return (
+            <ContactItem
+              key={contact.id}
+              contact={contact}
+              handleContactButtonClick={handleContactButtonClick}
+              handleModalAction={handleModalAction}
+              online="Could be online - check"
+            />
+          );
+        })}
       </div>
     </>
   );

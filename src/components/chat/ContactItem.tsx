@@ -17,15 +17,14 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { type ContactItem } from "~/types/ContactItem";
 
 type ModalActionType = {
-  contactId: string;
-  userId: string;
+  id: string;
   type: "block" | "delete";
 };
 
 type PropType = {
   contact: ContactItem;
   handleContactButtonClick: (contactId: string) => void;
-  handleModalAction: ({ contactId, userId }: ModalActionType) => void;
+  handleModalAction: ({ id }: ModalActionType) => void;
   online?: string;
 };
 
@@ -39,12 +38,11 @@ export default function ContactItem({
 
   return (
     <div
-      key={contact.contactId}
+      key={contact.id}
       className="flex w-full animate-appearance-in cursor-pointer content-start items-center justify-between p-2 text-black hover:bg-slate-200"
     >
       <User
-        onClick={() => handleContactButtonClick(contact.contactId)}
-        key={contact.contactId}
+        onClick={() => handleContactButtonClick(contact.id)}
         isFocusable
         name={contact.name}
         description={online}
@@ -65,11 +63,7 @@ export default function ContactItem({
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Contact Actions">
-          <DropdownItem
-            key="Profile"
-            as={Link}
-            href={`/profile/${contact.contactId}`}
-          >
+          <DropdownItem key="Profile" as={Link} href={`/profile/${contact.id}`}>
             Profile
           </DropdownItem>
           <DropdownItem
@@ -102,21 +96,21 @@ export default function ContactItem({
               </ModalHeader>
               <ModalBody>
                 <p>Are you sure you want to {showBlockModal} this user?</p>
-                <p className="text-sm text-red-500">
+                <p className="text-bold text-sm text-red-500">
                   This action cannot be undone.
                 </p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="warning" variant="light" onPress={onClose}>
                   No
                 </Button>
                 <Button
-                  color="primary"
                   onPress={onClose}
+                  variant="bordered"
+                  className=" hover:border-red-500 hover:text-red-500"
                   onClick={() =>
                     handleModalAction({
-                      contactId: contact.id,
-                      userId: contact.contactId,
+                      id: contact.id,
                       type: showBlockModal as "block" | "delete",
                     })
                   }

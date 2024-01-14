@@ -1,4 +1,4 @@
-import { Button, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -19,28 +19,28 @@ import ActionButtons from "~/components/pages-components/profile/ActionButtons";
 import Languages from "~/components/pages-components/profile/Languages";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
 import ChipList from "~/components/pages-components/profile/ChipList";
-import { useSession } from "next-auth/react";
 import Alert from "~/components/pages-components/profile/Alert";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
+  const { data: userSession } = useSession();
   const router = useRouter();
   const id = router.query.id as string;
-  const { data: userSession } = useSession();
 
   const { data, status, refetch } = api.user.getOne.useQuery(
     { id },
     { enabled: !!id },
   );
 
-  const unblockUser = api.chat.unblockContact.useMutation({
-    onError: (e) =>
-      console.error("Fail to unblock user, something went wrong", e.message),
-    onSuccess: async () => await refetch(),
-  });
-  const { data: blockedUser } = api.chat.isBlocked.useQuery(
-    { contactId: id, userId: userSession?.user.id ?? "" },
-    { enabled: !!userSession?.user.id },
-  );
+  // const unblockUser = api.contact.unblockContact.useMutation({
+  //   onError: (e) =>
+  //     console.error("Fail to unblock user, something went wrong", e.message),
+  //   onSuccess: async () => await refetch(),
+  // });
+  // const { data: blockedUser } = api.chat.isBlocked.useQuery(
+  //   { contactId: id, userId: userSession?.user.id ?? "" },
+  //   { enabled: !!userSession?.user.id },
+  // );
 
   if (status === "loading") {
     return (
@@ -55,20 +55,20 @@ export default function ProfilePage() {
 
   if (data?.userType === "Customer") return <CustomerProfile data={data} />;
 
-  if (blockedUser?.blocked) {
-    return (
-      <div className="flex flex-col justify-center">
-        <p className="m-10 text-center">You have blocked this user.</p>
-        <Button
-          className="mx-auto w-10"
-          size="sm"
-          onClick={() => unblockUser.mutate({ id })}
-        >
-          Unblock
-        </Button>
-      </div>
-    );
-  }
+  // if (blockedUser?.blocked) {
+  //   return (
+  //     <div className="flex flex-col justify-center">
+  //       <p className="m-10 text-center">You have blocked this user.</p>
+  //       <Button
+  //         className="mx-auto w-10"
+  //         size="sm"
+  //         onClick={() => unblockUser.mutate({ id })}
+  //       >
+  //         Unblock
+  //       </Button>
+  //     </div>
+  //   );
+  // }
 
   const genderSign = genders.find((g) => g.id.toString() == data?.gender);
 

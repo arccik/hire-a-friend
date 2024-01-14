@@ -15,6 +15,7 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { menuItems } from "./menu-items";
 import { VscSignIn } from "react-icons/vsc";
 import { GiTimeTrap } from "react-icons/gi";
+import { usePathname } from "next/navigation";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,10 +23,24 @@ type PropType = {
 };
 
 export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
+  const desktopMenu = menuItems.slice(0, 4);
+  const restDesktopMenu = menuItems.slice(4);
+  const searchParams = usePathname();
   return (
     <>
       <NavbarContent justify="end" className="hidden sm:flex">
         <NavbarContent justify="end" className="hidden sm:flex">
+          {desktopMenu.map((item) => (
+            <NavbarItem
+              key={item.title}
+              isActive={searchParams?.includes(item.href)}
+            >
+              <Link color="foreground" href={item.href}>
+                {item.title}
+              </Link>
+            </NavbarItem>
+          ))}
+
           <NavbarContent className="sm:hidden" justify="end">
             <NavbarMenuToggle
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -43,7 +58,7 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
               </DropdownTrigger>
               <DropdownMenu aria-label="Dropdown menu" variant="bordered">
                 <DropdownSection>
-                  {menuItems.map((entry) => (
+                  {restDesktopMenu.map((entry) => (
                     <DropdownItem
                       key={entry.href}
                       as={Link}

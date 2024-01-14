@@ -1,6 +1,20 @@
 import { Input } from "@nextui-org/react";
-import type { MemberFormProps } from "~/types/MemberFormPropsType.ts";
 import type { UserValidationType } from "~/validation/member";
+import type {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
+
+export type MemberFormProps = {
+  register: UseFormRegister<UserValidationType>;
+  errors: FieldErrors<UserValidationType>;
+  getValues?: UseFormGetValues<UserValidationType>;
+  watch?: UseFormWatch<UserValidationType>;
+  setValue?: UseFormSetValue<UserValidationType>;
+};
 
 export default function InputField({
   register,

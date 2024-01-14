@@ -1,8 +1,11 @@
-import { type PropsType } from "~/types/MemberFormPropsType";
+import { type MemberFormProps } from "~/types/MemberFormPropsType";
 
 import InputField from "../features/InputField";
 
-export default function PersonalInformation({ register, errors }: PropsType) {
+export default function PersonalInformation({
+  register,
+  errors,
+}: MemberFormProps) {
   return (
     <div className="border-b border-gray-900/10 pb-12">
       <h2 className="text-base font-semibold leading-7 text-gray-900">

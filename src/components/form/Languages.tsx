@@ -1,8 +1,8 @@
 import { Chip, Select, SelectItem } from "@nextui-org/react";
 import languages from "~/data/language-list.json";
-import { type PropsType } from "~/types/MemberFormPropsType";
+import { type MemberFormProps } from "~/types/MemberFormPropsType";
 
-type PropType = Required<Pick<PropsType, "setValue">> & PropsType;
+type PropType = Required<Pick<MemberFormProps, "setValue">> & MemberFormProps;
 
 export default function Languages({ register, errors, setValue }: PropType) {
   return (

@@ -6,7 +6,8 @@ import type {
   UseFormWatch,
 } from "react-hook-form";
 import { type UserValidationType } from "~/validation/member";
-export type PropsType = {
+
+export type MemberFormProps = {
   register: UseFormRegister<UserValidationType>;
   errors: FieldErrors<UserValidationType>;
   getValues?: UseFormGetValues<UserValidationType>;

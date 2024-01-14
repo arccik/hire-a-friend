@@ -1,10 +1,13 @@
-import { type PropsType } from "~/types/MemberFormPropsType";
+import { type MemberFormProps } from "~/types/MemberFormPropsType";
 import activities from "~/data/activities.json";
 import hobbies from "~/data/hobby-list.json";
 import { Chip, Select, SelectItem } from "@nextui-org/react";
 
-type PropType = Required<Pick<PropsType, "setValue">> &
-  PropsType & { value: string[] | undefined; type: "activities" | "hobbies" };
+type InterestActivitiesProps = Required<Pick<MemberFormProps, "setValue">> &
+  MemberFormProps & {
+    value: string[] | undefined;
+    type: "activities" | "hobbies";
+  };
 
 export default function InterestActivities({
   register,
@@ -12,7 +15,7 @@ export default function InterestActivities({
   setValue,
   value,
   type,
-}: PropType) {
+}: InterestActivitiesProps) {
   const values = type === "activities" ? activities : hobbies;
   return (
     <fieldset>

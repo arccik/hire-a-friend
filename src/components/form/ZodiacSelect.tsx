@@ -1,11 +1,11 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { zodiacSigns } from "~/data/zodiac-sign-list";
-import { type PropsType } from "~/types/MemberFormPropsType";
+import { type MemberFormProps } from "~/types/MemberFormPropsType";
 
 export default function ZodiacSelect({
   register,
   value,
-}: PropsType & { value?: string }) {
+}: MemberFormProps & { value?: string }) {
   return (
     <Select
       items={zodiacSigns}

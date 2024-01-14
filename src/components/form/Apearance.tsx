@@ -1,6 +1,6 @@
 import { Input, Select, SelectItem } from "@nextui-org/react";
 
-import { type PropsType } from "~/types/MemberFormPropsType";
+import { type MemberFormProps } from "~/types/MemberFormPropsType";
 import genders from "~/data/gender-list.json";
 import ZodiacSelect from "./ZodiacSelect";
 
@@ -8,7 +8,7 @@ export default function Apearance({
   register,
   errors,
   getValues,
-}: Required<Pick<PropsType, "getValues">> & PropsType) {
+}: Required<Pick<MemberFormProps, "getValues">> & MemberFormProps) {
   const gender = getValues?.("gender");
   return (
     <div className="border-b border-slate-400/50 pb-12">

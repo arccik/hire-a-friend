@@ -1,7 +1,10 @@
-import { type PropsType } from "~/types/MemberFormPropsType";
+import { type MemberFormProps } from "~/types/MemberFormPropsType";
 
 type PropType = Required<
-  Pick<PropsType, "register" | "errors" | "getValues" | "watch" | "setValue">
+  Pick<
+    MemberFormProps,
+    "register" | "errors" | "getValues" | "watch" | "setValue"
+  >
 >;
 
 import { Checkbox, Input } from "@nextui-org/react";

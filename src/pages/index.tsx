@@ -21,20 +21,17 @@ export default function HomePage() {
           </p>
           <p className="mr-10 mt-5 text-2xl">
             Rent one (they come with stories).
-            {/* Having nobody to share your emotions, the quiet evenings spent
-            alone, and the unspoken words? */}
-            {/* Whether you are seeking companionship, a listening ear, or a way to
-            earn extra income, our platform connects those looking to offer
-            services with those in need, creating meaningful connections and
-            financial opportunities. */}
           </p>
-          <p className="text-md">
-            Whether you are seeking companionship or a listening ear, our
+          <p className="text-md text-gray-400">
+            Our platform connects those offering services with those in need,
+            fostering meaningful connections and providing opportunities for
+            extra income.
+            {/* Whether you are seeking companionship or a listening ear, our
             platform connects those looking to offer services with individuals
             in need. On the other hand, if you are looking to earn extra income,
             our platform also provides opportunities for financial growth. This
             way, we cater to both the desire for meaningful connections and the
-            pursuit of additional financial resources.
+            pursuit of additional financial resources. */}
           </p>
           <div className="mb-10 flex w-full">
             <Button
@@ -51,7 +48,8 @@ export default function HomePage() {
       <section className="mt-10 grid min-h-screen grid-flow-row md:grid-cols-2">
         <div className="order-2 m-5 flex flex-col justify-center md:order-1 md:ml-10">
           <p className="mt-10 text-4xl font-semibold md:text-7xl">
-            Your Path to Friendship and Connection
+            {/* Your Path to Friendship and Connection */}
+            Your Path to Adventure and Companionship
           </p>
           <p className="mt-10 text-xl">
             At Rent My Time, we believe that everyone deserves the warmth of

@@ -13,6 +13,7 @@ import "~/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import Analytics from "~/helpers/Analytics";
 import { WebSocketProvider } from "~/context/websocketProvider";
+import CookiesConsentBanner from "~/components/features/CookiesConsentBanner";
 
 const meta = [
   {
@@ -59,6 +60,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             draggable
           />
           <Footer />
+          <CookiesConsentBanner />
         </WebSocketProvider>
       </SessionProvider>
     </NextUIProvider>

@@ -9,8 +9,9 @@ import {
   handleRouterNavigation,
   handleRouterRemoveQuery,
 } from "~/helpers/searchParams";
-import { useSharedWebSocket } from "~/context/websocketProvider";
+import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
 import { newMessageNotification } from "~/helpers/notifications";
+import { api } from "~/utils/api";
 
 export default function ChatBox() {
   const searchParams = useSearchParams();
@@ -19,14 +20,30 @@ export default function ChatBox() {
   const { data: userSession } = useSession();
   const { lastJsonMessage } = useSharedWebSocket();
 
+  const message =
+    lastJsonMessage &&
+    ACTIONS.newMessage in lastJsonMessage &&
+    lastJsonMessage.body;
+
+  const senderId: string = message ? lastJsonMessage.body.senderId : "";
+
+  const { data } = api.user.getOne.useQuery(
+    { id: senderId },
+    {
+      enabled: !!message,
+    },
+  );
+
   useEffect(() => {
-    if (lastJsonMessage && "body" in lastJsonMessage) {
-      const message = lastJsonMessage.body;
-      newMessageNotification({
-        message,
-      });
+    if (message && data) {
+      message &&
+        newMessageNotification({
+          message: message,
+          image: data.image,
+          name: data.name,
+        });
     }
-  }, [lastJsonMessage]);
+  }, [lastJsonMessage, data]);
 
   useEffect(() => {
     // disable scrolling on mobile when chat open

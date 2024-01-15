@@ -54,7 +54,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <ToastContainer
             position="top-right"
             newestOnTop={false}
-            // theme="colored"
+            hideProgressBar={true}
+            autoClose={2000}
             draggable
           />
           <Footer />

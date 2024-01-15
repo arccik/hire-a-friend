@@ -29,6 +29,7 @@ export enum ACTIONS {
   $disconnect = "$disconnect",
   contactList = "contactList",
   sendPrivate = "sendPrivate",
+  newMessage = "body",
 }
 
 interface WebSocketContextProps {

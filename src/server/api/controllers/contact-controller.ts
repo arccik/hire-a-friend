@@ -5,7 +5,7 @@ import {
   ScanCommand,
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
-import { ddbClient } from "../routers/realtime-chat";
+import { ddbClient } from "../routers/chat";
 import { deleteChatHistory } from "./chat-controller";
 
 type FuncParams = {

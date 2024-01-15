@@ -12,35 +12,19 @@ export const uploaderRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const s3Client = new S3Client({});
 
-      return await createPresignedPost(
-        s3Client,
-        {
-          Bucket: env.AWS_BUCKET_NAME,
-          Key: uuidv4(),
-          Conditions: [
-            ["content-length-range", 0, 10485760], // up to 10 MB
-            ["starts-with", "$Content-Type", input.fileType],
-          ],
-          Fields: {
-            acl: "public-read",
-            "Content-Type": input.fileType,
-          },
-          Expires: 600,
+      return await createPresignedPost(s3Client, {
+        Bucket: env.AWS_BUCKET_NAME,
+        Key: uuidv4(),
+        Conditions: [
+          ["content-length-range", 0, 10485760], // up to 10 MB
+          ["starts-with", "$Content-Type", input.fileType],
+        ],
+        Fields: {
+          acl: "public-read",
+          "Content-Type": input.fileType,
         },
-
-        //   {
-        //   Bucket: env.AWS_BUCKET_NAME,
-        //   Key: input.fileName,
-        //   Fields: {
-        //     key: input.fileName,
-        //     "Content-Type": input.fileType,
-        //   },
-        //   Expires: 600, // seconds
-        //   Conditions: [
-        //     ["content-length-range", 0, 10048576], // up to 10 MB
-        //   ],
-        // }
-      );
+        Expires: 600,
+      });
     }),
   delete: protectedProcedure
     .input(z.object({ url: z.string() }))

@@ -5,7 +5,7 @@ import { uploaderRouter } from "./routers/file-upload";
 import { emailRouter } from "./routers/email";
 import { notificationRouter } from "./routers/notification";
 import { contactsRouter } from "./routers/contact";
-import { chatRouter } from "./routers/realtime-chat";
+import { chatRouter } from "./routers/chat";
 
 /**
  * This is the primary router for your server.

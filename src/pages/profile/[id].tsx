@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/react";
+import { Badge, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -140,7 +140,7 @@ export default function ProfilePage() {
               </div>
               <div className="my-5 text-center md:mt-2">
                 <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
-                  {data?.name}
+                  {data?.name} {data.online ? "Online " : "Offline"}
                 </h3>
                 <p className="-mt-4 text-slate-400">{data.experties}</p>
 

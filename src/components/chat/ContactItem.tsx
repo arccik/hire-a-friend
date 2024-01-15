@@ -43,10 +43,10 @@ export default function ContactItem({
   return (
     <div
       key={contact.id}
+      onClick={() => handleContactButtonClick(contact.id)}
       className="flex w-full animate-appearance-in cursor-pointer content-start items-center justify-between p-2 text-black hover:bg-slate-200"
     >
       <User
-        onClick={() => handleContactButtonClick(contact.id)}
         isFocusable
         name={contact.name}
         description={contact.online ? "Online" : "Offline"}

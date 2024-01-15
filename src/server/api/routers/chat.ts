@@ -12,7 +12,11 @@ export const ddbClient = new DynamoDBClient({
 });
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
-import { getContacts, saveContact } from "../controllers/contact-controller";
+import {
+  deleteContact,
+  getContacts,
+  saveContact,
+} from "../controllers/contact-controller";
 import { getMessages, saveMessage } from "../controllers/message-controller";
 import { saveMessageSchema } from "~/validation/message";
 
@@ -59,16 +63,6 @@ export const chatRouter = createTRPCRouter({
       });
     }),
   getContacts: protectedProcedure.query(async ({ ctx }) => {
-    // const params = {
-    //   TableName: "Contacts",
-    //   FilterExpression: "userId = :userId", // Filter by userId
-    //   ExpressionAttributeValues: {
-    //     ":userId": ctx.session.user.id,
-    //   },
-    //   ProjectionExpression: "contactId",
-    // };
-    // const command = new ScanCommand(params);
-    // const response = await ddbClient.send(command);
     const contactsIds = await getContacts({ userId: ctx.session.user.id });
     if (!contactsIds) return [];
 
@@ -110,40 +104,10 @@ export const chatRouter = createTRPCRouter({
   deleteContact: protectedProcedure
     .input(z.object({ contactId: z.string() }))
     .mutation(async ({ ctx, input: { contactId } }) => {
-      // const params = {
-      //   TableName: "ChatContactsList",
-      //   Key: {
-      //     userId: { S: ctx.session.user.id },
-      //   },
-      //   UpdateExpression: "DELETE contactsIds :contactId",
-      //   ExpressionAttributeNames: {
-      //     "#contactsIds": "contactsIds",
-      //   },
-      //   ExpressionAttributeValues: {
-      //     ":contactId": contactId,
-      //   },
-      // };
-
-      // const command = new UpdateCommand(params);
-      // try {
-      //   const response = await client.send(command);
-      //   console.log("ContactId deleted successfully:", response);
-      //   return response;
-      // } catch (error) {
-      //   console.error("Error deleting contactId:", error);
-      //   throw error; // Re-throw for proper error handling
-      // }
-      const params = {
-        TableName: "Contacts",
-        Key: {
-          userId: ctx.session.user.id, // Partition key
-          contactId: contactId,
-        },
-      };
-
-      const command = new DeleteCommand(params);
-      const response = await ddbClient.send(command);
-
+      const response = await deleteContact({
+        userId: ctx.session.user.id,
+        contactId,
+      });
       if (!response) {
         console.log("Contact not found or already deleted.");
       } else {

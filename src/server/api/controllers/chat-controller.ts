@@ -1,5 +1,5 @@
 import { PutCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
-import { ddbClient } from "../routers/realtime-chat";
+import { ddbClient } from "../routers/chat";
 
 type FuncParams = {
   userId: string;

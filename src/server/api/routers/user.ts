@@ -9,6 +9,7 @@ import {
 import { clientSchema } from "~/validation/client-form";
 import { userValidation } from "~/validation/member";
 import { signUpSchema } from "~/validation/sign-up";
+import { isOnline } from "../controllers/contact-controller";
 // import bcrypt from "bcrypt";
 
 export const userRouter = createTRPCRouter({
@@ -74,13 +75,16 @@ export const userRouter = createTRPCRouter({
     }),
   getOne: publicProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.user.findUnique({
+    .query(async ({ ctx, input }) => {
+      const online = await isOnline({ userId: input.id });
+      const user = await ctx.prisma.user.findUnique({
         where: {
           id: input.id,
         },
         include: { appearance: true, Rate: true, availability: true },
       });
+      if (!user) return null;
+      return { ...user, online };
     }),
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({ select: { password: false } });

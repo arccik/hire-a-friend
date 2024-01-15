@@ -16,7 +16,7 @@ export default function HomePage() {
       <section className="grid min-h-screen grid-flow-row md:grid-cols-2">
         <Lottie animationData={sayHiData} loop={false} />
         <div className="m-5 flex flex-col justify-center">
-          <p className="text-4xl font-semibold md:text-8xl">
+          <p className="text-5xl font-semibold lg:text-7xl">
             Need a buddy for life&apos;s adventures?
           </p>
           <p className="mr-10 mt-5 text-2xl">

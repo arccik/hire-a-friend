@@ -4,6 +4,7 @@ import { TfiClose } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import ContactItem from "./ContactItem";
+import { Spinner } from "@nextui-org/react";
 
 type ContactsProp = {
   onClose: () => void;
@@ -15,9 +16,11 @@ type ModalActionParams = {
 };
 
 export default function Contacts({ onClose }: ContactsProp) {
-
-  const { data: contactsData, refetch: refetchContacts } =
-    api.contact.getContacts.useQuery();
+  const {
+    data: contactsData,
+    refetch: refetchContacts,
+    status,
+  } = api.contact.getContacts.useQuery();
   const deleteContact = api.contact.deleteContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
@@ -26,7 +29,6 @@ export default function Contacts({ onClose }: ContactsProp) {
     },
   });
 
-  console.log("Contacts [isOnline] ", contactsData);
   const blockContact = api.contact.blockContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {
@@ -34,6 +36,10 @@ export default function Contacts({ onClose }: ContactsProp) {
       await refetchContacts();
     },
   });
+
+  if (status === "loading") {
+    return <Spinner className="flex h-full items-center justify-center" />;
+  }
 
   const handleContactButtonClick = (contactId: string) => {
     handleRouterNavigation({ chat: contactId });

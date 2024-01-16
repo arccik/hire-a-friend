@@ -50,28 +50,36 @@ export default function NotificationCenter() {
           ],
         }}
       >
-        <DropdownSection aria-label="Profile & Actions" showDivider>
-          {notifications.map((notificaiton) => (
-            <DropdownItem isReadOnly key={notificaiton.id}>
-              <div
-                onClick={() => router.push(`/profile/${notificaiton.id}`)}
-                className="flex flex-row items-center gap-2"
-              >
-                <Avatar
-                  name="Junior Garcia"
-                  size="sm"
-                  src={notificaiton.image}
-                  className="h-6 w-6 text-tiny"
-                  classNames={{
-                    name: "text-default-600",
-                  }}
-                />
-                <p className="w-full truncate text-xs md:w-48">
-                  {notificaiton.message}
-                </p>
-              </div>
+        <DropdownSection aria-label="Profile & Actions">
+          {!!notifications.length ? (
+            notifications.map((notificaiton) => (
+              <DropdownItem isReadOnly key={notificaiton.id}>
+                <div
+                  onClick={() => router.push(`/profile/${notificaiton.id}`)}
+                  className="flex flex-row items-center gap-2"
+                >
+                  <Avatar
+                    name="Junior Garcia"
+                    size="sm"
+                    src={notificaiton.image}
+                    className="h-6 w-6 text-tiny"
+                    classNames={{
+                      name: "text-default-600",
+                    }}
+                  />
+                  <p className="w-full truncate text-xs md:w-48">
+                    {notificaiton.message}
+                  </p>
+                </div>
+              </DropdownItem>
+            ))
+          ) : (
+            <DropdownItem>
+              <p className="flex h-full w-full flex-row items-center justify-center text-slate-400">
+                No Notification yet.
+              </p>
             </DropdownItem>
-          ))}
+          )}
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>

@@ -7,32 +7,35 @@ import {
   Button,
   Avatar,
 } from "@nextui-org/react";
-import { FaBell } from "react-icons/fa";
+import { CiBellOn } from "react-icons/ci";
+import { api } from "~/utils/api";
+import Loader from "../features/Loader";
+import DisplayError from "../features/DisplayError";
+import { useRouter } from "next/router";
 
 export default function NotificationCenter() {
+  const { data: notifications, status } = api.notify.getAll.useQuery();
+  const router = useRouter();
+  if (status === "loading") return <Loader />;
+  if (status === "error") return <DisplayError />;
+
+  console.log("notification", notifications);
   return (
-    <Dropdown
-      showArrow
-      radius="sm"
-      classNames={{
-        base: "before:bg-default-200", // change arrow background
-        content: "p-0 border-small border-divider bg-background",
-      }}
-    >
+    <Dropdown showArrow radius="sm">
       <DropdownTrigger>
         <Button
           isIconOnly
-          variant="ghost"
           className="border-none"
+          variant="ghost"
+          color="warning"
           disableRipple
         >
-          <FaBell size="2rem" />
+          <CiBellOn size="2rem" />
         </Button>
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Custom item styles"
         disabledKeys={["profile"]}
-        className="p-3"
         itemClasses={{
           base: [
             "rounded-md",
@@ -48,19 +51,27 @@ export default function NotificationCenter() {
         }}
       >
         <DropdownSection aria-label="Profile & Actions" showDivider>
-          <DropdownItem
-            isReadOnly
-            key="profile"
-            className="flex h-14 w-40 gap-2 opacity-100"
-          >
-            <Avatar
-              name="Junior Garcia"
-              classNames={{
-                name: "text-default-600",
-              }}
-            />
-            <p>Some text will go here</p>
-          </DropdownItem>
+          {notifications.map((notificaiton) => (
+            <DropdownItem isReadOnly key={notificaiton.id}>
+              <div
+                onClick={() => router.push(`/profile/${notificaiton.id}`)}
+                className="flex flex-row items-center gap-2"
+              >
+                <Avatar
+                  name="Junior Garcia"
+                  size="sm"
+                  src={notificaiton.image}
+                  className="h-6 w-6 text-tiny"
+                  classNames={{
+                    name: "text-default-600",
+                  }}
+                />
+                <p className="w-full truncate text-xs md:w-48">
+                  {notificaiton.message}
+                </p>
+              </div>
+            </DropdownItem>
+          ))}
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>

@@ -4,19 +4,19 @@ import uploadFileToAWS from "~/utils/uploadFileToAWS";
 
 import ImageGallery from "../features/ImageGallery";
 import { toast } from "react-toastify";
-import { Spinner } from "@nextui-org/react";
+
 import { cn } from "~/lib/utils";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { v1 } from "uuid";
 import { type UserValidationType } from "~/validation/member";
 import { type FieldErrors, type UseFormSetValue } from "react-hook-form";
+import Loader from "../features/Loader";
 
 export type ImageUploadType = {
   setValue: UseFormSetValue<UserValidationType>;
   imgUrls: string[] | null;
   errors: FieldErrors<UserValidationType>;
 };
-
 
 export default function UploadImageGallery({
   setValue,
@@ -83,7 +83,7 @@ export default function UploadImageGallery({
           imagesUrl={imageUrls}
           handleDeleteImage={handleDeleteImage}
         />
-        {isLoading && <Spinner className="mx-auto my-5 w-20" color="warning" />}
+        {isLoading && <Loader />}
 
         <div className="flex justify-center">
           <label

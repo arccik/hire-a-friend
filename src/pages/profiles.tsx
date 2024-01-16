@@ -1,4 +1,4 @@
-import { Pagination, Spinner } from "@nextui-org/react";
+import { Pagination } from "@nextui-org/react";
 import { useSearchParams } from "next/navigation";
 import type { Metadata } from "next/types";
 import DisplayError from "~/components/features/DisplayError";
@@ -6,10 +6,10 @@ import Title from "~/components/features/Title";
 import FriendCard from "~/components/pages-components/profiles/FriendCard";
 import { api } from "~/utils/api";
 import ClearFilter from "~/components/pages-components/profiles/ClearFilterButton";
-// import PaginationOrange from "~/components/features/PaginationOrange";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import FilterButton from "~/components/pages-components/profiles/FilterButton";
 import { citiesList } from "~/data/cities-list";
+import Loader from "~/components/features/Loader";
 
 export const metadata: Metadata = {
   title: "Explore Profiles for Companionship and Services | RentMyTime",
@@ -57,15 +57,9 @@ export default function FriendsPage() {
         </p>
       </div>
       <div className="mx-auto h-full w-full max-w-screen-2xl content-center  pb-10">
-        {/* <Filter /> */}
         <FilterButton />
 
-        {filterStatus === "loading" && (
-          <Spinner
-            color="warning"
-            className="mt-10 flex items-center align-middle"
-          />
-        )}
+        {filterStatus === "loading" && <Loader />}
 
         {toDisplay && toDisplay[0].length === 0 && <ClearFilter show={true} />}
 

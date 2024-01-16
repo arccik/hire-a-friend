@@ -1,11 +1,13 @@
 import React from "react";
-import { Spinner } from "@nextui-org/react";
 import ActiveFriendsCard from "./ActiveFriendsCard";
 import { api } from "~/utils/api";
+import Loader from "~/components/features/Loader";
+import DisplayError from "~/components/features/DisplayError";
 
 export default function ActiveFriend() {
   const { data, status } = api.user.getActiveFriends.useQuery();
-  if (status === "loading") return <Spinner size="lg" color="warning" />;
+  if (status === "loading") return <Loader />;
+  if (status === "error") return <DisplayError />;
   return (
     <div className="no-scrollbar flex w-[calc(100%)] flex-col">
       <div className="no-scrollbar flex w-full overflow-x-scroll">

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
-import { Spinner, User } from "@nextui-org/react";
+import { User } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
@@ -14,6 +14,7 @@ import MessageBubble from "./MessageBubble";
 
 // import SocketStatus from "./SocketStatus";
 import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
+import Loader from "../features/Loader";
 
 export type Message = {
   senderId: string;
@@ -65,13 +66,8 @@ export default function ChatBody() {
     handleRouterRemoveQuery("chat");
   };
 
-  if (savedMessagesStatus === "loading")
-    return (
-      <Spinner
-        className="flex h-full w-full items-center justify-center"
-        color="warning"
-      />
-    );
+  if (savedMessagesStatus === "loading") return <Loader />;
+
   const handleCloseButton = () => {
     handleRouterRemoveQuery("showChat");
   };

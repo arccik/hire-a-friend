@@ -1,4 +1,3 @@
-import { Badge, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
@@ -21,6 +20,7 @@ import { zodiacSigns } from "~/data/zodiac-sign-list";
 import ChipList from "~/components/pages-components/profile/ChipList";
 import Alert from "~/components/pages-components/profile/Alert";
 import { useSession } from "next-auth/react";
+import Loader from "~/components/features/Loader";
 
 export default function ProfilePage() {
   const { data: userSession } = useSession();
@@ -42,15 +42,8 @@ export default function ProfilePage() {
   //   { enabled: !!userSession?.user.id },
   // );
 
-  if (status === "loading") {
-    return (
-      <Spinner
-        size="lg"
-        color="warning"
-        className="flex h-screen items-center justify-center"
-      />
-    );
-  }
+  if (status === "loading") return <Loader />;
+
   if (status === "error" || !data) return <DisplayError />;
 
   if (data?.userType === "Customer") return <CustomerProfile data={data} />;

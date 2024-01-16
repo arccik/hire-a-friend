@@ -1,10 +1,11 @@
-import { Card, Spinner } from "@nextui-org/react";
-import MemberForm from "../../components/form/MemberForm";
+import { Card } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+
 import { api } from "~/utils/api";
+import MemberForm from "../../components/form/MemberForm";
 import DisplayError from "~/components/features/DisplayError";
 import CustomerForm from "~/components/form/CustomerForm";
-// import VerticalMenu from "~/components/pages-components/update-profile/VerticalMenu";
+import Loader from "~/components/features/Loader";
 
 export default function UpdateProfile() {
   const { data: userSession } = useSession({ required: true });
@@ -13,20 +14,12 @@ export default function UpdateProfile() {
     { enabled: !!userSession?.user },
   );
 
-  if (status === "loading")
-    return (
-      <Spinner
-        color="warning"
-        className="mt-10 flex h-screen items-center align-middle"
-      />
-    );
+  if (status === "loading") return <Loader />;
+
   if (status === "error") return <DisplayError />;
 
   return (
     <main>
-      {/* <aside className="w-14">
-        <VerticalMenu />
-      </aside> */}
       <section className="flex flex-col items-center justify-center p-4">
         <Card fullWidth className="p-4 md:p-10">
           {user?.userType === "Friend" && userSession?.user?.id ? (

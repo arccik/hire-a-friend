@@ -5,13 +5,13 @@ import {
   CardFooter,
   CardHeader,
   Image,
-  Spinner,
 } from "@nextui-org/react";
 import { type UserType } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import Router from "next/router";
 import { api } from "~/utils/api";
 import { FaHandHoldingHeart, FaHandHoldingUsd } from "react-icons/fa";
+import Loader from "~/components/features/Loader";
 
 type PropType = {
   title: string;
@@ -36,7 +36,7 @@ export default function MembershipCard({
       void Router.replace(`/auth/update-profile`);
     },
   });
-  if (status === "loading") return <Spinner />;
+  if (status === "loading") return <Loader />;
 
   if (isTypeSelected) void Router.replace(`/auth/update-profile`);
 

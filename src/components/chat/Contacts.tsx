@@ -4,7 +4,7 @@ import { TfiClose } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import ContactItem from "./ContactItem";
-import { Spinner } from "@nextui-org/react";
+import Loader from "../features/Loader";
 
 type ContactsProp = {
   onClose: () => void;
@@ -37,9 +37,7 @@ export default function Contacts({ onClose }: ContactsProp) {
     },
   });
 
-  if (status === "loading") {
-    return <Spinner className="flex h-full items-center justify-center" />;
-  }
+  if (status === "loading") return <Loader />; 
 
   const handleContactButtonClick = (contactId: string) => {
     handleRouterNavigation({ chat: contactId });

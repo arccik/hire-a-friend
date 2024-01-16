@@ -1,10 +1,11 @@
-import { Button, Spinner } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import Image from "next/image";
 import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
+import Loader from "../features/Loader";
 
 type PropsType = {
   setValue: (value: string) => void;
@@ -48,7 +49,8 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
     }
     setIsLoading(false);
   };
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Loader />;
+
   return (
     <div className="mt-2 flex items-center gap-x-3">
       {imageUrl ? (

@@ -150,6 +150,8 @@ export default function ProfilePage() {
                   isAvailable={data.activated}
                   rate={data.Rate}
                   id={data.id}
+                  name={data.name}
+                  image={data.image}
                   refetch={() => void refetch()}
                 />
 
@@ -207,6 +209,8 @@ export default function ProfilePage() {
               </div>
 
               <ActionButtons
+                name={data.name}
+                image={data.image}
                 isAvailable={data.activated}
                 rate={data.Rate}
                 id={data.id}

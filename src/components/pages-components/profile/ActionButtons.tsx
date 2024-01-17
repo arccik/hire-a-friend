@@ -14,12 +14,16 @@ type PropType = {
   rate: Rate[];
   refetch: () => void;
   isAvailable: boolean | null;
+  name: string | null;
+  image: string | null;
 };
 
 export default function ActionButtons({
   id,
   rate,
   refetch,
+  name,
+  image,
   isAvailable,
 }: PropType) {
   const [activated, setActivated] = useState(!!isAvailable);
@@ -28,6 +32,7 @@ export default function ActionButtons({
   const userId = userSession?.user?.id;
 
   const saveContact = api.chat.saveContact.useMutation();
+  const makeNotificaiton = api.notify.create.useMutation();
   const makeActive = api.user.makeActive.useMutation({
     onError: (e) => {
       if (e.message.includes("fields")) {
@@ -82,13 +87,29 @@ export default function ActionButtons({
       status,
     });
   };
+
+  const handleRateClick = (id: string) => {
+    rateUser.mutate({ id });
+    if (!image && !name) return;
+    if (isRated) {
+      makeNotificaiton.mutate({
+        message: `You remove vote from ${name}`,
+        image: image ?? "",
+      });
+    } else {
+      makeNotificaiton.mutate({
+        message: `Vated for ${name}`,
+        image: image ?? "",
+      });
+    }
+  };
   return (
     <div className="mb-2 mt-0 flex justify-center gap-5 text-sm font-bold leading-normal text-gray-400">
       <div className="space-x-4 space-y-4 ">
         <Button
           color="warning"
           variant={isRated ? "light" : "flat"}
-          onClick={() => rateUser.mutate({ id })}
+          onClick={() => handleRateClick(id)}
         >
           <MdThumbUpAlt />
           {isRated ? "Rated" : "Rate"}

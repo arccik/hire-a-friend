@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 export default function formatMessageDateTime(timestamp: string) {
   const messageDateTime = dayjs(timestamp);
   const today = dayjs();
@@ -12,3 +13,7 @@ export default function formatMessageDateTime(timestamp: string) {
     return messageDateTime.format("D MMM, YYYY h:mm A");
   }
 }
+
+export const formatNoticationfDateTime = (dateTime: Date) => {
+  return dayjs().to(dayjs(dateTime));
+};

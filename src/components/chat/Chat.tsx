@@ -19,7 +19,7 @@ export default function ChatBox() {
   const chatId = searchParams.get("chat");
   const { data: userSession } = useSession();
   const { lastJsonMessage } = useSharedWebSocket();
-
+  const notification = api.notify.create.useMutation();
   const message =
     lastJsonMessage &&
     ACTIONS.newMessage in lastJsonMessage &&
@@ -35,15 +35,19 @@ export default function ChatBox() {
   );
 
   useEffect(() => {
-    if (message && data) {
-      message &&
-        newMessageNotification({
-          message: message,
-          image: data.image,
-          name: data.name,
-        });
+    if (message) {
+      if (!data) return;
+      newMessageNotification({
+        message: message,
+        image: data.image!,
+        name: data.name!,
+      });
+      notification.mutate({
+        message: `${data.name}: ${message.message}`,
+        image: data.image ?? "",
+      });
     }
-  }, [lastJsonMessage, data]);
+  }, [lastJsonMessage]);
 
   useEffect(() => {
     // disable scrolling on mobile when chat open

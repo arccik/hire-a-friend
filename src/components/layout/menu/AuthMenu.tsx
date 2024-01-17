@@ -104,6 +104,9 @@ export default function AuthMenu({
       </NavbarContent>
       <NavbarContent justify="end" className="flex sm:hidden">
         <NavbarContent className="sm:hidden" justify="end">
+          <NavbarItem>
+            <NotificationCenter />
+          </NavbarItem>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />

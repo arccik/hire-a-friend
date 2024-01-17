@@ -47,7 +47,7 @@ const MyForm: React.FC<PropType> = ({
     onSuccess: (user) => {
       toast.success(
         <>
-          Profile updated successfully{" "}
+          Profile updated successfully
           <Button
             as={Link}
             href={`/profile/${user.id}`}

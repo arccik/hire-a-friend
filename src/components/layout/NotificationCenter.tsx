@@ -34,7 +34,7 @@ export default function NotificationCenter() {
     if (notificaiton.message.includes("Message")) {
       handleRouterNavigation({ chat: notificaiton.id, showChat: true });
     } else {
-      router.push(`/profile/${notificaiton.id}`);
+      void router.push(`/profile/${notificaiton.id}`);
     }
   };
   return (

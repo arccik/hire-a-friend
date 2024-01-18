@@ -173,7 +173,7 @@ export default function ProfilePage() {
               <div className="mx-auto mt-5 flex flex-row justify-center md:w-96">
                 <div className="flex justify-between gap-10">
                   {zodiacSign && (
-                    <div className="mx-auto">
+                    <div className="flex flex-col items-center">
                       <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
                         Zodiac Sign
                       </p>
@@ -184,7 +184,7 @@ export default function ProfilePage() {
                     </div>
                   )}
                   {data.age && (
-                    <div className="mx-auto">
+                    <div className="flex flex-col items-center">
                       <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
                         Age
                       </p>
@@ -195,7 +195,7 @@ export default function ProfilePage() {
                     </div>
                   )}
                   {genderSign && (
-                    <div className="mx-auto">
+                    <div className="flex flex-col items-center">
                       <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
                         Gender
                       </p>
@@ -208,14 +208,6 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <ActionButtons
-                name={data.name}
-                image={data.image}
-                isAvailable={data.activated}
-                rate={data.Rate}
-                id={data.id}
-                refetch={() => void refetch()}
-              />
               {/* {data.lastLogin && (
                 <div className="mt-10 text-xs text-slate-400">
                   <p>Last Visit: {data.lastLogin.toLocaleDateString()}</p>

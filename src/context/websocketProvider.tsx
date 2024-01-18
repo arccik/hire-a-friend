@@ -51,8 +51,6 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
       userId ? env.NEXT_PUBLIC_AWS_WEBSOCKET : null,
       {
         onOpen: () => sendJsonMessage({ userId }),
-        reconnectAttempts: 10,
-        reconnectInterval: 3000,
       },
     );
 

@@ -30,7 +30,7 @@ export default function ActionButtons({
   const { data: userSession } = useSession();
 
   const userId = userSession?.user?.id;
-  const saveContact = api.chat.saveContact.useMutation();
+  const saveContact = api.contact.addContact.useMutation();
   const makeNotificaiton = api.notify.create.useMutation();
   const makeActive = api.user.makeActive.useMutation({
     onError: (e) => {
@@ -75,7 +75,7 @@ export default function ActionButtons({
         </div>,
       );
     }
-    saveContact.mutate(id);
+    saveContact.mutate({ id });
     handleRouterNavigation({ chat: id, showChat: true });
   };
 
@@ -97,7 +97,7 @@ export default function ActionButtons({
       });
     } else {
       makeNotificaiton.mutate({
-        message: `Rated ${name}`,
+        message: `Rated ${name}'s profile`,
         image: image ?? "",
         from: id,
       });

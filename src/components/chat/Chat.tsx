@@ -43,7 +43,7 @@ export default function ChatBox() {
         name: data.name!,
       });
       notification.mutate({
-        message: `${data.name}: ${message.message}`,
+        message: `Message ${data.name}: ${message.message}`,
         image: data.image ?? "",
         from: senderId,
       });

@@ -46,6 +46,7 @@ export const notificationRouter = createTRPCRouter({
       z.object({
         message: z.string(),
         image: z.string(),
+        from: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -54,6 +55,7 @@ export const notificationRouter = createTRPCRouter({
           userId: ctx.session.user.id,
           message: input.message,
           image: input.image,
+          from: input.from,
         },
       });
     }),

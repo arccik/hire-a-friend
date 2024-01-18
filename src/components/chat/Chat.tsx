@@ -10,7 +10,7 @@ import {
   handleRouterRemoveQuery,
 } from "~/helpers/searchParams";
 import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
-import { newMessageNotification } from "~/helpers/notifications";
+import { newMessageNotification } from "~/helpers/newMessageNotification";
 import { api } from "~/utils/api";
 
 export default function ChatBox() {
@@ -45,6 +45,7 @@ export default function ChatBox() {
       notification.mutate({
         message: `${data.name}: ${message.message}`,
         image: data.image ?? "",
+        from: senderId,
       });
     }
   }, [lastJsonMessage]);

@@ -171,4 +171,5 @@ model Notification {
     createdAt DateTime @default(now())
     isRead    Boolean  @default(false)
     image     String
+    from      String
 }

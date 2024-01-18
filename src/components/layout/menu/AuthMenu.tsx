@@ -19,7 +19,7 @@ import Link from "next/link";
 import { menuItems } from "./menu-items";
 import { AiFillSetting } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
-import NotificationCenter from "../NotificationCenter";
+import NotificationCenter from "../NotificationCenter/NotificationCenter";
 // import { useSharedWebSocket } from "~/context/websocketProvider";
 
 type PropType = {

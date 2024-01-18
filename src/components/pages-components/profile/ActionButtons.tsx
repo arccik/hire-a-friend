@@ -30,7 +30,6 @@ export default function ActionButtons({
   const { data: userSession } = useSession();
 
   const userId = userSession?.user?.id;
-
   const saveContact = api.chat.saveContact.useMutation();
   const makeNotificaiton = api.notify.create.useMutation();
   const makeActive = api.user.makeActive.useMutation({
@@ -93,13 +92,15 @@ export default function ActionButtons({
     if (!image && !name) return;
     if (isRated) {
       makeNotificaiton.mutate({
-        message: `You remove vote from ${name}`,
+        message: `Unrated ${name}'s profile`,
         image: image ?? "",
+        from: id,
       });
     } else {
       makeNotificaiton.mutate({
-        message: `Vated for ${name}`,
+        message: `Rated ${name}`,
         image: image ?? "",
+        from: id,
       });
     }
   };
@@ -128,7 +129,6 @@ export default function ActionButtons({
             <br />
             <Switch
               color="warning"
-              // defaultSelected={activated}
               isSelected={activated}
               onValueChange={handleActivateClick}
             >
@@ -138,7 +138,6 @@ export default function ActionButtons({
         ) : (
           <Button
             onClick={handleChatClick}
-            // color="success"
             className="mr-2 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-white"
             type="button"
             variant="flat"

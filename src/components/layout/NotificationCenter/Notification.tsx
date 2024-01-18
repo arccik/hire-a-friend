@@ -19,7 +19,7 @@ export default function Notification({ notification }: NotificationProps) {
   useEffect(() => {
     // Set isRead to the initial value only on the first render
     setIsRead(initialIsReadRef.current);
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, []);
 
   const handleNotificationClick = (notificaiton: Notification) => {
     if (notificaiton.message.includes("Message")) {
@@ -37,7 +37,7 @@ export default function Notification({ notification }: NotificationProps) {
       onClick={() => handleNotificationClick(notification)}
       className="flex flex-row items-center gap-1 md:gap-2"
     >
-      <Avatar src={notification.image} className="h-6 w-6" />
+      <Avatar src={notification.image} className="h-6" />
       <p className="w-full truncate text-tiny ">{notification.message}</p>
       <span className="text-[10px] text-slate-400">
         {formatNoticationfDateTime(notification.createdAt)}

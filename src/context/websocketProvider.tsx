@@ -53,12 +53,9 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
         onOpen: () => sendJsonMessage({ userId }),
         reconnectAttempts: 10,
         reconnectInterval: 3000,
-        shouldReconnect: (v) => {
-          console.log("Should Reconnect :)", v);
-          return true;
-        },
       },
     );
+
 
   const value: WebSocketContextProps = {
     sendJsonMessage,

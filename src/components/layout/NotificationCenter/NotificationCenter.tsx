@@ -63,7 +63,7 @@ export default function NotificationCenter() {
     0,
   );
 
-  const handleBellClick = async () => {
+  const handleBellClick = () => {
     setAllRead.mutate();
   };
 

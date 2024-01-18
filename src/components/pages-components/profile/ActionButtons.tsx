@@ -49,7 +49,6 @@ export default function ActionButtons({
 
   const rateUser = api.friend.vote.useMutation({
     onSuccess: () => {
-      toast.success("Thanks");
       refetch();
     },
     onError: (e) => {

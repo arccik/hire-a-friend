@@ -41,7 +41,7 @@ export const chatRouter = createTRPCRouter({
       return ddbClient.send(command);
     }),
   isBlocked: protectedProcedure.query(async ({ ctx }) => {
-    ctx.prisma.user.findFirst({
+    return ctx.prisma.user.findFirst({
       where: {
         id: ctx.session.user.id,
         blockedBy: { has: ctx.session.user.id },

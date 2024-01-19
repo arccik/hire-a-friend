@@ -30,7 +30,7 @@ export const chatRouter = createTRPCRouter({
     }),
   deleteMessage: protectedProcedure
     .input(z.object({ chatId: z.string() }))
-    .mutation(async ({ input: { chatId } }) => {
+    .mutation(({ input: { chatId } }) => {
       const params = {
         TableName: "ChatHistory",
         Key: {

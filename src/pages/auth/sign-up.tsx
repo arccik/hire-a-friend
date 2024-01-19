@@ -26,6 +26,7 @@ export default function SignUpPage() {
     clearErrors,
     setError,
     control,
+    getValues,
   } = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
   });
@@ -41,6 +42,17 @@ export default function SignUpPage() {
         toast.success("User Successfully Created!");
       })
       .catch((_) => setError("email", { message: "User alredy exist!" }));
+  };
+
+  const handleGoogleSignInClick = () => {
+    const userType = getValues("userType");
+    const callBackUrl = {
+      Friend: "/auth/update-profile",
+      Customer: "auth/update-profile",
+    };
+    void signIn("google", {
+      callbackUrl: callBackUrl[userType],
+    });
   };
 
   return (
@@ -143,7 +155,7 @@ export default function SignUpPage() {
               </Button>
               <Divider text="OR" />
               <Button
-                onClick={() => void signIn("google")}
+                onClick={handleGoogleSignInClick}
                 fullWidth
                 color="warning"
                 className="bg-orange-500/50"

@@ -11,7 +11,6 @@ import { useSession } from "next-auth/react";
 import Router from "next/router";
 import { api } from "~/utils/api";
 import { FaHandHoldingHeart, FaHandHoldingUsd } from "react-icons/fa";
-import Loader from "~/components/features/Loader";
 
 type PropType = {
   title: string;
@@ -29,16 +28,12 @@ export default function MembershipCard({
   memberType,
 }: PropType) {
   useSession({ required: true });
-  const { data: isTypeSelected, status } =
-    api.user.isUserTypeChoosen.useQuery();
+
   const changeStatus = api.user.changeMemberStatus.useMutation({
     onSuccess: () => {
       void Router.replace(`/auth/update-profile`);
     },
   });
-  if (status === "loading") return <Loader />;
-
-  if (isTypeSelected) void Router.replace(`/auth/update-profile`);
 
   const handleClick = () => {
     changeStatus.mutate({
@@ -46,7 +41,7 @@ export default function MembershipCard({
     });
   };
   return (
-    <Card className="border border-orange-500 py-4">
+    <Card className="border  py-4">
       <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
         <h4 className="text-2xl font-bold">{title}</h4>
         <small className="mb-1 text-default-500">{description}</small>
@@ -61,9 +56,9 @@ export default function MembershipCard({
           <br />
         )}
         {memberType === "Customer" ? (
-          <FaHandHoldingHeart size="5rem" />
-        ) : (
           <FaHandHoldingUsd size="5rem" />
+        ) : (
+          <FaHandHoldingHeart size="5rem" />
         )}
       </CardBody>
       <CardFooter>

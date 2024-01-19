@@ -1,6 +1,15 @@
+import Router from "next/router";
+
 import MembershipCard from "~/components/pages-components/choose-member-type/MembershipCard";
+import Loader from "~/components/features/Loader";
+import { api } from "~/utils/api";
 
 export default function ChooseMemberTypePage() {
+  const { data: isUserTypeSelected, status } =
+    api.user.isUserTypeChoosen.useQuery();
+  if (status === "loading") return <Loader />;
+  if (isUserTypeSelected) void Router.replace(`/auth/update-profile`);
+
   return (
     <section className="w-full">
       <div className="container mx-auto p-5">

@@ -114,7 +114,7 @@ export const userRouter = createTRPCRouter({
       where: { id: ctx.session.user.id },
       select: { userType: true },
     });
-    return !!isChoosen;
+    return !!isChoosen?.userType;
   }),
   lastFiveUsers: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({

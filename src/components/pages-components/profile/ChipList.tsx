@@ -1,6 +1,7 @@
 import { Chip } from "@nextui-org/react";
 import type { Rate, User } from "@prisma/client";
 import { FaCity, FaPoundSign, FaHeart } from "react-icons/fa";
+import { cn } from "~/lib/utils";
 
 export default function ChipList({
   data,
@@ -8,7 +9,7 @@ export default function ChipList({
   data: User & { Rate: Rate[] } & { online: boolean };
 }) {
   return (
-    <div className="my-4 flex flex-row justify-center gap-1">
+    <div className="max-w-80 mx-auto my-4 grid grid-cols-3 gap-1">
       {data.city && (
         <Chip
           startContent={<FaCity size={18} />}
@@ -33,7 +34,18 @@ export default function ChipList({
           {data.Rate.length}
         </Chip>
       )}
-      <Chip variant="flat">{data.online ? "Online" : "Offline"}</Chip>
+      <Chip
+        variant="dot"
+        color={data.online ? "success" : "danger"}
+        className={cn(
+          "col-span-3 mx-auto mt-3",
+          data.online
+            ? "border-green-500 text-green-600"
+            : "border-red-600 text-red-600",
+        )}
+      >
+        {data.online ? "Online" : "Offline"}
+      </Chip>
     </div>
   );
 }

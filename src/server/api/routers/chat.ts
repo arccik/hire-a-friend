@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DeleteCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { env } from "~/env.mjs";
 
 export const ddbClient = new DynamoDBClient({
@@ -12,11 +12,7 @@ export const ddbClient = new DynamoDBClient({
 });
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
-import {
-  deleteContact,
-  getContacts,
-  saveContact,
-} from "../controllers/contact-controller";
+
 import { getMessages, saveMessage } from "../controllers/message-controller";
 import { saveMessageSchema } from "~/validation/message";
 
@@ -44,4 +40,12 @@ export const chatRouter = createTRPCRouter({
       const command = new DeleteCommand(params);
       return ddbClient.send(command);
     }),
+  isBlocked: protectedProcedure.query(async ({ ctx }) => {
+    ctx.prisma.user.findFirst({
+      where: {
+        id: ctx.session.user.id,
+        blockedBy: { has: ctx.session.user.id },
+      },
+    });
+  }),
 });

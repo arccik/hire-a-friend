@@ -21,6 +21,7 @@ import ChipList from "~/components/pages-components/profile/ChipList";
 import Alert from "~/components/pages-components/profile/Alert";
 import { useSession } from "next-auth/react";
 import Loader from "~/components/features/Loader";
+import checkRequiredFields from "~/helpers/checkRequiredFields";
 
 export default function ProfilePage() {
   const { data: userSession } = useSession();
@@ -133,19 +134,13 @@ export default function ProfilePage() {
               </div>
               <div className="my-5 text-center md:mt-2">
                 <h3 className="mb-2  flex justify-center text-4xl font-semibold leading-normal text-gray-700">
-                  {data?.name} {data.online ? "Online " : "Offline"}
+                  {data?.name}
                 </h3>
                 <p className="-mt-4 text-slate-400">{data.experties}</p>
 
-                <Alert
-                  show={
-                    (!data?.name ||
-                      !data?.age ||
-                      !data?.image ||
-                      !data?.activities.length) &&
-                    data.id === userSession?.user.id
-                  }
-                />
+                {userSession?.user.id === data.id && (
+                  <Alert show={checkRequiredFields(data)} />
+                )}
                 <ActionButtons
                   isAvailable={data.activated}
                   rate={data.Rate}

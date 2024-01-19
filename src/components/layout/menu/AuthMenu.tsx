@@ -63,7 +63,7 @@ export default function AuthMenu({
               <DropdownItem
                 key="signed-in-us"
                 className="h-14 gap-2"
-                // textValue="signed in as"
+                textValue="signed in as"
                 as={Link}
                 href={`/profile/${session.user.id}`}
               >

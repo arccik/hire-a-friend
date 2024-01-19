@@ -5,6 +5,7 @@ import {
   FaRegQuestionCircle,
 } from "react-icons/fa";
 import { MdOutlinePolicy, MdPolicy } from "react-icons/md";
+import { VscSignIn } from "react-icons/vsc";
 
 type MenuItem = {
   id: number;
@@ -49,5 +50,11 @@ export const menuItems: MenuItem[] = [
     title: "Privacy Policy",
     href: "/docs/privacy-policy",
     icon: <MdOutlinePolicy />,
+  },
+  {
+    id: 7,
+    title: "Login",
+    href: "/auth/sign-in",
+    icon: <VscSignIn />,
   },
 ];

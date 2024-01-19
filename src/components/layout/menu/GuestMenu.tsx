@@ -9,12 +9,12 @@ import {
   DropdownItem,
   NavbarItem,
   DropdownSection,
+  Button,
 } from "@nextui-org/react";
 import Link from "next/link";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { menuItems } from "./menu-items";
 import { VscSignIn } from "react-icons/vsc";
-import { GiTimeTrap } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 
 type PropType = {
@@ -40,7 +40,17 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
               </Link>
             </NavbarItem>
           ))}
-
+          <NavbarItem key="signUp">
+            <Button
+              variant="bordered"
+              as={Link}
+              href="/auth/sign-up"
+              color="warning"
+              size="sm"
+            >
+              Sign Up
+            </Button>
+          </NavbarItem>
           <NavbarContent className="sm:hidden" justify="end">
             <NavbarMenuToggle
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -64,29 +74,11 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
                       as={Link}
                       startContent={entry.icon}
                       href={entry.href}
+                      color="warning"
                     >
                       {entry.title}
                     </DropdownItem>
                   ))}
-                </DropdownSection>
-                <DropdownSection>
-                  <DropdownItem
-                    key="signUp"
-                    startContent={<GiTimeTrap />}
-                    as={Link}
-                    href="/auth/sign-up"
-                  >
-                    Sign Up
-                  </DropdownItem>
-                  <DropdownItem
-                    color="warning"
-                    startContent={<VscSignIn />}
-                    key="signIn"
-                    as={Link}
-                    href="/auth/sign-in"
-                  >
-                    Login
-                  </DropdownItem>
                 </DropdownSection>
               </DropdownMenu>
             </Dropdown>

@@ -15,7 +15,7 @@ export const userValidation = z
     lastName: z.string().optional(),
     age: z
       .number({ invalid_type_error: "Required" })
-      .min(18, "Must be over 18 to our platform")
+      .min(18, "Must be over 18 to use platform")
       .max(110, "Too old for our platform")
       .refine((data) => !isNaN(data), {
         message: "Age must be a number",
@@ -43,29 +43,29 @@ export const userValidation = z
     price: z.any().optional(),
 
     hidePrice: z.boolean().optional(),
-    isOffering: z.boolean().optional(),
+    // isOffering: z.boolean().optional(),
     languages: z.array(z.string()).optional(),
     experties: z.string().optional(),
     activated: z.boolean().optional(),
-    earnings: z.string().optional(),
-    feedback: z.array(z.string()).optional(),
+    // earnings: z.string().optional(),
+    // feedback: z.array(z.string()).optional(),
     zodiacSign: z.string().optional(),
 
     password: z.string().optional(),
 
     preferedAgeRange: z.array(z.number()).optional(),
-    availability: z
-      .object({
-        id: z.string().optional(),
-        monday: z.string().optional(),
-        tuesday: z.string().optional(),
-        wednesday: z.string().optional(),
-        thursday: z.string().optional(),
-        friday: z.string().optional(),
-        saturday: z.string().optional(),
-        sunday: z.string().optional(),
-      })
-      .optional(),
+    // availability: z
+    //   .object({
+    //     id: z.string().optional(),
+    //     monday: z.string().optional(),
+    //     tuesday: z.string().optional(),
+    //     wednesday: z.string().optional(),
+    //     thursday: z.string().optional(),
+    //     friday: z.string().optional(),
+    //     saturday: z.string().optional(),
+    //     sunday: z.string().optional(),
+    //   })
+    //   .optional(),
 
     appearance: z.object({
       id: z.string().optional(),

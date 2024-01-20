@@ -56,20 +56,18 @@ const SignInPage = () => {
                 {...register("email")}
                 label="Email"
                 variant="bordered"
-                autoComplete="email"
                 placeholder="email@example.com"
                 errorMessage={errors.email?.message}
-                isInvalid={!!errors.email}
+                isInvalid={!!errors.email || !!errors.password}
               />
               <Input
                 {...register("password")}
                 label="Password"
                 variant="bordered"
-                autoComplete="current-password"
                 type="password"
                 placeholder="Type your password"
                 errorMessage={errors.password?.message}
-                isInvalid={!!errors.password}
+                isInvalid={!!errors.email || !!errors.password}
               />
 
               <Button

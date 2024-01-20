@@ -122,17 +122,6 @@ export default function TermsAndConditionsPage() {
         </p>
       </div>
 
-      {/* <div className="mb-6 text-gray-700">
-        <p>
-          <strong>11. Governing Law</strong>
-        </p>
-        <p>
-          These Terms and Conditions are governed by the laws of [Your
-          Jurisdiction]. Any disputes arising from the use of Rent My Time will
-          be subject to the exclusive jurisdiction of the courts in [Your
-          Jurisdiction].
-        </p>
-      </div> */}
 
       <p className="mb-6 text-gray-700">
         By using Rent My Time, you acknowledge that you have read, understood,

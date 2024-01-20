@@ -22,6 +22,8 @@ import PriceField from "./PriceField";
 import getDefaultValues from "~/helpers/getDefaultValues";
 import Languages from "./Languages";
 import PreferedAgeRange from "./PreferedAgeRange";
+import ActionButtons from "./ActionButtons";
+import { useEffect } from "react";
 // import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {
@@ -32,8 +34,10 @@ export default function MemberForm(props: BigFormPropType) {
           <b>Successfully Saved!</b>
           <Button
             size="sm"
-            className="bg-orange-500 text-xs text-white"
+            // className="bg-orange-500 text-xs text-white"
             as={Link}
+            variant="bordered"
+            color="warning"
             href={`/profile/${props.id}`}
           >
             View Profile
@@ -46,7 +50,7 @@ export default function MemberForm(props: BigFormPropType) {
       console.error("[update profile]: something went wrong: ", error.message);
     },
   });
-
+  const defaultValues = getDefaultValues(props);
   const {
     register,
     handleSubmit,
@@ -55,15 +59,15 @@ export default function MemberForm(props: BigFormPropType) {
     setValue,
     watch,
     control,
+    reset,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
-    defaultValues: getDefaultValues(props),
+    defaultValues,
   });
 
   const onSubmit: SubmitHandler<UserValidationType> = (data): void => {
     updateUser.mutate({ ...data, id: props.userId });
   };
-
   return (
     <>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
@@ -79,12 +83,14 @@ export default function MemberForm(props: BigFormPropType) {
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <InputField
+                fullWidth={true}
                 title="Nickname"
                 fieldName="name"
                 register={register}
                 errors={errors}
               />
               <InputField
+                fullWidth={true}
                 title="Experties"
                 fieldName="experties"
                 register={register}
@@ -191,31 +197,7 @@ export default function MemberForm(props: BigFormPropType) {
           // setValue={setValue}
           control={control}
         /> */}
-        <div className="fixed inset-x-0 bottom-0 z-40 flex h-auto w-full items-center justify-center gap-4 bg-background/70 p-1 backdrop-blur-lg backdrop-saturate-150">
-          <div className="w-1/4">
-            <Button
-              variant="flat"
-              fullWidth
-              color="danger"
-              className="bg-red-100 text-red-400  hover:scale-95"
-              as={Link}
-              href={`/profile/${props.id}`}
-            >
-              Cancel
-            </Button>
-          </div>
-          <div className="w-1/2">
-            <Button
-              fullWidth
-              color="success"
-              variant="flat"
-              className=" border border-green-400 bg-green-100 text-green-400 hover:scale-95"
-              type="submit"
-            >
-              Save
-            </Button>
-          </div>
-        </div>
+        <ActionButtons id={props.id} />
       </form>
     </>
   );

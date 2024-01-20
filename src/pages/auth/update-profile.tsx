@@ -9,21 +9,21 @@ import Loader from "~/components/features/Loader";
 
 export default function UpdateProfile() {
   const { data: userSession } = useSession({ required: true });
+  const userId = userSession?.user.id;
   const { data: user, status } = api.user.getOne.useQuery(
-    { id: userSession?.user.id ?? "" },
-    { enabled: !!userSession?.user },
+    { id: userId! },
+    { enabled: !!userId },
   );
 
-  if (status === "loading") return <Loader />;
-
+  if (status === "loading" || !userId || !user) return <Loader />;
   if (status === "error") return <DisplayError />;
 
   return (
     <main>
       <section className="flex flex-col items-center justify-center p-4">
         <Card fullWidth className="p-4 md:p-10">
-          {user?.userType === "Friend" && userSession?.user?.id ? (
-            <MemberForm {...user} userId={userSession.user.id} />
+          {user.userType === "Friend" ? (
+            <MemberForm {...user} userId={userId} />
           ) : (
             <CustomerForm
               age={user?.age}

@@ -8,6 +8,7 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 import { type UserValidationType } from "~/validation/member";
+import InputField from "../features/InputField";
 
 export type ApearanceProps = {
   register: UseFormRegister<UserValidationType>;
@@ -22,7 +23,7 @@ export default function Apearance({
 }: ApearanceProps) {
   const gender = getValues?.("gender");
   return (
-    <div className="border-b border-slate-400/50 pb-12">
+    <div className="border-b border-slate-400/50 py-12">
       <h2 className="text-base font-semibold leading-7 text-gray-900">
         Appearance/Looks
       </h2>
@@ -53,6 +54,12 @@ export default function Apearance({
             register={register}
             errors={errors}
             value={getValues("zodiacSign")}
+          />
+          <InputField
+            errors={errors}
+            fieldName="age"
+            register={register}
+            title="Age"
           />
           <Input
             variant="bordered"

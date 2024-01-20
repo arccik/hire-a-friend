@@ -4,8 +4,10 @@ export default function getDefaultValues(
   props: Partial<BigFormPropType> = {},
 ): UserValidationType {
   return {
+    id: props.id ?? "",
     about: props.about ?? "",
     activated: props.activated ?? false,
+    photos: props.photos ?? [],
     image: props.image ?? undefined,
     gender: props.gender ?? undefined,
     coverImage: props.coverImage ?? "",
@@ -21,8 +23,8 @@ export default function getDefaultValues(
     name: props.name ?? "",
     activities: props.activities ?? [],
     experties: props.experties ?? undefined,
-    age: props.age ?? NaN,
-    price: props.price ?? NaN,
+    age: props.age ?? 18,
+    price: props.price ?? 0,
     hidePrice: !!props.hidePrice,
     phoneNumber: props.phoneNumber ?? "",
     zodiacSign: props.zodiacSign ?? "",

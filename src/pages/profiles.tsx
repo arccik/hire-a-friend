@@ -3,11 +3,11 @@ import { useSearchParams } from "next/navigation";
 import type { Metadata } from "next/types";
 import DisplayError from "~/components/features/DisplayError";
 import Title from "~/components/features/Title";
-import FriendCard from "~/components/pages-components/profiles/FriendCard";
+import FriendCard from "~/components/pages/profiles/FriendCard";
 import { api } from "~/utils/api";
-import ClearFilter from "~/components/pages-components/profiles/ClearFilterButton";
+import ClearFilter from "~/components/pages/profiles/ClearFilterButton";
 import { handleRouterNavigation } from "~/helpers/searchParams";
-import FilterButton from "~/components/pages-components/profiles/FilterButton";
+import FilterButton from "~/components/pages/profiles/FilterButton";
 import { citiesList } from "~/data/cities-list";
 import Loader from "~/components/features/Loader";
 

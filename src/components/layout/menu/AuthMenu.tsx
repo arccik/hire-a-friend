@@ -20,7 +20,6 @@ import { menuItems } from "./menu-items";
 import { AiFillSetting } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import NotificationCenter from "../NotificationCenter/NotificationCenter";
-// import { useSharedWebSocket } from "~/context/websocketProvider";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +32,7 @@ export default function AuthMenu({
   isMenuOpen,
   setIsMenuOpen,
 }: PropType) {
-
+  const menuToDisplay = menuItems.slice(0, -1);
   return (
     <>
       <NavbarContent justify="end" className="hidden sm:flex">
@@ -50,7 +49,7 @@ export default function AuthMenu({
             <DropdownTrigger>
               <Avatar
                 isBordered
-                radius="md"
+                radius="lg"
                 as="button"
                 color="warning"
                 className="bg-orange-500 transition-transform"
@@ -67,7 +66,7 @@ export default function AuthMenu({
                 as={Link}
                 href={`/profile/${session.user.id}`}
               >
-                <p className="font-semibold">Signed in as</p>
+                <p className="text-xs text-slate-500">Signed in as</p>
                 <p className="font-semibold">{session.user.email}</p>
               </DropdownItem>
               <DropdownItem
@@ -78,7 +77,7 @@ export default function AuthMenu({
                 Update Profile
               </DropdownItem>
               <DropdownSection>
-                {menuItems.map((entry) => (
+                {menuToDisplay.map((entry) => (
                   <DropdownItem
                     startContent={entry.icon}
                     key={entry.href}
@@ -90,7 +89,7 @@ export default function AuthMenu({
                 ))}
               </DropdownSection>
               <DropdownItem
-                key="login"
+                key="signOut"
                 className="-mt-3"
                 onClick={() => void signOut()}
                 color="danger"

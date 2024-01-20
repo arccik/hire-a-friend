@@ -7,6 +7,7 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  optimizeCss: true,
   images: {
     domains: ["lh3.googleusercontent.com", "img.freepik.com", "images.generated.photos", 'rentmytime-storage.s3.eu-west-2.amazonaws.com'],
     remotePatterns: [

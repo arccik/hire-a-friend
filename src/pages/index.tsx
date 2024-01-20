@@ -7,8 +7,8 @@ import handshake from "~/data/animations/handshake.json";
 import threeFriend from "~/data/animations/three-friend-circles.json";
 import bubbleProfileAnimationData from "~/data/animations/bubble-profile.json";
 
-import Features from "~/components/pages-components/home/Features";
-import ActiveFriend from "~/components/pages-components/home/ActiveFriends";
+import Features from "~/components/pages/home/Features";
+import ActiveFriend from "~/components/pages/home/ActiveFriends";
 
 export default function HomePage() {
   return (

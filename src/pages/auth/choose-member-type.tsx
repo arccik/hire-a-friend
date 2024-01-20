@@ -1,6 +1,6 @@
 import Router from "next/router";
 
-import MembershipCard from "~/components/pages-components/choose-member-type/MembershipCard";
+import MembershipCard from "~/components/pages/choose-member-type/MembershipCard";
 import Loader from "~/components/features/Loader";
 import { api } from "~/utils/api";
 

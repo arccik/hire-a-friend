@@ -31,7 +31,7 @@ export default function NotificationCenter() {
     },
   });
 
-  if (status === "loading") return <Loader />;
+  if (status === "loading") return <Loader size="sm" />;
   if (status === "error") return <DisplayError />;
 
   if (!notifications.length) {

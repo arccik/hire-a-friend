@@ -74,6 +74,7 @@ export default function SignUpPage() {
                 autoComplete="email"
                 placeholder="email@example.com"
                 errorMessage={errors.email?.message}
+                isInvalid={!!errors.email?.message}
               />
               <Input
                 {...register("password")}
@@ -82,6 +83,7 @@ export default function SignUpPage() {
                 type="password"
                 placeholder="Type your password"
                 errorMessage={errors.password?.message}
+                isInvalid={!!errors.password?.message}
               />
               <Input
                 {...register("confirmPassword")}
@@ -90,6 +92,7 @@ export default function SignUpPage() {
                 type="password"
                 placeholder="Type your password again"
                 errorMessage={errors.confirmPassword?.message}
+                isInvalid={!!errors.confirmPassword?.message}
               />
               <div className="flex flex-col">
                 <p className="text-center text-sm font-bold text-orange-500">
@@ -121,6 +124,7 @@ export default function SignUpPage() {
                 <div className="flex h-5 items-center ">
                   <Checkbox
                     id="terms"
+                    isInvalid={!!errors.terms?.message}
                     onValueChange={(v) => {
                       setValue("terms", v);
                       clearErrors("terms");
@@ -131,6 +135,7 @@ export default function SignUpPage() {
                       <Link
                         className="font-medium  text-primary-600 hover:underline"
                         href="/docs/terms-and-conditions"
+                        target="_blank"
                       >
                         Terms and Conditions
                       </Link>

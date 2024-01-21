@@ -8,13 +8,34 @@ await import("./src/env.mjs");
 const config = {
   reactStrictMode: true,
   optimizeCss: true,
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "*",
+          },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
+            value:
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     domains: ["lh3.googleusercontent.com", "img.freepik.com", "images.generated.photos", 'rentmytime-storage.s3.eu-west-2.amazonaws.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'rentmytime-storage.s3.eu-west-2.amazonaws.com',
-        port: '',
         pathname: '/**',
       },
     ],

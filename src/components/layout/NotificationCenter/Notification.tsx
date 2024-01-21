@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Avatar } from "@nextui-org/react";
-import { Notification } from "@prisma/client";
+import type { Notification } from "@prisma/client";
 import { useRouter } from "next/router";
 import { formatNoticationfDateTime } from "~/helpers/formatMessageDateTime";
 import { handleRouterNavigation } from "~/helpers/searchParams";

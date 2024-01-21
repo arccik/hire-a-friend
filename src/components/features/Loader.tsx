@@ -1,10 +1,19 @@
 import { Spinner } from "@nextui-org/react";
+import { cn } from "~/lib/utils";
 
-export default function Loader({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
+export default function Loader({
+  size = "md",
+  fullWidth = true,
+}: {
+  size?: "sm" | "md" | "lg";
+  fullWidth?: boolean;
+}) {
   return (
     <Spinner
       size={size}
-      className="flex h-full w-full items-center justify-center"
+      className={cn("flex h-full items-center justify-center", {
+        "w-full": fullWidth,
+      })}
       color="warning"
     />
   );

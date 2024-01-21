@@ -14,15 +14,12 @@ export default function ZodiacSelect({ register, value }: ZodiacSelectProps) {
       items={zodiacSigns}
       translate="no"
       label="Zodiac Sign"
+      className="font-semibold"
       {...register("zodiacSign")}
       variant="bordered"
       defaultSelectedKeys={value}
       placeholder="Select your Zodiac sign"
       labelPlacement="outside"
-      classNames={{
-        base: "max-w-xs",
-        trigger: "min-h-unit-12 py-2",
-      }}
     >
       {(zodiac) => (
         <SelectItem key={zodiac.id} textValue={zodiac.name}>

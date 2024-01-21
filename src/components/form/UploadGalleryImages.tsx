@@ -41,8 +41,7 @@ export default function UploadImageGallery({
     const file = event.target.files?.[0];
     if (!file || isFull) return;
     setIsLoading(true);
-    // const fileName = randomBytes(16).toString("hex");
-    // const fileWithName = new File([file], fileName);
+
     const { url, fields } = await getUploaderURL.mutateAsync({
       fileType: file.type,
       fileName: file.name,
@@ -76,20 +75,15 @@ export default function UploadImageGallery({
 
   return (
     <>
-      <p className="mb-2 text-lg font-bold">Upload photos to your gallery</p>
-
-      <div className="flex flex-col gap-2">
-        <ImageGallery
-          imagesUrl={imageUrls}
-          handleDeleteImage={handleDeleteImage}
-        />
-        {isLoading && <Loader />}
-
-        <div className="flex justify-center">
+      <p className="block text-sm font-medium leading-6 text-gray-900">
+        Upload photos to your gallery
+      </p>
+      <div className="flex flex-row flex-wrap gap-2">
+        <div className="mb-2 flex w-full sm:mb-0 sm:w-48">
           <label
             htmlFor="dropzone-file"
             className={cn(
-              " flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100",
+              "flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100",
               {
                 "cursor-not-allowed opacity-50": isLoading || isFull,
                 "bg-red-500 hover:bg-red-300": errors.photos?.message,
@@ -109,7 +103,7 @@ export default function UploadImageGallery({
                     <span className="font-semibold">Click to upload</span>
                   </p>
                   <p className="text-xs text-gray-500 ">
-                    PNG, JPG or GIF (MAX. 5MB)
+                    PNG, JPG or GIF (MAX. 10MB)
                   </p>
                 </>
               )}
@@ -124,6 +118,11 @@ export default function UploadImageGallery({
             />
           </label>
         </div>
+        <ImageGallery
+          imagesUrl={imageUrls}
+          handleDeleteImage={handleDeleteImage}
+        />
+        {isLoading && <Loader fullWidth={false} />}
       </div>
     </>
   );

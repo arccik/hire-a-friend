@@ -27,6 +27,7 @@ export default function InterestActivities({
   return (
     <fieldset>
       <Select
+        id={type}
         translate="no"
         items={values}
         label={type.toUpperCase()}
@@ -41,10 +42,10 @@ export default function InterestActivities({
           if (type === "hobbies") return;
           setValue(type, e.target.value.split(","));
         }}
-        classNames={{
-          base: "max-w-lg",
-          trigger: "min-h-unit-12 py-2",
-        }}
+        // classNames={{
+        //   base: "max-w-lg",
+        //   trigger: "min-h-unit-12 py-2",
+        // }}
         renderValue={(items) => {
           return (
             <div className="flex flex-wrap gap-2">

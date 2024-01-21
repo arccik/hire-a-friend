@@ -61,9 +61,9 @@ export default function UploadCoverImage({
 
   if (imageUrl) {
     return (
-      <div className="col-span-full">
+      <div>
         <label className="block text-sm font-medium leading-6 text-gray-900">
-          Cover photo
+          Cover Image
         </label>
         <Badge
           content={<MdDeleteForever size={20} />}
@@ -73,8 +73,8 @@ export default function UploadCoverImage({
           onClick={handleDelete}
         >
           <Image
-            width="400"
-            height="400"
+            width="200"
+            height="200"
             alt="cover image"
             src={imageUrl}
             className="rounded-lg object-cover"
@@ -85,13 +85,11 @@ export default function UploadCoverImage({
   }
 
   return (
-    <div className="col-span-full">
-      <p className="col-span-full text-sm font-medium  text-gray-900">
-        Cover Image
-      </p>
+    <div className="col-span-4">
+      <p className=" text-sm font-medium  text-gray-900">Cover Image</p>
       <label
         htmlFor="dropzone-file"
-        className="flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100"
+        className="flex h-60 w-full cursor-pointer flex-col justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-2 hover:bg-gray-100"
       >
         <div className="flex flex-col items-center justify-center pb-6 pt-5">
           <MdOutlineCloudUpload size="3rem" />

@@ -19,11 +19,15 @@ export default function Languages({
   setValue,
 }: LanguagesProps) {
   return (
-    <fieldset className="mb-6">
-      <h2 className="mb-2 text-base font-semibold leading-7 text-gray-900">
+    <fieldset>
+      <label
+        htmlFor="select languages"
+        className="block text-sm font-medium leading-6 text-gray-900"
+      >
         Languages
-      </h2>
+      </label>
       <Select
+        id="select languages"
         translate="no"
         items={languages}
         label="Select languages you can speak"
@@ -37,10 +41,10 @@ export default function Languages({
         onChange={(e) => {
           setValue("languages", e.target.value.split(","));
         }}
-        classNames={{
-          base: "max-w-lg",
-          trigger: "min-h-unit-12 py-2",
-        }}
+        // classNames={{
+        //   base: "max-w-lg",
+        //   trigger: "min-h-unit-12 py-2",
+        // }}
         renderValue={(items) => {
           return (
             <div className="flex flex-wrap gap-2">

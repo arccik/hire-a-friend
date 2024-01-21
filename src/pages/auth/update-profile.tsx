@@ -6,6 +6,7 @@ import MemberForm from "../../components/form/MemberForm";
 import DisplayError from "~/components/features/DisplayError";
 import CustomerForm from "~/components/form/CustomerForm";
 import Loader from "~/components/features/Loader";
+import type { Appearance, User } from "@prisma/client";
 
 export default function UpdateProfile() {
   const { data: userSession } = useSession({ required: true });
@@ -18,24 +19,33 @@ export default function UpdateProfile() {
   if (status === "loading" || !userId || !user) return <Loader />;
   if (status === "error") return <DisplayError />;
 
+  function renderProfileForm(
+    userType: string,
+    user: User & { appearance: Appearance | null },
+    userId: string,
+  ) {
+    if (userType === "Friend") {
+      return <MemberForm {...user} userId={userId} />;
+    } else {
+      const { age, city, image, name, about, experties } = user;
+      return (
+        <CustomerForm
+          age={age}
+          city={city}
+          image={image}
+          name={name}
+          about={about}
+          experties={experties}
+        />
+      );
+    }
+  }
+
   return (
-    <main>
-      <section className="flex flex-col items-center justify-center p-4">
-        <Card fullWidth className="p-4 md:p-10">
-          {user.userType === "Friend" ? (
-            <MemberForm {...user} userId={userId} />
-          ) : (
-            <CustomerForm
-              age={user?.age}
-              city={user?.city}
-              image={user?.image}
-              name={user?.name}
-              about={user?.about}
-              experties={user?.experties}
-            />
-          )}
-        </Card>
-      </section>
+    <main className="container mx-auto">
+      <Card fullWidth className="p-4">
+        {user.userType && renderProfileForm(user.userType, user, userId)}
+      </Card>
     </main>
   );
 }

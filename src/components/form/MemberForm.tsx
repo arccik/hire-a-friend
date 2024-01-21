@@ -1,4 +1,4 @@
-import { Button, Textarea } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 
@@ -9,21 +9,20 @@ import {
 } from "~/validation/member";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { api } from "~/utils/api";
-import Apearance from "./Apearance";
-import InterestActivities from "./InterestActivities";
-import PersonalInformation from "./PersonalInfo";
 import InputField from "../features/InputField";
-// import NotifyBy from "./NotifyBy";
 import Link from "next/link";
 import UploadImage from "./UploadImage";
-import UploadCoverImage from "./UploadCoverImage";
 import UploadGalleryImages from "./UploadGalleryImages";
 import PriceField from "./PriceField";
 import getDefaultValues from "~/helpers/getDefaultValues";
 import Languages from "./Languages";
 import PreferedAgeRange from "./PreferedAgeRange";
 import ActionButtons from "./ActionButtons";
-import { useEffect } from "react";
+import About from "./About";
+import GenderSelect from "./GenderSelect";
+import ZodiacSelect from "./ZodiacSelect";
+import Hobbies from "./Hobbies";
+import Activities from "./Activities";
 // import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {
@@ -59,7 +58,6 @@ export default function MemberForm(props: BigFormPropType) {
     setValue,
     watch,
     control,
-    reset,
   } = useForm<UserValidationType>({
     resolver: zodResolver(userValidation),
     defaultValues,
@@ -71,132 +69,102 @@ export default function MemberForm(props: BigFormPropType) {
   return (
     <>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
-        <div className="grid grid-cols-1 space-y-12 md:grid-flow-dense md:grid-cols-2 md:space-x-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Profile
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              This information will be displayed publicly so be careful what you
-              share.
-            </p>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <InputField
-                fullWidth={true}
-                title="Nickname"
-                fieldName="name"
-                register={register}
-                errors={errors}
-              />
-              <InputField
-                fullWidth={true}
-                title="Experties"
-                fieldName="experties"
-                register={register}
-                errors={errors}
-              />
-              <div className="col-span-full">
-                <label
-                  htmlFor="about"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  About
-                </label>
-                <div className="mt-2">
-                  <Textarea
-                    id="about"
-                    {...register("about")}
-                    name="about"
-                    rows={3}
-                    variant="bordered"
-                    radius="sm"
-                  />
-                </div>
-                <p className="mt-3 text-sm leading-6 text-gray-600">
-                  Write a few sentences about yourself.
-                </p>
-              </div>
-
-              <div className="col-span-full">
-                <label
-                  htmlFor="upload-btn"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Photo
-                </label>
-                <UploadImage
-                  setValue={(v) => setValue("image", v)}
-                  imgUrl={props.image}
-                />
-              </div>
-
-              <UploadCoverImage setValue={setValue} imgUrl={props.coverImage} />
-            </div>
-          </div>
-
-          <PersonalInformation register={register} errors={errors} />
-        </div>
-        <UploadGalleryImages
-          setValue={setValue}
-          imgUrls={props.photos}
-          errors={errors}
-        />
-
-        <Apearance register={register} errors={errors} getValues={getValues} />
-
-        <div className="flex flex-row">
-          <div className="my-10">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Activities/Interests
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Curate your choices from the list and watch the connections
-              unfold. Precision matters - pick your preferences, and let the
-              cool collaborations come to you
-            </p>
-
-            <InterestActivities
+        <div className="grid grid-cols-1  sm:grid-cols-4">
+          <div className="col-span-4 flex w-full flex-col gap-4 p-5 sm:col-span-2">
+            {/* Left */}
+            <UploadImage
+              setValue={(v) => setValue("image", v)}
+              imgUrl={props.image}
+            />
+            <InputField
+              fullWidth={true}
+              fieldName="name"
+              register={register("name")}
+              errors={errors}
+            />
+            <InputField
+              fullWidth={true}
+              fieldName="experties"
+              register={register("experties")}
+              errors={errors}
+            />
+            <About register={register} errors={errors} />
+            <Hobbies
               register={register}
               errors={errors}
               setValue={setValue}
-              value={getValues("activities")}
-              type="activities"
+              getValues={getValues}
             />
-            <br />
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Hobbies/Topics
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Specify your hobbies/topics, what you especially enjoy discussing.
-              That gives clients a sense of your specialties and descriptive
-              tags help clients easily find you.
-            </p>
-            <InterestActivities
+            <InputField
+              errors={errors}
+              register={register("email")}
+              fieldName="email"
+              fullWidth={true}
+            />
+            <PriceField
               register={register}
               errors={errors}
-              type="hobbies"
+              watch={watch}
               setValue={setValue}
-              value={getValues("hobbies")}
             />
           </div>
+          <div className="col-span-4 flex w-full flex-col gap-4 border-l-1 p-5 sm:col-span-2">
+            {/* Right */}
+            <GenderSelect
+              register={register}
+              errors={errors}
+              value={getValues("gender")}
+            />
+            <InputField
+              errors={errors}
+              register={register("age", { valueAsNumber: true, value: 0 })}
+              fieldName="age"
+              fullWidth={true}
+            />
+            <ZodiacSelect
+              errors={errors}
+              register={register}
+              value={getValues("zodiacSign")}
+            />
+            <InputField
+              errors={errors}
+              register={register("ethnicity")}
+              fieldName="ethnicity"
+              fullWidth={true}
+            />
+            <Languages
+              errors={errors}
+              register={register}
+              setValue={setValue}
+            />
+            <Activities
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              getValues={getValues}
+            />
+            <PreferedAgeRange control={control} />
+            <InputField
+              errors={errors}
+              register={register("city")}
+              fieldName="city"
+              fullWidth={true}
+            />
+          </div>
+          <div className="col-span-4 w-full border-t-1  p-5">
+            {/* Bottom */}
+            <UploadGalleryImages
+              setValue={setValue}
+              imgUrls={props.photos}
+              errors={errors}
+            />
+            {/* <Availability
+              errors={errors}
+              setValue={setValue}
+              control={control}
+            /> */}
+          </div>
         </div>
-        <Languages errors={errors} register={register} setValue={setValue} />
-        <PriceField
-          register={register}
-          errors={errors}
-          watch={watch}
-          setValue={setValue}
-        />
-        <PreferedAgeRange control={control} />
-
-        {/* <NotifyBy /> */}
-
-        {/* <Availability
-          // errors={errors}
-          // setValue={setValue}
-          control={control}
-        /> */}
         <ActionButtons id={props.id} />
       </form>
     </>

@@ -52,35 +52,46 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="mt-2 flex items-center gap-x-3">
-      {imageUrl ? (
-        <Image
-          width={48}
-          height={48}
-          className="h-12 w-12 rounded-full object-cover"
-          src={imageUrl}
-          alt="avatar"
-        />
-      ) : (
-        <FaUserCircle className="h-12 w-12 text-gray-300" aria-hidden="true" />
-      )}
-
-      <input
-        type="file"
-        id="upload-btn"
-        accept="image/*"
-        hidden
-        onChange={(event) => void handleFileUpload(event)}
-      />
-      <Button
-        as="label"
+    <>
+      <label
         htmlFor="upload-btn"
-        variant="bordered"
-        radius="sm"
-        size="sm"
+        className="block text-sm font-medium leading-6 text-gray-900"
       >
-        {imageUrl?.length ? "Change" : "Upload"} Image
-      </Button>
-    </div>
+        Profile Photo
+      </label>
+      <div className="mt-2 flex items-center gap-x-3">
+        {imageUrl ? (
+          <Image
+            width={48}
+            height={48}
+            className="h-12 w-12 rounded-full object-cover"
+            src={imageUrl}
+            alt="avatar"
+          />
+        ) : (
+          <FaUserCircle
+            className="h-12 w-12 text-gray-300"
+            aria-hidden="true"
+          />
+        )}
+
+        <input
+          type="file"
+          id="upload-btn"
+          accept="image/*"
+          hidden
+          onChange={(event) => void handleFileUpload(event)}
+        />
+        <Button
+          as="label"
+          htmlFor="upload-btn"
+          variant="bordered"
+          radius="sm"
+          size="sm"
+        >
+          {imageUrl?.length ? "Change" : "Upload"} Image
+        </Button>
+      </div>
+    </>
   );
 }

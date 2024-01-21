@@ -9,13 +9,13 @@ type PropType = {
 
 export default function PreferedAgeRange({ control }: PropType) {
   return (
-    <fieldset>
+    <fieldset className="mt-5">
       <legend className="text-sm font-semibold leading-6 text-gray-900">
         Preferred Age Range
       </legend>
       <p className="mt-1 text-sm leading-6 text-gray-600">
-        Specify the age range you prefer for your activities, ensuring they
-        align with your preferences and requirements.
+        Indicate the specific age range that best suits your preferences and
+        requirements for the activities you engage in.
       </p>
       <Controller
         control={control}

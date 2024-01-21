@@ -24,7 +24,7 @@ export default function PriceField({
 }: PriceFieldProps) {
   const showPriceField = watch("hidePrice") ?? false;
   return (
-    <fieldset className="mb-10">
+    <fieldset>
       <legend className="text-sm font-semibold leading-6 text-gray-900">
         Price Per Hour
       </legend>
@@ -33,7 +33,6 @@ export default function PriceField({
       </p>
       <div>
         <Checkbox
-          className="mb-5"
           defaultSelected={showPriceField}
           {...register("hidePrice")}
           onChange={(e) => setValue("hidePrice", e.target.checked)}
@@ -44,6 +43,7 @@ export default function PriceField({
         <AnimatePresence>
           {!showPriceField && (
             <motion.div
+              className="mt-4"
               initial={{ opacity: 0, y: -100 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 100 }}

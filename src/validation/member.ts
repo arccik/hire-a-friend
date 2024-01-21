@@ -50,22 +50,23 @@ export const userValidation = z
     // earnings: z.string().optional(),
     // feedback: z.array(z.string()).optional(),
     zodiacSign: z.string().optional(),
+    ethnicity: z.string().optional(),
 
     password: z.string().optional(),
 
     preferedAgeRange: z.array(z.number()).optional(),
-    // availability: z
-    //   .object({
-    //     id: z.string().optional(),
-    //     monday: z.string().optional(),
-    //     tuesday: z.string().optional(),
-    //     wednesday: z.string().optional(),
-    //     thursday: z.string().optional(),
-    //     friday: z.string().optional(),
-    //     saturday: z.string().optional(),
-    //     sunday: z.string().optional(),
-    //   })
-    //   .optional(),
+    availability: z
+      .object({
+        id: z.string().optional(),
+        monday: z.string().optional(),
+        tuesday: z.string().optional(),
+        wednesday: z.string().optional(),
+        thursday: z.string().optional(),
+        friday: z.string().optional(),
+        saturday: z.string().optional(),
+        sunday: z.string().optional(),
+      })
+      .optional(),
 
     appearance: z.object({
       id: z.string().optional(),

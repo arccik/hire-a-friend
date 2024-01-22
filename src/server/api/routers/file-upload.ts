@@ -54,8 +54,8 @@ export const uploaderRouter = createTRPCRouter({
         Bucket: process.env.AWS_BUCKET_NAME!,
         Key: fileName,
         ContentType: input.fileType,
-        ContentLength: input.fileSize,
-        ChecksumSHA256: input.checksum,
+        // ContentLength: input.fileSize,
+        // ChecksumSHA256: input.checksum,
       });
 
       const url = await getSignedUrl(

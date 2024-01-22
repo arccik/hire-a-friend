@@ -73,6 +73,7 @@ export default function AuthMenu({
                 as={Link}
                 startContent={<AiFillSetting />}
                 href={`/auth/update-profile`}
+                textValue="Update profile"
               >
                 Update Profile
               </DropdownItem>
@@ -80,6 +81,7 @@ export default function AuthMenu({
                 {menuToDisplay.map((entry) => (
                   <DropdownItem
                     startContent={entry.icon}
+                    textValue={entry.title}
                     key={entry.href}
                     as={Link}
                     href={entry.href}
@@ -90,6 +92,7 @@ export default function AuthMenu({
               </DropdownSection>
               <DropdownItem
                 key="signOut"
+                textValue="signOut"
                 className="-mt-3"
                 onClick={() => void signOut()}
                 color="danger"

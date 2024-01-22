@@ -92,7 +92,7 @@ export default function NotificationCenter() {
             <DropdownItem
               key={notification.id}
               isReadOnly
-              textValue={notification.message}
+              // textValue={notification.message}
             >
               <Notification notification={notification} />
             </DropdownItem>

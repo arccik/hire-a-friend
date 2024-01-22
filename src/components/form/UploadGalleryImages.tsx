@@ -12,6 +12,7 @@ import { type UserValidationType } from "~/validation/member";
 import { type FieldErrors, type UseFormSetValue } from "react-hook-form";
 import Loader from "../features/Loader";
 import { computeSHA256 } from "~/helpers/uploader";
+import compressImage from "~/utils/compressImage";
 
 export type ImageUploadType = {
   setValue: UseFormSetValue<UserValidationType>;
@@ -41,17 +42,22 @@ export default function UploadImageGallery({
     event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     const file = event.target.files?.[0];
+    console.log("handleFileUpload", file);
     if (!file || isFull) return;
     setIsLoading(true);
 
+    const compressed = await compressImage(file);
+    if (compressed instanceof Error) return;
+
     const url = await getSignedURL.mutateAsync({
-      fileType: file.type,
-      checksum: await computeSHA256(file),
-      fileSize: file.size,
+      fileType: compressed.type,
+      checksum: await computeSHA256(compressed as File),
+      fileSize: compressed.size,
     });
+    console.log("URL: ", url);
     const savedImageUrl = await uploadFileToAWS({
       url,
-      file,
+      file: compressed as File,
     });
     if (savedImageUrl) {
       setValue(
@@ -60,6 +66,7 @@ export default function UploadImageGallery({
       );
       setImageUrls((prev) => [...prev!, savedImageUrl]);
     }
+
     setIsLoading(false);
   };
 

@@ -32,7 +32,6 @@ export default async function uploadFileToAWS({
       },
       body: compressedImage,
     });
-    console.log("UPLOADED FILE : ", { uploadedFile });
     if (uploadedFile.ok) {
       return url.split("?")[0]; // return like to uploaded file
     }

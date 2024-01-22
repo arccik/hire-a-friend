@@ -51,8 +51,6 @@ export default function UploadImageGallery({
       fields,
       file,
     });
-    console.log("UploadImageGallery", { imageUrls, savedImageUrl, file });
-
     if (savedImageUrl) {
       setValue(
         "photos",
@@ -62,8 +60,6 @@ export default function UploadImageGallery({
     }
     setIsLoading(false);
   };
-
-
 
   const handleDeleteImage = (imgUrl: string): void => {
     if (!imageUrls) return;

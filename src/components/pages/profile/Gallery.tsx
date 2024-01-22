@@ -24,15 +24,18 @@ export default function Gallery({
   return (
     <>
       {imagesUrl.map((img, index) => (
-        <Image
-          isZoomed
-          key={`${img} -- ${index}`}
-          width={240}
-          height={200}
-          alt="NextUI Fruit Image with Zoom"
-          src={img}
-          onClick={() => openLightboxOnSlide(index + 1)}
-        />
+        <div className="relative overflow-hidden rounded-xl">
+          <img
+            // isZoomed
+            className="transform cursor-pointer transition-transform hover:scale-110"
+            key={`${img} -- ${index}`}
+            width={240}
+            height={200}
+            alt="Gallery Images"
+            src={img}
+            onClick={() => openLightboxOnSlide(index + 1)}
+          />
+        </div>
       ))}
       <FsLightbox
         toggler={lightboxController.toggler}

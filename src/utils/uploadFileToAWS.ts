@@ -1,11 +1,9 @@
 import compressImage from "./compressImage";
 
 export default async function uploadFileToAWS({
-  fields,
   file,
   url,
 }: {
-  fields: Record<string, string>;
   file: File;
   url: string;
 }): Promise<string | void> {
@@ -15,18 +13,28 @@ export default async function uploadFileToAWS({
     if (!("Blob" in window && compressedImage instanceof Blob)) {
       throw new Error("Faild to compress image");
     }
-    const formData = new FormData();
-    Object.entries({ ...fields, file: compressedImage }).forEach(
-      ([key, value]) => {
-        formData.append(key, value);
+    // const formData = new FormData();
+    // formData.append("file", compressedImage);
+    // Object.entries({ file: compressedImage }).forEach(
+    //   ([key, value]) => {
+    //     formData.append(key, value);
+    //   },
+    // );
+    // const upload = await fetch(url, {
+    //   method: "POST",
+    //   body: formData,
+    // });
+
+    const uploadedFile = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": file.type,
       },
-    );
-    const upload = await fetch(url, {
-      method: "POST",
-      body: formData,
+      body: compressedImage,
     });
-    if (upload.ok && fields.key) {
-      return url + fields.key; // return like to uploaded file
+    console.log("UPLOADED FILE : ", { uploadedFile });
+    if (uploadedFile.ok) {
+      return url.split("?")[0]; // return like to uploaded file
     }
   } catch (error) {
     console.error("Was not able to upload file", error);

@@ -22,6 +22,7 @@ export const handleRouterNavigation = (
 };
 
 export const handleRouterRemoveQuery = (queryToRemove: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { [queryToRemove]: _, ...remainingQuery } = Router.query;
 
   void Router.replace({ query: remainingQuery }, undefined, {

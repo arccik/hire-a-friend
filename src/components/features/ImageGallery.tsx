@@ -8,7 +8,7 @@ export default function ImageGallery({
   handleDeleteImage,
 }: {
   imagesUrl: string[] | null;
-  handleDeleteImage: (url: string) => void;
+  handleDeleteImage?: (url: string) => void;
 }) {
   const [lightboxController, setLightboxController] = useState({
     toggler: false,
@@ -30,11 +30,12 @@ export default function ImageGallery({
         {imagesUrl.map((img, index) => (
           <Fragment key={`${img} --- ${index} --`}>
             <Badge
+              isInvisible={!handleDeleteImage}
               content={<MdDeleteForever size={20} />}
               size="lg"
               variant="faded"
               className=" cursor-pointer hover:border-red-200 hover:bg-red-400 hover:text-white"
-              onClick={() => handleDeleteImage(img)}
+              onClick={() => handleDeleteImage && handleDeleteImage(img)}
             >
               <Image
                 isZoomed
@@ -48,10 +49,12 @@ export default function ImageGallery({
           </Fragment>
         ))}
       </div>
+
       <FsLightbox
         toggler={lightboxController.toggler}
         sources={imagesUrl}
         slide={lightboxController.slide}
+        types={["image"]}
       />
     </>
   );

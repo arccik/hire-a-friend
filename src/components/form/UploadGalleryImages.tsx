@@ -11,6 +11,7 @@ import { v1 } from "uuid";
 import { type UserValidationType } from "~/validation/member";
 import { type FieldErrors, type UseFormSetValue } from "react-hook-form";
 import Loader from "../features/Loader";
+import { computeSHA256 } from "~/helpers/uploader";
 
 export type ImageUploadType = {
   setValue: UseFormSetValue<UserValidationType>;
@@ -30,6 +31,7 @@ export default function UploadImageGallery({
     },
   });
 
+  const getSignedURL = api.uploader.getSignedURL.useMutation();
   const [imageUrls, setImageUrls] = useState<string[] | null>(imgUrls);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,13 +44,13 @@ export default function UploadImageGallery({
     if (!file || isFull) return;
     setIsLoading(true);
 
-    const { url, fields } = await getUploaderURL.mutateAsync({
+    const url = await getSignedURL.mutateAsync({
       fileType: file.type,
-      fileName: file.name,
+      checksum: await computeSHA256(file),
+      fileSize: file.size,
     });
     const savedImageUrl = await uploadFileToAWS({
       url,
-      fields,
       file,
     });
     if (savedImageUrl) {

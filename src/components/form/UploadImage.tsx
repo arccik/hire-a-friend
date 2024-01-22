@@ -16,7 +16,7 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
   const getUploaderURL = api.uploader.getUrl.useMutation();
   const [imageUrl, setImageUrl] = useState(imgUrl);
   const [isLoading, setIsLoading] = useState(false);
-  const fileDeleter = api.uploader.delete.useMutation();
+  const deleteFile = api.uploader.delete.useMutation();
   const { data: userSession } = useSession();
 
   const handleFileUpload = async (
@@ -27,16 +27,17 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
 
     if (!file) return;
     if (imageUrl) {
-      fileDeleter.mutate({ url: imageUrl });
+      deleteFile.mutate({ url: imageUrl });
     }
 
-    const { url, fields } = await getUploaderURL.mutateAsync({
+    const { url } = await getUploaderURL.mutateAsync({
       fileName: file.name,
       fileType: file.type,
     });
+
+    console.log("PreSignedPostURL", url);
     const savedImageUrl = await uploadFileToAWS({
       url,
-      fields,
       file,
     });
     if (savedImageUrl) {

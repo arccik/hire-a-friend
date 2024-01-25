@@ -140,7 +140,7 @@ export default function AuthMenu({
             </Button>
           </NavbarMenuItem>
 
-          {menuItems.map((item, index) => (
+          {menuToDisplay.map((item, index) => (
             <NavbarMenuItem
               key={`${item.href}-${index}`}
               onClick={() => setIsMenuOpen(false)}

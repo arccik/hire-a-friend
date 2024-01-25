@@ -35,7 +35,6 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
       fileType: file.type,
     });
 
-    console.log("PreSignedPostURL", url);
     const savedImageUrl = await uploadFileToAWS({
       url,
       file,

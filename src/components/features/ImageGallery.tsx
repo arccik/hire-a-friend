@@ -54,7 +54,7 @@ export default function ImageGallery({
         toggler={lightboxController.toggler}
         sources={imagesUrl}
         slide={lightboxController.slide}
-        types={["image"]}
+        type={"image"}
       />
     </>
   );

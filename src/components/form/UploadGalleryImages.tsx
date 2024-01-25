@@ -42,7 +42,6 @@ export default function UploadImageGallery({
     event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     const file = event.target.files?.[0];
-    console.log("handleFileUpload", file);
     if (!file || isFull) return;
     setIsLoading(true);
 
@@ -54,7 +53,6 @@ export default function UploadImageGallery({
       checksum: await computeSHA256(compressed as File),
       fileSize: compressed.size,
     });
-    console.log("URL: ", url);
     const savedImageUrl = await uploadFileToAWS({
       url,
       file: compressed as File,

@@ -9,7 +9,6 @@ import ApearanceTable from "~/components/pages/profile/ApearanceTable";
 import { genders } from "~/data/gender-icons";
 import ActiveFriend from "~/components/pages/home/ActiveFriends";
 import Title from "~/components/features/Title";
-import Gallery from "~/components/pages/profile/Gallery";
 import ActivityAndHobby from "~/components/pages/profile/ActivityAndHobby";
 import ReportViolating from "~/components/pages/profile/RepotViolating";
 import GoBackButton from "~/components/features/GoBackButton";
@@ -22,6 +21,7 @@ import Alert from "~/components/pages/profile/Alert";
 import { useSession } from "next-auth/react";
 import Loader from "~/components/features/Loader";
 import checkRequiredFields from "~/helpers/checkRequiredFields";
+import ImageGallery from "~/components/features/ImageGallery";
 
 export default function ProfilePage() {
   const { data: userSession } = useSession();
@@ -82,7 +82,7 @@ export default function ProfilePage() {
         <Image
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover opacity-50 backdrop-blur-lg"
+          className="object-cover opacity-50 blur-xl backdrop-blur-3xl backdrop-hue-rotate-15"
           src={
             !!data?.coverImage
               ? data.coverImage
@@ -161,8 +161,8 @@ export default function ProfilePage() {
                 activities={data.activities}
               />
               <Languages languages={data.languages} />
-              <div className="mx-auto mb-10 mt-10 grid grid-cols-2 justify-center gap-4 md:w-2/3 md:grid-cols-4">
-                <Gallery imagesUrl={data?.photos} />
+              <div className="mx-auto mb-10 mt-10 grid  justify-center">
+                <ImageGallery imagesUrl={data?.photos} />
               </div>
               <ApearanceTable data={data?.appearance} />
               <div className="mx-auto mt-5 flex flex-row justify-center md:w-96">

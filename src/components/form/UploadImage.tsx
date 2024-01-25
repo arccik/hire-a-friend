@@ -6,6 +6,8 @@ import uploadFileToAWS from "~/utils/uploadFileToAWS";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import Loader from "../features/Loader";
+import { computeSHA256 } from "~/helpers/uploader";
+import compressImage from "~/utils/compressImage";
 
 type PropsType = {
   setValue: (value: string) => void;
@@ -13,7 +15,7 @@ type PropsType = {
 };
 
 export default function UploadImage({ setValue, imgUrl }: PropsType) {
-  const getUploaderURL = api.uploader.getUrl.useMutation();
+  const getUploaderURL = api.uploader.getSignedURL.useMutation();
   const [imageUrl, setImageUrl] = useState(imgUrl);
   const [isLoading, setIsLoading] = useState(false);
   const deleteFile = api.uploader.delete.useMutation();
@@ -29,15 +31,18 @@ export default function UploadImage({ setValue, imgUrl }: PropsType) {
     if (imageUrl) {
       deleteFile.mutate({ url: imageUrl });
     }
+    const compressed = await compressImage(file);
+    if (compressed instanceof Error) return;
 
-    const { url } = await getUploaderURL.mutateAsync({
-      fileName: file.name,
-      fileType: file.type,
+    const url = await getUploaderURL.mutateAsync({
+      fileType: compressed.type,
+      checksum: await computeSHA256(compressed as File),
+      fileSize: compressed.size,
     });
 
     const savedImageUrl = await uploadFileToAWS({
       url,
-      file,
+      file: compressed as File,
     });
     if (savedImageUrl) {
       setValue(savedImageUrl);

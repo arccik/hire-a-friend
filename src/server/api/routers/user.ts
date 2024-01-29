@@ -84,10 +84,11 @@ export const userRouter = createTRPCRouter({
         include: { appearance: true, Rate: true, availability: true },
       });
       if (!user) return null;
-      return { ...user, online };
+
+      return { ...user, password: null, online };
     }),
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany({ select: { password: false } });
+    return ctx.prisma.user.findMany();
   }),
   getActiveFriends: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({

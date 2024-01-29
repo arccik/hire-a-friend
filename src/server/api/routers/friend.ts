@@ -11,11 +11,14 @@ export const friendRouter = createTRPCRouter({
   getOne: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ input, ctx }) => {
-      return ctx.prisma.user.findFirst({ where: { id: input.id } });
+      console.log("GET ONE FRIEND ::: >>> >>> >>>> ", { ctx });
+      return ctx.prisma.user.findFirst({
+        where: { id: input.id },
+      });
     }),
 
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany({ select: { password: false } });
+    return ctx.prisma.user.findMany();
   }),
   filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
     const options: Record<string, string | boolean | object | null> = {};
@@ -37,7 +40,6 @@ export const friendRouter = createTRPCRouter({
     const take = pageSize;
     options.userType = "Friend";
     options.activated = true;
-
     // options.NOT = {
     //   blockedBy: {
     //     has: ctx.session?.user.id,
@@ -50,7 +52,6 @@ export const friendRouter = createTRPCRouter({
       },
       skip,
       take,
-      // select: { password: false },
     });
 
     return ctx.prisma.$transaction([
@@ -78,7 +79,6 @@ export const friendRouter = createTRPCRouter({
           },
           skip,
           take,
-          // select: { password: false },
         }),
         ctx.prisma.user.count({
           where: {

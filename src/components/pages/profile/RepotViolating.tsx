@@ -25,11 +25,14 @@ export default function ReportViolating() {
   });
 
   const handleReportUser = () => {
-    if (!userSession?.user.id) return;
-    reportUser.mutate({
-      email: userSession.user.email!,
-      id: router.query.id as string,
-    });
+    if (!userSession?.user.id) {
+      toast.error("Please login to report a user");
+    } else {
+      reportUser.mutate({
+        email: userSession.user.email!,
+        id: router.query.id as string,
+      });
+    }
   };
   return (
     <div className="mt-10 border-t border-gray-200 py-10 text-center">

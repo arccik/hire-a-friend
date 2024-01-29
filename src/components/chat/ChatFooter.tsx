@@ -24,7 +24,7 @@ export default function ChatFooter({ chatId, sendMessage }: PropType) {
       message,
       recipientId: chatId,
       senderId: userSession.user.id,
-      timestamp: new Date().toISOString(),
+      timestamp: Date.now(),
     });
     setMessage("");
   };

@@ -23,7 +23,8 @@ export async function getContact({ userId, contactId }: FuncParams) {
   };
   const command = new GetCommand(params);
   try {
-    return await ddbClient.send(command);
+    const response = await ddbClient.send(command);
+    return response?.Item;
   } catch (error) {
     console.error(error);
     // return { status: "error", message: "Error getting contact" };
@@ -141,8 +142,11 @@ export async function unblockContact({ userId, contactId }: FuncParams) {
 
 export async function isBlocked({ userId, contactId }: FuncParams) {
   const contact = await getContact({ userId, contactId });
+  console.log("IsBLOCKED:::: ", contact);
   if (!contact) return false;
-  if ("Item" in contact) return contact?.Item?.blocked as boolean;
+  if ("blocked" in contact) {
+    return !!contact.blocked;
+  }
 }
 
 export async function isOnline({ userId }: { userId: string }) {

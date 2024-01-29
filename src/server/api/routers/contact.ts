@@ -22,7 +22,6 @@ export const contactsRouter = createTRPCRouter({
         userId: ctx.session.user.id,
         contactId: input.id,
       });
-
       if (isExist) return;
 
       return saveContact({ userId: ctx.session.user.id, contactId: input.id });

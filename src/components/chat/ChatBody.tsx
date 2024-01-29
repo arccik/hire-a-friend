@@ -15,12 +15,13 @@ import MessageBubble from "./MessageBubble";
 // import SocketStatus from "./SocketStatus";
 import { ACTIONS, useSharedWebSocket } from "~/context/websocketProvider";
 import Loader from "../features/Loader";
+import { toast } from "react-toastify";
 
 export type Message = {
   senderId: string;
   message: string;
   recipientId: string;
-  timestamp: string;
+  timestamp: number;
 };
 
 export default function ChatBody() {
@@ -44,6 +45,12 @@ export default function ChatBody() {
       },
       { enabled: !!chatId },
     );
+  const saveMessage = api.chat.saveMessage.useMutation({
+    onError: (error) => {
+      console.error("Couldn't save message, something went wrong.", error);
+      toast.error("Error saving message");
+    },
+  });
 
   useEffect(() => {
     if (savedMessages) {
@@ -73,6 +80,7 @@ export default function ChatBody() {
   };
 
   const handleSendMessage = (data: Message) => {
+    saveMessage.mutate(data);
     sendJsonMessage({ action: ACTIONS.sendPrivate, ...data });
     setMessageHistory((prev) => [...prev, data]);
   };

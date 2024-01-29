@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-export default function formatMessageDateTime(timestamp: string) {
+export default function formatMessageDateTime(timestamp: number) {
   const messageDateTime = dayjs(timestamp);
   const today = dayjs();
 

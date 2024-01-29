@@ -29,6 +29,7 @@ export default function Contacts({ onClose }: ContactsProp) {
     },
   });
 
+
   const blockContact = api.contact.blockContact.useMutation({
     onError: (e) => toast.error(e.message),
     onSuccess: async () => {

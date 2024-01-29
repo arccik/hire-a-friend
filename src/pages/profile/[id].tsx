@@ -161,7 +161,7 @@ export default function ProfilePage() {
                 activities={data.activities}
               />
               <Languages languages={data.languages} />
-              <div className="mx-auto mb-10 mt-10 grid  justify-center">
+              <div className="w-full">
                 <ImageGallery imagesUrl={data?.photos} />
               </div>
               <ApearanceTable data={data?.appearance} />

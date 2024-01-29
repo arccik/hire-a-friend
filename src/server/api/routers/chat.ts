@@ -19,8 +19,13 @@ import { saveMessageSchema } from "~/validation/message";
 export const chatRouter = createTRPCRouter({
   saveMessage: protectedProcedure
     .input(saveMessageSchema)
-    .mutation(async ({ input }) => {
-      return await saveMessage(input);
+    .mutation(async ({ ctx, input }) => {
+      const primaryKey = chatHrefConstructor(
+        input.recipientId,
+        ctx.session.user.id,
+      );
+      console.log("Save Message ::: ", input);
+      return await saveMessage({ ...input, primaryKey });
     }),
   getMessages: protectedProcedure
     .input(z.object({ chatId: z.string() }))

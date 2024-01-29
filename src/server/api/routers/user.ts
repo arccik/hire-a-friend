@@ -91,10 +91,12 @@ export const userRouter = createTRPCRouter({
     return ctx.prisma.user.findMany();
   }),
   getActiveFriends: publicProcedure.query(({ ctx }) => {
+    const userId = ctx.session?.user.id;
     return ctx.prisma.user.findMany({
       where: {
-        // activated: true,
+        activated: true,
         userType: "Friend",
+        id: userId ? { not: userId } : undefined,
       },
       // select: { password: false },
     });

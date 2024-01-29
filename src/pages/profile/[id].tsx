@@ -6,7 +6,6 @@ import DisplayError from "~/components/features/DisplayError";
 import CustomerProfile from "~/components/pages/profile/CustomerProfile";
 import ApearanceTable from "~/components/pages/profile/ApearanceTable";
 
-import { genders } from "~/data/gender-icons";
 import ActiveFriend from "~/components/pages/home/ActiveFriends";
 import Title from "~/components/features/Title";
 import ActivityAndHobby from "~/components/pages/profile/ActivityAndHobby";
@@ -15,13 +14,13 @@ import GoBackButton from "~/components/features/GoBackButton";
 import Head from "next/head";
 import ActionButtons from "~/components/pages/profile/ActionButtons";
 import Languages from "~/components/pages/profile/Languages";
-import { zodiacSigns } from "~/data/zodiac-sign-list";
 import ChipList from "~/components/pages/profile/ChipList";
 import Alert from "~/components/pages/profile/Alert";
 import { useSession } from "next-auth/react";
 import Loader from "~/components/features/Loader";
 import checkRequiredFields from "~/helpers/checkRequiredFields";
 import ImageGallery from "~/components/features/ImageGallery";
+import AgeZodiacGenderPanel from "~/components/pages/profile/AgeZodiacGenderPanel";
 
 export default function ProfilePage() {
   const { data: userSession } = useSession();
@@ -63,10 +62,6 @@ export default function ProfilePage() {
   //     </div>
   //   );
   // }
-
-  const genderSign = genders.find((g) => g.id.toString() == data?.gender);
-
-  const zodiacSign = zodiacSigns.find((s) => s.id === Number(data.zodiacSign));
 
   return (
     <main className="profile-page">
@@ -165,43 +160,11 @@ export default function ProfilePage() {
                 <ImageGallery imagesUrl={data?.photos} />
               </div>
               <ApearanceTable data={data?.appearance} />
-              <div className="mx-auto mt-5 flex flex-row justify-center md:w-96">
-                <div className="flex justify-between gap-10">
-                  {zodiacSign && (
-                    <div className="flex flex-col items-center">
-                      <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
-                        Zodiac Sign
-                      </p>
-                      {zodiacSign?.Icon({ size: "2rem", color: "orange" })}
-                      <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
-                        {zodiacSign?.name}
-                      </p>
-                    </div>
-                  )}
-                  {data.age && (
-                    <div className="flex flex-col items-center">
-                      <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
-                        Age
-                      </p>
-                      <p className="text-2xl text-orange-500"> {data.age}</p>
-                      <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
-                        years
-                      </p>
-                    </div>
-                  )}
-                  {genderSign && (
-                    <div className="flex flex-col items-center">
-                      <p className="-mt-1 mb-1 text-xs leading-6 text-gray-400">
-                        Gender
-                      </p>
-                      {genderSign?.Icon({ size: "2rem", color: "orange" })}
-                      <p className=" -mt-1 mb-1 text-xs leading-6 text-gray-400">
-                        {genderSign?.name}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <AgeZodiacGenderPanel
+                zodiac={data.zodiacSign}
+                age={data.age}
+                gender={data.gender}
+              />
 
               {/* {data.lastLogin && (
                 <div className="mt-10 text-xs text-slate-400">

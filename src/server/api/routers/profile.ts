@@ -11,6 +11,7 @@ import { userValidation } from "~/validation/member";
 import { TRPCError } from "@trpc/server";
 import { signUpSchema } from "~/validation/sign-up";
 import { isOnline } from "../controllers/contact-controller";
+import { generateFilterOptions, hideFieldsFromClient } from "~/helpers/prisma";
 
 export const profileRouter = createTRPCRouter({
   getOne: publicProcedure
@@ -28,41 +29,15 @@ export const profileRouter = createTRPCRouter({
       return { ...user, password: null, online };
     }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany();
-  }),
   filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
-    const options: Record<string, string | boolean | object | null> = {};
-    if (!!input.status) options.status = input.status;
-    if (input.activities?.has && input.activities.has !== "null") {
-      options.activities = input.activities;
-    } else {
-      delete options.activities;
-    }
-    if (input.gender && input.gender !== "null") options.gender = input.gender;
-    if (input.city && input.city !== "null") {
-      options.city = input.city;
-    } else {
-      delete options.city;
-    }
-
-    const pageSize = 9;
-    const skip = (input.page - 1) * pageSize;
-    const take = pageSize;
-    options.userType = "Friend";
-    options.activated = true;
-    // options.NOT = {
-    //   blockedBy: {
-    //     has: ctx.session?.user.id,
-    //   },
-    // };
-
+    const { options, skip, take } = generateFilterOptions(input);
     const users = ctx.prisma.user.findMany({
       where: {
         ...options,
       },
       skip,
       take,
+      select: hideFieldsFromClient(ctx.prisma.user.fields),
     });
 
     return ctx.prisma.$transaction([
@@ -163,7 +138,7 @@ export const profileRouter = createTRPCRouter({
         userType: "Friend",
         id: userId ? { not: userId } : undefined,
       },
-      // select: { password: false },
+      select: hideFieldsFromClient(ctx.prisma.user.fields),
     });
   }),
   makeActive: protectedProcedure

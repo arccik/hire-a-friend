@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 export default function SignUpPage() {
-  const createUser = api.user.signUp.useMutation();
+  const createUser = api.profile.signUp.useMutation();
   const { data: userSession } = useSession();
   const router = useRouter();
 

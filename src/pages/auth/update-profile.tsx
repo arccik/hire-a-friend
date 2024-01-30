@@ -11,7 +11,7 @@ import type { Appearance, User } from "@prisma/client";
 export default function UpdateProfile() {
   const { data: userSession } = useSession({ required: true });
   const userId = userSession?.user.id;
-  const { data: user, status } = api.user.getOne.useQuery(
+  const { data: user, status } = api.profile.getOne.useQuery(
     { id: userId! },
     { enabled: !!userId },
   );

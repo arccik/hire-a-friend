@@ -31,7 +31,7 @@ export default function FriendsPage() {
   const page = paramPage ? parseInt(paramPage) : 1;
   const searchValue = searchParams.get("search") ?? undefined;
 
-  const { data, status: filterStatus } = api.friend.filter.useQuery({
+  const { data, status: filterStatus } = api.profile.filter.useQuery({
     activities: { has: activities },
     status,
     gender,
@@ -39,7 +39,7 @@ export default function FriendsPage() {
     page,
   });
 
-  const { data: searchResult } = api.friend.search.useQuery(
+  const { data: searchResult } = api.profile.search.useQuery(
     { value: searchValue, page },
     { enabled: !!searchValue },
   );

@@ -29,7 +29,7 @@ export default function MembershipCard({
 }: PropType) {
   useSession({ required: true });
 
-  const changeStatus = api.user.changeMemberStatus.useMutation({
+  const changeStatus = api.profile.changeMemberStatus.useMutation({
     onSuccess: () => {
       void Router.replace(`/auth/update-profile`);
     },

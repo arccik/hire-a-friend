@@ -5,7 +5,7 @@ import Loader from "~/components/features/Loader";
 import DisplayError from "~/components/features/DisplayError";
 
 export default function ActiveFriend() {
-  const { data, status } = api.user.getActiveFriends.useQuery();
+  const { data, status } = api.profile.getActiveFriends.useQuery();
   if (status === "loading") return <Loader />;
   if (status === "error") return <DisplayError />;
   return (

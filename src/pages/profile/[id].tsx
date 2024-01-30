@@ -27,7 +27,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const id = router.query.id as string;
 
-  const { data, status, refetch } = api.user.getOne.useQuery(
+  const { data, status, refetch } = api.profile.getOne.useQuery(
     { id },
     { enabled: !!id },
   );

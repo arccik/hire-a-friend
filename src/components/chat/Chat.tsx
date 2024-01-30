@@ -27,7 +27,7 @@ export default function ChatBox() {
 
   const senderId: string = message ? lastJsonMessage.body.senderId : "";
 
-  const { data } = api.user.getOne.useQuery(
+  const { data } = api.profile.getOne.useQuery(
     { id: senderId },
     {
       enabled: !!message,

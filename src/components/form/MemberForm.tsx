@@ -26,7 +26,7 @@ import Activities from "./Activities";
 // import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {
-  const updateUser = api.user.update.useMutation({
+  const updateUser = api.profile.update.useMutation({
     onSuccess: () => {
       toast.success(
         <div className="flex flex-row items-center justify-between">

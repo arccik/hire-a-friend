@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const searchValue = searchParams.get("search");
-  const { data: result, status: searchStatus } = api.friend.search.useQuery({
+  const { data: result, status: searchStatus } = api.profile.search.useQuery({
     value: searchValue ?? "",
     page: 1,
   });

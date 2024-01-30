@@ -43,7 +43,7 @@ const MyForm: React.FC<PropType> = ({
       experties: experties ?? "",
     },
   });
-  const updateUser = api.user.updateClientProfile.useMutation({
+  const updateUser = api.profile.updateClientProfile.useMutation({
     onSuccess: (user) => {
       toast.success(
         <>

@@ -33,7 +33,7 @@ export default function ChatBody() {
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chat");
 
-  const { data: receiverData } = api.user.getOne.useQuery(
+  const { data: receiverData } = api.profile.getOne.useQuery(
     { id: chatId! },
     { enabled: !!chatId },
   );

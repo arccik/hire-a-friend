@@ -8,7 +8,9 @@ type PropType = {
 };
 
 export default function Notification({ msg, sender }: PropType) {
-  const { data: senderData, status } = api.user.getOne.useQuery({ id: sender });
+  const { data: senderData, status } = api.profile.getOne.useQuery({
+    id: sender,
+  });
   if (status === "loading") return <Loader />;
   return (
     <>

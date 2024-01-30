@@ -6,7 +6,7 @@ import { api } from "~/utils/api";
 
 export default function ChooseMemberTypePage() {
   const { data: isUserTypeSelected, status } =
-    api.user.isUserTypeChoosen.useQuery();
+    api.profile.isUserTypeChoosen.useQuery();
   if (status === "loading") return <Loader />;
   if (isUserTypeSelected) void Router.replace(`/auth/update-profile`);
 

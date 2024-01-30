@@ -32,7 +32,7 @@ export default function ActionButtons({
   const userId = userSession?.user?.id;
   const saveContact = api.contact.addContact.useMutation();
   const makeNotificaiton = api.notify.create.useMutation();
-  const makeActive = api.user.makeActive.useMutation({
+  const makeActive = api.profile.makeActive.useMutation({
     onError: (e) => {
       if (e.message.includes("fields")) {
         toast.error(e.message);
@@ -47,7 +47,7 @@ export default function ActionButtons({
   const isRated =
     userSession?.user && rate.some((v: Rate) => v.voterId === userId);
 
-  const rateUser = api.friend.vote.useMutation({
+  const rateUser = api.profile.vote.useMutation({
     onSuccess: () => {
       refetch();
     },

@@ -28,8 +28,8 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
   const searchParams = usePathname();
   return (
     <>
-      <NavbarContent justify="end" className="hidden sm:flex">
-        <NavbarContent justify="end" className="hidden sm:flex">
+      <NavbarContent justify="end" className="hidden md:flex">
+        <NavbarContent justify="end" className="hidden md:flex">
           {desktopMenu.map((item) => (
             <NavbarItem
               key={item.title}
@@ -51,7 +51,7 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
               Sign Up
             </Button>
           </NavbarItem>
-          <NavbarContent className="sm:hidden" justify="end">
+          <NavbarContent className="md:hidden" justify="end">
             <NavbarMenuToggle
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             />
@@ -85,8 +85,8 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
           </NavbarItem>
         </NavbarContent>
       </NavbarContent>
-      <NavbarContent justify="end" className="flex sm:hidden">
-        <NavbarContent className="sm:hidden" justify="end">
+      <NavbarContent justify="end" className="flex md:hidden">
+        <NavbarContent className="md:hidden" justify="end">
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />
@@ -112,16 +112,6 @@ export default function GuestMenu({ isMenuOpen, setIsMenuOpen }: PropType) {
             <VscSignIn color="green" />
             <Link className="w-full" href="/auth/sign-up">
               Sign Up
-            </Link>
-          </NavbarMenuItem>
-          <NavbarMenuItem
-            onClick={() => setIsMenuOpen(false)}
-            key="login-btn"
-            className="flex items-center gap-3 transition-transform hover:scale-105 hover:text-orange-500"
-          >
-            <VscSignIn color="green" />
-            <Link className="w-full" href="/auth/sign-in">
-              Login
             </Link>
           </NavbarMenuItem>
         </NavbarMenu>

@@ -38,7 +38,7 @@ export const generateFilterOptions = (
   } else {
     delete options.city;
   }
-
+  // hide signed in user from the dispaly list
   id && (options.id = { not: id });
 
   const pageSize = 9;

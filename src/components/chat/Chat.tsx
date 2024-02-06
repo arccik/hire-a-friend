@@ -20,6 +20,17 @@ export default function ChatBox() {
   const { data: userSession } = useSession();
   const { lastJsonMessage } = useSharedWebSocket();
   const notification = api.notify.create.useMutation();
+
+
+  const getMessage = () => {
+    if (
+      lastJsonMessage &&
+      ACTIONS.newMessage in lastJsonMessage &&
+      lastJsonMessage.body.recipientId === userSession?.user.id
+    ) {
+      return lastJsonMessage.body.message;
+    }
+  };
   const message =
     lastJsonMessage &&
     ACTIONS.newMessage in lastJsonMessage &&

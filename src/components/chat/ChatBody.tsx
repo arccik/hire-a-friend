@@ -65,7 +65,11 @@ export default function ChatBody() {
   }, [messageHistory]);
 
   useEffect(() => {
-    if (lastJsonMessage && "body" in lastJsonMessage) {
+    if (
+      lastJsonMessage &&
+      "body" in lastJsonMessage &&
+      chatId === lastJsonMessage.body.senderId
+    ) {
       setMessageHistory((prev) => [...prev, lastJsonMessage.body]);
     }
   }, [lastJsonMessage]);

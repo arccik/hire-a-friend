@@ -22,13 +22,15 @@ export const profileRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
-        include: { appearance: true, Rate: true, availability: true },
+        include: { appearance: true, Rate: true },
       });
       if (!user) return null;
 
       return { ...user, password: null, online };
     }),
-
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    return ctx.prisma.user.findMany();
+  }),
   filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
     const { options, skip, take } = generateFilterOptions(input);
     const users = ctx.prisma.user.findMany({
@@ -37,7 +39,7 @@ export const profileRouter = createTRPCRouter({
       },
       skip,
       take,
-      select: hideFieldsFromClient(ctx.prisma.user.fields),
+      // select: hideFieldsFromClient(ctx.prisma.user.fields),
     });
 
     return ctx.prisma.$transaction([
@@ -107,7 +109,7 @@ export const profileRouter = createTRPCRouter({
   update: protectedProcedure
     .input(userValidation)
     .mutation(({ ctx, input }) => {
-      const { availability, appearance, ...rest } = input;
+      const {  appearance, ...rest } = input;
       return ctx.prisma.user.update({
         where: {
           id: input.id,
@@ -115,7 +117,7 @@ export const profileRouter = createTRPCRouter({
         data: {
           ...rest,
           appearance: { create: appearance },
-          availability: { create: availability },
+          // availability: { create: availability },
         },
       });
     }),
@@ -130,16 +132,18 @@ export const profileRouter = createTRPCRouter({
   count: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.user.count();
   }),
-  getActiveFriends: publicProcedure.query(({ ctx }) => {
+  getActiveFriends: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.session?.user.id;
-    return ctx.prisma.user.findMany({
+    const result = await ctx.prisma.user.findMany({
       where: {
         activated: true,
         userType: "Friend",
         id: userId ? { not: userId } : undefined,
       },
-      select: hideFieldsFromClient(ctx.prisma.user.fields),
+      // select: hideFieldsFromClient(ctx.prisma.user.fields),
     });
+    result.filter((value) => (value.password = null));
+    return result;
   }),
   makeActive: protectedProcedure
     .input(z.object({ id: z.string(), status: z.boolean() }))

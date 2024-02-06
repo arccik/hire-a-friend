@@ -85,7 +85,7 @@ model User {
     ethnicity        String?
     blockedBy        String[]
     socialMediaLinks String[]
-    availability     Availability[]
+    // availability     Availability[]
     preferedAgeRange Int[]
     Notification     Notification[]
 }
@@ -150,18 +150,18 @@ model Contact {
     // @@map("Contact")
 }
 
-model Availability {
-    id        String  @id @default(cuid())
-    monday    String?
-    tuesday   String?
-    wednesday String?
-    thursday  String?
-    friday    String?
-    saturday  String?
-    sunday    String?
-    userId    String
-    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+// model Availability {
+//     id        String  @id @default(cuid())
+//     monday    String?
+//     tuesday   String?
+//     wednesday String?
+//     thursday  String?
+//     friday    String?
+//     saturday  String?
+//     sunday    String?
+//     userId    String
+//     user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
 
 model Notification {
     id        String   @id @default(cuid())

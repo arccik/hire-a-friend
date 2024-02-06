@@ -32,7 +32,10 @@ export const profileRouter = createTRPCRouter({
     return ctx.prisma.user.findMany();
   }),
   filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
-    const { options, skip, take } = generateFilterOptions(input);
+    const { options, skip, take } = generateFilterOptions(
+      input,
+      ctx.session?.user.id,
+    );
     const users = ctx.prisma.user.findMany({
       where: {
         ...options,

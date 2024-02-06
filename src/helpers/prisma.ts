@@ -20,7 +20,10 @@ export const hideFieldsFromClient = (fields: Prisma.UserFieldRefs) => {
   return select;
 };
 
-export const generateFilterOptions = (input: FriendFilterSchemaType) => {
+export const generateFilterOptions = (
+  input: FriendFilterSchemaType,
+  id?: string,
+) => {
   const options: Record<string, string | boolean | object | null> = {};
 
   if (!!input.status) options.status = input.status;
@@ -35,6 +38,8 @@ export const generateFilterOptions = (input: FriendFilterSchemaType) => {
   } else {
     delete options.city;
   }
+
+  id && (options.id = { not: id });
 
   const pageSize = 9;
   const skip = (input.page - 1) * pageSize;

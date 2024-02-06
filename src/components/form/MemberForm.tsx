@@ -23,6 +23,7 @@ import GenderSelect from "./GenderSelect";
 import ZodiacSelect from "./ZodiacSelect";
 import Hobbies from "./Hobbies";
 import Activities from "./Activities";
+import EthnicitySelect from "./EthnicitySelect";
 // import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {
@@ -126,16 +127,19 @@ export default function MemberForm(props: BigFormPropType) {
               register={register}
               value={getValues("zodiacSign")}
             />
-            <InputField
+
+            <EthnicitySelect
+              register={register}
               errors={errors}
-              register={register("ethnicity")}
-              fieldName="ethnicity"
-              fullWidth={true}
+              value={getValues("ethnicity")}
+              setValue={setValue}
             />
             <Languages
               errors={errors}
               register={register}
               setValue={setValue}
+              value={getValues("languages")}
+              getValues={getValues}
             />
             <Activities
               register={register}

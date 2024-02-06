@@ -28,6 +28,8 @@ export default function getDefaultValues(
     hidePrice: !!props.hidePrice,
     phoneNumber: props.phoneNumber ?? "",
     zodiacSign: props.zodiacSign ?? "",
+    ethnicity: props.ethnicity ?? "",
+    languages: props.languages ?? [],
     preferedAgeRange: !!props.preferedAgeRange?.length
       ? props.preferedAgeRange
       : [18, 99],

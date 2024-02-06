@@ -2,6 +2,7 @@ import { Chip, Select, SelectItem } from "@nextui-org/react";
 import languages from "~/data/language-list.json";
 import type {
   FieldErrors,
+  UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
@@ -11,13 +12,11 @@ export type LanguagesProps = {
   register: UseFormRegister<UserValidationType>;
   errors: FieldErrors<UserValidationType>;
   setValue: UseFormSetValue<UserValidationType>;
+  value?: string[];
+  getValues: UseFormGetValues<UserValidationType>;
 };
 
-export default function Languages({
-  register,
-  errors,
-  setValue,
-}: LanguagesProps) {
+export default function Languages({ register, errors, setValue, value }: LanguagesProps) {
   return (
     <fieldset>
       <label
@@ -32,19 +31,14 @@ export default function Languages({
         items={languages}
         label="Select languages you can speak"
         variant="bordered"
-        // defaultSelectedKeys={"English"}
         isMultiline={true}
         selectionMode="multiple"
+        defaultSelectedKeys={value}
         placeholder="Select Languages"
         {...register("languages")}
-        // onSelectionChange={(e) => setValue("languages", [...e] as string[])}
         onChange={(e) => {
           setValue("languages", e.target.value.split(","));
         }}
-        // classNames={{
-        //   base: "max-w-lg",
-        //   trigger: "min-h-unit-12 py-2",
-        // }}
         renderValue={(items) => {
           return (
             <div className="flex flex-wrap gap-2">

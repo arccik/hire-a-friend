@@ -7,7 +7,6 @@ import DisplayError from "~/components/features/DisplayError";
 export default function ActiveFriend() {
   const { data, status } = api.profile.getActiveFriends.useQuery();
 
-  console.log("ActiveFriend", data);
   if (status === "loading") return <Loader />;
   if (status === "error") return <DisplayError />;
   return (

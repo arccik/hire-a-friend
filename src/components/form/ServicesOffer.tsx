@@ -1,6 +1,8 @@
 import React, { type ChangeEvent } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 import data from "~/data/activities.json";
+
+
 export default function ServicesOffer() {
   const [values, setValues] = React.useState(new Set(""));
 
@@ -15,7 +17,7 @@ export default function ServicesOffer() {
         variant="bordered"
         selectionMode="multiple"
         placeholder="Select services you offer"
-        selectedKeys={values}
+        defaultSelectedKeys={values}
         className="max-w-xs"
         onChange={handleSelectionChange}
       >

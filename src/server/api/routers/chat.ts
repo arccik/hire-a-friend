@@ -24,7 +24,6 @@ export const chatRouter = createTRPCRouter({
         input.recipientId,
         ctx.session.user.id,
       );
-      console.log("Save Message ::: ", input);
       return await saveMessage({ ...input, primaryKey });
     }),
   getMessages: protectedProcedure

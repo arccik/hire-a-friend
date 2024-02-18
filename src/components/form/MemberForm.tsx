@@ -128,12 +128,12 @@ export default function MemberForm(props: BigFormPropType) {
               value={getValues("zodiacSign")}
             />
 
-            <EthnicitySelect
+            {/* <EthnicitySelect
               register={register}
               errors={errors}
               value={getValues("ethnicity")}
               setValue={setValue}
-            />
+            /> */}
             <Languages
               errors={errors}
               register={register}

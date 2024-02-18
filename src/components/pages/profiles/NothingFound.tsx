@@ -31,8 +31,11 @@ export default function ClearFilter({ show }: PropType) {
             might be added soon.
           </li>
           <li className="flex gap-2">
-            <FaCheck className="text-warning" /> Contact us if you need
-            assistance or have any questions.
+            <FaCheck className="text-warning" />{" "}
+            <Link href="/contact-us" className="underline">
+              Contact us
+            </Link>{" "}
+            if you need assistance or have any questions.
           </li>
         </ul>
         <Button

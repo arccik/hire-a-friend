@@ -1,5 +1,3 @@
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 import Hero from "~/components/pages/home/Hero";
@@ -8,6 +6,7 @@ import OurMission from "~/components/pages/home/OurMission";
 import EventsAndActivities from "~/components/pages/home/EventsAndActivities";
 import AvailableNow from "~/components/pages/home/AvailableNow";
 import OurVision from "~/components/pages/home/OurVision";
+import ActionButton from "~/components/pages/home/ActionButton";
 
 export default function HomePage() {
   const { data: userSession } = useSession();
@@ -16,11 +15,12 @@ export default function HomePage() {
       <>
         <AvailableNow />
         <OurVision />
+        <ActionButton />
       </>
     );
   }
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto snap-y snap-mandatory overflow-y-scroll">
       <Hero />
       <YourPath />
       <OurMission />
@@ -28,16 +28,7 @@ export default function HomePage() {
       <AvailableNow />
 
       <OurVision />
-      <div className="mb-10 flex w-full justify-center">
-        <Button
-          as={Link}
-          size="lg"
-          href="/profiles"
-          className="mt-10 animate-bounce bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg  hover:from-yellow-500 hover:to-pink-500 hover:drop-shadow-lg"
-        >
-          Start your journey
-        </Button>
-      </div>
+      <ActionButton />
     </main>
   );
 }

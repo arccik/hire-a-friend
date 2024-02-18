@@ -3,7 +3,7 @@ import handshake from "~/data/animations/handshake.json";
 
 export default function OurMission() {
   return (
-    <section className="grid grid-flow-row md:grid-cols-2">
+    <section className="mb-10 grid shrink-0 snap-start grid-flow-row md:grid-cols-2">
       <div className="flex align-middle">
         <Lottie animationData={handshake} />
       </div>

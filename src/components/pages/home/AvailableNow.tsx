@@ -2,7 +2,7 @@ import ActiveFriend from "./ActiveFriends";
 
 export default function AvailableNow() {
   return (
-    <section className="mx-auto mt-32 md:container">
+    <section className="mx-auto mt-32 shrink-0 snap-start md:container ">
       <div className="m-5">
         <p className="mb-10 text-6xl font-semibold ">
           Connect with Those Available Now

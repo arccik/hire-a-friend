@@ -77,7 +77,7 @@ export default function ProfilePage() {
         <Image
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover opacity-50 blur-xl backdrop-blur-3xl backdrop-hue-rotate-15"
+          className="object-cover opacity-50 blur-xl backdrop-blur-3xl backdrop-brightness-50 backdrop-hue-rotate-15"
           src={
             !!data?.coverImage
               ? data.coverImage
@@ -113,7 +113,7 @@ export default function ProfilePage() {
             <div className="px-6">
               <div className="flex flex-wrap justify-center">
                 {data?.image && (
-                  <div className="flex w-full justify-center px-4 ">
+                  <div className="flex w-full justify-center px-4 drop-shadow-md">
                     <div className="relative max-w-xs">
                       <Image
                         width={300}

@@ -12,7 +12,7 @@ export default function Languages({ languages }: PropType) {
         Languages
       </p>
 
-      <div className="  flex flex-wrap justify-center gap-5">
+      <div className="md-5 flex flex-wrap justify-center gap-5 md:mb-10">
         {languages.map((language) => (
           <Chip
             key={language}

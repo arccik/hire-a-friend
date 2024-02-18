@@ -3,7 +3,7 @@ import bubbleProfileAnimationData from "~/data/animations/bubble-profile.json";
 
 export default function OurVision() {
   return (
-    <section className="m-5 mt-10 grid grid-flow-row md:grid-cols-2">
+    <section className="m-5 mt-10 grid shrink-0 snap-start  grid-flow-row md:grid-cols-2 ">
       <div className="flex flex-col justify-center md:ml-10">
         <p className="text-7xl font-semibold">Our Vision</p>
         <p className="mt-10 text-xl">

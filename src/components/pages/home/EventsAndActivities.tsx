@@ -2,7 +2,7 @@ import Features from "./Features";
 
 export default function EventsAndActivities() {
   return (
-    <section className="mx-auto mt-32 md:container">
+    <section className="mx-auto shrink-0 snap-start md:container">
       <div className="m-5">
         <p className="text-6xl font-semibold ">Events and Activities</p>
         <p className="mb-10 text-xl">

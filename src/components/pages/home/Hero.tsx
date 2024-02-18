@@ -5,7 +5,7 @@ import sayHiData from "~/data/animations/say-hi.json";
 
 export default function Hero() {
   return (
-    <section className="grid min-h-screen grid-flow-row md:grid-cols-2">
+    <section className="grid h-screen shrink-0 snap-start grid-flow-row md:grid-cols-2">
       <Lottie animationData={sayHiData} loop={false} />
       <div className="m-5 flex flex-col justify-center">
         <p className="text-5xl font-semibold lg:text-7xl">

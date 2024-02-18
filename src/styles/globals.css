@@ -4,6 +4,7 @@
 
 @layer utilities {
   @layer utilities {
+
     /* Hide scrollbar for Chrome, Safari, and Opera */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -17,12 +18,9 @@
 
     /* Custome scroll bar */
     ::-webkit-scrollbar {
-      width: 2px; /* Adjust the width as needed */
+      width: 6px; /* Adjust the width as needed */
     }
-    ::-webkit-scrollbar:hover {
-      width: 10px;
-     
-    }
+
 
     ::-webkit-scrollbar-thumb {
       background-color: #e2810a; /* Adjust the color as needed */

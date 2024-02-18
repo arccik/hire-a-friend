@@ -5,7 +5,7 @@ import DisplayError from "~/components/features/DisplayError";
 import Title from "~/components/features/Title";
 import FriendCard from "~/components/pages/profiles/FriendCard";
 import { api } from "~/utils/api";
-import ClearFilter from "~/components/pages/profiles/ClearFilterButton";
+import NothingFound from "~/components/pages/profiles/NothingFound";
 import { handleRouterNavigation } from "~/helpers/searchParams";
 import FilterButton from "~/components/pages/profiles/FilterButton";
 import { citiesList } from "~/data/cities-list";
@@ -47,6 +47,7 @@ export default function FriendsPage() {
   if (filterStatus === "error") return <DisplayError />;
 
   const toDisplay = (searchResult && searchResult) ?? (data && data);
+  const isNothingFound = !!(toDisplay && toDisplay[0].length === 0);
 
   return (
     <main className="m-3 md:m-10">
@@ -56,12 +57,12 @@ export default function FriendsPage() {
           Unlock a World of Connections with a Click.
         </p>
       </div>
-      <div className="mx-auto h-full w-full max-w-screen-2xl content-center  pb-10">
+      <div className="mx-auto h-full w-full max-w-screen-2xl content-center">
         <FilterButton />
 
         {filterStatus === "loading" && <Loader />}
 
-        {toDisplay && toDisplay[0].length === 0 && <ClearFilter show={true} />}
+        <NothingFound show={isNothingFound} />
 
         <div className="grid grid-flow-row gap-2 md:grid-cols-2 md:gap-4 lg:grid-cols-3  2xl:grid-cols-4">
           {toDisplay

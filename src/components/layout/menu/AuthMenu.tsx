@@ -19,6 +19,7 @@ import Link from "next/link";
 import { menuItems } from "./menu-items";
 import { AiFillSetting } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
+import { FaUser } from "react-icons/fa";
 import NotificationCenter from "../NotificationCenter/NotificationCenter";
 
 type PropType = {
@@ -68,6 +69,14 @@ export default function AuthMenu({
               >
                 <p className="text-xs text-slate-500">Signed in as</p>
                 <p className="font-semibold">{session.user.email}</p>
+              </DropdownItem>
+              <DropdownItem
+                as={Link}
+                startContent={<FaUser />}
+                href={`/profile/${session.user.id}`}
+                textValue="Profile"
+              >
+                Profile
               </DropdownItem>
               <DropdownItem
                 as={Link}

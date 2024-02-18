@@ -1,9 +1,4 @@
-import {
-  FaUserFriends,
-  FaInfo,
-  FaMailBulk,
-  FaRegQuestionCircle,
-} from "react-icons/fa";
+import { FaUserFriends, FaInfo, FaMailBulk, FaQuestion } from "react-icons/fa";
 import { MdOutlinePolicy, MdPolicy } from "react-icons/md";
 import { VscSignIn } from "react-icons/vsc";
 
@@ -37,7 +32,7 @@ export const menuItems: MenuItem[] = [
     id: 4,
     title: "FAQ",
     href: "/help-feedback",
-    icon: <FaRegQuestionCircle />,
+    icon: <FaQuestion />,
   },
   {
     id: 5,

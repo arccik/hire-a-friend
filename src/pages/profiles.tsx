@@ -24,6 +24,7 @@ export default function FriendsPage() {
   const activities = searchParams.get("activities");
   const status = searchParams.get("status");
   const gender = searchParams.get("gender");
+  const language = searchParams.get("language");
   const cityIndex = searchParams.get("city") ?? undefined;
 
   const city = citiesList.find((v) => v.id == +cityIndex!);
@@ -35,6 +36,7 @@ export default function FriendsPage() {
     activities: { has: activities },
     status,
     gender,
+    languages: { has: language },
     city: city?.label,
     page,
   });

@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { FriendFilterSchemaType } from "~/validation/filter";
+import languageList from "~/data/language-list.json";
 
 export const hideFieldsFromClient = (fields: Prisma.UserFieldRefs) => {
   const selectedFields = Object.keys({ ...fields }).filter(
@@ -32,7 +33,14 @@ export const generateFilterOptions = (
   } else {
     delete options.activities;
   }
-  if (input.gender && input.gender !== "null") options.gender = input.gender;
+  if (input.gender && input.gender !== "null") {
+    options.gender = input.gender;
+  }
+  if (input.languages?.has && input.languages.has !== "null") {
+    options.languages = input.languages;
+  } else {
+    delete options.languages;
+  }
   if (input.city && input.city !== "null") {
     options.city = input.city;
   } else {

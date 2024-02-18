@@ -5,6 +5,10 @@ export const friendFilterSchema = z.object({
   status: z.string().optional().nullable(),
   city: z.string().optional().nullable(),
   page: z.number(),
+  languages: z
+    .object({ has: z.string().optional().nullable() })
+    .optional()
+    .nullable(),
   activities: z
     .object({ has: z.string().optional().nullable() })
     .optional()

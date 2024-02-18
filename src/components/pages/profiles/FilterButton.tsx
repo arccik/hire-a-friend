@@ -17,6 +17,7 @@ import {
 import { genders } from "~/data/gender-icons";
 import { citiesList } from "~/data/cities-list";
 import activitiesList from "~/data/activities.json";
+import languagesList from "~/data/language-list.json";
 import { useSearchParams } from "next/navigation";
 import { cn } from "~/lib/utils";
 
@@ -27,6 +28,7 @@ export default function FilterButton() {
   const selectedStatus = searchParams.get("status") ?? undefined;
   const selectedActivities = searchParams.get("activities") ?? undefined;
   const selectedCity = searchParams.get("city") ?? undefined;
+  const selectedLanguage = searchParams.get("language") ?? undefined;
 
   const isAnySelected = searchParams.size > 0;
 
@@ -134,6 +136,22 @@ export default function FilterButton() {
                   {citiesList.map((city) => (
                     <SelectItem key={city.id} value={city.label}>
                       {city.label}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Select
+                  label="Language"
+                  labelPlacement="outside"
+                  size="sm"
+                  defaultSelectedKeys={selectedLanguage}
+                  // selectedKeys={selectedLanguage}
+                  onChange={(e) => {
+                    handleRouterNavigation({ language: e.target.value });
+                  }}
+                >
+                  {languagesList.map((lang) => (
+                    <SelectItem key={lang.id} value={lang.label}>
+                      {lang.label}
                     </SelectItem>
                   ))}
                 </Select>

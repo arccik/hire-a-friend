@@ -1,4 +1,5 @@
 import { z } from "zod";
+import bcrypt from "bcrypt";
 
 import {
   createTRPCRouter,
@@ -112,7 +113,7 @@ export const profileRouter = createTRPCRouter({
   update: protectedProcedure
     .input(userValidation)
     .mutation(({ ctx, input }) => {
-      const {  appearance, ...rest } = input;
+      const { appearance, ...rest } = input;
       return ctx.prisma.user.update({
         where: {
           id: input.id,
@@ -193,13 +194,12 @@ export const profileRouter = createTRPCRouter({
           message: "User already exists.",
         });
       } else {
-        // const hashedPassword = await argon2.hash(input.password, {
-        //   saltLength: 10,
-        // });
+        const hashedPassword = await bcrypt.hash(input.password, 10);
+        console.log("HASHED PASSWORD :: ", hashedPassword, input.password);
         return ctx.prisma.user.create({
           data: {
             email: input.email,
-            password: input.password,
+            password: hashedPassword,
             userType: input.userType,
           },
         });

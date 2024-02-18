@@ -8,7 +8,7 @@ import {
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
-// import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
@@ -83,23 +83,14 @@ export const authOptions: NextAuthOptions = {
         const user = await prisma.user.findFirst({
           where: {
             email,
-            password,
           },
         });
         if (!user) return null;
-        // const hashedPassword = await argon2.hash(password, { saltLength: 10 });
 
-        // const isValidPassword = await argon2.verify(
-        //   user.password,
-        //   hashedPassword,
-        // );
+        const isValidPassword = bcrypt.compareSync(password, user.password!);
 
-        // console.log("COMPARED PASSWROD: ", {
-        //   match: isValidPassword,
-        //   db: user.password,
-        //   input: hashedPassword,
-        // });
-        // if (!isValidPassword) return null;
+        if (!isValidPassword) return null;
+
         await prisma.user.update({
           where: {
             id: user.id,

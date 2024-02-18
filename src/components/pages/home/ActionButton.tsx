@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function ActionButton() {
   return (
-    <div className="mb-10 flex w-full shrink-0  snap-start justify-center ">
+    <div className="mb-10 flex w-full justify-center">
       <Button
         as={Link}
         size="lg"

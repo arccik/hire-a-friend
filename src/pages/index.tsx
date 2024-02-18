@@ -20,7 +20,7 @@ export default function HomePage() {
     );
   }
   return (
-    <main className="container mx-auto snap-y snap-mandatory overflow-y-scroll">
+    <main className="container mx-auto">
       <Hero />
       <YourPath />
       <OurMission />

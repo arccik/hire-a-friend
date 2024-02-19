@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FsLightbox from "fslightbox-react";
-import { Image } from "@nextui-org/react";
 
 export default function Gallery({
   imagesUrl,

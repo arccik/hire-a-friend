@@ -35,7 +35,7 @@ export default function AuthMenu({
   setIsMenuOpen,
 }: PropType) {
   const { data } = api.profile.getOne.useQuery({ id: session.user.id });
-  const userImgUrl = (data?.image || session.user.image) ?? "";
+  const userImgUrl = data?.image ?? session.user.image ?? "";
   const menuToDisplay = menuItems.slice(0, -1);
   return (
     <>

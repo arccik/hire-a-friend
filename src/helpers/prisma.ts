@@ -1,6 +1,6 @@
-import { Prisma } from "@prisma/client";
-import { FriendFilterSchemaType } from "~/validation/filter";
-import languageList from "~/data/language-list.json";
+import { type Prisma } from "@prisma/client";
+import { type FriendFilterSchemaType } from "~/validation/filter";
+// import languageList from "~/data/language-list.json";
 
 export const hideFieldsFromClient = (fields: Prisma.UserFieldRefs) => {
   const selectedFields = Object.keys({ ...fields }).filter(

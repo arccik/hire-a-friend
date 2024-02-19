@@ -20,9 +20,11 @@ export async function saveMessage(message: SaveMessage) {
 export async function getMessages({
   primaryKey,
   limit = 11,
+  exclusiveStartKey = undefined,
 }: {
   primaryKey: string;
   limit?: number;
+  exclusiveStartKey?: Record<string, string>;
 }) {
   const params = {
     TableName: "History",
@@ -32,11 +34,16 @@ export async function getMessages({
     ExpressionAttributeValues: {
       ":primaryKey": primaryKey,
     },
+    ExclusiveStartKey: exclusiveStartKey,
   };
 
   const command = new QueryCommand(params);
   const response = await ddbClient.send(command);
-  return response?.Items as Message[];
+
+  const items = response?.Items as Message[];
+  const lastEvaluatedKey = response?.LastEvaluatedKey;
+
+  return { items, lastEvaluatedKey };
 }
 
 export async function deleteMessage({ userId }: FuncParams) {

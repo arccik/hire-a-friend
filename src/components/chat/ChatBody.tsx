@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 import { TfiArrowLeft, TfiClose } from "react-icons/tfi";
-import { User } from "@nextui-org/react";
+import { Button, User } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 
 import { handleRouterRemoveQuery } from "~/helpers/searchParams";
@@ -27,6 +27,9 @@ export type Message = {
 export default function ChatBody() {
   const [messageHistory, setMessageHistory] = useState<Message[]>([]);
   const { lastJsonMessage, readyState, sendJsonMessage } = useSharedWebSocket();
+  const [exclusiveStartKey, setExclusiveStartKey] = useState<
+    Record<string, string> | undefined
+  >();
   useSession({ required: true });
 
   const chatRef = useRef<HTMLDivElement | null>(null);
@@ -42,6 +45,7 @@ export default function ChatBody() {
     api.chat.getMessages.useQuery(
       {
         chatId: chatId!,
+        exclusiveStartKey,
       },
       { enabled: !!chatId },
     );
@@ -54,7 +58,7 @@ export default function ChatBody() {
 
   useEffect(() => {
     if (savedMessages) {
-      setMessageHistory(savedMessages.reverse());
+      setMessageHistory(savedMessages.items.reverse());
     }
   }, [savedMessages]);
 
@@ -89,6 +93,10 @@ export default function ChatBody() {
     setMessageHistory((prev) => [...prev, data]);
   };
 
+  const handleLoadMoreMessages = () => {
+    setExclusiveStartKey(savedMessages?.lastEvaluatedKey);
+  };
+
   return (
     <>
       <div className="flex items-center overflow-auto border-b p-3">
@@ -115,6 +123,16 @@ export default function ChatBody() {
       <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4">
         <div className="mx-auto mb-16 w-full space-y-4">
           {/* <SocketStatus readyState={readyState} /> */}
+          <div>
+            <Button
+              onClick={handleLoadMoreMessages}
+              className="w-full underline"
+              variant="light"
+              size="sm"
+            >
+              Load More
+            </Button>
+          </div>
           {messageHistory?.map((msg, index) => (
             <MessageBubble
               key={msg.timestamp + index}

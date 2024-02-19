@@ -42,7 +42,7 @@ export const uploaderRouter = createTRPCRouter({
         fileSize: z.number(),
       }),
     )
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       const allowedFileTypes = ["image/jpeg", "image/png"];
 
       if (!allowedFileTypes.includes(input.fileType)) {

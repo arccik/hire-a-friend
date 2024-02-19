@@ -21,6 +21,7 @@ import { AiFillSetting } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import { FaUser } from "react-icons/fa";
 import NotificationCenter from "../NotificationCenter/NotificationCenter";
+import { api } from "~/utils/api";
 
 type PropType = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,6 +34,8 @@ export default function AuthMenu({
   isMenuOpen,
   setIsMenuOpen,
 }: PropType) {
+  const { data } = api.profile.getOne.useQuery({ id: session.user.id });
+  const userImgUrl = (data?.image || session.user.image) ?? "";
   const menuToDisplay = menuItems.slice(0, -1);
   return (
     <>
@@ -56,7 +59,7 @@ export default function AuthMenu({
                 className="bg-orange-500 transition-transform"
                 name={session.user.name ?? ""}
                 size="sm"
-                src={session.user.image ?? ""}
+                src={userImgUrl}
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Dropdown Menu" variant="flat">

@@ -25,7 +25,7 @@ export default function UploadImageGallery({
   imgUrls,
   errors,
 }: ImageUploadType) {
-  const getUploaderURL = api.uploader.getUrl.useMutation();
+  // const getUploaderURL = api.uploader.getUrl.useMutation();
   const deleteImage = api.uploader.delete.useMutation({
     onError: () => {
       toast.error("File not deleted. Something went wrong!");

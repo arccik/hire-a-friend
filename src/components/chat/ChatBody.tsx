@@ -26,7 +26,7 @@ export type Message = {
 
 export default function ChatBody() {
   const [messageHistory, setMessageHistory] = useState<Message[]>([]);
-  const { lastJsonMessage, readyState, sendJsonMessage } = useSharedWebSocket();
+  const { lastJsonMessage, sendJsonMessage } = useSharedWebSocket();
   const [exclusiveStartKey, setExclusiveStartKey] = useState<
     Record<string, string> | undefined
   >();
@@ -76,7 +76,7 @@ export default function ChatBody() {
     ) {
       setMessageHistory((prev) => [...prev, lastJsonMessage.body]);
     }
-  }, [lastJsonMessage]);
+  }, [lastJsonMessage, chatId]);
   const handleBackButton = () => {
     handleRouterRemoveQuery("chat");
   };

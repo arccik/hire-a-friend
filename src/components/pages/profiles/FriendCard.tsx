@@ -3,11 +3,13 @@ import { type User } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function FriendCard({ item }: { item: User }) {
+export default function FriendCard({ item }: { item: Partial<User> }) {
   const router = useRouter();
 
   const hobbies =
-    item.hobbies.length > 6 ? item.hobbies.slice(0, 6) : item.hobbies;
+    item.hobbies && item.hobbies.length > 6
+      ? item.hobbies.slice(0, 6)
+      : item.hobbies;
   return (
     <div
       className=" flex w-full max-w-full cursor-pointer drop-shadow-md hover:rounded-xl hover:drop-shadow-lg"
@@ -33,12 +35,12 @@ export default function FriendCard({ item }: { item: User }) {
             {item.experties}
           </p>
         </div>
-        {!!item.hobbies.length && (
+        {!!item.hobbies?.length && (
           <div>
             <p className="text-xs font-bold text-slate-900">Hobbies:</p>
             <div className="flex flex-wrap items-center gap-1">
               <p className="mt-1 text-xs text-slate-400">
-                {hobbies.join(", ")}
+                {hobbies?.join(", ")}
               </p>
             </div>
           </div>
@@ -46,12 +48,12 @@ export default function FriendCard({ item }: { item: User }) {
         <div className="mt-2">
           <p className="mt-1 text-xs font-bold text-slate-800">Open for:</p>
           <div className="flex flex-wrap items-center gap-1">
-            {item.activities.length === 0 && (
+            {item.activities?.length === 0 && (
               <p className="mt-1 text-xs text-slate-400">No activities</p>
             )}
 
             <p className="mt-1 text-xs text-slate-400">
-              {item.activities.join(", ")}
+              {item.activities?.join(", ")}
             </p>
           </div>
         </div>

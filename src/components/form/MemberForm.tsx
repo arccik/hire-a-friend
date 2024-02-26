@@ -23,7 +23,7 @@ import GenderSelect from "./GenderSelect";
 import ZodiacSelect from "./ZodiacSelect";
 import Hobbies from "./Hobbies";
 import Activities from "./Activities";
-import EthnicitySelect from "./EthnicitySelect";
+// import EthnicitySelect from "./EthnicitySelect";
 // import Availability from "./Availability";
 
 export default function MemberForm(props: BigFormPropType) {

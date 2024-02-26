@@ -12,7 +12,7 @@ import { userValidation } from "~/validation/member";
 import { TRPCError } from "@trpc/server";
 import { signUpSchema } from "~/validation/sign-up";
 import { isOnline } from "../controllers/contact-controller";
-import { generateFilterOptions } from "~/helpers/prisma";
+import { generateFilterOptions, hideFieldsFromClient } from "~/helpers/prisma";
 
 export const profileRouter = createTRPCRouter({
   getOne: publicProcedure
@@ -27,30 +27,39 @@ export const profileRouter = createTRPCRouter({
       });
       if (!user) return null;
 
-      return { ...user, password: null, online };
+      return { ...user, password: null, email: null, online };
     }),
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    return ctx.prisma.user.findMany();
-  }),
-  filter: publicProcedure.input(friendFilterSchema).query(({ ctx, input }) => {
-    const { options, skip, take } = generateFilterOptions(
-      input,
-      ctx.session?.user.id,
-    );
-    const users = ctx.prisma.user.findMany({
-      where: {
-        ...options,
-      },
-      skip,
-      take,
-      // select: hideFieldsFromClient(ctx.prisma.user.fields),
-    });
 
-    return ctx.prisma.$transaction([
-      users,
-      ctx.prisma.user.count({ where: { ...options } }),
-    ]);
-  }),
+  filter: publicProcedure
+    .input(friendFilterSchema)
+    .query(async ({ ctx, input }) => {
+      const { options, skip, take } = generateFilterOptions(
+        input,
+        ctx.session?.user.id,
+      );
+      const users = ctx.prisma.user.findMany({
+        where: {
+          ...options,
+        },
+        skip,
+        take,
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          about: true,
+          experties: true,
+          hobbies: true,
+          activities: true,
+          city: true,
+        },
+      });
+
+      return ctx.prisma.$transaction([
+        users,
+        ctx.prisma.user.count({ where: { ...options } }),
+      ]);
+    }),
   search: publicProcedure
     .input(
       z.object({ value: z.string().optional(), page: z.number().optional() }),
@@ -88,6 +97,7 @@ export const profileRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const isVoted = await ctx.prisma.rate.findFirst({
         where: { voterId: ctx.session.user.id, targetUserId: input.id },
+        select: hideFieldsFromClient(ctx.prisma.user.fields),
       });
       if (!!isVoted) {
         await ctx.prisma.rate.delete({
@@ -144,9 +154,8 @@ export const profileRouter = createTRPCRouter({
         userType: "Friend",
         id: userId ? { not: userId } : undefined,
       },
-      // select: hideFieldsFromClient(ctx.prisma.user.fields),
     });
-    result.map((value) => (value.password = null));
+    result.map((value) => ((value.password = null), (value.email = null)));
     return result;
   }),
   makeActive: protectedProcedure

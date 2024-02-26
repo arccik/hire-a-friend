@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FsLightbox from "fslightbox-react";
+import Image from "next/image";
 
 export default function Gallery({
   imagesUrl,
@@ -27,7 +28,7 @@ export default function Gallery({
           key={`${img} -- ${index}`}
           className="relative overflow-hidden rounded-xl"
         >
-          <img
+          <Image
             // isZoomed
             className="transform cursor-pointer transition-transform hover:scale-110"
             width={240}

@@ -21,8 +21,8 @@ export type SendMessage = {
   message: string;
   from: string;
   timestamp: string;
+  isRead: boolean;
 };
-
 
 export enum ACTIONS {
   $connect = "$connect",
@@ -33,7 +33,7 @@ export enum ACTIONS {
 }
 
 interface WebSocketContextProps {
-  sendJsonMessage: (message: Record<string, string | number>) => void;
+  sendJsonMessage: (message: Record<string, string | number | boolean>) => void;
   readyState: number;
   lastJsonMessage: SocketResponse;
 }

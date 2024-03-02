@@ -15,7 +15,11 @@ export const ddbClient = new DynamoDBClient({
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { chatHrefConstructor } from "~/helpers/chatHrefConstructor";
 
-import { getMessages, saveMessage } from "../controllers/message-controller";
+import {
+  getMessages,
+  markAsRead,
+  saveMessage,
+} from "../controllers/message-controller";
 import { saveMessageSchema } from "~/validation/message";
 
 export const chatRouter = createTRPCRouter({
@@ -40,6 +44,7 @@ export const chatRouter = createTRPCRouter({
       if (exclusiveStartKey) {
         PAGE_LIMIT += PAGE_LIMIT;
       }
+      await markAsRead(primaryKey);
       return await getMessages({
         primaryKey,
         exclusiveStartKey,

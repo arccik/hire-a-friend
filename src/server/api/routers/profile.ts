@@ -97,7 +97,7 @@ export const profileRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const isVoted = await ctx.prisma.rate.findFirst({
         where: { voterId: ctx.session.user.id, targetUserId: input.id },
-        select: hideFieldsFromClient(ctx.prisma.user.fields),
+        // select: hideFieldsFromClient(ctx.prisma.user.fields),
       });
       if (!!isVoted) {
         await ctx.prisma.rate.delete({

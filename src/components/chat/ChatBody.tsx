@@ -22,6 +22,7 @@ export type Message = {
   message: string;
   recipientId: string;
   timestamp: number;
+  isRead: boolean;
 };
 
 export default function ChatBody() {

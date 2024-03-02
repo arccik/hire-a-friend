@@ -1,4 +1,9 @@
-import { PutCommand, DeleteCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  PutCommand,
+  DeleteCommand,
+  QueryCommand,
+  UpdateCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { ddbClient } from "../routers/chat";
 import type { Message } from "~/components/chat/ChatBody";
 import { type SaveMessage } from "~/validation/message";
@@ -56,4 +61,20 @@ export async function deleteMessage({ userId }: FuncParams) {
   const command = new DeleteCommand(params);
   await ddbClient.send(command);
   return { status: "ok" }; // Return a response indicating the message was deleted successfully
+}
+
+export async function markAsRead(primaryKey: string) {
+  const params = {
+    TableName: "History",
+    Key: {
+      primaryKey,
+    },
+    UpdateExpression: "SET isRead = :isRead",
+    ExpressionAttributeValues: {
+      ":isRead": true,
+    },
+  };
+
+  const command = new UpdateCommand(params);
+  await ddbClient.send(command);
 }

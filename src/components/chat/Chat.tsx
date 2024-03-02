@@ -21,15 +21,6 @@ export default function ChatBox() {
   const { lastJsonMessage } = useSharedWebSocket();
   const notification = api.notify.create.useMutation();
 
-  // const getMessage = () => {
-  //   if (
-  //     lastJsonMessage &&
-  //     ACTIONS.newMessage in lastJsonMessage &&
-  //     lastJsonMessage.body.recipientId === userSession?.user.id
-  //   ) {
-  //     return lastJsonMessage.body.message;
-  //   }
-  // };
   const message =
     lastJsonMessage &&
     ACTIONS.newMessage in lastJsonMessage &&
@@ -78,7 +69,6 @@ export default function ChatBox() {
       handleRouterNavigation({ showChat: true });
     }
   };
-
   return (
     <AnimatePresence>
       <motion.div
@@ -91,6 +81,7 @@ export default function ChatBox() {
       >
         <IoMdChatboxes size="2rem" onClick={handleChatButtonClick} />
       </motion.div>
+
       {showChat && (
         <motion.div
           initial={{ opacity: 0, x: 100 }}

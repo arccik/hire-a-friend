@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import AuthMenu from "./menu/AuthMenu";
 import GuestMenu from "./menu/GuestMenu";
-import logo from "../../../public/assets/images/square-logo.png";
+import logo from "../../../public/assets/images/logo.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -70,9 +70,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <Analytics />
           {isLoading && <Loader />}
           <Header />
-
-          <Component {...pageProps} />
-
+          <div className={isLoading ? "hidden" : ""}>
+            <Component {...pageProps} />
+          </div>
           <ToastContainer
             position="top-right"
             newestOnTop={false}

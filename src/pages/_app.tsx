@@ -68,19 +68,24 @@ const MyApp: AppType<{ session: Session | null }> = ({
           </Head>
           {/* google analytics */}
           <Analytics />
-          {isLoading && <Loader />}
-          <Header />
-          <div className={isLoading ? "hidden" : ""}>
-            <Component {...pageProps} />
-          </div>
-          <ToastContainer
-            position="top-right"
-            newestOnTop={false}
-            hideProgressBar={true}
-            autoClose={2000}
-            draggable
-          />
-          <Footer />
+
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <Header />
+              <Component {...pageProps} />
+              <ToastContainer
+                position="top-right"
+                newestOnTop={false}
+                hideProgressBar={true}
+                autoClose={2000}
+                draggable
+              />
+              <Footer />
+            </>
+          )}
+
           <CookiesConsentBanner />
         </WebSocketProvider>
       </SessionProvider>

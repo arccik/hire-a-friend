@@ -12,7 +12,7 @@ import { userValidation } from "~/validation/member";
 import { TRPCError } from "@trpc/server";
 import { signUpSchema } from "~/validation/sign-up";
 import { isOnline } from "../controllers/contact-controller";
-import { generateFilterOptions, hideFieldsFromClient } from "~/helpers/prisma";
+import { generateFilterOptions } from "~/helpers/prisma";
 
 export const profileRouter = createTRPCRouter({
   getOne: publicProcedure

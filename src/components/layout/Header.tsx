@@ -3,7 +3,6 @@ import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { GiTimeTrap } from "react-icons/gi";
 import { useSession } from "next-auth/react";
 import AuthMenu from "./menu/AuthMenu";
 import GuestMenu from "./menu/GuestMenu";

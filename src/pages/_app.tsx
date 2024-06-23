@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Analytics from "~/helpers/Analytics";
 import { WebSocketProvider } from "~/context/websocketProvider";
 import CookiesConsentBanner from "~/components/features/CookiesConsentBanner";
+import Loader from "~/components/loader";
+import { useEffect, useState } from "react";
 
 const meta = [
   {
@@ -36,6 +38,23 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const handleCSSLoad = () => {
+      setIsLoading(false);
+    };
+
+    const cssLink = document.querySelector('link[href*="tailwind.css"]');
+    if (cssLink) {
+      cssLink.addEventListener("load", handleCSSLoad);
+      return () => {
+        cssLink.removeEventListener("load", handleCSSLoad);
+      };
+    } else {
+      setIsLoading(false); // If there's no external CSS file, just hide the loader
+    }
+  }, []);
   return (
     <NextUIProvider>
       <SessionProvider session={session}>
@@ -49,7 +68,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           </Head>
           {/* google analytics */}
           <Analytics />
+          {isLoading && <Loader />}
           <Header />
+
           <Component {...pageProps} />
 
           <ToastContainer
